@@ -43,7 +43,7 @@
 
 	// Private functions
 
-	unsigned int Item::assumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool isExclusivePrimarySpecification, bool hasNegativePrimarySpecification, bool hasAdditionalDefinitionSpecification, bool hasSecondarySpecification, unsigned short justificationTypeNr )
+	unsigned int Item::justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
@@ -54,24 +54,29 @@
 				return 1;
 
 			case JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION:
-				return ( hasAdditionalDefinitionSpecification ? ( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
+				return ( hasAdditionalDefinitionSpecification ?
+						( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
 
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasAdditionalDefinitionSpecification &&
 						hasFeminineOrMasculineProperNounEnding ? 3 :
+
 							( hasFeminineOrMasculineProperNounEnding ||
 							isExclusivePrimarySpecification ? 2 : 1 ) );
 
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
-				return ( hasNegativePrimarySpecification ||
-						hasAdditionalDefinitionSpecification ||
+				return ( hasAdditionalDefinitionSpecification ||
+						isNegativePrimarySpecification ||
 
 						( isExclusivePrimarySpecification &&
-						!hasSecondarySpecification ) ? 1 : 0 );
+						!isNegativeSecondarySpecification ) ? 1 : 0 );
 
 			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
-			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+
+			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ?
+						( hasFeminineOrMasculineProperNounEnding ? 2 : 1 ) : 0 );
 
 			default:
 				return NO_ASSUMPTION_LEVEL;
@@ -1412,9 +1417,9 @@
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
-	unsigned int Item::assumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem )
+	unsigned int Item::justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem )
 		{
-		unsigned int assumptionLevel = assumptionGrade( hasFeminineOrMasculineProperNounEnding, ( primarySpecificationItem != NULL && primarySpecificationItem->isExclusiveSpecification() ), ( primarySpecificationItem != NULL && primarySpecificationItem->isNegative() ), ( additionalDefinitionSpecificationItem != NULL ), ( secondarySpecificationItem != NULL ), justificationTypeNr );
+		unsigned int assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != NULL ), ( primarySpecificationItem != NULL && primarySpecificationItem->isExclusiveSpecification() ), ( primarySpecificationItem != NULL && primarySpecificationItem->isNegative() ), ( secondarySpecificationItem != NULL && secondarySpecificationItem->isNegative() ), justificationTypeNr );
 		unsigned int tempAssumptionLevel;
 
 		if( primarySpecificationItem != NULL &&

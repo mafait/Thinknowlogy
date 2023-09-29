@@ -12,7 +12,7 @@ Toon "   - het trekken van conclusies (geavanceerder dan wetenschappelijke oplos
 Toon "   - het doen van aannames (met zelfregulerend onzekerheidsniveau),".
 Toon "   - het stellen van vragen over hiaten in de kennis,".
 Toon "   - het tonen van verantwoordingsrapportages voor de zelf-gegenereerde kennis,".
-Toon "   - het detecteren van bevestigingen en conflicten, en een zelforganiserend vermogen;".
+Toon "   - het detecteren van bevestigingen en conflicten; en met een zelf-organiserend vermogen;".
 Toon " * Meertaligheid, wat aangeeft dat talen een gemeenschappelijke en logische oorsprong hebben.".
 Toon "------------------------------------------------------------------------------".
 Toon " Ik daag iedereen uit om de eenvoudigste resultaten van dit redeneersysteem op een generieke".

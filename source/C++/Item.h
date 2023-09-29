@@ -92,7 +92,7 @@ class Item
 
 	// Private functions
 
-	unsigned int assumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool isExclusivePrimarySpecification, bool hasNegativePrimarySpecification, bool hasAdditionalDefinitionSpecification, bool hasSecondarySpecification, unsigned short justificationTypeNr );
+	unsigned int justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr );
 
 	char *myWordTypeString( unsigned short queryWordTypeNr );
 
@@ -345,7 +345,7 @@ class Item
 	bool isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr );
 	bool isNounWordType( unsigned short wordTypeNr );
 
-	unsigned int assumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem );
+	unsigned int justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem );
 	};
 #endif
 

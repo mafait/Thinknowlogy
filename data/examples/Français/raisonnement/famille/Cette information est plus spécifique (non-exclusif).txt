@@ -1,6 +1,6 @@
 ﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Dominique est un père ou une mère.
-#Dev#Affichez le rapport de justification sur Dominique.
-Dominique est un père.
-#Dev#Affichez le rapport de justification sur Dominique.
+Jules est un père ou une mère.
+#Dev#Affichez le rapport de justification sur Jules.
+Jules est un père.
+#Dev#Affichez le rapport de justification sur Jules.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

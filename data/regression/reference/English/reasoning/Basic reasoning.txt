@@ -39,8 +39,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every father is masculine.
@@ -64,16 +64,13 @@
 * 
 * My conclusions:
 < Every man is not a mother. Because:
-<	- Every mother is feminine.
 <	- Every man is masculine.
+<	- Every mother is not masculine.
 < Every man is not feminine. Because:
 <	- Every man is masculine.
 < Every man is not a woman. Because:
 <	- Every man is masculine.
 <	- Every woman is not masculine.
-* 	and:
-<	- Every woman is feminine.
-<	- Every man is not feminine.
 * 
 * My assumptions:
 < A man is probably a person. Because:
@@ -83,14 +80,11 @@
 * 
 * My conclusions:
 < Every woman is not a father. Because:
-<	- Every father is masculine.
 <	- Every woman is feminine.
+<	- Every father is not feminine.
 < Every woman is not masculine. Because:
 <	- Every woman is feminine.
 < Every woman is not a man. Because:
-<	- Every man is masculine.
-<	- Every woman is not masculine.
-* 	and:
 <	- Every woman is feminine.
 <	- Every man is not feminine.
 * 
@@ -158,11 +152,11 @@
 * 
 * My conclusions:
 < Every mother is not a father. Because:
-<	- Every mother is feminine.
-<	- Every father is not feminine.
-* 	and:
 <	- Every mother is a woman.
 <	- Every woman is not a father.
+* 	and:
+<	- Every mother is feminine.
+<	- Every father is not feminine.
 < Every mother is feminine. Because:
 <	- Every mother is a woman.
 <	- Every woman is feminine.

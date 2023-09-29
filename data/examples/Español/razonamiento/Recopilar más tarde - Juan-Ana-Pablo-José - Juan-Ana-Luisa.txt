@@ -1,6 +1,0 @@
-﻿Juan es el padre y Ana es la madre de Pablo y José.
-Juan es el padre y Ana es la madre de Luisa.
-#Dev#Mostrar el informe de justificación sobre Pablo.
-#Dev#Mostrar el informe de justificación sobre José.
-#Dev#Mostrar el informe de justificación sobre Luisa.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

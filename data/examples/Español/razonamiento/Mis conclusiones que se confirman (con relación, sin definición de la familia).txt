@@ -1,7 +1,7 @@
-﻿Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-#Dev#Mostrar el informe de justificación sobre Pablo.
-Pablo tiene un padre, llamado Juan.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+﻿Juan es el padre y Ana es la madre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Paz.
+Paz tiene un padre, llamado Juan.
+#Dev#Mostrar el informe de justificación sobre Paz.
 José tiene un padre, llamado Juan.
 #Dev#Mostrar el informe de justificación sobre José.
 Luisa tiene un padre, llamado Juan.

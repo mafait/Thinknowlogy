@@ -174,7 +174,7 @@ class SpecificationItem extends Item
 				// Justification doesn't exist yet in existing specification
 				!existingSpecificationItem.hasSecondarySpecificationJustification( negativeDefinitionSpecificationItem ) &&
 				// Justification has at least the same assumption level
-				existingSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, null, negativeDefinitionSpecificationItem, null ) &&
+				existingSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, null, negativeDefinitionSpecificationItem, null ) &&
 				// Add negative justification to existing specification
 				existingSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, null, negativeDefinitionSpecificationItem ) != Constants.RESULT_OK )
 					return addError( 1, null, "I failed to add a negative justification to the existing specification" );
@@ -214,7 +214,7 @@ class SpecificationItem extends Item
 						// Justification doesn't exist yet in reversible specification
 						if( !reversibleSpecificationItem.hasPrimarySpecificationJustification( this ) &&
 						// Justification has at least the same assumption level
-						reversibleSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, null, null, null ) &&
+						reversibleSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, null, null, null ) &&
 						// Add non-possessive reversible justification to myself
 						reversibleSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, null, null ) != Constants.RESULT_OK )
 							return addError( 1, null, "I failed to add a non-possessive reversible justification to myself" );
@@ -230,7 +230,7 @@ class SpecificationItem extends Item
 								!partOfSpecificationItem.hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
 								( definitionSpecificationItem = partOfSpecificationWordItem.partOfSpecificationItem( specificationWordItem_ ) ) != null &&
 								// Justification has at least the same assumption level
-								partOfSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, definitionSpecificationItem, null ) &&
+								partOfSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, definitionSpecificationItem, null ) &&
 								// Add non-possessive part-of justification to part-of specification
 								partOfSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, definitionSpecificationItem ) != Constants.RESULT_OK )
 									return addError( 1, null, "I failed to add a non-possessive part-of justification to a part-of specification" );
@@ -242,7 +242,7 @@ class SpecificationItem extends Item
 								!partOfSpecificationItem.hasPrimarySpecificationJustification( this ) &&
 								( definitionSpecificationItem = partOfSpecificationWordItem.partOfSpecificationItem( specificationWordItem_ ) ) != null &&
 								// Justification has at least the same assumption level
-								partOfSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem, null ) &&
+								partOfSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem, null ) &&
 								// Add non-possessive part-of justification to part-of specification
 								partOfSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem ) != Constants.RESULT_OK )
 									return addError( 1, null, "I failed to add a non-possessive part-of justification to a part-of specification" );
@@ -255,7 +255,7 @@ class SpecificationItem extends Item
 					// I don't have this reversible justification
 					!hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
 					// I have no better assumption level
-					assumptionLevel_ >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, null, null ) &&
+					assumptionLevel_ >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, null, null ) &&
 					// Add possessive reversible justification to myself
 					addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, null, null ) != Constants.RESULT_OK )
 						return addError( 1, null, "I failed to add a possessive reversible justification to myself" );
@@ -276,7 +276,7 @@ class SpecificationItem extends Item
 					!partOfSpecificationItem.hasPrimarySpecificationJustification( this ) &&
 					( definitionSpecificationItem = partOfSpecificationWordItem.partOfSpecificationItem( specificationWordItem_ ) ) != null &&
 					// Justification has at least the same assumption level
-					partOfSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem, null ) &&
+					partOfSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem, null ) &&
 					// Add possessive part-of justification to part-of specification
 					partOfSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, null, definitionSpecificationItem ) != Constants.RESULT_OK )
 						return addError( 1, null, "I failed to add a possessive part-of justification to a part-of specification" );
@@ -288,7 +288,7 @@ class SpecificationItem extends Item
 					// Justification doesn't exist yet in part-of specification
 					!oppositeSpecificationItem.hasPrimaryAndSecondarySpecificationJustification( definitionSpecificationItem, this ) &&
 					// Justification has at least the same assumption level
-					oppositeSpecificationItem.assumptionLevel() >= this.assumptionLevel( false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, null, this, null ) &&
+					oppositeSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, null, this, null ) &&
 					// Add opposite possessive assumption justification to opposite specification
 					oppositeSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, null, this ) != Constants.RESULT_OK )
 						return addError( 1, null, "I failed to add an opposite possessive assumption justification to the opposite specification" );
@@ -912,7 +912,8 @@ class SpecificationItem extends Item
 		{
 		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ?
-														( assignmentLevel_ == currentAssignmentLevel ? this : null ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+														( assignmentLevel_ == currentAssignmentLevel ? this : null ) :
+														nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != null )
 			{
@@ -933,7 +934,8 @@ class SpecificationItem extends Item
 		{
 		short currentAssignmentLevel = GlobalVariables.currentAssignmentLevel;
 		SpecificationItem searchSpecificationItem = ( isIncludingThisItem ?
-														( assignmentLevel_ == currentAssignmentLevel ? this : null ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+														( assignmentLevel_ == currentAssignmentLevel ? this : null ) :
+														nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != null )
 			{
@@ -981,21 +983,6 @@ class SpecificationItem extends Item
 
 				searchJustificationItem = searchJustificationItem.attachedJustificationItem();
 				}
-			}
-
-		return false;
-		}
-
-	protected boolean hasJustificationWithAdditionalDefinitionSpecification()
-		{
-		JustificationItem searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != null )
-			{
-			if( searchJustificationItem.hasAdditionalDefinitionSpecification() )
-				return true;
-
-			searchJustificationItem = searchJustificationItem.attachedJustificationItem();
 			}
 
 		return false;
@@ -1629,6 +1616,7 @@ class SpecificationItem extends Item
 
 				// Non-possessive specification not in a male word
 				( ( !isPossessive_ &&
+		!myWordItem().hasMasculineProperNounEnding() &&
 				!myWordItem().isMasculineWord() ) ||
 
 				// Possessive specification without male relation context
@@ -2291,6 +2279,8 @@ class SpecificationItem extends Item
 
 	protected byte recalculateAssumptionLevel( boolean isSituationStable )
 		{
+		boolean hasChangedAssumptionLevel;
+		boolean _hasRelationContext = ( relationContextNr_ > Constants.NO_CONTEXT_NR );
 		boolean isOlderSpecification = isOlderItem();
 		short previousAssumptionLevel = assumptionLevel_;
 
@@ -2300,27 +2290,34 @@ class SpecificationItem extends Item
 
 		if( hasCurrentCreationSentenceNr() )
 			{
+			hasChangedAssumptionLevel = ( previousAssumptionLevel != assumptionLevel_ );
+
 			// Older specification
 			if( ( isOlderSpecification ||
 
 			// Not older specification
 			( isSituationStable &&
 
-			( ( isPartOf_ &&
-			previousAssumptionLevel == assumptionLevel_ ) ||
+			( isNegative_ ||
 
-			( relationContextNr_ > Constants.NO_CONTEXT_NR &&
+			// Test file: "Complex (12)"
+			( !hasChangedAssumptionLevel &&
+			isPartOf_ ) ||
+
+			( _hasRelationContext &&
 			hasNonCompoundSpecificationCollection() ) ) &&
 
-			( myWordItem().isUserRelationWord ||
+			( !_hasRelationContext ||
+			isPossessive_ ||
+			myWordItem().isUserRelationWord ||
 			firstJustificationItem( Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == null ) ) ) &&
 
 			// Remove obsolete assumption justifications
 			removeObsoleteAssumptionJustifications( isOlderSpecification, isSituationStable ) != Constants.RESULT_OK )
 				return addError( 1, null, "I failed to remove obsolete assumption justifications from this assumption" );
 
-			if( isOlderSpecification &&
-			assumptionLevel_ != previousAssumptionLevel &&
+			if( hasChangedAssumptionLevel &&
+			isOlderSpecification &&
 			// Process changed assumption level
 			processChangedAssumption( previousAssumptionLevel ) != Constants.RESULT_OK )
 				return addError( 1, null, "I failed to process the changed assumption level" );
@@ -2331,8 +2328,8 @@ class SpecificationItem extends Item
 
 	protected byte removeObsoleteAssumptionJustifications( boolean isOnlySelectingOlderJustifications, boolean isSituationStable )
 		{
-		boolean hasChanged = false;
 		boolean hasConfirmedAnySpecification = GlobalVariables.hasConfirmedAnySpecification;
+		boolean _hasOnlyOneRelationWord;
 		boolean _hasRelationContext = ( relationContextNr_ > Constants.NO_CONTEXT_NR );
 		boolean isIncludingNegativeAssumptionOrConclusion;
 		boolean isIncludingReversibleAssumptionOrConclusion;
@@ -2355,9 +2352,10 @@ class SpecificationItem extends Item
 		if( !hasCurrentCreationSentenceNr() )
 			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 
+//		isOnlySelectingOlderJustifications = isOlderItem();
+
 		isIncludingNegativeAssumptionOrConclusion = ( assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL ||
 
-													// Test file: "Complex (13)"
 													( !hasConfirmedAnySpecification &&
 													// Typical for Spanish
 													// Spanish test file: "Complejo (13)"
@@ -2369,13 +2367,16 @@ class SpecificationItem extends Item
 														isHiddenSpanishSpecification() );
 
 		isIncludingSpecificationSubstitutionAssumptionOrConclusion = ( !hasConfirmedAnySpecification ||
-																		assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL ||
 
 																		( isSituationStable &&
 																		specificationCollectionNr_ == Constants.NO_COLLECTION_NR ) );
 
+		_hasOnlyOneRelationWord = ( _hasRelationContext &&
+									isSituationStable &&
+									hasOnlyOneRelationWord() );
+
 		do	{
-			if( currentJustificationItem.isObsoleteAssumptionJustification( isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_ ) )
+			if( currentJustificationItem.isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_))
 				{
 				attachedJustificationItem = currentJustificationItem.attachedJustificationItem();
 
@@ -2409,7 +2410,6 @@ class SpecificationItem extends Item
 							return addError( 1, null, "I failed to change the attached justification item of the previous justification item" );
 						}
 
-					hasChanged = true;
 					currentJustificationItem = attachedJustificationItem;
 					}
 				else
@@ -2445,7 +2445,6 @@ class SpecificationItem extends Item
 						if( _myWordItem.replaceOrDeleteJustification( currentJustificationItem ) != Constants.RESULT_OK )
 							return addError( 1, null, "I failed to replace the current justification item" );
 
-						hasChanged = true;
 						// Reset variables
 						previousPreviousJustificationItem = null;
 						previousJustificationItem = null;
@@ -2495,13 +2494,13 @@ class SpecificationItem extends Item
 			}
 		while( currentJustificationItem != null );
 
-		if( ( hasChanged ||
-
 		// Typical for Spanish
 		// Spanish test file: "Complejo (12)"
-		( isOnlySelectingOlderJustifications &&
-		isPossessive_ ) ) &&
-
+		if( _hasRelationContext &&
+		isOnlySelectingOlderJustifications &&
+		isPossessive_ &&
+		!isSituationStable &&
+		isHiddenSpanishSpecification() &&
 		// (Re)calculate assumption level
 		calculateAssumptionLevel() != Constants.RESULT_OK )
 			return addError( 1, null, "I failed to (re)calculate my assumption level" );

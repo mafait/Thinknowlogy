@@ -1,5 +1,5 @@
-﻿¿Es Juan probablemente el padre de Pablo?
-¿Es Juan el padre de Pablo?
-¿Es Ana la madre de Pablo?
-¿Es Ana probablemente la madre de Pablo?
+﻿¿Es Juan probablemente el padre de Paz?
+¿Es Juan el padre de Paz?
+¿Es Ana la madre de Paz?
+¿Es Ana probablemente la madre de Paz?
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

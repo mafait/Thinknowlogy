@@ -1,0 +1,23 @@
+﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis preguntas:
+< ¿Es Angel un hombre o una mujer?
+< 
+* 
+* Mis preguntas que han sido respondidas:
+< ¿Es Angel un hombre o una mujer?
+* 
+* Mis suposiciones:
+< Angel es probablemente un hombre.
+< 
+* 
+* Mis suposiciones:
+< Angel es probablemente un hombre. Porque:
+<	- Angel es una persona.
+<	- Cada persona es un hombre o una mujer.
+<	- Angel no es una mujer.
+< 

@@ -49,5 +49,5 @@
 <	- Ronaldo era probablemente un padre.
 <	- Cada padre era un parent.
 < Ronaldo era probablemente un padre. Porque:
-<	- ¿Era Ronaldo el padre de Pablo?
+<	- ¿Era Ronaldo el padre de Paz?
 < 

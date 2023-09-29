@@ -13,8 +13,8 @@ Antoine n'a aucun père plus.
 Antoine avait un père, appelé Philippe.
 
 Chaque personne est un homme ou une femme.
-Dominique est une personne.
-Dominique est un homme ou une femme.
+Jules est une personne.
+Jules est un homme ou une femme.
 
 Barack Obama est le président des États-Unis.
 Les États-Unis a un président, appelé Barack Obama.

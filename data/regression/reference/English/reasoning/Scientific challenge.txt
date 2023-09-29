@@ -69,12 +69,16 @@
 * 
 * 
 * My conclusions:
-< Peter has no father anymore.
-< Peter had a father, called James.
+< Joe has no father anymore.
+< Joe had a father, called James.
 < 
 * 
 * My conclusions:
 < James was a man.
+< 
+* 
+* My conclusions:
+< Socrates was mortal.
 < 
 * 
 * My assumptions:
@@ -87,14 +91,14 @@
 < 
 * 
 * My questions:
-< Is Addison a man or a woman?
+< Is Alex a man or a woman?
 < 
 * 
 * My questions that have been answered:
-< Is Addison a man or a woman?
+< Is Alex a man or a woman?
 * 
 * My assumptions:
-< Addison is probably a man.
+< Alex is probably a man.
 < 
 * 
 * My conclusions:
@@ -128,8 +132,8 @@
 * My assumptions:
 < A man is probably a person.
 < A woman is probably a person.
-< Addison is probably masculine.
-< Addison is probably not feminine.
+< Alex is probably masculine.
+< Alex is probably not feminine.
 < A father is probably a person.
 < James was probably a person.
 < 
@@ -232,20 +236,14 @@
 * 
 * My conclusions:
 < Every man is not a girl. Because:
-<	- Every girl is feminine.
-<	- Every man is not feminine.
-* 	and:
 <	- Every man is masculine.
 <	- Every girl is not masculine.
 < Every man is not a mother. Because:
-<	- Every mother is feminine.
 <	- Every man is masculine.
+<	- Every mother is not masculine.
 < Every man is not feminine. Because:
 <	- Every man is masculine.
 < Every man is not a woman. Because:
-<	- Every woman is feminine.
-<	- Every man is not feminine.
-* 	and:
 <	- Every man is masculine.
 <	- Every woman is not masculine.
 * 
@@ -259,22 +257,16 @@
 * 
 * My conclusions:
 < Every woman is not a boy. Because:
-<	- Every boy is masculine.
-<	- Every woman is not masculine.
-* 	and:
 <	- Every woman is feminine.
 <	- Every boy is not feminine.
 < Every woman is not a father. Because:
-<	- Every father is masculine.
 <	- Every woman is feminine.
+<	- Every father is not feminine.
 < Every woman is not masculine. Because:
 <	- Every woman is feminine.
 < Every woman is not a man. Because:
 <	- Every woman is feminine.
 <	- Every man is not feminine.
-* 	and:
-<	- Every man is masculine.
-<	- Every woman is not masculine.
 * 
 * My assumptions:
 < A woman is probably not a girl. Because:
@@ -293,14 +285,17 @@
 * 
 * My conclusions:
 < Every father is not a girl. Because:
-<	- Every girl is feminine.
-<	- Every father is not feminine.
-* 	and:
 <	- Every father is masculine.
 <	- Every girl is not masculine.
 < Every father is not a mother. Because:
-<	- Every mother is feminine.
 <	- Every father is masculine.
+<	- Every mother is feminine.
+* 	and:
+<	- Every father is masculine.
+<	- Every mother is not masculine.
+* 	and:
+<	- Every father is a man.
+<	- Every man is not a mother.
 < Every father is masculine. Because:
 <	- Every father is a man.
 <	- Every man is masculine.
@@ -316,21 +311,12 @@
 * 
 * My assumptions:
 < A father is probably a person. Because:
-<	- Every person is masculine or feminine.
-<	- Every father is masculine.
-* 	and:
 <	- Every father is a man.
 <	- A man is probably a person.
-* 	and:
-<	- Every person is a man or a woman.
-<	- Every father is a man.
 < 
 * 
 * My conclusions:
 < Every mother is not a boy. Because:
-<	- Every boy is masculine.
-<	- Every mother is not masculine.
-* 	and:
 <	- Every mother is feminine.
 <	- Every boy is not feminine.
 < Every mother is feminine. Because:
@@ -385,27 +371,75 @@
 <	- A woman is probably a person.
 < 
 * 
-* Your information:
-< Addison is not a woman.
-< Addison is a person.
+* My conclusions:
+< Paul is masculine. Because:
+<	- Paul is a son of John.
+<	- Every son is masculine.
+< Paul is not a girl. Because:
+<	- Paul is masculine.
+<	- Every girl is not masculine.
+< Paul is not a mother. Because:
+<	- Paul is masculine.
+<	- Every mother is not masculine.
+< Paul is not a woman. Because:
+<	- Paul is masculine.
+<	- Every woman is not masculine.
+< Paul is not feminine. Because:
+<	- Paul is a son of John.
+<	- Every son is not feminine.
 * 
 * My assumptions:
-< Addison is probably masculine.
-< Addison is probably not feminine.
-< Addison is probably a man.
+< Paul is probably a person. Because:
+<	- Paul is a son of John.
+<	- A son is probably a person.
+< Paul is probably a child of John and Anna. Because:
+<	- Every family has a parent and a child.
+<	- Anna is a parent of Paul.
+<	- John is a parent of Paul.
+* 	and:
+<	- Anna has probably a child, called Paul.
+<	- John has probably a child, called Paul.
+* 	and:
+<	- Every family has a parent and a child.
+<	- Paul has 2 parents, called John and Anna.
+< Paul is probably part of a family. Because:
+<	- Paul is probably a child of John and Anna.
+<	- A child is part of every family.
+* 	and:
+<	- John has probably a child, called Paul.
+<	- A child is part of every family.
 < 
 * 
+* My conclusions:
+< John is part of a family. Because:
+<	- John is a parent of Paul.
+<	- A parent is part of every family.
+< John has a son, called Paul. Because:
+<	- Paul is a son of John.
+* 
 * My assumptions:
-< Addison is probably masculine. Because:
-<	- Addison is probably a man.
-<	- Every man is masculine.
-< Addison is probably not feminine. Because:
-<	- Addison is probably a man.
-<	- Every man is not feminine.
-< Addison is probably a man. Because:
-<	- Addison is a person.
+< John is probably a person. Because:
+<	- John is a parent of Paul.
+<	- A parent is probably a person.
+< John has probably a child, called Paul. Because:
+<	- Paul is probably a child of John and Anna.
+* 	and:
+<	- Every family has a parent and a child.
+<	- John is a parent of Paul.
+* 	and:
+<	- Every family has a parent and a child.
+<	- Paul has 2 parents, called John and Anna.
+* 
+* My questions:
+< Is John masculine or feminine? Because:
+<	- John is probably a person.
+<	- Every person is masculine or feminine.
+* 	and:
+<	- John is a parent of Paul.
+<	- Every parent is masculine or feminine.
+< Is John a man or a woman? Because:
+<	- John is probably a person.
 <	- Every person is a man or a woman.
-<	- Addison is not a woman.
 < 
 * 
 * My conclusions:
@@ -466,160 +500,6 @@
 < 
 * 
 * My conclusions:
-< John is part of a family. Because:
-<	- John is a parent of Paul.
-<	- A parent is part of every family.
-< John has a son, called Paul. Because:
-<	- Paul is a son of John.
-* 
-* My assumptions:
-< John is probably a person. Because:
-<	- John is a parent of Paul.
-<	- A parent is probably a person.
-< John has probably a child, called Paul. Because:
-<	- Paul is probably a child of John and Anna.
-* 	and:
-<	- Every family has a parent and a child.
-<	- John is a parent of Paul.
-* 	and:
-<	- Every family has a parent and a child.
-<	- Paul has 2 parents, called John and Anna.
-* 
-* My questions:
-< Is John masculine or feminine? Because:
-<	- John is probably a person.
-<	- Every person is masculine or feminine.
-* 	and:
-<	- John is a parent of Paul.
-<	- Every parent is masculine or feminine.
-< Is John a man or a woman? Because:
-<	- John is probably a person.
-<	- Every person is a man or a woman.
-< 
-* 
-* My assumptions:
-< Ronald is possibly a person. Because:
-<	- Ronald is probably a parent.
-<	- A parent is probably a person.
-< Ronald is probably a parent. Because:
-<	- Every family has a parent and a child.
-<	- Ronald has a child.
-< Ronald is probably part of a family. Because:
-<	- Ronald is probably a parent.
-<	- A parent is part of every family.
-* 
-* My questions:
-< Is Ronald masculine or feminine? Because:
-<	- Ronald is possibly a person.
-<	- Every person is masculine or feminine.
-* 	and:
-<	- Ronald is probably a parent.
-<	- Every parent is masculine or feminine.
-< Is Ronald a man or a woman? Because:
-<	- Ronald is possibly a person.
-<	- Every person is a man or a woman.
-< 
-* 
-* My conclusions:
-< Michael is part of a family. Because:
-<	- Michael is a parent.
-<	- A parent is part of every family.
-* 
-* My assumptions:
-< Michael is probably a person. Because:
-<	- Michael is a parent.
-<	- A parent is probably a person.
-< Michael has probably a child. Because:
-<	- Every family has a parent and a child.
-<	- Michael is a parent.
-* 
-* My questions:
-< Is Michael masculine or feminine? Because:
-<	- Michael is probably a person.
-<	- Every person is masculine or feminine.
-* 	and:
-<	- Michael is a parent.
-<	- Every parent is masculine or feminine.
-< Is Michael a man or a woman? Because:
-<	- Michael is probably a person.
-<	- Every person is a man or a woman.
-< 
-* 
-* My conclusions:
-< James was a man. Because:
-<	- James was the father of Peter.
-<	- Every father is a man.
-< James was masculine. Because:
-<	- James was a man.
-<	- Every man is masculine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is masculine.
-< James was not a woman. Because:
-<	- James was a man.
-<	- Every man is not a woman.
-* 	and:
-<	- James was masculine.
-<	- Every woman is not masculine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is not a woman.
-< James was not feminine. Because:
-<	- James was a man.
-<	- Every man is not feminine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is not feminine.
-* 
-* My assumptions:
-< James was probably a person. Because:
-<	- James was a man.
-<	- A man is probably a person.
-* 	and:
-<	- James was the father of Peter.
-<	- A father is probably a person.
-< 
-* 
-* My conclusions:
-< Paul is masculine. Because:
-<	- Paul is a son of John.
-<	- Every son is masculine.
-< Paul is not a girl. Because:
-<	- Paul is masculine.
-<	- Every girl is not masculine.
-< Paul is not a mother. Because:
-<	- Paul is masculine.
-<	- Every mother is not masculine.
-< Paul is not a woman. Because:
-<	- Paul is masculine.
-<	- Every woman is not masculine.
-< Paul is not feminine. Because:
-<	- Paul is a son of John.
-<	- Every son is not feminine.
-* 
-* My assumptions:
-< Paul is probably a person. Because:
-<	- Paul is a son of John.
-<	- A son is probably a person.
-< Paul is probably a child of John and Anna. Because:
-<	- Every family has a parent and a child.
-<	- Anna is a parent of Paul.
-<	- John is a parent of Paul.
-* 	and:
-<	- Anna has probably a child, called Paul.
-<	- John has probably a child, called Paul.
-* 	and:
-<	- Every family has a parent and a child.
-<	- Paul has 2 parents, called John and Anna.
-< Paul is probably part of a family. Because:
-<	- Paul is probably a child of John and Anna.
-<	- A child is part of every family.
-* 	and:
-<	- John has probably a child, called Paul.
-<	- A child is part of every family.
-< 
-* 
-* My conclusions:
 < Laura is feminine. Because:
 <	- Laura is a daughter of Anna.
 <	- Every daughter is feminine.
@@ -650,4 +530,143 @@
 < Is Laura a girl or a woman? Because:
 <	- Laura is a daughter of Anna.
 <	- Every daughter is a girl or a woman.
+< 
+* 
+* My conclusions:
+< Michael is part of a family. Because:
+<	- Michael is a parent.
+<	- A parent is part of every family.
+* 
+* My assumptions:
+< Michael is probably a person. Because:
+<	- Michael is a parent.
+<	- A parent is probably a person.
+< Michael has probably a child. Because:
+<	- Every family has a parent and a child.
+<	- Michael is a parent.
+* 
+* My questions:
+< Is Michael masculine or feminine? Because:
+<	- Michael is probably a person.
+<	- Every person is masculine or feminine.
+* 	and:
+<	- Michael is a parent.
+<	- Every parent is masculine or feminine.
+< Is Michael a man or a woman? Because:
+<	- Michael is probably a person.
+<	- Every person is a man or a woman.
+< 
+* 
+* My conclusions:
+< Adam is part of a family. Because:
+<	- Adam is a child.
+<	- A child is part of every family.
+* 
+* My assumptions:
+< Adam has probably a parent. Because:
+<	- Every family has a parent and a child.
+<	- Adam is a child.
+< 
+* 
+* My assumptions:
+< Peter is probably a child. Because:
+<	- Every family has a parent and a child.
+<	- Peter has a parent.
+< Peter is probably part of a family. Because:
+<	- Peter is probably a child.
+<	- A child is part of every family.
+< 
+* 
+* My assumptions:
+< Ronald is possibly a person. Because:
+<	- Ronald is probably a parent.
+<	- A parent is probably a person.
+< Ronald is probably a parent. Because:
+<	- Every family has a parent and a child.
+<	- Ronald has a child.
+< Ronald is probably part of a family. Because:
+<	- Ronald is probably a parent.
+<	- A parent is part of every family.
+* 
+* My questions:
+< Is Ronald masculine or feminine? Because:
+<	- Ronald is possibly a person.
+<	- Every person is masculine or feminine.
+* 	and:
+<	- Ronald is probably a parent.
+<	- Every parent is masculine or feminine.
+< Is Ronald a man or a woman? Because:
+<	- Ronald is possibly a person.
+<	- Every person is a man or a woman.
+< 
+* 
+* My conclusions:
+< James was a man. Because:
+<	- James was the father of Joe.
+<	- Every father is a man.
+< James was masculine. Because:
+<	- James was a man.
+<	- Every man is masculine.
+* 	and:
+<	- James was the father of Joe.
+<	- Every father is masculine.
+< James was not a woman. Because:
+<	- James was a man.
+<	- Every man is not a woman.
+* 	and:
+<	- James was masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- James was the father of Joe.
+<	- Every father is not a woman.
+< James was not feminine. Because:
+<	- James was a man.
+<	- Every man is not feminine.
+* 	and:
+<	- James was the father of Joe.
+<	- Every father is not feminine.
+* 
+* My assumptions:
+< James was probably a person. Because:
+<	- James was a man.
+<	- A man is probably a person.
+* 	and:
+<	- James was the father of Joe.
+<	- A father is probably a person.
+< 
+* 
+* My conclusions:
+< Joe has no father anymore. Because:
+<	- Joe had a father, called James.
+< Joe had a father, called James. Because:
+<	- James was the father of Joe.
+< 
+* 
+* My conclusions:
+< Socrates was mortal. Because:
+<	- Socrates was a philosopher.
+<	- Every philosopher is mortal.
+< 
+* 
+* My assumptions:
+< Alex is probably masculine. Because:
+<	- Alex is probably a man.
+<	- Every man is masculine.
+< Alex is probably not feminine. Because:
+<	- Alex is probably a man.
+<	- Every man is not feminine.
+< Alex is probably a man. Because:
+<	- Alex is a person.
+<	- Every person is a man or a woman.
+<	- Alex is not a woman.
+< 
+* 
+* Your information:
+< Alex is not a woman.
+< Alex is a person.
+* 
+* My assumptions:
+< Alex is probably masculine.
+< Alex is probably not feminine.
+< Alex is probably a man.
 < 

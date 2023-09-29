@@ -1,5 +1,5 @@
-﻿Pablo es hijo de Juan.
-Juan tiene un hijo, llamado Pablo.
+﻿Paz es hijo de Juan.
+Juan tiene un hijo, llamado Paz.
 Ana tiene una hija, llamada Laura.
 Laura es hija de Ana.
 
@@ -13,8 +13,8 @@ Rafael no tiene un padre nunca-más.
 Rafael tenido un padre, llamado Hernando.
 
 Cada persona es un hombre o una mujer.
-Cruz es una persona.
-Cruz es un hombre o una mujer.
+Angel es una persona.
+Angel es un hombre o una mujer.
 
 Barack Obama es el presidente de los Estados Unidos.
 Los Estados Unidos tiene un presidente, llamado Barack Obama.

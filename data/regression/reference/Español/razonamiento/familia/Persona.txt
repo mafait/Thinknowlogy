@@ -46,16 +46,16 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
+< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -90,6 +90,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -104,20 +108,20 @@
 < 
 * 
 * Mis preguntas:
-< ¿Es Cruz un hombre o una mujer?
-< ¿Es Cruz masculino o femenina?
+< ¿Es Angel un hombre o una mujer?
+< ¿Es Angel masculino o femenina?
 < 
 * 
 * Mis preguntas:
-< ¿Es Cruz un hombre o una mujer? Porque:
-<	- Cruz es una persona.
+< ¿Es Angel un hombre o una mujer? Porque:
+<	- Angel es una persona.
 <	- Cada persona es un hombre o una mujer.
-< ¿Es Cruz masculino o femenina? Porque:
-<	- ¿Es Cruz un hombre o una mujer?
+< ¿Es Angel masculino o femenina? Porque:
+<	- ¿Es Angel un hombre o una mujer?
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Cruz es una persona.
+<	- Angel es una persona.
 <	- Cada persona es masculino o femenina.
 < 
 * 

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -395,6 +399,9 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe, Laura and Peter.
 <	- John is a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura has 2 parents, called John and Anna.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
 < 
@@ -528,6 +535,9 @@
 < Paul is not a daughter. Because:
 <	- Paul is masculine.
 <	- Every daughter is not masculine.
+* 	and:
+<	- Paul is a son.
+<	- Every son is not a daughter.
 < Paul is not a girl. Because:
 <	- Paul is masculine.
 <	- Every girl is not masculine.
@@ -656,6 +666,9 @@
 < Laura is possibly not a son. Because:
 <	- Laura is possibly feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is possibly a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is possibly not a boy. Because:
 <	- Laura is possibly feminine.
 <	- Every boy is not feminine.
@@ -829,6 +842,9 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe, Laura and Peter.
 <	- John is a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura has 2 parents, called John and Anna.
 < John is probably a parent of Paul, Joe, Laura and Peter. Because:
 <	- Peter has a father, called John.
 <	- Paul has a father, called John.
@@ -1013,6 +1029,9 @@
 < Paul is not a daughter. Because:
 <	- Paul is masculine.
 <	- Every daughter is not masculine.
+* 	and:
+<	- Paul is a son.
+<	- Every son is not a daughter.
 < Paul is not a girl. Because:
 <	- Paul is masculine.
 <	- Every girl is not masculine.
@@ -1141,6 +1160,9 @@
 < Laura is possibly not a son. Because:
 <	- Laura is possibly feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is possibly a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is possibly not a boy. Because:
 <	- Laura is possibly feminine.
 <	- Every boy is not feminine.

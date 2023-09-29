@@ -1,13 +1,13 @@
 ﻿¿Son 1 y 2 números?
 ¿Era Hernando el padre de Rafael?
-¿Es Juan el padre de Pablo?
-¿Son Pablo y José hijos?
+¿Es Juan el padre de Paz?
+¿Son Paz y José hijos?
 Leer el archivo "Español/razonamiento/familia/definición de familia".
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-Jorge es el padre de Alfonso.
-¿Son Pablo y José hijos?
-¿Son Pablo y José padres?
-¿Son Pablo y José hijos de Alfonso?
-¿Son Pablo y José hijos de Juan?
-¿Son Pablo y José hijos de Juan y Ana?
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+Jorge es el padre de Diaz.
+¿Son Paz y José hijos?
+¿Son Paz y José padres?
+¿Son Paz y José hijos de Diaz?
+¿Son Paz y José hijos de Juan?
+¿Son Paz y José hijos de Juan y Ana?
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

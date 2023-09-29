@@ -80,9 +80,9 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
 < James was not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -128,6 +128,10 @@
 < A man is probably not a boy.
 < 
 * 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
+* 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
@@ -144,8 +148,14 @@
 * 
 * My conclusions:
 < James was not a mother. Because:
+<	- James was masculine.
+<	- Every mother is not masculine.
+* 	and:
 <	- James was the father of Peter and Albert.
 <	- Every father is not a mother.
+* 	and:
+<	- James was a man.
+<	- Every man is not a mother.
 < James was masculine. Because:
 <	- James was the father of Peter and Albert.
 <	- Every father is masculine.
@@ -578,6 +588,9 @@
 < Laura is maybe not a son. Because:
 <	- Laura is maybe feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is maybe a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is maybe not a boy. Because:
 <	- Laura is maybe feminine.
 <	- Every boy is not feminine.

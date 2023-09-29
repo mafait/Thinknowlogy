@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere moeder is geen vader.
 < Iedere vader is geen moeder.
+< Iedere moeder is geen vader.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -94,6 +94,10 @@
 < Een jongen is waarschijnlijk een persoon.
 < Een man is waarschijnlijk geen jongen.
 < 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -155,7 +159,6 @@
 < Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen die aangepast zijn:
-< Anna is waarschijnlijk een persoon.
 < Anna is waarschijnlijk geen meisje.
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
@@ -164,6 +167,9 @@
 < Anna is niet mannelijk.
 < Anna is geen man.
 < Anna is geen zoon.
+* 
+* Mijn veronderstellingen die aangepast zijn:
+< Anna is waarschijnlijk een persoon.
 * 
 * Mijn veronderstellingen:
 < Anna is misschien een moeder van Laura en Paul.
@@ -183,12 +189,10 @@
 * Mijn vragen die beantwoord zijn:
 < Is Jan een man of een vrouw?
 < Is Jan mannelijk of vrouwelijk?
+< Is Jan een vader of een moeder?
 * 
 * Mijn veronderstellingen die aangepast zijn:
 < Jan is waarschijnlijk een persoon.
-* 
-* Mijn vragen die beantwoord zijn:
-< Is Jan een vader of een moeder?
 * 
 * Mijn veronderstellingen die bevestigd zijn:
 < Anna is misschien een moeder van Laura en Paul.
@@ -210,8 +214,8 @@
 < Johan heeft een moeder, genaamd Anna.
 * 
 * Mijn veronderstellingen:
-< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Paul is mogelijk een kind van Jan en Anna.
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Jan is waarschijnlijk geen jongen.
 < Jan is waarschijnlijk een ouder van Laura, Paul en Johan.
 < Jan heeft mogelijk 3 kinderen, genaamd Laura, Paul en Johan.
@@ -280,11 +284,11 @@
 <	- Jan is een man.
 <	- Een man is waarschijnlijk geen jongen.
 < Jan is waarschijnlijk een persoon. Omdat:
-<	- Jan is een man.
-<	- Een man is waarschijnlijk een persoon.
-* 	en:
 <	- Jan is een vader.
 <	- Een vader is waarschijnlijk een persoon.
+* 	en:
+<	- Jan is een man.
+<	- Een man is waarschijnlijk een persoon.
 < Jan is waarschijnlijk een ouder van Laura, Paul en Johan. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura is een kind van Jan en Anna.
@@ -408,13 +412,13 @@
 <	- Anna is een vrouw.
 <	- Een vrouw is waarschijnlijk geen meisje.
 < Anna is waarschijnlijk een persoon. Omdat:
-<	- Anna is een moeder.
+<	- Paul heeft een moeder, genaamd Anna.
 <	- Een moeder is waarschijnlijk een persoon.
 * 	en:
 <	- Anna is een vrouw.
 <	- Een vrouw is waarschijnlijk een persoon.
 * 	en:
-<	- Paul heeft een moeder, genaamd Anna.
+<	- Anna is een moeder.
 <	- Een moeder is waarschijnlijk een persoon.
 < Anna heeft mogelijk een dochter, genaamd Laura. Omdat:
 <	- Laura is mogelijk een dochter van Jan en Anna.
@@ -425,15 +429,6 @@
 <	- Jan is de vader van Laura, Paul en Johan.
 * 
 * Mijn veronderstellingen:
-< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
-<	- Jan is waarschijnlijk een ouder van Laura, Paul en Johan.
-<	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
-* 	en:
-<	- Paul heeft een vader, genaamd Jan.
-<	- Een vader is waarschijnlijk een ouder.
-* 	en:
-<	- Paul heeft een moeder, genaamd Anna.
-<	- Een moeder is waarschijnlijk een ouder.
 < Paul is mogelijk een kind van Jan en Anna. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
@@ -455,6 +450,15 @@
 < Paul is misschien een persoon. Omdat:
 <	- Paul is mogelijk een kind van Jan en Anna.
 <	- Een kind is waarschijnlijk een persoon.
+< Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
+<	- Jan is waarschijnlijk een ouder van Laura, Paul en Johan.
+<	- Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
+* 	en:
+<	- Paul heeft een vader, genaamd Jan.
+<	- Een vader is waarschijnlijk een ouder.
+* 	en:
+<	- Paul heeft een moeder, genaamd Anna.
+<	- Een moeder is waarschijnlijk een ouder.
 * 
 * Mijn vragen:
 < Is Paul vrouwelijk of mannelijk? Omdat:
@@ -488,6 +492,9 @@
 * 
 * Mijn veronderstellingen:
 < Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
+<	- Laura heeft een vader, genaamd Jan.
+<	- Een vader is waarschijnlijk een ouder.
+* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Laura is een kind van Jan en Anna.
 * 	en:
@@ -506,6 +513,9 @@
 < Laura is mogelijk geen zoon. Omdat:
 <	- Laura is mogelijk vrouwelijk.
 <	- Iedere zoon is niet vrouwelijk.
+* 	en:
+<	- Laura is mogelijk een dochter van Jan en Anna.
+<	- Iedere dochter is geen zoon.
 < Laura is mogelijk geen jongen. Omdat:
 <	- Laura is mogelijk vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.

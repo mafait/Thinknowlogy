@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-¿Es Jorge el padre de Pablo?
-¿Son Pablo y Alfonso hijos?
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+¿Es Jorge el padre de Paz?
+¿Son Paz y Alfonso hijos?
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

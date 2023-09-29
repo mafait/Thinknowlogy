@@ -5,5 +5,5 @@ Juan es un hombre.
 Ana es una mujer.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -34,7 +34,7 @@
 < English es una idioma. {aprendido de usuario Admin}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos:	8685.
+ Número total de elementos:	8686.
 ------------------------------------------------------------------------------
  Elementos de administrador:	        422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Acciones:			15.
     <Z> Alternativas:			0.
 ------------------------------------------------------------------------------
- Elementos de las palabras:	        8263.
+ Elementos de las palabras:	        8264.
 ------------------------------------------------------------------------------
- * Elementos activos:		8210.
+ * Elementos activos:		8211.
     <a> asignaciones:			7.
     <c> colecciones:			272.
     <g> generalizaciones:			348.
     <i> interfaz:				1301.
     <j> justificación:			8.
-    <l> gramática:			4818.
+    <l> gramática:			4819.
     <m> varias palabras:			69.
     <s> especificaciones:			384.
     <r> escribir palabras (temporal):		0.

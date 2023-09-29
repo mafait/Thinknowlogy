@@ -34,7 +34,7 @@
 < English is een taal. {geleerd van gebruiker Admin}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal items: 8685.
+ Totaal aantal items: 8686.
 ------------------------------------------------------------------------------
  Items in administrator:	422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Acties:			15.
     <Z> Alternatieven:		0.
 ------------------------------------------------------------------------------
- Items in woorden:	8263.
+ Items in woorden:	8264.
 ------------------------------------------------------------------------------
- * Actieve items:	       8210.
+ * Actieve items:	       8211.
     <a> toewijzingen:		7.
     <c> collecties:		272.
     <g> generalisaties:		348.
     <i> interface:		1301.
     <j> verantwoordingen:		8.
-    <l> grammatica:		4818.
+    <l> grammatica:		4819.
     <m> multiple woord:		69.
     <s> specificaties:		384.
     <r> schrijfwoorden (tijdelijk):	0.

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -95,6 +95,10 @@
 < A man is probably not a boy.
 < 
 * 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
+* 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
@@ -110,140 +114,140 @@
 < 
 * 
 * My assumptions:
-< Addison is probably a person.
-< Addison is probably a parent.
-< Addison is probably part of a family.
-< Addison has possibly a child.
+< Alex is probably a person.
+< Alex is probably a parent.
+< Alex is probably part of a family.
+< Alex has possibly a child.
 * 
 * My questions:
-< Is Addison masculine or feminine?
-< Is Addison a man or a woman?
-< Is Addison a father or a mother?
+< Is Alex masculine or feminine?
+< Is Alex a man or a woman?
+< Is Alex a father or a mother?
 < 
 * 
 * My assumptions:
-< Addison is probably a person. Because:
-<	- Addison is a father or a mother.
+< Alex is probably a person. Because:
+<	- Alex is a father or a mother.
 <	- A father is probably a person.
 <	- A mother is probably a person.
-< Addison is probably a parent. Because:
-<	- Addison is a father or a mother.
+< Alex is probably a parent. Because:
+<	- Alex is a father or a mother.
 <	- A father is probably a parent.
-< Addison is probably part of a family. Because:
-<	- Addison is probably a parent.
+< Alex is probably part of a family. Because:
+<	- Alex is probably a parent.
 <	- Parents are part of every family.
-< Addison has possibly a child. Because:
+< Alex has possibly a child. Because:
 <	- Every family has parents and children.
-<	- Addison is probably a parent.
+<	- Alex is probably a parent.
 * 
 * My questions:
-< Is Addison masculine or feminine? Because:
-<	- Addison is probably a person.
+< Is Alex masculine or feminine? Because:
+<	- Alex is probably a person.
 <	- Every person is masculine or feminine.
 * 	and:
-<	- Is Addison a man or a woman?
+<	- Is Alex a man or a woman?
 <	- Every woman is feminine.
 <	- Every man is masculine.
 * 	and:
-<	- Addison is probably a parent.
+<	- Alex is probably a parent.
 <	- Every parent is feminine or masculine.
 * 	and:
-<	- Addison is a father or a mother.
+<	- Alex is a father or a mother.
 <	- Every mother is feminine.
 <	- Every father is masculine.
-< Is Addison a man or a woman? Because:
-<	- Addison is probably a parent.
+< Is Alex a man or a woman? Because:
+<	- Alex is probably a parent.
 <	- Every parent is a woman or a man.
 * 	and:
-<	- Addison is probably a person.
+<	- Alex is probably a person.
 <	- Every person is a man or a woman.
 * 	and:
-<	- Addison is a father or a mother.
+<	- Alex is a father or a mother.
 <	- Every mother is a woman.
 <	- Every father is a man.
-< Is Addison a father or a mother? Because:
-<	- Addison is a father or a mother.
+< Is Alex a father or a mother? Because:
+<	- Alex is a father or a mother.
 < 
 * 
 * This information is more specific than your earlier information:
-< Addison is a father or a mother.
+< Alex is a father or a mother.
 * 
 * My questions that have been answered:
-< Is Addison a father or a mother?
-< Is Addison a man or a woman?
-< Is Addison masculine or feminine?
+< Is Alex a father or a mother?
+< Is Alex a man or a woman?
+< Is Alex masculine or feminine?
 * 
 * My conclusions:
-< Addison is not a girl.
-< Addison is not feminine.
-< Addison is not a woman.
-< Addison is a man.
-< Addison is masculine.
-< Addison is not a daughter.
-< Addison is not a mother.
+< Alex is not a girl.
+< Alex is not feminine.
+< Alex is not a woman.
+< Alex is a man.
+< Alex is masculine.
+< Alex is not a daughter.
+< Alex is not a mother.
 * 
 * My assumptions:
-< Addison is probably not a boy.
+< Alex is probably not a boy.
 < 
 * 
 * My conclusions:
-< Addison is not a girl. Because:
-<	- Addison is a father.
+< Alex is not a girl. Because:
+<	- Alex is a father.
 <	- Every father is not a girl.
 * 	and:
-<	- Addison is a man.
+<	- Alex is a man.
 <	- Every man is not a girl.
 * 	and:
-<	- Addison is masculine.
+<	- Alex is masculine.
 <	- Every girl is not masculine.
-< Addison is not feminine. Because:
-<	- Addison is a father.
+< Alex is not feminine. Because:
+<	- Alex is a father.
 <	- Every father is not feminine.
 * 	and:
-<	- Addison is a man.
+<	- Alex is a man.
 <	- Every man is not feminine.
-< Addison is not a woman. Because:
-<	- Addison is a father.
+< Alex is not a woman. Because:
+<	- Alex is a father.
 <	- Every father is not a woman.
 * 	and:
-<	- Addison is a man.
+<	- Alex is a man.
 <	- Every man is not a woman.
 * 	and:
-<	- Addison is masculine.
+<	- Alex is masculine.
 <	- Every woman is not masculine.
-< Addison is a man. Because:
-<	- Addison is a father.
+< Alex is a man. Because:
+<	- Alex is a father.
 <	- Every father is a man.
-< Addison is masculine. Because:
-<	- Addison is a man.
+< Alex is masculine. Because:
+<	- Alex is a man.
 <	- Every man is masculine.
 * 	and:
-<	- Addison is a father.
+<	- Alex is a father.
 <	- Every father is masculine.
-< Addison is not a daughter. Because:
-<	- Addison is masculine.
+< Alex is not a daughter. Because:
+<	- Alex is masculine.
 <	- Every daughter is not masculine.
-< Addison is not a mother. Because:
-<	- Addison is masculine.
+< Alex is not a mother. Because:
+<	- Alex is masculine.
 <	- Every mother is not masculine.
 * 
 * My assumptions:
-< Addison is probably a person. Because:
-<	- Addison is a father.
+< Alex is probably a person. Because:
+<	- Alex is a father.
 <	- A father is probably a person.
 * 	and:
-<	- Addison is a man.
+<	- Alex is a man.
 <	- A man is probably a person.
-< Addison is probably a parent. Because:
-<	- Addison is a father.
+< Alex is probably a parent. Because:
+<	- Alex is a father.
 <	- A father is probably a parent.
-< Addison is probably part of a family. Because:
-<	- Addison is probably a parent.
+< Alex is probably part of a family. Because:
+<	- Alex is probably a parent.
 <	- Parents are part of every family.
-< Addison has possibly a child. Because:
+< Alex has possibly a child. Because:
 <	- Every family has parents and children.
-<	- Addison is probably a parent.
-< Addison is probably not a boy. Because:
-<	- Addison is a man.
+<	- Alex is probably a parent.
+< Alex is probably not a boy. Because:
+<	- Alex is a man.
 <	- A man is probably not a boy.
 < 

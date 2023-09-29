@@ -1,5 +1,5 @@
 ﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
-Dominique est un père ou une mère.
-Dominique est un père.
+Jules est un père ou une mère.
+Jules est un père.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».
-Est Dominique un homme et une femme?
+Est Jules un homme et une femme?

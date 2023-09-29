@@ -108,7 +108,7 @@ class JustificationItem : private Item
 
 	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isNegativeAssumptionOrConclusion();
-	bool isObsoleteAssumptionJustification( bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel );
+	bool isObsoleteAssumptionJustification( bool hasOnlyOneRelationWord, bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel );
 	bool isOppositePossessiveSpecificationAssumption();
 	bool isQuestionJustification();
 	bool isReversibleAssumptionOrConclusion();
@@ -116,6 +116,7 @@ class JustificationItem : private Item
 	bool isSpecificationSubstitutionAssumptionOrConclusion();
 	bool isSpecificationSubstitutionPartOfAssumptionOrConclusion();
 	bool isSuggestiveQuestionAssumption();
+	bool isUniqueUserRelationAssumptionOrConclusion();
 
 	unsigned short justificationTypeNr();
 	unsigned short primarySpecificationWordTypeNr();

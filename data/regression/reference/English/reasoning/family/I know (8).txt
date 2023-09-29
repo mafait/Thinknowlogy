@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -179,13 +183,13 @@
 < Is Paul feminine or masculine?
 * 
 * My assumptions that have been adjusted:
-< Paul is probably a person.
 < Paul is probably a child of John and Anna.
 * 
 * My questions that have been adjusted:
 < Is Paul a boy or a man?
 * 
 * My assumptions that have been adjusted:
+< Paul is probably a person.
 < Paul is probably part of a family.
 * 
 * My conclusions:

@@ -6,7 +6,7 @@
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es Juan probablemente el padre de Pablo?
+< ¿Es Juan probablemente el padre de Paz?
 * 
 * Sólo sé:
 < Juan es posiblemente un padre.
@@ -21,7 +21,7 @@
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es Ana la madre de Pablo?
+< ¿Es Ana la madre de Paz?
 * 
 * Sólo sé:
 < Ana es probablemente una madre.

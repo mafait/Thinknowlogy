@@ -1,9 +1,0 @@
-﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Luisa tiene un padre, llamado Juan.
-Pablo tiene 2 padres, llamados Juan y Ana.
-Luisa es hija de Juan y Ana.
-#Dev#Mostrar el informe de justificación sobre Juan.
-#Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
-#Dev#Mostrar el informe de justificación sobre Luisa.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

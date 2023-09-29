@@ -1,25 +1,25 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-Pablo tiene un padre, llamado Juan.
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+Paz tiene un padre, llamado Juan.
 Luisa tiene una madre, llamada Ana.
 Luisa tiene 2 padres, llamados Juan y Ana.
 José tiene un padre, llamado Juan.
-Pablo es un hijo.
+Paz es un hijo.
 Luisa es hija de Juan y Ana.
-Peyo tiene un padre, llamado Juan.
+Luz tiene un padre, llamado Juan.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
-#Dev#Mostrar el informe de justificación sobre Peyo.
+#Dev#Mostrar el informe de justificación sobre Luz.
 Becky tiene una madre, llamada Ana.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
-#Dev#Mostrar el informe de justificación sobre Peyo.
+#Dev#Mostrar el informe de justificación sobre Luz.
 #Dev#Mostrar el informe de justificación sobre Becky.
 Becky es hija de Ana.
 #Dev#Mostrar el informe de justificación sobre Ana.

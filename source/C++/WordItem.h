@@ -583,7 +583,6 @@ class WordItem : protected Item
 	bool hasCurrentlyMoreSpecificSpecification();
 	bool hasMultipleSpecificationWordsWithSameSentenceNr( unsigned int creationSentenceNr, unsigned int skipThisItemNr, unsigned int specificationCollectionNr );
 	bool hasNegativeSpecification();
-	bool hasPartOfSpecification();
 	bool hasPossiblyGapInKnowledge( unsigned int exclusiveSecondarySpecificationCollectionNr, unsigned int primarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem );
 	bool hasRelationContextInSpecificationsInWord( unsigned int relationContextNr );
 
@@ -625,7 +624,7 @@ class WordItem : protected Item
 	SpecificationItem *firstFeminineOrMasculineSpecificationItem();
 
 	SpecificationItem *firstNegativeSpecificationItem();
-	SpecificationItem *firstNonCollectedSpecificationItem( bool isSelfGenerated, WordItem *excludeSpecificcationWordItem );
+	SpecificationItem *firstNonCollectedSpecificationItem( bool isSelfGenerated, WordItem *excludeSpecificationWordItem );
 	SpecificationItem *firstNonCompoundUserSpecificationItem();
 	SpecificationItem *firstNonCompoundCollectionSpecificationItem( unsigned int specificationCollectionNr );
 	SpecificationItem *firstNonExclusiveSpecificationItem( bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem );

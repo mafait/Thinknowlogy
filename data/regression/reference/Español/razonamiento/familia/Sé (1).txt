@@ -46,16 +46,16 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
+< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -90,6 +90,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -120,19 +124,19 @@
 < 
 * 
 * Mis conclusiones:
-< Peyo no es femenina.
-< Peyo es parte de una familia.
-< Peyo es un hombre.
-< Peyo no es una madre.
-< Peyo no es una niña.
-< Peyo no es una mujer.
-< Peyo es masculino.
-< Peyo no es una hija.
+< Luz no es femenina.
+< Luz es parte de una familia.
+< Luz es un hombre.
+< Luz no es una madre.
+< Luz no es una niña.
+< Luz no es una mujer.
+< Luz es masculino.
+< Luz no es una hija.
 * 
 * Mis suposiciones:
-< Peyo es probablemente una persona.
-< Peyo no es probablemente un niño.
-< Peyo tiene probablemente un hijo.
+< Luz es probablemente una persona.
+< Luz no es probablemente un niño.
+< Luz tiene probablemente un hijo.
 < 
 * 
 * Mis suposiciones anteriores que tienen palabras de relación ahora:
@@ -166,18 +170,18 @@
 < Ana no es un hombre.
 < Ana es femenina.
 < Ana no es un hijo.
-< Pablo tiene una madre, llamada Ana.
+< Paz tiene una madre, llamada Ana.
 * 
 * Mis suposiciones:
 < Ana no es probablemente una niña.
 < Ana es probablemente una persona.
-< Pablo es posiblemente una persona.
-< Pablo es probablemente parte de una familia.
+< Paz es posiblemente una persona.
+< Paz es probablemente parte de una familia.
 * 
 * Mis preguntas:
-< ¿Es Pablo femenina o masculino?
-< ¿Es Pablo una niña, una mujer, un niño o un hombre?
-< ¿Es Pablo un hijo o una hija?
+< ¿Es Paz femenina o masculino?
+< ¿Es Paz una niña, una mujer, un niño o un hombre?
+< ¿Es Paz un hijo o una hija?
 < 
 * Sé.
 * 
@@ -197,13 +201,18 @@
 * Mis suposiciones:
 < Jorge era probablemente una persona.
 < Jorge no era probablemente un niño.
-< Alfonso es probablemente parte de una familia.
-< Alfonso es posiblemente una persona.
+< Alfonso es posiblemente hijo de Jorge.
+< Alfonso es posiblemente parte de una familia.
+< Alfonso es puede-ser una persona.
+< Alfonso es posiblemente masculino.
+< Alfonso no es posiblemente una hija.
+< Alfonso no es posiblemente una niña.
+< Alfonso no es posiblemente una madre.
+< Alfonso no es posiblemente una mujer.
+< Alfonso no es posiblemente femenina.
 * 
 * Mis preguntas:
-< ¿Es Alfonso femenina o masculino?
-< ¿Es Alfonso una niña, una mujer, un niño o un hombre?
-< ¿Es Alfonso un hijo o una hija?
+< ¿Es Alfonso un niño o un hombre?
 < 
 * Sé.
 * 

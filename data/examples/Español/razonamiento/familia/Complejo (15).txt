@@ -4,11 +4,11 @@ Luisa es hija de Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
-Pablo tiene un padre, llamado Juan.
+Paz tiene un padre, llamado Juan.
 José tiene una madre, llamada Ana.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 Luisa tiene un padre, llamado Juan.
 #Dev#Mostrar el informe de justificación sobre Juan.

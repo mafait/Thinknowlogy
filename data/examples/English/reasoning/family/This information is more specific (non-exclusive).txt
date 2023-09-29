@@ -1,6 +1,6 @@
 ﻿Read the file "English/reasoning/family/family definition".
-Addison is a father or a mother.
-#Dev#Display the justification report about Addison.
-Addison is a father.
-#Dev#Display the justification report about Addison.
+Alex is a father or a mother.
+#Dev#Display the justification report about Alex.
+Alex is a father.
+#Dev#Display the justification report about Alex.
 # To continue, click button «Clear your mind.» or «Restart.».

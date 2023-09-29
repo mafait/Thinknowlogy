@@ -1,6 +1,6 @@
-﻿Juan es posiblemente el padre de Pablo.
-Juan es el padre de Pablo.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+﻿Juan es posiblemente el padre de Paz.
+Juan es el padre de Paz.
+#Dev#Mostrar el informe de justificación sobre Paz.
 Jorge era posiblemente el padre de Alfonso.
 Jorge era el padre de Alfonso.
 #Dev#Mostrar el informe de justificación sobre Alfonso.

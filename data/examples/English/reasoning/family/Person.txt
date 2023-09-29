@@ -1,6 +1,8 @@
 ﻿Read the file "English/reasoning/family/family definition".
-Addison is a person.
-#Dev#Display the justification report about Addison.
+Alex is a person.
+#Dev#Display the justification report about Alex.
 Anna is a person.
 #Dev#Display the justification report about Anna.
+#Ronald is a person.
+##Dev#Display the justification report about Ronald.
 # To continue, click button «Clear your mind.» or «Restart.».

@@ -64,14 +64,15 @@ class ContextList extends List
 	protected void addToContextWordQuickAccessList()
 		{
 		WordItem lastContextWordItem = GlobalVariables.lastContextWordItem;
+		WordItem _myWordItem = myWordItem();
 
 		if( lastContextWordItem == null )
-			GlobalVariables.firstContextWordItem = myWordItem();
+			GlobalVariables.firstContextWordItem = _myWordItem;
 		else
 			// Word order is important: Add word at end of context word list
-			lastContextWordItem.nextContextWordItem = myWordItem();
+			lastContextWordItem.nextContextWordItem = _myWordItem;
 
-		GlobalVariables.lastContextWordItem = myWordItem();
+		GlobalVariables.lastContextWordItem = _myWordItem;
 		}
 
 	protected boolean hasContext( int contextNr )

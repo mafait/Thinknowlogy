@@ -1,0 +1,23 @@
+﻿* 
+* My assumptions:
+< A man is probably not a woman.
+< A woman is probably not a man.
+< 
+* 
+* My questions:
+< Is Alex a man or a woman?
+< 
+* 
+* My questions that have been answered:
+< Is Alex a man or a woman?
+* 
+* My assumptions:
+< Alex is probably a man.
+< 
+* 
+* My assumptions:
+< Alex is probably a man. Because:
+<	- Alex is a person.
+<	- Every person is a man or a woman.
+<	- Alex is not a woman.
+< 

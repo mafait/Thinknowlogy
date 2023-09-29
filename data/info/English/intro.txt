@@ -10,9 +10,9 @@ Display " The natural logic of language is demonstrated by:".
 Display " * Reasoning (in sentences with restricted grammar):".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
-Display "   - asking questions (about gaps in the knowledge),".
+Display "   - asking questions about gaps in the knowledge,".
 Display "   - displaying justification reports for the self-generated knowledge,".
-Display "   - detecting confirmations and conflicts, and self-organizing capabilities;".
+Display "   - detecting confirmations and conflicts; using self-organizing capabilities;".
 Display " * Multilingualism, assuming that languages have a common and logical origin.".
 Display "------------------------------------------------------------------------------".
 Display " I defy anyone to beat the simplest results of this reasoning system in a generic way:".

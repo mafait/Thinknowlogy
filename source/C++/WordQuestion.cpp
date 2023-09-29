@@ -561,9 +561,7 @@ class WordQuestion
 				if( findAnswerToNewUserQuestion( questionSpecificationItem ) != RESULT_OK )
 					return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to find an answer to a question" );
 				}																						// First question specification
-			while( ( questionSpecificationItem = ( questionSpecificationItem->isReplacedOrDeletedItem() ? firstActiveNewUserQuestion() :
-																										// Next question specification
-																										questionSpecificationItem->nextSelectedSpecificationItem() ) ) != NULL &&
+			while( ( questionSpecificationItem = questionSpecificationItem->nextSelectedSpecificationItem() ) != NULL &&
 			!questionSpecificationItem->isOlderItem() );
 			}
 

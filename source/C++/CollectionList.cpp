@@ -82,14 +82,15 @@ class CollectionList : private List
 	void addToCollectionWordQuickAccessList()
 		{
 		WordItem *lastCollectionWordItem = globalVariables()->lastCollectionWordItem;
+		WordItem *_myWordItem = myWordItem();
 
 		if( lastCollectionWordItem == NULL )
-			globalVariables()->firstCollectionWordItem = myWordItem();
+			globalVariables()->firstCollectionWordItem = _myWordItem;
 		else
 			// Word order is important: Add word at end of collection word list
-			lastCollectionWordItem->nextCollectionWordItem = myWordItem();
+			lastCollectionWordItem->nextCollectionWordItem = _myWordItem;
 
-		globalVariables()->lastCollectionWordItem = myWordItem();
+		globalVariables()->lastCollectionWordItem = _myWordItem;
 		}
 
 	bool hasCollectionNr( unsigned int collectionNr )

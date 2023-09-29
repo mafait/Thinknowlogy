@@ -531,9 +531,7 @@ class WordQuestion
 				if( findAnswerToNewUserQuestion( questionSpecificationItem ) != Constants.RESULT_OK )
 					return myWordItem_.addErrorInWord( 1, moduleNameString_, "I failed to find an answer to a question" );
 				}																						// First question specification
-			while( ( questionSpecificationItem = ( questionSpecificationItem.isReplacedOrDeletedItem() ? firstActiveNewUserQuestion() :
-																										// Next question specification
-																										questionSpecificationItem.nextSelectedSpecificationItem() ) ) != null &&
+			while( ( questionSpecificationItem = questionSpecificationItem.nextSelectedSpecificationItem() ) != null &&
 			!questionSpecificationItem.isOlderItem() );
 			}
 

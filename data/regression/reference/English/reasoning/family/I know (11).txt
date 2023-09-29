@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -222,16 +226,14 @@
 * My questions that have been answered:
 < Is John a man or a woman?
 < Is John masculine or feminine?
-* 
-* My assumptions that have been adjusted:
-< John is probably a person.
-* 
-* My questions that have been answered:
 < Is John a father or a mother?
 * 
 * My earlier assumptions that have relation words now:
 < Joe has maybe a parent.
 < Joe is possibly a child.
+* 
+* My assumptions that have been adjusted:
+< John is probably a person.
 * 
 * My assumptions that have been confirmed:
 < Anna is maybe a mother of Paul and Laura.
@@ -319,11 +321,11 @@
 <	- John is a man.
 <	- A man is probably not a boy.
 < John is probably a person. Because:
-<	- John is a man.
-<	- A man is probably a person.
-* 	and:
 <	- John is a father.
 <	- A father is probably a person.
+* 	and:
+<	- John is a man.
+<	- A man is probably a person.
 < John is probably a parent of Paul, Laura and Joe. Because:
 <	- Joe has probably 2 parents, called Anna and John.
 <	- Laura has probably 2 parents, called Anna and John.
@@ -615,6 +617,9 @@
 * 	and:
 <	- John is probably a parent of Paul, Laura and Joe.
 <	- Anna is probably a parent of Paul, Laura and Joe.
+* 	and:
+<	- Laura has a father, called John.
+<	- A father is probably a parent.
 < Laura is probably not a girl. Because:
 <	- Laura is a woman.
 <	- A woman is probably not a girl.

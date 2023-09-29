@@ -12,7 +12,7 @@
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
-* No sé nada acerca de Pablo, pero yo seguiré esta pregunta en la mente.
+* No sé nada acerca de Paz, pero yo seguiré esta pregunta en la mente.
 * No sé nada acerca de José, pero yo seguiré esta pregunta en la mente.
 * 
 * 
@@ -79,20 +79,22 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
 * 
 * Mis suposiciones que se han ajustado:
 < Juan no es probablemente una madre.
 < Hernando no era probablemente una madre.
 * 
+* Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
+* 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -127,6 +129,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -147,7 +153,7 @@
 < Juan es probablemente un padre.
 * 
 * Sus preguntas que han sido respondidas:
-< ¿Es Juan el padre de Pablo?
+< ¿Es Juan el padre de Paz?
 * 
 * Mis suposiciones que se han concluido:
 < Juan no es una madre.
@@ -163,9 +169,9 @@
 < Juan es parte de una familia.
 * 
 * Mis conclusiones:
-< Pablo tiene 2 padres, llamados Juan y Ana.
-< Pablo tiene un padre, llamado Juan.
-< Pablo tiene una madre, llamada Ana.
+< Paz tiene 2 padres, llamados Juan y Ana.
+< Paz tiene un padre, llamado Juan.
+< Paz tiene una madre, llamada Ana.
 < Juan no es una hija.
 < Juan no es una niña.
 < José tiene 2 padres, llamados Juan y Ana.
@@ -184,8 +190,8 @@
 < Ana no es un hijo.
 * 
 * Mis suposiciones:
-< Pablo es probablemente parte de una familia.
-< Pablo es posiblemente una persona.
+< Paz es probablemente parte de una familia.
+< Paz es posiblemente una persona.
 < Juan no es probablemente un niño.
 < Juan tiene puede-ser una hija, llamada Luisa.
 < José es probablemente parte de una familia.
@@ -204,9 +210,9 @@
 < Ana tiene puede-ser una hija, llamada Luisa.
 * 
 * Mis preguntas:
-< ¿Es Pablo femenina o masculino?
-< ¿Es Pablo una niña, una mujer, un niño o un hombre?
-< ¿Es Pablo un hijo o una hija?
+< ¿Es Paz femenina o masculino?
+< ¿Es Paz una niña, una mujer, un niño o un hombre?
+< ¿Es Paz un hijo o una hija?
 < ¿Es José femenina o masculino?
 < ¿Es José una niña, una mujer, un niño o un hombre?
 < ¿Es José un hijo o una hija?
@@ -222,23 +228,23 @@
 < Jorge no es una mujer.
 < Jorge es masculino.
 < Jorge no es una hija.
-< Alfonso tiene un padre, llamado Jorge.
+< Diaz tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
 < Jorge no es probablemente un niño.
-< Alfonso es probablemente parte de una familia.
-< Alfonso es posiblemente una persona.
+< Diaz es probablemente parte de una familia.
+< Diaz es posiblemente una persona.
 * 
 * Mis preguntas:
-< ¿Es Alfonso femenina o masculino?
-< ¿Es Alfonso una niña, una mujer, un niño o un hombre?
-< ¿Es Alfonso un hijo o una hija?
+< ¿Es Diaz femenina o masculino?
+< ¿Es Diaz una niña, una mujer, un niño o un hombre?
+< ¿Es Diaz un hijo o una hija?
 < 
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
-< No, Pablo tiene 2 padres, llamados Juan y Ana.
+< No, Paz tiene 2 padres, llamados Juan y Ana.
 < Jorge es un padre.
 < Juan es un padre.
 < Hernando era probablemente un padre.
@@ -246,7 +252,7 @@
 < 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es Pablo un padre?
+< ¿Es Paz un padre?
 * 
 * Tenías una pregunta similar antes:
 < ¿Es José un padre?
@@ -255,14 +261,14 @@
 * 
 * 
 * Esta pregunta es más específica que la anterior pregunta:
-< ¿Es Pablo un padre?
+< ¿Es Paz un padre?
 < ¿Es José un padre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 * 
 * Esta pregunta es más específica que la anterior pregunta:
-< ¿Es Pablo un padre?
+< ¿Es Paz un padre?
 < ¿Es José un padre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.

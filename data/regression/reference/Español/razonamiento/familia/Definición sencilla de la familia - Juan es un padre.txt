@@ -25,8 +25,8 @@
 * 
 * Mis suposiciones:
 < Juan no es probablemente una madre.
-< Juan es probablemente una persona.
 < Juan no es probablemente una mujer.
+< Juan es probablemente una persona.
 < 
 * 
 * Mis conclusiones:
@@ -38,10 +38,10 @@
 < Juan no es probablemente una madre. Porque:
 <	- Juan es un padre.
 <	- Un padre no es probablemente una madre.
-< Juan es probablemente una persona. Porque:
-<	- Juan es un padre.
-<	- Un padre es probablemente una persona.
 < Juan no es probablemente una mujer. Porque:
 <	- Juan es un hombre.
 <	- Un hombre no es probablemente una mujer.
+< Juan es probablemente una persona. Porque:
+<	- Juan es un padre.
+<	- Un padre es probablemente una persona.
 < 

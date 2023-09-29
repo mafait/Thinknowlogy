@@ -1,0 +1,15 @@
+﻿# La definición simple de una familia.
+Cada padre es un padre o una madre.
+Cada padre es un hombre.
+Cada madre es una mujer.
+
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+Paz es un hijo.
+José es un hijo.
+Luisa es una hija.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

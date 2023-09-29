@@ -1,14 +1,14 @@
 ﻿#----------------------------------------------------------------------------
 # Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# The natural logic of language is demonstrated by:".
-# * Reasoning (in sentences with restricted grammar):".
-#   - drawing conclusions (more advanced than scientific solutions),".
-#   - making assumptions (with self-adjusting level of uncertainty),".
-#   - asking questions (about gaps in the knowledge),".
-#   - displaying justification reports for the self-generated knowledge,".
-#   - detecting confirmations and conflicts, and self-organizing capabilities;".
-# * Multilingualism, assuming that languages have a common and logical origin.".
+# La lógica natural del lenguaje se demuestra por:
+# * Razonamiento (en oraciones con gramática restringida):
+#   - sacando conclusiones (más avanzadas que las soluciones científicas),
+#   - haciendo suposiciones (con nivel de incertidumbre autoajustable),
+#   - haciendo preguntas sobre las lagunas en el conocimiento,
+#   - mostrando informes de justificación del conocimiento autogenerado,
+#   - detectando confirmaciones y conflictos; utilizando capacidades de autoorganización;
+# * Multilingüismo, asumiendo que las lenguas tienen un origen común y lógico.
 #----------------------------------------------------------------------------
 # Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
@@ -29,8 +29,8 @@ Cada hijo es un niño o un hombre.
 Cada hija es una niña o una mujer.
 #C++## Ahora escribe frases como éstas:
 #C++##
-#C++## Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-#C++## Pablo es un hijo.			Pablo es un hombre.
+#C++## Juan es el padre y Ana es la madre de Paz, José y Luisa.
+#C++## Paz es un hijo.			Paz es un hombre.
 #C++## José es un hijo.			José es un hombre.
 #C++## Luisa es una hija.			Luisa es una mujer.
 #C++## Juan es un padre.		Ana es una madre.
@@ -38,10 +38,10 @@ Cada hija es una niña o una mujer.
 #C++## Mostrar información sobre hijos.
 #C++## Mostrar información sobre Juan.
 #C++## Mostrar información sobre Ana.
-#C++## Mostrar información sobre Pablo.
+#C++## Mostrar información sobre Paz.
 #C++## Mostrar información sobre José.
 #C++## Mostrar información sobre Luisa.
-#C++## Pablo es hijo de Juan y Ana.
+#C++## Paz es hijo de Juan y Ana.
 #C++## José es hijo de Juan y Ana.
 #C++## Luisa es hija de Juan y Ana.
 #C++##

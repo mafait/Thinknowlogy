@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Cruz es un padre o una madre.
-#Dev#Mostrar el informe de justificación sobre Cruz.
-Cruz es un padre.
-#Dev#Mostrar el informe de justificación sobre Cruz.
+Angel es un padre o una madre.
+#Dev#Mostrar el informe de justificación sobre Angel.
+Angel es un padre.
+#Dev#Mostrar el informe de justificación sobre Angel.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

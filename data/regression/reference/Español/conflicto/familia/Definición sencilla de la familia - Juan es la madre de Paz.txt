@@ -1,0 +1,54 @@
+﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis suposiciones:
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es una mujer o un hombre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es un hombre.
+* 
+* Mis suposiciones:
+< Juan no es probablemente una madre.
+< Juan no es probablemente una mujer.
+< Juan es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Juan es un hombre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+* 
+* Mis suposiciones:
+< Juan no es probablemente una madre. Porque:
+<	- Juan es un padre.
+<	- Un padre no es probablemente una madre.
+< Juan no es probablemente una mujer. Porque:
+<	- Juan es un hombre.
+<	- Un hombre no es probablemente una mujer.
+< Juan es probablemente una persona. Porque:
+<	- Juan es un padre.
+<	- Un padre es probablemente una persona.
+< 
+! 
+! No se acepta esta frase, porque está en conflicto con:
+< Juan no es probablemente una madre.
+< Juan es un padre.
+< Juan no es probablemente una mujer.
+< Juan es un hombre.
+< 

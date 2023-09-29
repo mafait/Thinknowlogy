@@ -1,10 +1,10 @@
 ﻿* 
 * Mis conclusiones:
-< Juan tiene un hijo, llamado Pablo.
+< Juan tiene un hijo, llamado Paz.
 < 
 * 
 * Mis conclusiones que han sido confirmadas:
-< Juan tiene un hijo, llamado Pablo.
+< Juan tiene un hijo, llamado Paz.
 < 
 * 
 * Mis conclusiones:
@@ -50,7 +50,7 @@
 < 
 * 
 * Mis preguntas:
-< ¿Es Cruz un hombre o una mujer?
+< ¿Es Angel un hombre o una mujer?
 < 
 * 
 * Mis conclusiones:

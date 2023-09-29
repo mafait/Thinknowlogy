@@ -1,16 +1,16 @@
 ﻿* 
 * Mis suposiciones:
-< Pablo no tiene posiblemente un padre nunca-más.
-< Pablo tenido posiblemente un padre, llamado Jorge.
+< Paz no tiene posiblemente un padre nunca-más.
+< Paz tenido posiblemente un padre, llamado Jorge.
 < 
-< Sí, Jorge era posiblemente el padre de Pablo.
+< Sí, Jorge era posiblemente el padre de Paz.
 < 
 * 
 * Tenías una pregunta similar antes:
-< ¿Era Jorge posiblemente el padre de Pablo?
+< ¿Era Jorge posiblemente el padre de Paz?
 * 
 * Esta pregunta ya ha sido respondida.
 * 
 * Mi respuesta:
-< Jorge era posiblemente el padre de Pablo.
+< Jorge era posiblemente el padre de Paz.
 < 

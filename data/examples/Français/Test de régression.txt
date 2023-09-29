@@ -80,7 +80,7 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/Spécification-généralisation - Spécification unique".
 #Dev#Lirez le fichier de test "Français/raisonnement/Changer de langue".
 #Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Bateau".
-#Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Dominique n'est pas une femme".
+#Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Jules n'est pas une femme".
 #Dev#Lirez le fichier de test "Français/raisonnement/La seule option qui reste - Option".
 #Dev#Lirez le fichier de test "Français/raisonnement/Tom est un chat".
 #Dev##Java#Lirez le fichier de test "Français/raisonnement/L'incertitude et passé".
@@ -202,8 +202,10 @@
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier a 2 fils et une fille (avant la définition de famille)".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier a une fille et 2 fils".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un père - Pascal a 2 parents".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal - Lorraine".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un enfant de Olivier et Amélie".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est un parent - Pascal est un fils".
+#Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est le père - Pascal - Lorraine".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier est le père de Pascal - Julien - Lorraine - Claudia".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Olivier était le père de Pascal, Julien et Lorraine".
 #Dev#Lirez le fichier de test "Français/raisonnement/famille/Rapport de justification".

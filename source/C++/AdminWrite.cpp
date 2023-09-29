@@ -167,9 +167,11 @@ class AdminWrite
 				if( isPrimarySpecificationWordSpanishAmbiguous &&
 				isPossessivePrimarySpecification &&
 				!primarySpecificationItem->hasCompoundSpecificationCollection() &&
-				primarySpecificationItem->isSelfGeneratedConclusion() &&
 				primarySpecificationItem->hasOnlyOneRelationWord() &&
-				!currentJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() )
+				!primarySpecificationItem->isArchivedAssignment() &&
+				primarySpecificationItem->isSelfGeneratedConclusion() &&
+				!currentJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() &&
+				!currentJustificationItem->isUniqueUserRelationAssumptionOrConclusion() )
 					isHidingAlmostSimilarSpanishAmbiguousPrimarySpecification = true;
 				}
 

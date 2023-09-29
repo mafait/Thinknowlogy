@@ -1,5 +1,0 @@
-﻿Pablo tiene un padre, llamado Juan.
-Pablo tiene una madre, llamada Ana.
-Mostrar información sobre Pablo.
-Pablo tiene 2 padres, llamados Juan y Ana.
-# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

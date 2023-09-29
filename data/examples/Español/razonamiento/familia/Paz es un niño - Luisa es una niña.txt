@@ -1,0 +1,8 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+Paz es un niño.
+Luisa es una niña.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+Paz es un hombre.
+Luisa es una mujer.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

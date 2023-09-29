@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -154,17 +158,14 @@
 * 
 * My conclusions:
 < Every father is not a girl. Because:
-<	- Every girl is feminine.
-<	- Every father is not feminine.
-* 	and:
 <	- Every father is masculine.
 <	- Every girl is not masculine.
 < Every father is not a mother. Because:
-<	- Every father is masculine.
-<	- Every mother is not masculine.
-* 	and:
 <	- Every father is a man.
 <	- Every man is not a mother.
+* 	and:
+<	- Every father is masculine.
+<	- Every mother is not masculine.
 < Every father is masculine. Because:
 <	- Every father is a man.
 <	- Every man is masculine.
@@ -192,9 +193,6 @@
 * 
 * My conclusions:
 < Every mother is not a boy. Because:
-<	- Every boy is masculine.
-<	- Every mother is not masculine.
-* 	and:
 <	- Every mother is feminine.
 <	- Every boy is not feminine.
 < Every mother is feminine. Because:
@@ -230,20 +228,14 @@
 * 
 * My conclusions:
 < Every man is not a girl. Because:
-<	- Every girl is feminine.
-<	- Every man is not feminine.
-* 	and:
 <	- Every man is masculine.
 <	- Every girl is not masculine.
 < Every man is not a mother. Because:
-<	- Every mother is feminine.
 <	- Every man is masculine.
+<	- Every mother is not masculine.
 < Every man is not feminine. Because:
 <	- Every man is masculine.
 < Every man is not a woman. Because:
-<	- Every woman is feminine.
-<	- Every man is not feminine.
-* 	and:
 <	- Every man is masculine.
 <	- Every woman is not masculine.
 * 
@@ -257,22 +249,16 @@
 * 
 * My conclusions:
 < Every woman is not a boy. Because:
-<	- Every boy is masculine.
-<	- Every woman is not masculine.
-* 	and:
 <	- Every woman is feminine.
 <	- Every boy is not feminine.
 < Every woman is not a father. Because:
-<	- Every father is masculine.
 <	- Every woman is feminine.
+<	- Every father is not feminine.
 < Every woman is not masculine. Because:
 <	- Every woman is feminine.
 < Every woman is not a man. Because:
 <	- Every woman is feminine.
 <	- Every man is not feminine.
-* 	and:
-<	- Every man is masculine.
-<	- Every woman is not masculine.
 * 
 * My assumptions:
 < A woman is probably not a girl. Because:
@@ -283,6 +269,9 @@
 < 
 * 
 * My conclusions:
+< Every son is not a daughter. Because:
+<	- Every son is masculine.
+<	- Every daughter is not masculine.
 < Every son is masculine. Because:
 <	- Every son is a boy or a man.
 <	- Every boy is masculine.
@@ -300,8 +289,6 @@
 <	- Every son is a boy or a man.
 <	- A man is probably a person.
 <	- A boy is probably a person.
-< A son is probably not a daughter. Because:
-<	- Every child is a son or a daughter.
 < 
 * 
 * My conclusions:
@@ -313,6 +300,9 @@
 <	- Every daughter is a girl or a woman.
 <	- Every girl is not masculine.
 <	- Every woman is not masculine.
+< Every daughter is not a son. Because:
+<	- Every daughter is feminine.
+<	- Every son is not feminine.
 * 
 * My assumptions:
 < A daughter is probably a child. Because:
@@ -322,8 +312,6 @@
 <	- Every daughter is a girl or a woman.
 <	- A woman is probably a person.
 <	- A girl is probably a person.
-< A daughter is probably not a son. Because:
-<	- Every child is a son or a daughter.
 < 
 * 
 * My conclusions:
@@ -332,21 +320,12 @@
 < Every boy is not a girl. Because:
 <	- Every boy is masculine.
 <	- Every girl is not masculine.
-* 	and:
-<	- Every girl is feminine.
-<	- Every boy is not feminine.
 < Every boy is not a mother. Because:
 <	- Every boy is masculine.
 <	- Every mother is not masculine.
-* 	and:
-<	- Every mother is feminine.
-<	- Every boy is not feminine.
 < Every boy is not a woman. Because:
 <	- Every boy is masculine.
 <	- Every woman is not masculine.
-* 	and:
-<	- Every woman is feminine.
-<	- Every boy is not feminine.
 * 
 * My assumptions:
 < A boy is probably not a man. Because:
@@ -358,9 +337,6 @@
 * 
 * My conclusions:
 < Every girl is not a boy. Because:
-<	- Every boy is masculine.
-<	- Every girl is not masculine.
-* 	and:
 <	- Every girl is feminine.
 <	- Every boy is not feminine.
 < Every girl is not masculine. Because:
@@ -368,15 +344,9 @@
 < Every girl is not a father. Because:
 <	- Every girl is feminine.
 <	- Every father is not feminine.
-* 	and:
-<	- Every father is masculine.
-<	- Every girl is not masculine.
 < Every girl is not a man. Because:
 <	- Every girl is feminine.
 <	- Every man is not feminine.
-* 	and:
-<	- Every man is masculine.
-<	- Every girl is not masculine.
 * 
 * My assumptions:
 < A girl is probably not a woman. Because:
@@ -785,6 +755,9 @@
 < Laura is maybe not a son. Because:
 <	- Laura is maybe feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is maybe a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is maybe not a boy. Because:
 <	- Laura is maybe feminine.
 <	- Every boy is not feminine.

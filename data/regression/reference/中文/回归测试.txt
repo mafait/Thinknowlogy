@@ -34,7 +34,7 @@
 < English是语言。 {learned from user Admin}
 < 
 ------------------------------------------------------------------------------
- Total number of items: 8682.
+ Total number of items: 8683.
 ------------------------------------------------------------------------------
  Items in administrator:	422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Actions:		15.
     <Z> Alternatives:		0.
 ------------------------------------------------------------------------------
- Items in words:	8260.
+ Items in words:	8261.
 ------------------------------------------------------------------------------
- * Active items:	        8208.
+ * Active items:	        8209.
     <a> assignments:		7.
     <c> collections:		272.
     <g> generalizations:		348.
     <i> interface:		1301.
     <j> justification:		8.
-    <l> grammar:		4818.
+    <l> grammar:		4819.
     <m> multiple word:		69.
     <s> specifications:		384.
     <r> write words (temporary):	0.

@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Pablo es hijo de Juan.
+Paz es hijo de Juan.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Juan es masculino.
 #Dev#Mostrar el informe de justificación sobre Juan.

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -245,6 +249,9 @@
 <	- Paul is probably a child of Anna and John.
 * 	and:
 <	- Every family has parents and children.
+<	- Paul has 2 parents, called Anna and John.
+* 	and:
+<	- Every family has parents and children.
 <	- John is a parent of Paul.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of Anna and John.
@@ -377,8 +384,8 @@
 * My assumptions:
 < Paul is probably a child of Anna and John. Because:
 <	- Every family has parents and children.
-<	- John is a parent of Paul.
 <	- Anna is a parent of Paul.
+<	- John is a parent of Paul.
 * 	and:
 <	- John has probably 2 children, called Paul and Laura.
 * 	and:
@@ -663,6 +670,12 @@
 <	- Joe is possibly a child of Anna and John.
 <	- Laura is a child of Anna and John.
 <	- Paul is probably a child of Anna and John.
+* 	and:
+<	- John has a son, called Paul.
+<	- A son is probably a child.
+* 	and:
+<	- Every family has parents and children.
+<	- Paul has 2 parents, called Anna and John.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of Anna and John.
 < 
@@ -735,6 +748,9 @@
 * 	and:
 <	- Anna is a parent of Paul.
 < Anna has possibly 3 children, called Paul, Joe and Laura. Because:
+<	- Anna has a son, called Paul.
+<	- A son is probably a child.
+* 	and:
 <	- Every family has parents and children.
 <	- Anna is probably a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul.
@@ -767,6 +783,9 @@
 < Paul is not a daughter. Because:
 <	- Paul is masculine.
 <	- Every daughter is not masculine.
+* 	and:
+<	- Paul is a son of Anna and John.
+<	- Every son is not a daughter.
 < Paul is not a girl. Because:
 <	- Paul is masculine.
 <	- Every girl is not masculine.
@@ -791,8 +810,8 @@
 <	- A son is probably a child.
 * 	and:
 <	- Every family has parents and children.
-<	- John is a parent of Paul.
 <	- Anna is a parent of Paul.
+<	- John is a parent of Paul.
 * 	and:
 <	- Every family has parents and children.
 <	- Paul has 2 parents, called Anna and John.

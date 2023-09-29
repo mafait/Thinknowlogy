@@ -1,14 +1,14 @@
 ﻿#----------------------------------------------------------------------------
 # Version: Thinknowlogy 2023 (Shaking tree)
 #----------------------------------------------------------------------------
-# The natural logic of language is demonstrated by:".
-# * Reasoning (in sentences with restricted grammar):".
-#   - drawing conclusions (more advanced than scientific solutions),".
-#   - making assumptions (with self-adjusting level of uncertainty),".
-#   - asking questions (about gaps in the knowledge),".
-#   - displaying justification reports for the self-generated knowledge,".
-#   - detecting confirmations and conflicts, and self-organizing capabilities;".
-# * Multilingualism, assuming that languages have a common and logical origin.".
+# La logique naturelle du langage est démontrée par:
+# * Raisonnement (dans des phrases à grammaire restreinte):
+#   - en tirant des conclusions (plus avancées que les solutions scientifiques),
+#   - en faisant des hypothèses (avec un niveau d'incertitude auto-ajustable),
+#   - en posant des questions sur les lacunes dans les connaissances,
+#   - en affichant des rapports de justification pour les connaissances auto-générées,
+#   - en détectant les confirmations et les conflits; en utilisant des capacités d'auto-organisation;
+# * Multilinguisme, en supposant que les langues ont une origine commune et logique.
 #----------------------------------------------------------------------------
 # Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact

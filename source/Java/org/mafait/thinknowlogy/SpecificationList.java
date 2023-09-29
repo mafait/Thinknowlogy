@@ -566,21 +566,6 @@ class SpecificationList extends List
 		return false;
 		}
 
-	protected boolean hasPartOfSpecification()
-		{
-		SpecificationItem searchSpecificationItem = firstActiveSpecificationItem( false, false );
-
-		while( searchSpecificationItem != null )
-			{
-			if( searchSpecificationItem.isPartOf() )
-				return true;
-
-			searchSpecificationItem = searchSpecificationItem.nextSelectedSpecificationItem();
-			}
-
-		return false;
-		}
-
 	protected boolean hasPossiblyGapInKnowledge( int exclusiveSecondarySpecificationCollectionNr, int primarySpecificationCollectionNr, SpecificationItem primarySpecificationItem )
 		{
 		int searchSpecificationCollectionNr;
@@ -771,7 +756,6 @@ class SpecificationList extends List
 	protected byte collectGeneralizations( boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isExclusiveGeneralization, int generalizationCollectionNr )
 		{
 		SpecificationItem searchSpecificationItem = firstAssignmentOrSpecificationItem( false, isInactiveAssignment, isArchivedAssignment, false );
-		WordItem _myWordItem = myWordItem();
 
 		if( generalizationCollectionNr <= Constants.NO_COLLECTION_NR )
 			return startError( 1, "The given generalization collection number is undefined" );
@@ -782,8 +766,7 @@ class SpecificationList extends List
 			// Definition specification
 			searchSpecificationItem.isGeneralizationNoun() ) &&
 
-			!searchSpecificationItem.hasGeneralizationCollection() &&
-			_myWordItem.hasCollectionNr( generalizationCollectionNr ) )
+			!searchSpecificationItem.hasGeneralizationCollection() )
 				{
 				if( searchSpecificationItem.hasCurrentCreationSentenceNr() )
 					{
@@ -946,7 +929,7 @@ class SpecificationList extends List
 			if( searchSpecificationItem.isPartOf() &&
 			searchSpecificationItem.isOlderItem() &&
 			searchSpecificationItem.hasCurrentCreationSentenceNr() &&
-			searchSpecificationItem.removeObsoleteAssumptionJustifications( true, false ) != Constants.RESULT_OK )
+			searchSpecificationItem.removeObsoleteAssumptionJustifications( false, false ) != Constants.RESULT_OK )
 				return addError( 1, "I failed to remove obsolete assumption justifications" );
 
 			searchSpecificationItem = searchSpecificationItem.nextSelectedSpecificationItem();

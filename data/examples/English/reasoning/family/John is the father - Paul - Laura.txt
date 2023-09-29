@@ -1,0 +1,14 @@
+﻿Read the file "English/reasoning/family/family definition".
+John is the father of Paul, Joe and Laura.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Laura.
+Paul is a son of John and Anna.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+Laura is a daughter of John and Anna.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Laura.
+# To continue, click button «Clear your mind.» or «Restart.».

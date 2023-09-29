@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
 Ana es una persona.
 #Dev#Mostrar el informe de justificación sobre Ana.
 Luisa es parte de una familia.

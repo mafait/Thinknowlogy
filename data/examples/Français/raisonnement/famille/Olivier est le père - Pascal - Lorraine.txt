@@ -1,0 +1,14 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Olivier est le père de Pascal, Julien et Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Pascal.
+#Dev#Affichez le rapport de justification sur Lorraine.
+Pascal est un fils de Olivier et Amélie.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+Lorraine est une fille de Olivier et Amélie.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Lorraine.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

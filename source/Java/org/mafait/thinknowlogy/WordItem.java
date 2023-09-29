@@ -1382,7 +1382,8 @@ class WordItem extends Item
 				( !isIncludingInactiveAssignments ||
 				( foundAssignmentItem = assignmentList_.firstNonQuestionAssignmentItem( true, false, isNegative, isPossessive, specificationWordItem ) ) == null ) &&
 
-				isIncludingArchivedAssignments ? assignmentList_.firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem ) : foundAssignmentItem );
+				isIncludingArchivedAssignments ? assignmentList_.firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem ) :
+												foundAssignmentItem );
 		}
 
 	protected CreateAndAssignResultType assignSpecification( boolean isAmbiguousRelationContext, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, short assumptionLevel, short prepositionParameter, short questionParameter, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, JustificationItem firstJustificationItem, WordItem specificationWordItem, String specificationString, String authorizationKey )
@@ -2732,11 +2733,6 @@ class WordItem extends Item
 		return ( specificationList_ == null ? false : specificationList_.hasNegativeSpecification() );
 		}
 
-	protected boolean hasPartOfSpecification()
-		{
-		return ( specificationList_ == null ? false : specificationList_.hasPartOfSpecification() );
-		}
-
 	protected boolean hasPossiblyGapInKnowledge( int exclusiveSecondarySpecificationCollectionNr, int primarySpecificationCollectionNr, SpecificationItem primarySpecificationItem )
 		{
 		return ( specificationList_ == null ? true : specificationList_.hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationCollectionNr, primarySpecificationItem ) );
@@ -3085,9 +3081,9 @@ class WordItem extends Item
 		return ( specificationList_ == null ? null : specificationList_.firstNegativeSpecificationItem() );
 		}
 
-	protected SpecificationItem firstNonCollectedSpecificationItem( boolean isSelfGenerated, WordItem excludeSpecificcationWordItem )
+	protected SpecificationItem firstNonCollectedSpecificationItem( boolean isSelfGenerated, WordItem excludeSpecificationWordItem )
 		{
-		return ( specificationList_ == null ? null : specificationList_.firstNonCollectedSpecificationItem( isSelfGenerated, excludeSpecificcationWordItem ) );
+		return ( specificationList_ == null ? null : specificationList_.firstNonCollectedSpecificationItem( isSelfGenerated, excludeSpecificationWordItem ) );
 		}
 
 	protected SpecificationItem firstNonCompoundUserSpecificationItem()

@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere moeder is geen vader.
 < Iedere vader is geen moeder.
+< Iedere moeder is geen vader.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -94,6 +94,10 @@
 < Een jongen is waarschijnlijk een persoon.
 < Een man is waarschijnlijk geen jongen.
 < 
+* 
+* Mijn veronderstellingen die geconcludeerd zijn:
+< Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -154,17 +158,14 @@
 * 
 * Mijn conclusies:
 < Iedere vader is geen meisje. Omdat:
-<	- Ieder meisje is vrouwelijk.
-<	- Iedere vader is niet vrouwelijk.
-* 	en:
 <	- Iedere vader is mannelijk.
 <	- Ieder meisje is niet mannelijk.
 < Iedere vader is geen moeder. Omdat:
-<	- Iedere vader is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-* 	en:
 <	- Iedere vader is een man.
 <	- Iedere man is geen moeder.
+* 	en:
+<	- Iedere vader is mannelijk.
+<	- Iedere moeder is niet mannelijk.
 < Iedere vader is mannelijk. Omdat:
 <	- Iedere vader is een man.
 <	- Iedere man is mannelijk.
@@ -192,9 +193,6 @@
 * 
 * Mijn conclusies:
 < Iedere moeder is geen jongen. Omdat:
-<	- Iedere jongen is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-* 	en:
 <	- Iedere moeder is vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.
 < Iedere moeder is vrouwelijk. Omdat:
@@ -230,20 +228,14 @@
 * 
 * Mijn conclusies:
 < Iedere man is geen meisje. Omdat:
-<	- Ieder meisje is vrouwelijk.
-<	- Iedere man is niet vrouwelijk.
-* 	en:
 <	- Iedere man is mannelijk.
 <	- Ieder meisje is niet mannelijk.
 < Iedere man is geen moeder. Omdat:
-<	- Iedere moeder is vrouwelijk.
 <	- Iedere man is mannelijk.
+<	- Iedere moeder is niet mannelijk.
 < Iedere man is niet vrouwelijk. Omdat:
 <	- Iedere man is mannelijk.
 < Iedere man is geen vrouw. Omdat:
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is niet vrouwelijk.
-* 	en:
 <	- Iedere man is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
 * 
@@ -257,22 +249,16 @@
 * 
 * Mijn conclusies:
 < Iedere vrouw is geen jongen. Omdat:
-<	- Iedere jongen is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-* 	en:
 <	- Iedere vrouw is vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.
 < Iedere vrouw is geen vader. Omdat:
-<	- Iedere vader is mannelijk.
 <	- Iedere vrouw is vrouwelijk.
+<	- Iedere vader is niet vrouwelijk.
 < Iedere vrouw is niet mannelijk. Omdat:
 <	- Iedere vrouw is vrouwelijk.
 < Iedere vrouw is geen man. Omdat:
 <	- Iedere vrouw is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
-* 	en:
-<	- Iedere man is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een vrouw is waarschijnlijk geen meisje. Omdat:
@@ -283,6 +269,9 @@
 < 
 * 
 * Mijn conclusies:
+< Iedere zoon is geen dochter. Omdat:
+<	- Iedere zoon is mannelijk.
+<	- Iedere dochter is niet mannelijk.
 < Iedere zoon is mannelijk. Omdat:
 <	- Iedere zoon is een jongen of een man.
 <	- Iedere jongen is mannelijk.
@@ -300,8 +289,6 @@
 <	- Iedere zoon is een jongen of een man.
 <	- Een man is waarschijnlijk een persoon.
 <	- Een jongen is waarschijnlijk een persoon.
-< Een zoon is waarschijnlijk geen dochter. Omdat:
-<	- Ieder kind is een zoon of een dochter.
 < 
 * 
 * Mijn conclusies:
@@ -313,6 +300,9 @@
 <	- Iedere dochter is een meisje of een vrouw.
 <	- Ieder meisje is niet mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+< Iedere dochter is geen zoon. Omdat:
+<	- Iedere dochter is vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Een dochter is waarschijnlijk een kind. Omdat:
@@ -322,8 +312,6 @@
 <	- Iedere dochter is een meisje of een vrouw.
 <	- Een vrouw is waarschijnlijk een persoon.
 <	- Een meisje is waarschijnlijk een persoon.
-< Een dochter is waarschijnlijk geen zoon. Omdat:
-<	- Ieder kind is een zoon of een dochter.
 < 
 * 
 * Mijn conclusies:
@@ -332,21 +320,12 @@
 < Iedere jongen is geen meisje. Omdat:
 <	- Iedere jongen is mannelijk.
 <	- Ieder meisje is niet mannelijk.
-* 	en:
-<	- Ieder meisje is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
 < Iedere jongen is geen moeder. Omdat:
 <	- Iedere jongen is mannelijk.
 <	- Iedere moeder is niet mannelijk.
-* 	en:
-<	- Iedere moeder is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
 < Iedere jongen is geen vrouw. Omdat:
 <	- Iedere jongen is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
-* 	en:
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Een jongen is waarschijnlijk geen man. Omdat:
@@ -358,9 +337,6 @@
 * 
 * Mijn conclusies:
 < Ieder meisje is geen jongen. Omdat:
-<	- Iedere jongen is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-* 	en:
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.
 < Ieder meisje is niet mannelijk. Omdat:
@@ -368,15 +344,9 @@
 < Ieder meisje is geen vader. Omdat:
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vader is niet vrouwelijk.
-* 	en:
-<	- Iedere vader is mannelijk.
-<	- Ieder meisje is niet mannelijk.
 < Ieder meisje is geen man. Omdat:
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
-* 	en:
-<	- Iedere man is mannelijk.
-<	- Ieder meisje is niet mannelijk.
 * 
 * Mijn veronderstellingen:
 < Een meisje is waarschijnlijk geen vrouw. Omdat:
@@ -785,6 +755,9 @@
 < Laura is misschien geen zoon. Omdat:
 <	- Laura is misschien vrouwelijk.
 <	- Iedere zoon is niet vrouwelijk.
+* 	en:
+<	- Laura is misschien een dochter van Jan en Anna.
+<	- Iedere dochter is geen zoon.
 < Laura is misschien geen jongen. Omdat:
 <	- Laura is misschien vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.

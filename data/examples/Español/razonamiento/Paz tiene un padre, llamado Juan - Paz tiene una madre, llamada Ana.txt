@@ -1,0 +1,5 @@
+﻿Paz tiene un padre, llamado Juan.
+Paz tiene una madre, llamada Ana.
+Mostrar información sobre Paz.
+Paz tiene 2 padres, llamados Juan y Ana.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

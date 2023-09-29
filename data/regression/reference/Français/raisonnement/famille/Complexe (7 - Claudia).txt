@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -94,6 +94,10 @@
 < Un garçon est probablement une personne.
 < Un homme n'est probablement pas un garçon.
 < 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -395,6 +399,9 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre.
 <	- Olivier est un parent de Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine a 2 parents, appelés Olivier et Amélie.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
 < 
@@ -528,6 +535,9 @@
 < Pascal n'est pas une fille. En raison:
 <	- Pascal est masculin.
 <	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Pascal est un fils.
+<	- Chaque fils n'est pas une fille.
 < Pascal n'est pas une jeune-fille. En raison:
 <	- Pascal est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
@@ -656,6 +666,9 @@
 < Lorraine n'est possible pas un fils. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un fils.
 < Lorraine n'est possible pas un garçon. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque garçon n'est pas féminin.
@@ -835,6 +848,9 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre.
 <	- Olivier est un parent de Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine a 2 parents, appelés Olivier et Amélie.
 < Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre. En raison:
 <	- Pierre a un père, appelé Olivier.
 <	- Pascal a un père, appelé Olivier.
@@ -1020,6 +1036,9 @@
 < Pascal n'est pas une fille. En raison:
 <	- Pascal est masculin.
 <	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Pascal est un fils.
+<	- Chaque fils n'est pas une fille.
 < Pascal n'est pas une jeune-fille. En raison:
 <	- Pascal est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
@@ -1148,6 +1167,9 @@
 < Lorraine n'est possible pas un fils. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un fils.
 < Lorraine n'est possible pas un garçon. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque garçon n'est pas féminin.
@@ -1241,6 +1263,9 @@
 < Claudia n'est peut-être pas un fils. En raison:
 <	- Claudia est peut-être féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Claudia est peut-être une fille de Amélie.
+<	- Chaque fille n'est pas un fils.
 < Claudia n'est peut-être pas un garçon. En raison:
 <	- Claudia est peut-être féminin.
 <	- Chaque garçon n'est pas féminin.
@@ -1264,7 +1289,6 @@
 < Claudia est peut-être une fille de Amélie.
 * 
 * Mes hypothèses qui ont été ajustées:
-< Claudia est probablement une personne.
 < Claudia est probablement un enfant de Amélie.
 < Amélie a possible 2 fille [pluriel de «fille» est inconnue], appelés Lorraine et Claudia.
 * 
@@ -1277,6 +1301,7 @@
 < Claudia n'est pas masculin.
 * 
 * Mes hypothèses qui ont été ajustées:
+< Claudia est probablement une personne.
 < Claudia est probablement partie d'une famille.
 < 
 * 
@@ -1420,6 +1445,9 @@
 < Claudia n'est pas un fils. En raison:
 <	- Claudia est féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Claudia est une fille de Amélie.
+<	- Chaque fille n'est pas un fils.
 < Claudia n'est pas un garçon. En raison:
 <	- Claudia est féminin.
 <	- Chaque garçon n'est pas féminin.

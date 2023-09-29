@@ -22,12 +22,12 @@
 < 
 * 
 * Mis suposiciones:
-< Pablo es posiblemente un hijo.
+< Paz es posiblemente un hijo.
 < 
 * 
 * Mis suposiciones:
-< Pablo es posiblemente un hijo. Porque:
-<	- Pablo es un niño.
+< Paz es posiblemente un hijo. Porque:
+<	- Paz es un niño.
 <	- Un niño es posiblemente un hijo.
 < 
 * 

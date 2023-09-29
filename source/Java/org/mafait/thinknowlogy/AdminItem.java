@@ -1284,12 +1284,12 @@ class AdminItem extends WordItem
 		return adminReasoning_.drawExclusiveNegativeUserConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, previousSpecificationWordItem, currentSpecificationWordItem );
 		}
 
-	protected byte drawNegativeUserConclusions( boolean isArchivedAssignment, short generalizationWordTypeNr, SpecificationItem userSpecificationItem, WordItem generalizationWordItem, WordItem adjectiveSpecificationWordItem, WordItem currentSpecificationWordItem )
+	protected byte drawNegativeUserDefinitionConclusions( boolean isArchivedAssignment, SpecificationItem userSpecificationItem, WordItem generalizationWordItem, WordItem adjectiveSpecificationWordItem, WordItem currentSpecificationWordItem )
 		{
 		if( adminReasoning_ == null )
 			return startError( 1, null, null, "The admin reasoning module isn't created yet" );
 
-		return adminReasoning_.drawNegativeUserConclusions( isArchivedAssignment, generalizationWordTypeNr, userSpecificationItem, generalizationWordItem, adjectiveSpecificationWordItem, currentSpecificationWordItem );
+		return adminReasoning_.drawNegativeUserDefinitionConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, adjectiveSpecificationWordItem, currentSpecificationWordItem );
 		}
 
 	protected byte drawOnlyOptionLeftNounConclusion( boolean isInactiveAssignment, boolean isArchivedAssignment, int specificationCollectionNr, int generalizationContextNr, WordItem generalizationWordItem )

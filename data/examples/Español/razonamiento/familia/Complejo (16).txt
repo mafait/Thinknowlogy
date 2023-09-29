@@ -1,20 +1,20 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Luisa es una hija.
-Ana es la madre de Pablo, José y Luisa.
-Pablo tiene 2 padres, llamados Juan y Ana.
+Ana es la madre de Paz, José y Luisa.
+Paz tiene 2 padres, llamados Juan y Ana.
 Luisa es hija de Juan y Ana.
 Luisa es una mujer.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
-Pablo es un hijo.
-Pablo es hijo de Juan y Ana.
-Juan es el padre de Pablo, José y Luisa.
+Paz es un hijo.
+Paz es hijo de Juan y Ana.
+Juan es el padre de Paz, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+#Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -79,8 +79,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -368,6 +368,9 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe, Laura and Peter.
 <	- John is a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura has 2 parents, called John and Anna.
 < John has possibly a daughter, called Laura. Because:
 <	- Laura is possibly a daughter of John and Anna.
 < 
@@ -560,11 +563,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a parent.
 < Paul is probably a person. Because:
-<	- Paul is a man.
-<	- A man is probably a person.
-* 	and:
 <	- Paul is a son.
 <	- A son is probably a person.
+* 	and:
+<	- Paul is a man.
+<	- A man is probably a person.
 < 
 * 
 * My conclusions:
@@ -750,13 +753,13 @@
 < Claudia is possibly a child of Anna.
 < Claudia is possibly part of a family.
 < Claudia is maybe a person.
+< Claudia is maybe a daughter of Anna.
 < Claudia is maybe a woman.
 < Claudia is maybe not a son.
 < Claudia is maybe not a father.
 < Claudia is maybe not masculine.
 < Claudia is maybe not a man.
 < Claudia is maybe feminine.
-< Claudia is maybe a daughter of Anna.
 < 
 * 
 * My conclusions:
@@ -853,6 +856,9 @@
 <	- Every family has parents and children.
 <	- John is probably a parent of Paul, Joe, Laura and Peter.
 <	- John is a parent of Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura has 2 parents, called John and Anna.
 < John is probably a parent of Paul, Joe, Laura and Peter. Because:
 <	- Peter has a father, called John.
 <	- Paul has a father, called John.
@@ -1094,11 +1100,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a parent.
 < Paul is probably a person. Because:
-<	- Paul is a man.
-<	- A man is probably a person.
-* 	and:
 <	- Paul is a son.
 <	- A son is probably a person.
+* 	and:
+<	- Paul is a man.
+<	- A man is probably a person.
 < 
 * 
 * My conclusions:
@@ -1296,11 +1302,16 @@
 < Claudia is maybe a person. Because:
 <	- Claudia is possibly a child of Anna.
 <	- A child is probably a person.
-< Claudia is maybe a woman. Because:
+< Claudia is maybe a daughter of Anna. Because:
 <	- Claudia is possibly a child of Anna.
-<	- Every child is a woman or a man.
+<	- Every child is a son or a daughter.
 <	- Proper noun "Claudia" is probably feminine.
 * 	and:
+<	- Anna is probably a parent of Paul, Joe, Laura and Claudia.
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- Proper noun "Claudia" is probably feminine.
+< Claudia is maybe a woman. Because:
 <	- Claudia is maybe a daughter of Anna.
 <	- Every daughter is a woman.
 < Claudia is maybe not a son. Because:
@@ -1342,15 +1353,6 @@
 * 	and:
 <	- Claudia is maybe a daughter of Anna.
 <	- Every daughter is feminine.
-< Claudia is maybe a daughter of Anna. Because:
-<	- Claudia is possibly a child of Anna.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Claudia" is probably feminine.
-* 	and:
-<	- Anna is probably a parent of Paul, Joe, Laura and Claudia.
-<	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Claudia" is probably feminine.
 < 
 * 
 * My assumptions that have been confirmed:
@@ -1361,14 +1363,14 @@
 * 
 * My assumptions that have been adjusted:
 < Claudia is probably a person.
+< Claudia is possibly a daughter of Anna.
+< Anna has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia.
 < Claudia is possibly a woman.
 < Claudia is possibly not a son.
 < Claudia is possibly not a father.
 < Claudia is possibly not masculine.
 < Claudia is possibly not a man.
 < Claudia is possibly feminine.
-< Claudia is possibly a daughter of Anna.
-< Anna has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia.
 < 
 * 
 * My conclusions:
@@ -1508,11 +1510,13 @@
 < Claudia is probably a person. Because:
 <	- Claudia is a child of Anna.
 <	- A child is probably a person.
-< Claudia is possibly a woman. Because:
+< Claudia is possibly a daughter of Anna. Because:
 <	- Claudia is a child of Anna.
-<	- Every child is a woman or a man.
+<	- Every child is a son or a daughter.
 <	- Proper noun "Claudia" is probably feminine.
 * 	and:
+<	- Anna has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia.
+< Claudia is possibly a woman. Because:
 <	- Claudia is possibly a daughter of Anna.
 <	- Every daughter is a woman.
 < Claudia is possibly not a son. Because:
@@ -1554,12 +1558,6 @@
 * 	and:
 <	- Claudia is possibly a daughter of Anna.
 <	- Every daughter is feminine.
-< Claudia is possibly a daughter of Anna. Because:
-<	- Claudia is a child of Anna.
-<	- Every child is a son or a daughter.
-<	- Proper noun "Claudia" is probably feminine.
-* 	and:
-<	- Anna has possibly 2 daughter [plural of 'daughter' is unknown], called Laura and Claudia.
 < Claudia has probably a parent, called Anna. Because:
 <	- Every family has parents and children.
 <	- Claudia is a child of Anna.

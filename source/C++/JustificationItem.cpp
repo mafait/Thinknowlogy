@@ -390,7 +390,7 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION );
 		}
 
-	bool JustificationItem::isObsoleteAssumptionJustification( bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel )
+	bool JustificationItem::isObsoleteAssumptionJustification( bool hasOnlyOneRelationWord, bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel )
 		{
 		return 	( primarySpecificationItem_ != NULL &&
 
@@ -403,11 +403,17 @@
 				justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
 
 				( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION &&
-				isIncludingReversibleAssumptionOrConclusion ) ||
+				isIncludingReversibleAssumptionOrConclusion &&
+
+				( !hasOnlyOneRelationWord ||
+				isOnlySelectingOlderJustifications ||
+				primarySpecificationItem_->isOlderItem() ) ) ||
 
 				( justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION &&
 				isIncludingNegativeAssumptionOrConclusion &&
-				!primarySpecificationItem_->isSpecificationAdjective() ) ||
+
+				( !primarySpecificationItem_->isSpecificationAdjective() ||
+				primarySpecificationItem_->isExclusiveSpecification() ) ) ||
 
 				( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION &&
 				isIncludingSpecificationSubstitutionAssumptionOrConclusion ) ||
@@ -451,6 +457,11 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION );
 		}
 
+	bool JustificationItem::isUniqueUserRelationAssumptionOrConclusion()
+		{
+		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION );
+		}
+
 	unsigned short JustificationItem::justificationTypeNr()
 		{
 		return justificationTypeNr_;
@@ -463,7 +474,7 @@
 
 	unsigned int JustificationItem::justificationAssumptionLevel()
 		{
-		return assumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
+		return Item::justificationAssumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
 		}
 
 	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords )

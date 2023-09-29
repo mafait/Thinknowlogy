@@ -196,7 +196,7 @@ class SpecificationItem : private Item
 				// Justification doesn't exist yet in existing specification
 				!existingSpecificationItem->hasSecondarySpecificationJustification( negativeDefinitionSpecificationItem ) &&
 				// Justification has at least the same assumption level
-				existingSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem, NULL ) &&
+				existingSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem, NULL ) &&
 				// Add negative justification to existing specification
 				existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem ) != RESULT_OK )
 					return addError( functionNameString, NULL, "I failed to add a negative justification to the existing specification" );
@@ -237,7 +237,7 @@ class SpecificationItem : private Item
 						// Justification doesn't exist yet in reversible specification
 						if( !reversibleSpecificationItem->hasPrimarySpecificationJustification( this ) &&
 						// Justification has at least the same assumption level
-						reversibleSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, NULL, NULL, NULL ) &&
+						reversibleSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, NULL, NULL, NULL ) &&
 						// Add non-possessive reversible justification to myself
 						reversibleSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, this, NULL, NULL ) != RESULT_OK )
 							return addError( functionNameString, NULL, "I failed to add a non-possessive reversible justification to myself" );
@@ -253,7 +253,7 @@ class SpecificationItem : private Item
 								!partOfSpecificationItem->hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
 								( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
 								// Justification has at least the same assumption level
-								partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, definitionSpecificationItem, NULL ) &&
+								partOfSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, definitionSpecificationItem, NULL ) &&
 								// Add non-possessive part-of justification to part-of specification
 								partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, definitionSpecificationItem ) != RESULT_OK )
 									return addError( functionNameString, NULL, "I failed to add a non-possessive part-of justification to a part-of specification" );
@@ -265,7 +265,7 @@ class SpecificationItem : private Item
 								!partOfSpecificationItem->hasPrimarySpecificationJustification( this ) &&
 								( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
 								// Justification has at least the same assumption level
-								partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
+								partOfSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
 								// Add non-possessive part-of justification to part-of specification
 								partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem ) != RESULT_OK )
 									return addError( functionNameString, NULL, "I failed to add a non-possessive part-of justification to a part-of specification" );
@@ -278,7 +278,7 @@ class SpecificationItem : private Item
 					// I don't have this reversible justification
 					!hasPrimarySpecificationJustification( reversibleSpecificationItem ) &&
 					// I have no better assumption level
-					assumptionLevel_ >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, NULL, NULL ) &&
+					assumptionLevel_ >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, NULL, NULL ) &&
 					// Add possessive reversible justification to myself
 					addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, reversibleSpecificationItem, NULL, NULL ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to add a possessive reversible justification to myself" );
@@ -299,7 +299,7 @@ class SpecificationItem : private Item
 					!partOfSpecificationItem->hasPrimarySpecificationJustification( this ) &&
 					( definitionSpecificationItem = partOfSpecificationWordItem->partOfSpecificationItem( specificationWordItem_ ) ) != NULL &&
 					// Justification has at least the same assumption level
-					partOfSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
+					partOfSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem, NULL ) &&
 					// Add possessive part-of justification to part-of specification
 					partOfSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, this, NULL, definitionSpecificationItem ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to add a possessive part-of justification to a part-of specification" );
@@ -311,7 +311,7 @@ class SpecificationItem : private Item
 					// Justification doesn't exist yet in part-of specification
 					!oppositeSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( definitionSpecificationItem, this ) &&
 					// Justification has at least the same assumption level
-					oppositeSpecificationItem->assumptionLevel() >= Item::assumptionLevel( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, NULL, this, NULL ) &&
+					oppositeSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, NULL, this, NULL ) &&
 					// Add opposite possessive assumption justification to opposite specification
 					oppositeSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, definitionSpecificationItem, NULL, this ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to add an opposite possessive assumption justification to the opposite specification" );
@@ -1062,7 +1062,8 @@ class SpecificationItem : private Item
 		{
 		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ?
-														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) :
+														nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -1083,7 +1084,8 @@ class SpecificationItem : private Item
 		{
 		unsigned short currentAssignmentLevel = globalVariables()->currentAssignmentLevel;
 		SpecificationItem *searchSpecificationItem = ( isIncludingThisItem ?
-														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) : nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
+														( assignmentLevel_ == currentAssignmentLevel ? this : NULL ) :
+														nextAssignmentItemWithAssignmentLevel( currentAssignmentLevel ) );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -1131,21 +1133,6 @@ class SpecificationItem : private Item
 
 				searchJustificationItem = searchJustificationItem->attachedJustificationItem();
 				}
-			}
-
-		return false;
-		}
-
-	bool hasJustificationWithAdditionalDefinitionSpecification()
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->hasAdditionalDefinitionSpecification() )
-				return true;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
 			}
 
 		return false;
@@ -1827,6 +1814,7 @@ class SpecificationItem : private Item
 
 				// Non-possessive specification not in a male word
 				( ( !isPossessive_ &&
+		!myWordItem()->hasMasculineProperNounEnding() &&
 				!myWordItem()->isMasculineWord() ) ||
 
 				// Possessive specification without male relation context
@@ -2501,6 +2489,8 @@ class SpecificationItem : private Item
 
 	signed char recalculateAssumptionLevel( bool isSituationStable )
 		{
+		bool hasChangedAssumptionLevel;
+		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
 		bool isOlderSpecification = isOlderItem();
 		unsigned short previousAssumptionLevel = assumptionLevel_;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "recalculateAssumptionLevel";
@@ -2511,27 +2501,34 @@ class SpecificationItem : private Item
 
 		if( hasCurrentCreationSentenceNr() )
 			{
+			hasChangedAssumptionLevel = ( previousAssumptionLevel != assumptionLevel_ );
+
 			// Older specification
 			if( ( isOlderSpecification ||
 
 			// Not older specification
 			( isSituationStable &&
 
-			( ( isPartOf_ &&
-			previousAssumptionLevel == assumptionLevel_ ) ||
+			( isNegative_ ||
 
-			( relationContextNr_ > NO_CONTEXT_NR &&
+			// Test file: "Complex (12)"
+			( !hasChangedAssumptionLevel &&
+			isPartOf_ ) ||
+
+			( _hasRelationContext &&
 			hasNonCompoundSpecificationCollection() ) ) &&
 
-			( myWordItem()->isUserRelationWord ||
+			( !_hasRelationContext ||
+			isPossessive_ ||
+			myWordItem()->isUserRelationWord ||
 			firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == NULL ) ) ) &&
 
 			// Remove obsolete assumption justifications
 			removeObsoleteAssumptionJustifications( isOlderSpecification, isSituationStable ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to remove obsolete assumption justifications from this assumption" );
 
-			if( isOlderSpecification &&
-			assumptionLevel_ != previousAssumptionLevel &&
+			if( hasChangedAssumptionLevel &&
+			isOlderSpecification &&
 			// Process changed assumption level
 			processChangedAssumption( previousAssumptionLevel ) != RESULT_OK )
 				return addError( functionNameString, NULL, "I failed to process the changed assumption level" );
@@ -2542,8 +2539,8 @@ class SpecificationItem : private Item
 
 	signed char removeObsoleteAssumptionJustifications( bool isOnlySelectingOlderJustifications, bool isSituationStable )
 		{
-		bool hasChanged = false;
 		bool hasConfirmedAnySpecification = globalVariables()->hasConfirmedAnySpecification;
+		bool _hasOnlyOneRelationWord;
 		bool _hasRelationContext = ( relationContextNr_ > NO_CONTEXT_NR );
 		bool isIncludingNegativeAssumptionOrConclusion;
 		bool isIncludingReversibleAssumptionOrConclusion;
@@ -2567,9 +2564,10 @@ class SpecificationItem : private Item
 		if( !hasCurrentCreationSentenceNr() )
 			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
 
+//		isOnlySelectingOlderJustifications = isOlderItem();
+
 		isIncludingNegativeAssumptionOrConclusion = ( assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
 
-													// Test file: "Complex (13)"
 													( !hasConfirmedAnySpecification &&
 													// Typical for Spanish
 													// Spanish test file: "Complejo (13)"
@@ -2581,13 +2579,16 @@ class SpecificationItem : private Item
 														isHiddenSpanishSpecification() );
 
 		isIncludingSpecificationSubstitutionAssumptionOrConclusion = ( !hasConfirmedAnySpecification ||
-																		assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
 
 																		( isSituationStable &&
 																		specificationCollectionNr_ == NO_COLLECTION_NR ) );
 
+		_hasOnlyOneRelationWord = ( _hasRelationContext &&
+									isSituationStable &&
+									hasOnlyOneRelationWord() );
+
 		do	{
-			if( currentJustificationItem->isObsoleteAssumptionJustification( isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_ ) )
+			if( currentJustificationItem->isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_))
 				{
 				attachedJustificationItem = currentJustificationItem->attachedJustificationItem();
 
@@ -2621,7 +2622,6 @@ class SpecificationItem : private Item
 							return addError( functionNameString, NULL, "I failed to change the attached justification item of the previous justification item" );
 						}
 
-					hasChanged = true;
 					currentJustificationItem = attachedJustificationItem;
 					}
 				else
@@ -2657,7 +2657,6 @@ class SpecificationItem : private Item
 						if( _myWordItem->replaceOrDeleteJustification( currentJustificationItem ) != RESULT_OK )
 							return addError( functionNameString, NULL, "I failed to replace the current justification item" );
 
-						hasChanged = true;
 						// Reset variables
 						previousPreviousJustificationItem = NULL;
 						previousJustificationItem = NULL;
@@ -2707,13 +2706,13 @@ class SpecificationItem : private Item
 			}
 		while( currentJustificationItem != NULL );
 
-		if( ( hasChanged ||
-
 		// Typical for Spanish
 		// Spanish test file: "Complejo (12)"
-		( isOnlySelectingOlderJustifications &&
-		isPossessive_ ) ) &&
-
+		if( _hasRelationContext &&
+		isOnlySelectingOlderJustifications &&
+		isPossessive_ &&
+		!isSituationStable &&
+		isHiddenSpanishSpecification() &&
 		// (Re)calculate assumption level
 		calculateAssumptionLevel() != RESULT_OK )
 			return addError( functionNameString, NULL, "I failed to (re)calculate my assumption level" );

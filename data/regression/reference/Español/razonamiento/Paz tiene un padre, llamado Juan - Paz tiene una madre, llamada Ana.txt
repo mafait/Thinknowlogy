@@ -1,0 +1,23 @@
+﻿* 
+* Mis conclusiones:
+< Juan es padre de Paz.
+< 
+* 
+* Mis conclusiones:
+< Ana es madre de Paz.
+< 
+* 
+* Su información:
+< Paz tiene una madre, llamada Ana.
+< Paz tiene un padre, llamado Juan.
+* 
+* Información relacionada:
+< Ana es madre de Paz.
+< Juan es padre de Paz.
+< 
+* 
+* Ha introducido un nombre plural "padres", que era desconocido para mí.
+* 
+* Mis conclusiones:
+< Ana es padre de Paz.
+< 

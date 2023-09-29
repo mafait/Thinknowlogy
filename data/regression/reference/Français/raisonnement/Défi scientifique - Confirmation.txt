@@ -50,7 +50,7 @@
 < 
 * 
 * Mes questions:
-< Est Dominique un homme ou une femme?
+< Est Jules un homme ou une femme?
 < 
 * 
 * Mes conclusions:

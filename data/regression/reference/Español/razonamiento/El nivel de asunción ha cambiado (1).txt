@@ -1,15 +1,15 @@
 ﻿* 
 * Mis conclusiones:
-< Pablo tiene un padre, llamado Juan.
+< Paz tiene un padre, llamado Juan.
 < 
 * 
 * Mis suposiciones:
-< Pablo tiene posiblemente un padre, llamado Juan.
+< Paz tiene posiblemente un padre, llamado Juan.
 < 
 * 
 * Mis suposiciones:
-< Pablo tiene posiblemente un padre, llamado Juan. Porque:
-<	- Juan es posiblemente el padre de Pablo.
+< Paz tiene posiblemente un padre, llamado Juan. Porque:
+<	- Juan es posiblemente el padre de Paz.
 < 
 * 
 * Mis conclusiones:

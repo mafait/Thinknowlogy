@@ -16,7 +16,7 @@ Chaque famille a un parent et un enfant.
 Guillaume est un parent.
 Armand est un enfant.
 Fabrice a un parent.
-Ronald a un enfant.
+Louis a un enfant.
 #-----------------------------------------------------------------
 # Bloque 3: Regroupement des connaissances
 #-----------------------------------------------------------------
@@ -29,15 +29,55 @@ Pascal a 2 parents, appelés Olivier et Amélie.
 Philippe était le père de Antoine.
 Chaque père est un homme.
 #-----------------------------------------------------------------
+# Construction de raisonnement naturel décrite par Aristote; au passé
+#-----------------------------------------------------------------
+Chaque philosophe est mortel.
+Socrate était un philosophe.
+#-----------------------------------------------------------------
 # Bloque 5: La détection d'un conflit et de génération d'une question
 #-----------------------------------------------------------------
 Chaque personne est un homme ou une femme.
-Dominique est un homme et une femme.
-Dominique est une personne.
-Dominique n'est pas une femme.
+Jules est un homme et une femme.
+Jules est une personne.
+Jules n'est pas une femme.
 #-----------------------------------------------------------------
 # Bloque 6: Archivage des connaissances
 #-----------------------------------------------------------------
 Barack Obama est le président des États-Unis.
 Donald Trump est le président des États-Unis.
+#-----------------------------------------------------------------
+# Bloque 7: Raisonnement avancé
+#-----------------------------------------------------------------
+Chaque femme est féminin.
+Chaque homme est masculin.
+Chaque parent est un homme ou une femme.
+Chaque père est un homme.
+Chaque mère est une femme.
+Chaque parent est un père ou une mère.
+Chaque jeune-fille est féminin.
+Chaque garçon est masculin.
+Chaque fils est un garçon ou un homme.
+Chaque fille est une jeune-fille ou une femme.
+#-----------------------------------------------------------------
+# Bloque 8: Rapports de justification
+#-----------------------------------------------------------------
+Affichez le rapport de justification sur les hommes.
+Affichez le rapport de justification sur les femmes.
+Affichez le rapport de justification sur les personnes.
+Affichez le rapport de justification sur les pères.
+Affichez le rapport de justification sur les mères.
+Affichez le rapport de justification sur les parents.
+Affichez le rapport de justification sur Pascal.
+Affichez le rapport de justification sur Olivier.
+Affichez le rapport de justification sur Amélie.
+Affichez le rapport de justification sur Lorraine.
+Affichez le rapport de justification sur Guillaume.
+Affichez le rapport de justification sur Armand.
+Affichez le rapport de justification sur Fabrice.
+Affichez le rapport de justification sur Louis.
+Affichez le rapport de justification sur Philippe.
+Affichez le rapport de justification sur Antoine.
+Affichez le rapport de justification sur Socrate.
+Affichez le rapport de justification sur Jules.
+Affichez information sur Jules.
 # Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

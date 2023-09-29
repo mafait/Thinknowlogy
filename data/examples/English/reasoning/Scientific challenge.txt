@@ -26,15 +26,20 @@ Paul has 2 parents, called John and Anna.
 #-----------------------------------------------------------------
 # Block 4: Past tense reasoning
 #-----------------------------------------------------------------
-James was the father of Peter.
+James was the father of Joe.
 Every father is a man.
+#-----------------------------------------------------------------
+# Natural reasoning construct described by Aristotle; in past tense
+#-----------------------------------------------------------------
+Every philosopher is mortal.
+Socrates was a philosopher.
 #-----------------------------------------------------------------
 # Block 5: Detection of a conflict and generation of a question
 #-----------------------------------------------------------------
 Every person is a man or a woman.
-Addison is a man and a woman.
-Addison is a person.
-Addison is not a woman.
+Alex is a man and a woman.
+Alex is a person.
+Alex is not a woman.
 #-----------------------------------------------------------------
 # Block 6: Archiving of knowledge
 #-----------------------------------------------------------------
@@ -62,13 +67,17 @@ Display the justification report about persons.
 Display the justification report about fathers.
 Display the justification report about mothers.
 Display the justification report about parents.
-Display information about Addison.
-Display the justification report about Addison.
-Display the justification report about Anna.
-Display the justification report about John.
-Display the justification report about Ronald.
-Display the justification report about Michael.
-Display the justification report about James.
 Display the justification report about Paul.
+Display the justification report about John.
+Display the justification report about Anna.
 Display the justification report about Laura.
+Display the justification report about Michael.
+Display the justification report about Adam.
+Display the justification report about Peter.
+Display the justification report about Ronald.
+Display the justification report about James.
+Display the justification report about Joe.
+Display the justification report about Socrates.
+Display the justification report about Alex.
+Display information about Alex.
 # To continue, click button «Clear your mind.» or «Restart.».

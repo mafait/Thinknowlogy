@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -324,14 +328,14 @@
 <	- Anna is a woman.
 <	- A woman is probably not a girl.
 < Anna is probably a person. Because:
+<	- Anna is a parent.
+<	- A parent is probably a person.
+* 	and:
 <	- Anna is a woman.
 <	- A woman is probably a person.
 * 	and:
 <	- Anna is a mother.
 <	- A mother is probably a person.
-* 	and:
-<	- Anna is a parent.
-<	- A parent is probably a person.
 < Anna is probably a parent of Paul, Joe and Laura. Because:
 <	- Anna is the mother of Paul, Joe and Laura.
 <	- A mother is probably a parent.

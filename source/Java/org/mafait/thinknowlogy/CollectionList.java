@@ -50,14 +50,15 @@ class CollectionList extends List
 	protected void addToCollectionWordQuickAccessList()
 		{
 		WordItem lastCollectionWordItem = GlobalVariables.lastCollectionWordItem;
+		WordItem _myWordItem = myWordItem();
 
 		if( lastCollectionWordItem == null )
-			GlobalVariables.firstCollectionWordItem = myWordItem();
+			GlobalVariables.firstCollectionWordItem = _myWordItem;
 		else
 			// Word order is important: Add word at end of collection word list
-			lastCollectionWordItem.nextCollectionWordItem = myWordItem();
+			lastCollectionWordItem.nextCollectionWordItem = _myWordItem;
 
-		GlobalVariables.lastCollectionWordItem = myWordItem();
+		GlobalVariables.lastCollectionWordItem = _myWordItem;
 		}
 
 	protected boolean hasCollectionNr( int collectionNr )

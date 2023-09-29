@@ -1,0 +1,5 @@
+﻿Every person is a man or a woman.
+Alex is a person.
+Alex is not a woman.
+#Dev#Display the justification report about Alex.
+# To continue, click button «Clear your mind.» or «Restart.».

@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -94,6 +94,10 @@
 < Un garçon est probablement une personne.
 < Un homme n'est probablement pas un garçon.
 < 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -153,9 +157,6 @@
 * Vous avez confirmé la spécification - mais aucun de ses relations - de mes hypothèses antérieures:
 < Lorraine est peut-être une fille de Olivier et Amélie.
 * 
-* Mes hypothèses qui ont été ajustées:
-< Lorraine est probablement une personne.
-* 
 * Mes hypothèses qui ont été conclues:
 < Lorraine est féminin.
 < Lorraine n'est pas un fils.
@@ -163,6 +164,9 @@
 < Lorraine n'est pas un père.
 < Lorraine n'est pas un homme.
 < Lorraine n'est pas masculin.
+* 
+* Mes hypothèses qui ont été ajustées:
+< Lorraine est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -172,6 +176,9 @@
 < Lorraine n'est pas un fils. En raison:
 <	- Lorraine est féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Lorraine est une fille.
+<	- Chaque fille n'est pas un fils.
 < Lorraine n'est pas un garçon. En raison:
 <	- Lorraine est féminin.
 <	- Chaque garçon n'est pas féminin.

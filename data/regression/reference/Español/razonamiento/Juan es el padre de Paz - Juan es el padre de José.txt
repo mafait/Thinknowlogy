@@ -1,0 +1,18 @@
+﻿* 
+* Mis conclusiones:
+< Paz tiene un padre, llamado Juan.
+< 
+* 
+* Mis conclusiones:
+< José tiene un padre, llamado Juan.
+< 
+* 
+* Su información:
+< Juan es el padre de Paz y José.
+* 
+* Información relacionada:
+< José tiene un padre, llamado Juan.
+< Paz tiene un padre, llamado Juan.
+< 
+* Sé.
+* 

@@ -1484,7 +1484,8 @@
 				( !isIncludingInactiveAssignments ||
 				( foundAssignmentItem = assignmentList_->firstNonQuestionAssignmentItem( true, false, isNegative, isPossessive, specificationWordItem ) ) == NULL ) &&
 
-				isIncludingArchivedAssignments ? assignmentList_->firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem ) : foundAssignmentItem );
+				isIncludingArchivedAssignments ? assignmentList_->firstNonQuestionAssignmentItem( false, true, isNegative, isPossessive, specificationWordItem ) :
+												foundAssignmentItem );
 		}
 
 	CreateAndAssignResultType WordItem::assignSpecification( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString, char *authorizationKey )
@@ -2894,11 +2895,6 @@
 		return ( specificationList_ == NULL ? false : specificationList_->hasNegativeSpecification() );
 		}
 
-	bool WordItem::hasPartOfSpecification()
-		{
-		return ( specificationList_ == NULL ? false : specificationList_->hasPartOfSpecification() );
-		}
-
 	bool WordItem::hasPossiblyGapInKnowledge( unsigned int exclusiveSecondarySpecificationCollectionNr, unsigned int primarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem )
 		{
 		return ( specificationList_ == NULL ? true : specificationList_->hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationCollectionNr, primarySpecificationItem ) );
@@ -3256,9 +3252,9 @@
 		return ( specificationList_ == NULL ? NULL : specificationList_->firstNegativeSpecificationItem() );
 		}
 
-	SpecificationItem *WordItem::firstNonCollectedSpecificationItem( bool isSelfGenerated, WordItem *excludeSpecificcationWordItem )
+	SpecificationItem *WordItem::firstNonCollectedSpecificationItem( bool isSelfGenerated, WordItem *excludeSpecificationWordItem )
 		{
-		return ( specificationList_ == NULL ? NULL : specificationList_->firstNonCollectedSpecificationItem( isSelfGenerated, excludeSpecificcationWordItem ) );
+		return ( specificationList_ == NULL ? NULL : specificationList_->firstNonCollectedSpecificationItem( isSelfGenerated, excludeSpecificationWordItem ) );
 		}
 
 	SpecificationItem *WordItem::firstNonCompoundUserSpecificationItem()

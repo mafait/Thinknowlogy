@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -95,6 +95,10 @@
 < A man is probably not a boy.
 < 
 * 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
+* 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
@@ -110,20 +114,20 @@
 < 
 * 
 * My questions:
-< Is Addison a man or a woman?
-< Is Addison masculine or feminine?
+< Is Alex a man or a woman?
+< Is Alex masculine or feminine?
 < 
 * 
 * My questions:
-< Is Addison a man or a woman? Because:
-<	- Addison is a person.
+< Is Alex a man or a woman? Because:
+<	- Alex is a person.
 <	- Every person is a man or a woman.
-< Is Addison masculine or feminine? Because:
-<	- Is Addison a man or a woman?
+< Is Alex masculine or feminine? Because:
+<	- Is Alex a man or a woman?
 <	- Every woman is feminine.
 <	- Every man is masculine.
 * 	and:
-<	- Addison is a person.
+<	- Alex is a person.
 <	- Every person is masculine or feminine.
 < 
 * 

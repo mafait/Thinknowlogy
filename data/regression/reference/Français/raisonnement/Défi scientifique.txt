@@ -39,8 +39,8 @@
 < 
 * 
 * Mes hypothèses:
-< Ronald est probablement un parent.
-< Ronald est probablement partie d'une famille.
+< Louis est probablement un parent.
+< Louis est probablement partie d'une famille.
 < 
 * 
 * Mes conclusions:
@@ -77,6 +77,10 @@
 < Philippe était un homme.
 < 
 * 
+* Mes conclusions:
+< Socrate était mortel.
+< 
+* 
 * Mes hypothèses:
 < Un homme n'est probablement pas une femme.
 < Une femme n'est probablement pas un homme.
@@ -87,14 +91,14 @@
 < 
 * 
 * Mes questions:
-< Est Dominique un homme ou une femme?
+< Est Jules un homme ou une femme?
 < 
 * 
 * Mes questions qui sont répondues:
-< Est Dominique un homme ou une femme?
+< Est Jules un homme ou une femme?
 * 
 * Mes hypothèses:
-< Dominique est probablement un homme.
+< Jules est probablement un homme.
 < 
 * 
 * Mes conclusions:
@@ -104,4 +108,565 @@
 * Mes conclusions:
 < Les États-Unis a un nouveau président, appelé Donald Trump.
 < Les États-Unis a un précédent président, appelé Barack Obama.
+< 
+* 
+* Mes conclusions:
+< Chaque femme n'est pas masculin.
+< 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque homme n'est pas une femme.
+< Chaque femme n'est pas un homme.
+* 
+* Mes conclusions:
+< Chaque homme n'est pas féminin.
+< Chaque femme n'est pas un père.
+< Chaque personne est masculin ou féminin.
+< Chaque père est masculin.
+< Chaque père n'est pas féminin.
+< Chaque père n'est pas une femme.
+< Philippe était masculin.
+< Philippe ne était pas féminin.
+< Philippe ne était pas une femme.
+* 
+* Mes hypothèses:
+< Un homme est probablement une personne.
+< Une femme est probablement une personne.
+< Jules est probablement masculin.
+< Jules n'est probablement pas féminin.
+< Un père est probablement une personne.
+< Philippe était probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est masculin ou féminin.
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne.
+< Amélie est probablement une personne.
+< Amélie est possible une femme.
+< Amélie n'est possible pas masculin.
+< Amélie n'est possible pas un homme.
+< Amélie n'est possible pas un père.
+< Amélie est possible féminin.
+< Olivier est probablement une personne.
+< Louis est possible une personne.
+< Guillaume est probablement une personne.
+* 
+* Mes questions:
+< Est Olivier masculin ou féminin?
+< Est Olivier un homme ou une femme?
+< Est Louis masculin ou féminin?
+< Est Louis un homme ou une femme?
+< Est Guillaume masculin ou féminin?
+< Est Guillaume un homme ou une femme?
+< 
+* 
+* Mes conclusions:
+< Chaque mère est féminin.
+< Chaque mère n'est pas un père.
+< Chaque mère n'est pas masculin.
+< Chaque mère n'est pas un homme.
+< Chaque père n'est pas un mère.
+< Chaque homme n'est pas un mère.
+* 
+* Mes hypothèses:
+< Un mère est probablement une personne.
+< 
+* 
+* Mes hypothèses:
+< Amélie est possible une mère.
+< 
+* 
+* Mes conclusions:
+< Chaque jeune-fille n'est pas masculin.
+< Chaque jeune-fille n'est pas un homme.
+< Chaque jeune-fille n'est pas un père.
+< Chaque homme n'est pas une jeune-fille.
+< Chaque père n'est pas une jeune-fille.
+< 
+* 
+* Mes conclusions:
+< Chaque garçon n'est pas féminin.
+< Chaque garçon n'est pas une jeune-fille.
+< Chaque garçon n'est pas une mère.
+< Chaque garçon n'est pas une femme.
+< Chaque jeune-fille n'est pas un garçon.
+< Chaque mère n'est pas un garçon.
+< Chaque femme n'est pas un garçon.
+< 
+* 
+* Mes conclusions:
+< Chaque fils est masculin.
+< Chaque fils n'est pas féminin.
+< Pascal est masculin.
+< Pascal n'est pas une jeune-fille.
+< Pascal n'est pas une mère.
+< Pascal n'est pas une femme.
+< Pascal n'est pas féminin.
+* 
+* Mes hypothèses:
+< Un fils est probablement une personne.
+< Pascal est probablement une personne.
+< Un garçon n'est probablement pas un homme.
+< Un garçon est probablement une personne.
+< Un homme n'est probablement pas un garçon.
+< 
+* 
+* Mes conclusions:
+< Chaque fille est féminin.
+< Chaque fille n'est pas masculin.
+< Lorraine est féminin.
+< Lorraine n'est pas un fils.
+< Lorraine n'est pas un garçon.
+< Lorraine n'est pas un homme.
+< Lorraine n'est pas un père.
+< Lorraine n'est pas masculin.
+* 
+* Mes hypothèses:
+< Une fille est probablement une personne.
+< Lorraine est probablement une personne.
+< Une jeune-fille n'est probablement pas une femme.
+< Une jeune-fille est probablement une personne.
+< Une femme n'est probablement pas une jeune-fille.
+* 
+* Mes questions:
+< Est Lorraine une jeune-fille ou une femme?
+< 
+* 
+* Mes conclusions:
+< Chaque homme n'est pas une jeune-fille. En raison:
+<	- Chaque homme est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+< Chaque homme n'est pas une mère. En raison:
+<	- Chaque homme est masculin.
+<	- Chaque mère n'est pas masculin.
+< Chaque homme n'est pas féminin. En raison:
+<	- Chaque homme est masculin.
+< Chaque homme n'est pas une femme. En raison:
+<	- Chaque homme est masculin.
+<	- Chaque femme n'est pas masculin.
+* 
+* Mes hypothèses:
+< Un homme n'est probablement pas un garçon. En raison:
+<	- Chaque fils est un garçon ou un homme.
+< Un homme est probablement une personne. En raison:
+<	- Chaque personne est masculin ou féminin.
+<	- Chaque homme est masculin.
+< 
+* 
+* Mes conclusions:
+< Chaque femme n'est pas un garçon. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque garçon n'est pas féminin.
+< Chaque femme n'est pas un père. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque père n'est pas féminin.
+< Chaque femme n'est pas masculin. En raison:
+<	- Chaque femme est féminin.
+< Chaque femme n'est pas un homme. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque homme n'est pas féminin.
+* 
+* Mes hypothèses:
+< Une femme n'est probablement pas une jeune-fille. En raison:
+<	- Chaque fille est une jeune-fille ou une femme.
+< Une femme est probablement une personne. En raison:
+<	- Chaque personne est masculin ou féminin.
+<	- Chaque femme est féminin.
+< 
+* 
+* Mes conclusions:
+< Chaque personne est masculin ou féminin. En raison:
+<	- Chaque personne est un homme ou une femme.
+<	- Chaque femme est féminin.
+<	- Chaque homme est masculin.
+< 
+* 
+* Mes conclusions:
+< Chaque père n'est pas une jeune-fille. En raison:
+<	- Chaque père est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+< Chaque père n'est pas une mère. En raison:
+<	- Chaque père est masculin.
+<	- Chaque mère est féminin.
+* 	et:
+<	- Chaque père est masculin.
+<	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Chaque père est un homme.
+<	- Chaque homme n'est pas une mère.
+< Chaque père est masculin. En raison:
+<	- Chaque père est un homme.
+<	- Chaque homme est masculin.
+< Chaque père n'est pas une femme. En raison:
+<	- Chaque père est un homme.
+<	- Chaque homme n'est pas une femme.
+* 	et:
+<	- Chaque père est masculin.
+<	- Chaque femme n'est pas masculin.
+< Chaque père n'est pas féminin. En raison:
+<	- Chaque père est un homme.
+<	- Chaque homme n'est pas féminin.
+* 
+* Mes hypothèses:
+< Un père est probablement une personne. En raison:
+<	- Chaque père est un homme.
+<	- Un homme est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque mère n'est pas un garçon. En raison:
+<	- Chaque mère est féminin.
+<	- Chaque garçon n'est pas féminin.
+< Chaque mère est féminin. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme est féminin.
+< Chaque mère n'est pas un père. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas un père.
+* 	et:
+<	- Chaque mère est féminin.
+<	- Chaque père n'est pas féminin.
+< Chaque mère n'est pas masculin. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas masculin.
+< Chaque mère n'est pas un homme. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas un homme.
+* 	et:
+<	- Chaque mère est féminin.
+<	- Chaque homme n'est pas féminin.
+* 
+* Mes hypothèses:
+< Un mère est probablement une personne. En raison:
+<	- Chaque personne est masculin ou féminin.
+<	- Chaque mère est féminin.
+* 	et:
+<	- Chaque personne est un homme ou une femme.
+<	- Chaque mère est une femme.
+* 	et:
+<	- Chaque mère est une femme.
+<	- Une femme est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque parent est masculin ou féminin. En raison:
+<	- Chaque parent est un père ou une mère.
+<	- Chaque mère est féminin.
+<	- Chaque père est masculin.
+* 	et:
+<	- Chaque parent est un homme ou une femme.
+<	- Chaque femme est féminin.
+<	- Chaque homme est masculin.
+* 
+* Mes hypothèses:
+< Un parent est probablement une personne. En raison:
+<	- Chaque parent est un père ou une mère.
+<	- Un mère est probablement une personne.
+<	- Un père est probablement une personne.
+* 	et:
+<	- Chaque parent est un homme ou une femme.
+<	- Un homme est probablement une personne.
+<	- Une femme est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Pascal est masculin. En raison:
+<	- Pascal est un fils de Olivier.
+<	- Chaque fils est masculin.
+< Pascal n'est pas une jeune-fille. En raison:
+<	- Pascal est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+< Pascal n'est pas une mère. En raison:
+<	- Pascal est masculin.
+<	- Chaque mère n'est pas masculin.
+< Pascal n'est pas une femme. En raison:
+<	- Pascal est masculin.
+<	- Chaque femme n'est pas masculin.
+< Pascal n'est pas féminin. En raison:
+<	- Pascal est un fils de Olivier.
+<	- Chaque fils n'est pas féminin.
+* 
+* Mes hypothèses:
+< Pascal est probablement une personne. En raison:
+<	- Pascal est un fils de Olivier.
+<	- Un fils est probablement une personne.
+< Pascal est probablement un enfant de Olivier et Amélie. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Amélie est un parent de Pascal.
+<	- Olivier est un parent de Pascal.
+* 	et:
+<	- Amélie a probablement un enfant, appelé Pascal.
+<	- Olivier a probablement un enfant, appelé Pascal.
+* 	et:
+<	- Chaque famille a un parent et un enfant.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+< Pascal est probablement partie d'une famille. En raison:
+<	- Pascal est probablement un enfant de Olivier et Amélie.
+<	- Un enfant est partie de chaque famille.
+* 	et:
+<	- Olivier a probablement un enfant, appelé Pascal.
+<	- Un enfant est partie de chaque famille.
+< 
+* 
+* Mes conclusions:
+< Olivier est partie d'une famille. En raison:
+<	- Olivier est un parent de Pascal.
+<	- Un parent est partie de chaque famille.
+< Olivier a un fils, appelé Pascal. En raison:
+<	- Pascal est un fils de Olivier.
+* 
+* Mes hypothèses:
+< Olivier est probablement une personne. En raison:
+<	- Olivier est un parent de Pascal.
+<	- Un parent est probablement une personne.
+< Olivier a probablement un enfant, appelé Pascal. En raison:
+<	- Pascal est probablement un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a un parent et un enfant.
+<	- Olivier est un parent de Pascal.
+* 	et:
+<	- Chaque famille a un parent et un enfant.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
+* 
+* Mes questions:
+< Est Olivier masculin ou féminin? En raison:
+<	- Olivier est probablement une personne.
+<	- Chaque personne est masculin ou féminin.
+* 	et:
+<	- Olivier est un parent de Pascal.
+<	- Chaque parent est masculin ou féminin.
+< Est Olivier un homme ou une femme? En raison:
+<	- Olivier est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+< 
+* 
+* Mes conclusions:
+< Amélie est partie d'une famille. En raison:
+<	- Amélie est un parent de Pascal.
+<	- Un parent est partie de chaque famille.
+* 
+* Mes hypothèses:
+< Amélie est probablement une personne. En raison:
+<	- Amélie est un parent de Pascal.
+<	- Un parent est probablement une personne.
+< Amélie est possible une mère. En raison:
+<	- Amélie est un parent de Pascal.
+<	- Chaque parent est un père ou une mère.
+<	- Nom propre «Amélie» est probablement féminin.
+< Amélie n'est possible pas un père. En raison:
+<	- Amélie est possible une mère.
+<	- Chaque mère n'est pas un père.
+* 	et:
+<	- Amélie est possible une femme.
+<	- Chaque femme n'est pas un père.
+* 	et:
+<	- Amélie est possible féminin.
+<	- Chaque père n'est pas féminin.
+< Amélie n'est possible pas masculin. En raison:
+<	- Amélie est possible une mère.
+<	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Amélie est possible une femme.
+<	- Chaque femme n'est pas masculin.
+< Amélie n'est possible pas un homme. En raison:
+<	- Amélie est possible une mère.
+<	- Chaque mère n'est pas un homme.
+* 	et:
+<	- Amélie est possible une femme.
+<	- Chaque femme n'est pas un homme.
+* 	et:
+<	- Amélie est possible féminin.
+<	- Chaque homme n'est pas féminin.
+< Amélie est possible une femme. En raison:
+<	- Amélie est possible une mère.
+<	- Chaque mère est une femme.
+* 	et:
+<	- Amélie est un parent de Pascal.
+<	- Chaque parent est un homme ou une femme.
+<	- Nom propre «Amélie» est probablement féminin.
+< Amélie est possible féminin. En raison:
+<	- Amélie est possible une femme.
+<	- Chaque femme est féminin.
+* 	et:
+<	- Amélie est possible une mère.
+<	- Chaque mère est féminin.
+< Amélie a probablement un enfant, appelé Pascal. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Amélie est un parent de Pascal.
+* 	et:
+<	- Pascal est probablement un enfant de Olivier et Amélie.
+< 
+* 
+* Mes conclusions:
+< Lorraine est féminin. En raison:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille est féminin.
+< Lorraine n'est pas un fils. En raison:
+<	- Lorraine est féminin.
+<	- Chaque fils n'est pas féminin.
+< Lorraine n'est pas un garçon. En raison:
+<	- Lorraine est féminin.
+<	- Chaque garçon n'est pas féminin.
+< Lorraine n'est pas un homme. En raison:
+<	- Lorraine est féminin.
+<	- Chaque homme n'est pas féminin.
+< Lorraine n'est pas un père. En raison:
+<	- Lorraine est féminin.
+<	- Chaque père n'est pas féminin.
+< Lorraine n'est pas masculin. En raison:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille n'est pas masculin.
+< Lorraine est une fille de Amélie. En raison:
+<	- Amélie a une fille, appelée Lorraine.
+* 
+* Mes hypothèses:
+< Lorraine est probablement une personne. En raison:
+<	- Lorraine est une fille de Amélie.
+<	- Une fille est probablement une personne.
+* 
+* Mes questions:
+< Est Lorraine une jeune-fille ou une femme? En raison:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille est une jeune-fille ou une femme.
+< 
+* 
+* Mes conclusions:
+< Guillaume est partie d'une famille. En raison:
+<	- Guillaume est un parent.
+<	- Un parent est partie de chaque famille.
+* 
+* Mes hypothèses:
+< Guillaume est probablement une personne. En raison:
+<	- Guillaume est un parent.
+<	- Un parent est probablement une personne.
+< Guillaume a probablement un enfant. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Guillaume est un parent.
+* 
+* Mes questions:
+< Est Guillaume masculin ou féminin? En raison:
+<	- Guillaume est probablement une personne.
+<	- Chaque personne est masculin ou féminin.
+* 	et:
+<	- Guillaume est un parent.
+<	- Chaque parent est masculin ou féminin.
+< Est Guillaume un homme ou une femme? En raison:
+<	- Guillaume est probablement une personne.
+<	- Chaque personne est un homme ou une femme.
+< 
+* 
+* Mes conclusions:
+< Armand est partie d'une famille. En raison:
+<	- Armand est un enfant.
+<	- Un enfant est partie de chaque famille.
+* 
+* Mes hypothèses:
+< Armand a probablement un parent. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Armand est un enfant.
+< 
+* 
+* Mes hypothèses:
+< Fabrice est probablement un enfant. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Fabrice a un parent.
+< Fabrice est probablement partie d'une famille. En raison:
+<	- Fabrice est probablement un enfant.
+<	- Un enfant est partie de chaque famille.
+< 
+* 
+* Mes hypothèses:
+< Louis est possible une personne. En raison:
+<	- Louis est probablement un parent.
+<	- Un parent est probablement une personne.
+< Louis est probablement un parent. En raison:
+<	- Chaque famille a un parent et un enfant.
+<	- Louis a un enfant.
+< Louis est probablement partie d'une famille. En raison:
+<	- Louis est probablement un parent.
+<	- Un parent est partie de chaque famille.
+* 
+* Mes questions:
+< Est Louis masculin ou féminin? En raison:
+<	- Louis est possible une personne.
+<	- Chaque personne est masculin ou féminin.
+* 	et:
+<	- Louis est probablement un parent.
+<	- Chaque parent est masculin ou féminin.
+< Est Louis un homme ou une femme? En raison:
+<	- Louis est possible une personne.
+<	- Chaque personne est un homme ou une femme.
+< 
+* 
+* Mes conclusions:
+< Philippe était un homme. En raison:
+<	- Philippe était le père de Antoine.
+<	- Chaque père est un homme.
+< Philippe était masculin. En raison:
+<	- Philippe était un homme.
+<	- Chaque homme est masculin.
+* 	et:
+<	- Philippe était le père de Antoine.
+<	- Chaque père est masculin.
+< Philippe ne était pas une femme. En raison:
+<	- Philippe était un homme.
+<	- Chaque homme n'est pas une femme.
+* 	et:
+<	- Philippe était masculin.
+<	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Philippe était le père de Antoine.
+<	- Chaque père n'est pas une femme.
+< Philippe ne était pas féminin. En raison:
+<	- Philippe était un homme.
+<	- Chaque homme n'est pas féminin.
+* 	et:
+<	- Philippe était le père de Antoine.
+<	- Chaque père n'est pas féminin.
+* 
+* Mes hypothèses:
+< Philippe était probablement une personne. En raison:
+<	- Philippe était un homme.
+<	- Un homme est probablement une personne.
+* 	et:
+<	- Philippe était le père de Antoine.
+<	- Un père est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Antoine n'a aucun père plus. En raison:
+<	- Antoine avait un père, appelé Philippe.
+< Antoine avait un père, appelé Philippe. En raison:
+<	- Philippe était le père de Antoine.
+< 
+* 
+* Mes conclusions:
+< Socrate était mortel. En raison:
+<	- Socrate était un philosophe.
+<	- Chaque philosophe est mortel.
+< 
+* 
+* Mes hypothèses:
+< Jules est probablement masculin. En raison:
+<	- Jules est probablement un homme.
+<	- Chaque homme est masculin.
+< Jules n'est probablement pas féminin. En raison:
+<	- Jules est probablement un homme.
+<	- Chaque homme n'est pas féminin.
+< Jules est probablement un homme. En raison:
+<	- Jules est une personne.
+<	- Chaque personne est un homme ou une femme.
+<	- Jules n'est pas une femme.
+< 
+* 
+* Vos informations:
+< Jules n'est pas une femme.
+< Jules est une personne.
+* 
+* Mes hypothèses:
+< Jules est probablement masculin.
+< Jules n'est probablement pas féminin.
+< Jules est probablement un homme.
 < 

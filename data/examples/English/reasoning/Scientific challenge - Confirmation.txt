@@ -13,8 +13,8 @@ Peter has no father anymore.
 Peter had a father, called James.
 
 Every person is a man or a woman.
-Addison is a person.
-Addison is a man or a woman.
+Alex is a person.
+Alex is a man or a woman.
 
 Donald Trump is the president of the United States.
 The United States has a president, called Donald Trump.

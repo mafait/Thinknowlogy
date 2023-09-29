@@ -1,0 +1,28 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+Juan es el padre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+Ana es la madre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+Paz es un hijo.
+José es un hijo.
+Luisa es una hija.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+#Dev## Extra checks
+#Dev#Paul es un hombre.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Joe es un niño.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Laura es una mujer.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

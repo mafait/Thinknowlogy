@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -191,6 +195,12 @@
 < Adam is not a daughter. Because:
 <	- Adam is masculine.
 <	- Every daughter is not masculine.
+* 	and:
+<	- Adam is a son of Michael.
+<	- Every son is not a daughter.
+* 	and:
+<	- Michael has a son, called Adam.
+<	- Every son is not a daughter.
 < Adam is not a girl. Because:
 <	- Adam is masculine.
 <	- Every girl is not masculine.

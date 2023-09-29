@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -146,14 +146,20 @@
 * 
 * Mes conclusions:
 < Chaque père n'est pas une fille. En raison:
+<	- Chaque père est masculin.
 <	- Chaque fille est féminin.
+* 	et:
 <	- Chaque père est masculin.
-< Chaque père n'est pas une mère. En raison:
-<	- Chaque père est masculin.
-<	- Chaque mère n'est pas masculin.
+<	- Chaque fille n'est pas masculin.
 * 	et:
 <	- Chaque père est un homme.
+<	- Chaque homme n'est pas une fille.
+< Chaque père n'est pas une mère. En raison:
+<	- Chaque père est un homme.
 <	- Chaque homme n'est pas une mère.
+* 	et:
+<	- Chaque père est masculin.
+<	- Chaque mère n'est pas masculin.
 < Chaque père est masculin. En raison:
 <	- Chaque père est un homme.
 <	- Chaque homme est masculin.
@@ -181,8 +187,14 @@
 * 
 * Mes conclusions:
 < Chaque mère n'est pas un fils. En raison:
-<	- Chaque fils est masculin.
 <	- Chaque mère est féminin.
+<	- Chaque fils est masculin.
+* 	et:
+<	- Chaque mère est féminin.
+<	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas un fils.
 < Chaque mère est féminin. En raison:
 <	- Chaque mère est une femme.
 <	- Chaque femme est féminin.
@@ -216,17 +228,14 @@
 * 
 * Mes conclusions:
 < Chaque homme n'est pas une fille. En raison:
-<	- Chaque fille est féminin.
 <	- Chaque homme est masculin.
+<	- Chaque fille n'est pas masculin.
 < Chaque homme n'est pas une mère. En raison:
-<	- Chaque mère est féminin.
 <	- Chaque homme est masculin.
+<	- Chaque mère n'est pas masculin.
 < Chaque homme n'est pas féminin. En raison:
 <	- Chaque homme est masculin.
 < Chaque homme n'est pas une femme. En raison:
-<	- Chaque femme est féminin.
-<	- Chaque homme n'est pas féminin.
-* 	et:
 <	- Chaque homme est masculin.
 <	- Chaque femme n'est pas masculin.
 * 
@@ -238,19 +247,16 @@
 * 
 * Mes conclusions:
 < Chaque femme n'est pas un fils. En raison:
-<	- Chaque fils est masculin.
 <	- Chaque femme est féminin.
+<	- Chaque fils n'est pas féminin.
 < Chaque femme n'est pas un père. En raison:
-<	- Chaque père est masculin.
 <	- Chaque femme est féminin.
+<	- Chaque père n'est pas féminin.
 < Chaque femme n'est pas masculin. En raison:
 <	- Chaque femme est féminin.
 < Chaque femme n'est pas un homme. En raison:
 <	- Chaque femme est féminin.
 <	- Chaque homme n'est pas féminin.
-* 	et:
-<	- Chaque homme est masculin.
-<	- Chaque femme n'est pas masculin.
 * 
 * Mes hypothèses:
 < Une femme est probablement une personne. En raison:
@@ -260,11 +266,11 @@
 * 
 * Mes conclusions:
 < Chaque fils n'est pas une fille. En raison:
-<	- Chaque fils est masculin.
-<	- Chaque fille n'est pas masculin.
-* 	et:
 <	- Chaque fils est un homme.
 <	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Chaque fils est masculin.
+<	- Chaque fille n'est pas masculin.
 < Chaque fils est masculin. En raison:
 <	- Chaque fils est un homme.
 <	- Chaque homme est masculin.

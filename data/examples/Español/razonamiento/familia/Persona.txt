@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Cruz es una persona.
-#Dev#Mostrar el informe de justificación sobre Cruz.
+Angel es una persona.
+#Dev#Mostrar el informe de justificación sobre Angel.
 Ana es una persona.
 #Dev#Mostrar el informe de justificación sobre Ana.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -153,9 +157,6 @@
 * You have confirmed the specification - but none of its relations - of my earlier assumptions:
 < Laura is maybe a daughter of John and Anna.
 * 
-* My assumptions that have been adjusted:
-< Laura is probably a person.
-* 
 * My assumptions that have been concluded:
 < Laura is feminine.
 < Laura is not a son.
@@ -163,6 +164,9 @@
 < Laura is not a father.
 < Laura is not a man.
 < Laura is not masculine.
+* 
+* My assumptions that have been adjusted:
+< Laura is probably a person.
 < 
 * 
 * My conclusions:
@@ -172,6 +176,9 @@
 < Laura is not a son. Because:
 <	- Laura is feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is a daughter.
+<	- Every daughter is not a son.
 < Laura is not a boy. Because:
 <	- Laura is feminine.
 <	- Every boy is not feminine.

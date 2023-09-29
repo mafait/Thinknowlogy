@@ -81,7 +81,7 @@
 #Dev#Read the test file "English/reasoning/Specification-generalization - Mammals (singular)".
 #Dev#Read the test file "English/reasoning/Specification-generalization - Single specification".
 #Dev#Read the test file "English/reasoning/Switch language".
-#Dev#Read the test file "English/reasoning/The only option left - Addison is not a woman".
+#Dev#Read the test file "English/reasoning/The only option left - Alex is not a woman".
 #Dev#Read the test file "English/reasoning/The only option left - Boat".
 #Dev#Read the test file "English/reasoning/The only option left - Option".
 #Dev#Read the test file "English/reasoning/Tom is a cat".
@@ -204,8 +204,10 @@
 #Dev#Read the test file "English/reasoning/family/John has 2 sons and a daughter (before family definition)".
 #Dev#Read the test file "English/reasoning/family/John has a daughter and 2 sons".
 #Dev#Read the test file "English/reasoning/family/John is a father - Paul has 2 parents".
+#Dev#Read the test file "English/reasoning/family/John is a parent - Paul - Laura".
 #Dev#Read the test file "English/reasoning/family/John is a parent - Paul is a child of John and Anna".
 #Dev#Read the test file "English/reasoning/family/John is a parent - Paul is a son".
+#Dev#Read the test file "English/reasoning/family/John is the father - Paul - Laura".
 #Dev#Read the test file "English/reasoning/family/John is the father of Paul - Joe - Laura - Claudia".
 #Dev#Read the test file "English/reasoning/family/John was the father of Paul, Joe and Laura".
 #Dev#Read the test file "English/reasoning/family/Justification report".

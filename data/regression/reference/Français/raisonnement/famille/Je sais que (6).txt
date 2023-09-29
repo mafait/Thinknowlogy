@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -94,6 +94,10 @@
 < Un garçon est probablement une personne.
 < Un homme n'est probablement pas un garçon.
 < 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -210,11 +214,13 @@
 < Est Pascal féminin ou masculin?
 * 
 * Mes hypothèses qui ont été ajustées:
-< Pascal est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie.
 * 
 * Mes questions qui ont été ajustées:
 < Est Pascal un garçon ou un homme?
+* 
+* Mes hypothèses qui ont été ajustées:
+< Pascal est probablement une personne.
 * 
 * Mes conclusions:
 < Olivier a un fils, appelé Pascal.

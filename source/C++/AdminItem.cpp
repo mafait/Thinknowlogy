@@ -1400,14 +1400,14 @@
 		return adminReasoning_->drawExclusiveNegativeUserConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, previousSpecificationWordItem, currentSpecificationWordItem );
 		}
 
-	signed char AdminItem::drawNegativeUserConclusions( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *adjectiveSpecificationWordItem, WordItem *currentSpecificationWordItem )
+	signed char AdminItem::drawNegativeUserDefinitionConclusions( bool isArchivedAssignment, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *adjectiveSpecificationWordItem, WordItem *currentSpecificationWordItem )
 		{
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeUserConclusions";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeUserDefinitionConclusions";
 
 		if( adminReasoning_ == NULL )
 			return startError( functionNameString, NULL, NULL, "The admin reasoning module isn't created yet" );
 
-		return adminReasoning_->drawNegativeUserConclusions( isArchivedAssignment, generalizationWordTypeNr, userSpecificationItem, generalizationWordItem, adjectiveSpecificationWordItem, currentSpecificationWordItem );
+		return adminReasoning_->drawNegativeUserDefinitionConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, adjectiveSpecificationWordItem, currentSpecificationWordItem );
 		}
 
 	signed char AdminItem::drawOnlyOptionLeftNounConclusion( bool isInactiveAssignment, bool isArchivedAssignment, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, WordItem *generalizationWordItem )

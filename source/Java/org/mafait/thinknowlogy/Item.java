@@ -46,7 +46,7 @@ class Item
 
 	// Private methods
 
-	private static int assumptionGrade( boolean hasFeminineOrMasculineProperNounEnding, boolean isExclusivePrimarySpecification, boolean hasNegativePrimarySpecification, boolean hasAdditionalDefinitionSpecification, boolean hasSecondarySpecification, short justificationTypeNr )
+	private static int justificationAssumptionGrade( boolean hasFeminineOrMasculineProperNounEnding, boolean hasAdditionalDefinitionSpecification, boolean isExclusivePrimarySpecification, boolean isNegativePrimarySpecification, boolean isNegativeSecondarySpecification, short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
@@ -57,24 +57,29 @@ class Item
 				return 1;
 
 			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION:
-				return ( hasAdditionalDefinitionSpecification ? ( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
+				return ( hasAdditionalDefinitionSpecification ?
+						( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
 
 			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasAdditionalDefinitionSpecification &&
 						hasFeminineOrMasculineProperNounEnding ? 3 :
+
 							( hasFeminineOrMasculineProperNounEnding ||
 							isExclusivePrimarySpecification ? 2 : 1 ) );
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
-				return ( hasNegativePrimarySpecification ||
-						hasAdditionalDefinitionSpecification ||
+				return ( hasAdditionalDefinitionSpecification ||
+						isNegativePrimarySpecification ||
 
 						( isExclusivePrimarySpecification &&
-						!hasSecondarySpecification ) ? 1 : 0 );
+						!isNegativeSecondarySpecification ) ? 1 : 0 );
 
 			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
-			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+
+			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ?
+						( hasFeminineOrMasculineProperNounEnding ? 2 : 1 ) : 0 );
 
 			default:
 				return Constants.NO_ASSUMPTION_LEVEL;
@@ -1110,9 +1115,9 @@ class Item
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected int assumptionLevel( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem additionalDefinitionSpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem additionalProperNounSpecificationItem )
+	protected int justificationAssumptionLevel( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem additionalDefinitionSpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem additionalProperNounSpecificationItem )
 		{
-		int assumptionLevel = assumptionGrade( hasFeminineOrMasculineProperNounEnding, ( primarySpecificationItem != null && primarySpecificationItem.isExclusiveSpecification() ), ( primarySpecificationItem != null && primarySpecificationItem.isNegative() ), ( additionalDefinitionSpecificationItem != null ), ( secondarySpecificationItem != null ), justificationTypeNr );
+		int assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != null ), ( primarySpecificationItem != null && primarySpecificationItem.isExclusiveSpecification() ), ( primarySpecificationItem != null && primarySpecificationItem.isNegative() ), ( secondarySpecificationItem != null && secondarySpecificationItem.isNegative() ), justificationTypeNr );
 		int tempAssumptionLevel;
 
 		if( primarySpecificationItem != null &&

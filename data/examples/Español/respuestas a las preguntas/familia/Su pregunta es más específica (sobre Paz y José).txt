@@ -1,0 +1,12 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+¿Es Paz un hombre?
+¿Es Paz una mujer?
+¿Es Paz un hijo?
+¿Es José una mujer?
+¿Es José una niña?
+¿Es José un hijo o una hija?
+¿Es José una hija?
+¿Es Luisa una niña o una mujer?
+¿Es Luisa una niña?
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

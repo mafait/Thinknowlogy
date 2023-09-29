@@ -46,16 +46,16 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
+< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -90,6 +90,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -106,7 +110,7 @@
 * 
 * No sé nada acerca de Ana, pero yo seguiré esta pregunta en la mente.
 * 
-* No sé nada acerca de Pablo, pero yo seguiré esta pregunta en la mente.
+* No sé nada acerca de Paz, pero yo seguiré esta pregunta en la mente.
 * 
 * No sé nada acerca de Luisa, pero yo seguiré esta pregunta en la mente.
 * 
@@ -126,8 +130,8 @@
 * 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es Pablo un hijo?
-* No sé nada acerca de Pablo, pero yo seguiré esta pregunta en la mente.
+< ¿Es Paz un hijo?
+* No sé nada acerca de Paz, pero yo seguiré esta pregunta en la mente.
 * 
 * 
 * Tenías una pregunta similar antes:

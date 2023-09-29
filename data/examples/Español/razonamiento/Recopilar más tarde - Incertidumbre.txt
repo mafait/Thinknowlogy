@@ -8,8 +8,8 @@ Una madre es probablemente un padre.
 Un niño es posiblemente un hijo.
 Una niña es probablemente un hijo.
 #Dev#Mostrar el informe de justificación sobre hijos.
-Pablo es un niño.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+Paz es un niño.
+#Dev#Mostrar el informe de justificación sobre Paz.
 Luisa es probablemente una niña.
 #Dev#Mostrar el informe de justificación sobre Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -94,6 +94,10 @@
 < A boy is probably a person.
 < A man is probably not a boy.
 < 
+* 
+* My assumptions that have been concluded:
+< Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -410,6 +414,9 @@
 < Laura is maybe not a son. Because:
 <	- Laura is maybe feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is maybe a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is maybe not a boy. Because:
 <	- Laura is maybe feminine.
 <	- Every boy is not feminine.
@@ -548,6 +555,12 @@
 < Paul has 2 parents, called John and Anna. Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul, Joe and Laura.
+* 	and:
+<	- Paul has a father, called John.
+<	- A father is probably a parent.
+* 	and:
+<	- Paul has a mother, called Anna.
+<	- A mother is probably a parent.
 < Paul has a father, called John. Because:
 <	- John is the father of Paul, Joe and Laura.
 < Paul has a mother, called Anna. Because:
@@ -600,6 +613,12 @@
 < Joe has 2 parents, called John and Anna. Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul, Joe and Laura.
+* 	and:
+<	- Joe has a father, called John.
+<	- A father is probably a parent.
+* 	and:
+<	- Joe has a mother, called Anna.
+<	- A mother is probably a parent.
 < Joe has a father, called John. Because:
 <	- John is the father of Paul, Joe and Laura.
 < Joe has a mother, called Anna. Because:
@@ -652,6 +671,12 @@
 < Laura has 2 parents, called John and Anna. Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul, Joe and Laura.
+* 	and:
+<	- Laura has a father, called John.
+<	- A father is probably a parent.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- A mother is probably a parent.
 < Laura has a father, called John. Because:
 <	- John is the father of Paul, Joe and Laura.
 < Laura has a mother, called Anna. Because:
@@ -687,6 +712,9 @@
 < Laura is maybe not a son. Because:
 <	- Laura is maybe feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is maybe a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is maybe not a boy. Because:
 <	- Laura is maybe feminine.
 <	- Every boy is not feminine.
@@ -891,8 +919,15 @@
 <	- Laura is a daughter of John and Anna.
 <	- Every daughter is feminine.
 < Laura is not a son. Because:
+<	- Anna has a daughter, called Laura.
+<	- John has a daughter, called Laura.
+<	- Every daughter is not a son.
+* 	and:
 <	- Laura is feminine.
 <	- Every son is not feminine.
+* 	and:
+<	- Laura is a daughter of John and Anna.
+<	- Every daughter is not a son.
 < Laura is not a boy. Because:
 <	- Laura is feminine.
 <	- Every boy is not feminine.
@@ -915,6 +950,12 @@
 < Laura has 2 parents, called John and Anna. Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul, Joe and Laura.
+* 	and:
+<	- Laura has a father, called John.
+<	- A father is probably a parent.
+* 	and:
+<	- Laura has a mother, called Anna.
+<	- A mother is probably a parent.
 < Laura has a father, called John. Because:
 <	- John is the father of Paul, Joe and Laura.
 < Laura has a mother, called Anna. Because:
@@ -971,6 +1012,12 @@
 < Paul has 2 parents, called John and Anna. Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Anna is a parent of Paul, Joe and Laura.
+* 	and:
+<	- Paul has a father, called John.
+<	- A father is probably a parent.
+* 	and:
+<	- Paul has a mother, called Anna.
+<	- A mother is probably a parent.
 < Paul has a father, called John. Because:
 <	- John is the father of Paul, Joe and Laura.
 < Paul has a mother, called Anna. Because:

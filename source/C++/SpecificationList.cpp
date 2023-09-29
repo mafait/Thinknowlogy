@@ -595,21 +595,6 @@ class SpecificationList : private List
 		return false;
 		}
 
-	bool hasPartOfSpecification()
-		{
-		SpecificationItem *searchSpecificationItem = firstActiveSpecificationItem( false, false );
-
-		while( searchSpecificationItem != NULL )
-			{
-			if( searchSpecificationItem->isPartOf() )
-				return true;
-
-			searchSpecificationItem = searchSpecificationItem->nextSelectedSpecificationItem();
-			}
-
-		return false;
-		}
-
 	bool hasPossiblyGapInKnowledge( unsigned int exclusiveSecondarySpecificationCollectionNr, unsigned int primarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem )
 		{
 		unsigned int searchSpecificationCollectionNr;
@@ -828,7 +813,6 @@ class SpecificationList : private List
 	signed char collectGeneralizations( bool isInactiveAssignment, bool isArchivedAssignment, bool isExclusiveGeneralization, unsigned int generalizationCollectionNr )
 		{
 		SpecificationItem *searchSpecificationItem = firstAssignmentOrSpecificationItem( false, isInactiveAssignment, isArchivedAssignment, false );
-		WordItem *_myWordItem = myWordItem();
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "collectGeneralizations";
 
 		if( generalizationCollectionNr <= NO_COLLECTION_NR )
@@ -840,8 +824,7 @@ class SpecificationList : private List
 			// Definition specification
 			searchSpecificationItem->isGeneralizationNoun() ) &&
 
-			!searchSpecificationItem->hasGeneralizationCollection() &&
-			_myWordItem->hasCollectionNr( generalizationCollectionNr ) )
+			!searchSpecificationItem->hasGeneralizationCollection() )
 				{
 				if( searchSpecificationItem->hasCurrentCreationSentenceNr() )
 					{
@@ -1008,7 +991,7 @@ class SpecificationList : private List
 			if( searchSpecificationItem->isPartOf() &&
 			searchSpecificationItem->isOlderItem() &&
 			searchSpecificationItem->hasCurrentCreationSentenceNr() &&
-			searchSpecificationItem->removeObsoleteAssumptionJustifications( true, false ) != RESULT_OK )
+			searchSpecificationItem->removeObsoleteAssumptionJustifications( false, false ) != RESULT_OK )
 				return addError( functionNameString, "I failed to remove obsolete assumption justifications" );
 
 			searchSpecificationItem = searchSpecificationItem->nextSelectedSpecificationItem();

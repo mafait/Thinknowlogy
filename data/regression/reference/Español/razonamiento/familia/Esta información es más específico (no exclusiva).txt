@@ -46,16 +46,16 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
+< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -90,6 +90,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -104,131 +108,131 @@
 < 
 * 
 * Mis conclusiones:
-< Cruz es parte de una familia.
+< Angel es parte de una familia.
 * 
 * Mis suposiciones:
-< Cruz es probablemente una persona.
-< Cruz tiene probablemente un hijo.
+< Angel es probablemente una persona.
+< Angel tiene probablemente un hijo.
 * 
 * Mis preguntas:
-< ¿Es Cruz masculino o femenina?
-< ¿Es Cruz un padre o una madre?
-< ¿Es Cruz un hombre o una mujer?
+< ¿Es Angel masculino o femenina?
+< ¿Es Angel un padre o una madre?
+< ¿Es Angel un hombre o una mujer?
 < 
 * 
 * Mis conclusiones:
-< Cruz es parte de una familia. Porque:
-<	- Cruz es un padre o una madre.
+< Angel es parte de una familia. Porque:
+<	- Angel es un padre o una madre.
 <	- Padres son parte de cada familia.
 * 
 * Mis suposiciones:
-< Cruz es probablemente una persona. Porque:
-<	- Cruz es un padre o una madre.
+< Angel es probablemente una persona. Porque:
+<	- Angel es un padre o una madre.
 <	- Un padre es probablemente una persona.
 <	- Una madre es probablemente una persona.
-< Cruz tiene probablemente un hijo. Porque:
+< Angel tiene probablemente un hijo. Porque:
 <	- Cada familia tiene padres y hijos.
-<	- Cruz es un padre o una madre.
+<	- Angel es un padre o una madre.
 * 
 * Mis preguntas:
-< ¿Es Cruz masculino o femenina? Porque:
-<	- Cruz es probablemente una persona.
+< ¿Es Angel masculino o femenina? Porque:
+<	- Angel es probablemente una persona.
 <	- Cada persona es masculino o femenina.
 * 	y:
-<	- ¿Es Cruz un hombre o una mujer?
+<	- ¿Es Angel un hombre o una mujer?
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Cruz es un padre o una madre.
+<	- Angel es un padre o una madre.
 <	- Cada madre es femenina.
 <	- Cada padre es masculino.
-< ¿Es Cruz un padre o una madre? Porque:
-<	- Cruz es un padre o una madre.
-< ¿Es Cruz un hombre o una mujer? Porque:
-<	- Cruz es un padre o una madre.
+< ¿Es Angel un padre o una madre? Porque:
+<	- Angel es un padre o una madre.
+< ¿Es Angel un hombre o una mujer? Porque:
+<	- Angel es un padre o una madre.
 <	- Cada madre es una mujer.
 <	- Cada padre es un hombre.
 * 	y:
-<	- Cruz es probablemente una persona.
+<	- Angel es probablemente una persona.
 <	- Cada persona es un hombre o una mujer.
 < 
 * 
 * Esta información es más específica que la información anterior:
-< Cruz es un padre o una madre.
+< Angel es un padre o una madre.
 * 
 * Mis preguntas que han sido respondidas:
-< ¿Es Cruz un padre o una madre?
-< ¿Es Cruz un hombre o una mujer?
-< ¿Es Cruz masculino o femenina?
+< ¿Es Angel un padre o una madre?
+< ¿Es Angel un hombre o una mujer?
+< ¿Es Angel masculino o femenina?
 * 
 * Mis conclusiones:
-< Cruz no es una niña.
-< Cruz no es femenina.
-< Cruz no es una mujer.
-< Cruz es un hombre.
-< Cruz es masculino.
-< Cruz no es una hija.
-< Cruz no es una madre.
+< Angel no es una niña.
+< Angel no es femenina.
+< Angel no es una mujer.
+< Angel es un hombre.
+< Angel es masculino.
+< Angel no es una hija.
+< Angel no es una madre.
 * 
 * Mis suposiciones:
-< Cruz no es probablemente un niño.
+< Angel no es probablemente un niño.
 < 
 * 
 * Mis conclusiones:
-< Cruz es parte de una familia. Porque:
-<	- Cruz es un padre.
+< Angel es parte de una familia. Porque:
+<	- Angel es un padre.
 <	- Padres son parte de cada familia.
-< Cruz no es una niña. Porque:
-<	- Cruz es un padre.
+< Angel no es una niña. Porque:
+<	- Angel es un padre.
 <	- Cada padre no es una niña.
 * 	y:
-<	- Cruz es un hombre.
+<	- Angel es un hombre.
 <	- Cada hombre no es una niña.
 * 	y:
-<	- Cruz es masculino.
+<	- Angel es masculino.
 <	- Cada niña no es masculino.
-< Cruz no es femenina. Porque:
-<	- Cruz es un padre.
+< Angel no es femenina. Porque:
+<	- Angel es un padre.
 <	- Cada padre no es femenina.
 * 	y:
-<	- Cruz es un hombre.
+<	- Angel es un hombre.
 <	- Cada hombre no es femenina.
-< Cruz no es una mujer. Porque:
-<	- Cruz es un padre.
+< Angel no es una mujer. Porque:
+<	- Angel es un padre.
 <	- Cada padre no es una mujer.
 * 	y:
-<	- Cruz es un hombre.
+<	- Angel es un hombre.
 <	- Cada hombre no es una mujer.
 * 	y:
-<	- Cruz es masculino.
+<	- Angel es masculino.
 <	- Cada mujer no es masculino.
-< Cruz es un hombre. Porque:
-<	- Cruz es un padre.
+< Angel es un hombre. Porque:
+<	- Angel es un padre.
 <	- Cada padre es un hombre.
-< Cruz es masculino. Porque:
-<	- Cruz es un hombre.
+< Angel es masculino. Porque:
+<	- Angel es un hombre.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Cruz es un padre.
+<	- Angel es un padre.
 <	- Cada padre es masculino.
-< Cruz no es una hija. Porque:
-<	- Cruz es masculino.
+< Angel no es una hija. Porque:
+<	- Angel es masculino.
 <	- Cada hija no es masculino.
-< Cruz no es una madre. Porque:
-<	- Cruz es masculino.
+< Angel no es una madre. Porque:
+<	- Angel es masculino.
 <	- Cada madre no es masculino.
 * 
 * Mis suposiciones:
-< Cruz es probablemente una persona. Porque:
-<	- Cruz es un padre.
+< Angel es probablemente una persona. Porque:
+<	- Angel es un padre.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cruz es un hombre.
+<	- Angel es un hombre.
 <	- Un hombre es probablemente una persona.
-< Cruz tiene probablemente un hijo. Porque:
+< Angel tiene probablemente un hijo. Porque:
 <	- Cada familia tiene padres y hijos.
-<	- Cruz es un padre.
-< Cruz no es probablemente un niño. Porque:
-<	- Cruz es un hombre.
+<	- Angel es un padre.
+< Angel no es probablemente un niño. Porque:
+<	- Angel es un hombre.
 <	- Un hombre no es probablemente un niño.
 < 

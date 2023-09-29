@@ -7,13 +7,13 @@ Mostrar " lenguaje humano como fuente de inteligencia natural. Estoy utilizando 
 Mostrar " del lenguaje humano para replicar la inteligencia humana en software.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " La lógica natural del lenguaje se demuestra por:".
-Mostrar " * Razonamiento en Lengua controlada:".
-Mostrar "   - sacar conclusiones (más avanzada que las soluciones científicas),".
-Mostrar "   - hacer suposiciones (con el nivel de ajuste automático de la incertidumbre),".
-Mostrar "   - haciendo preguntas acerca de las brechas en el conocimiento,".
-Mostrar "   - mostrar los informes de justificación para el conocimiento autogenerado,".
-Mostrar "   - detección de confirmaciones y conflictos, y capacidades de autoorganización;".
-Mostrar " * El multilingüismo, probando: Los lenguajes naturales tienen un origen común y lógico.".
+Mostrar " * Razonamiento (en oraciones con gramática restringida):".
+Mostrar "   - sacando conclusiones (más avanzadas que las soluciones científicas),".
+Mostrar "   - haciendo suposiciones (con nivel de incertidumbre autoajustable),".
+Mostrar "   - haciendo preguntas sobre las lagunas en el conocimiento,".
+Mostrar "   - mostrando informes de justificación del conocimiento autogenerado,".
+Mostrar "   - detectando confirmaciones y conflictos; utilizando capacidades de autoorganización;".
+Mostrar " * El multilingüismo, asumiendo que las lenguas tienen un origen común y lógico.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " Desafío a cualquiera a superar los resultados más simples de este sistema de razonamiento de".
 Mostrar " una manera genérica: de oraciones con gramática restringida, a través de algoritmos, de regreso,".

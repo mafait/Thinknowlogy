@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -95,6 +95,10 @@
 < Un homme n'est probablement pas un garçon.
 < 
 * 
+* Mes hypothèses qui ont été conclues:
+< Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
+* 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
@@ -110,140 +114,140 @@
 < 
 * 
 * Mes hypothèses:
-< Dominique est probablement une personne.
-< Dominique est probablement un parent.
-< Dominique est probablement partie d'une famille.
-< Dominique a possible un enfant.
+< Jules est probablement une personne.
+< Jules est probablement un parent.
+< Jules est probablement partie d'une famille.
+< Jules a possible un enfant.
 * 
 * Mes questions:
-< Est Dominique masculin ou féminin?
-< Est Dominique un homme ou une femme?
-< Est Dominique un père ou une mère?
+< Est Jules masculin ou féminin?
+< Est Jules un homme ou une femme?
+< Est Jules un père ou une mère?
 < 
 * 
 * Mes hypothèses:
-< Dominique est probablement une personne. En raison:
-<	- Dominique est un père ou une mère.
+< Jules est probablement une personne. En raison:
+<	- Jules est un père ou une mère.
 <	- Un père est probablement une personne.
 <	- Une mère est probablement une personne.
-< Dominique est probablement un parent. En raison:
-<	- Dominique est un père ou une mère.
+< Jules est probablement un parent. En raison:
+<	- Jules est un père ou une mère.
 <	- Un père est probablement un parent.
-< Dominique est probablement partie d'une famille. En raison:
-<	- Dominique est probablement un parent.
+< Jules est probablement partie d'une famille. En raison:
+<	- Jules est probablement un parent.
 <	- Parents sont partie de chaque famille.
-< Dominique a possible un enfant. En raison:
+< Jules a possible un enfant. En raison:
 <	- Chaque famille a parents et enfants.
-<	- Dominique est probablement un parent.
+<	- Jules est probablement un parent.
 * 
 * Mes questions:
-< Est Dominique masculin ou féminin? En raison:
-<	- Dominique est probablement une personne.
+< Est Jules masculin ou féminin? En raison:
+<	- Jules est probablement une personne.
 <	- Chaque personne est masculin ou féminin.
 * 	et:
-<	- Est Dominique un homme ou une femme?
+<	- Est Jules un homme ou une femme?
 <	- Chaque femme est féminin.
 <	- Chaque homme est masculin.
 * 	et:
-<	- Dominique est probablement un parent.
+<	- Jules est probablement un parent.
 <	- Chaque parent est féminin ou masculin.
 * 	et:
-<	- Dominique est un père ou une mère.
+<	- Jules est un père ou une mère.
 <	- Chaque mère est féminin.
 <	- Chaque père est masculin.
-< Est Dominique un homme ou une femme? En raison:
-<	- Dominique est probablement un parent.
+< Est Jules un homme ou une femme? En raison:
+<	- Jules est probablement un parent.
 <	- Chaque parent est une femme ou un homme.
 * 	et:
-<	- Dominique est probablement une personne.
+<	- Jules est probablement une personne.
 <	- Chaque personne est un homme ou une femme.
 * 	et:
-<	- Dominique est un père ou une mère.
+<	- Jules est un père ou une mère.
 <	- Chaque mère est une femme.
 <	- Chaque père est un homme.
-< Est Dominique un père ou une mère? En raison:
-<	- Dominique est un père ou une mère.
+< Est Jules un père ou une mère? En raison:
+<	- Jules est un père ou une mère.
 < 
 * 
 * Cette information est plus spécifique que votre information antérieure:
-< Dominique est un père ou une mère.
+< Jules est un père ou une mère.
 * 
 * Mes questions qui sont répondues:
-< Est Dominique un père ou une mère?
-< Est Dominique un homme ou une femme?
-< Est Dominique masculin ou féminin?
+< Est Jules un père ou une mère?
+< Est Jules un homme ou une femme?
+< Est Jules masculin ou féminin?
 * 
 * Mes conclusions:
-< Dominique n'est pas une jeune-fille.
-< Dominique n'est pas féminin.
-< Dominique n'est pas une femme.
-< Dominique est un homme.
-< Dominique est masculin.
-< Dominique n'est pas une fille.
-< Dominique n'est pas une mère.
+< Jules n'est pas une jeune-fille.
+< Jules n'est pas féminin.
+< Jules n'est pas une femme.
+< Jules est un homme.
+< Jules est masculin.
+< Jules n'est pas une fille.
+< Jules n'est pas une mère.
 * 
 * Mes hypothèses:
-< Dominique n'est probablement pas un garçon.
+< Jules n'est probablement pas un garçon.
 < 
 * 
 * Mes conclusions:
-< Dominique n'est pas une jeune-fille. En raison:
-<	- Dominique est un père.
+< Jules n'est pas une jeune-fille. En raison:
+<	- Jules est un père.
 <	- Chaque père n'est pas une jeune-fille.
 * 	et:
-<	- Dominique est un homme.
+<	- Jules est un homme.
 <	- Chaque homme n'est pas une jeune-fille.
 * 	et:
-<	- Dominique est masculin.
+<	- Jules est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
-< Dominique n'est pas féminin. En raison:
-<	- Dominique est un père.
+< Jules n'est pas féminin. En raison:
+<	- Jules est un père.
 <	- Chaque père n'est pas féminin.
 * 	et:
-<	- Dominique est un homme.
+<	- Jules est un homme.
 <	- Chaque homme n'est pas féminin.
-< Dominique n'est pas une femme. En raison:
-<	- Dominique est un père.
+< Jules n'est pas une femme. En raison:
+<	- Jules est un père.
 <	- Chaque père n'est pas une femme.
 * 	et:
-<	- Dominique est un homme.
+<	- Jules est un homme.
 <	- Chaque homme n'est pas une femme.
 * 	et:
-<	- Dominique est masculin.
+<	- Jules est masculin.
 <	- Chaque femme n'est pas masculin.
-< Dominique est un homme. En raison:
-<	- Dominique est un père.
+< Jules est un homme. En raison:
+<	- Jules est un père.
 <	- Chaque père est un homme.
-< Dominique est masculin. En raison:
-<	- Dominique est un homme.
+< Jules est masculin. En raison:
+<	- Jules est un homme.
 <	- Chaque homme est masculin.
 * 	et:
-<	- Dominique est un père.
+<	- Jules est un père.
 <	- Chaque père est masculin.
-< Dominique n'est pas une fille. En raison:
-<	- Dominique est masculin.
+< Jules n'est pas une fille. En raison:
+<	- Jules est masculin.
 <	- Chaque fille n'est pas masculin.
-< Dominique n'est pas une mère. En raison:
-<	- Dominique est masculin.
+< Jules n'est pas une mère. En raison:
+<	- Jules est masculin.
 <	- Chaque mère n'est pas masculin.
 * 
 * Mes hypothèses:
-< Dominique est probablement une personne. En raison:
-<	- Dominique est un père.
+< Jules est probablement une personne. En raison:
+<	- Jules est un père.
 <	- Un père est probablement une personne.
 * 	et:
-<	- Dominique est un homme.
+<	- Jules est un homme.
 <	- Un homme est probablement une personne.
-< Dominique est probablement un parent. En raison:
-<	- Dominique est un père.
+< Jules est probablement un parent. En raison:
+<	- Jules est un père.
 <	- Un père est probablement un parent.
-< Dominique est probablement partie d'une famille. En raison:
-<	- Dominique est probablement un parent.
+< Jules est probablement partie d'une famille. En raison:
+<	- Jules est probablement un parent.
 <	- Parents sont partie de chaque famille.
-< Dominique a possible un enfant. En raison:
+< Jules a possible un enfant. En raison:
 <	- Chaque famille a parents et enfants.
-<	- Dominique est probablement un parent.
-< Dominique n'est probablement pas un garçon. En raison:
-<	- Dominique est un homme.
+<	- Jules est probablement un parent.
+< Jules n'est probablement pas un garçon. En raison:
+<	- Jules est un homme.
 <	- Un homme n'est probablement pas un garçon.
 < 

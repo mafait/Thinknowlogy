@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every mother is not a father.
 < Every father is not a mother.
+< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -79,8 +79,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -146,14 +146,20 @@
 * 
 * My conclusions:
 < Every father is not a daughter. Because:
+<	- Every father is masculine.
 <	- Every daughter is feminine.
+* 	and:
 <	- Every father is masculine.
-< Every father is not a mother. Because:
-<	- Every father is masculine.
-<	- Every mother is not masculine.
+<	- Every daughter is not masculine.
 * 	and:
 <	- Every father is a man.
+<	- Every man is not a daughter.
+< Every father is not a mother. Because:
+<	- Every father is a man.
 <	- Every man is not a mother.
+* 	and:
+<	- Every father is masculine.
+<	- Every mother is not masculine.
 < Every father is masculine. Because:
 <	- Every father is a man.
 <	- Every man is masculine.
@@ -181,8 +187,14 @@
 * 
 * My conclusions:
 < Every mother is not a son. Because:
-<	- Every son is masculine.
 <	- Every mother is feminine.
+<	- Every son is masculine.
+* 	and:
+<	- Every mother is feminine.
+<	- Every son is not feminine.
+* 	and:
+<	- Every mother is a woman.
+<	- Every woman is not a son.
 < Every mother is feminine. Because:
 <	- Every mother is a woman.
 <	- Every woman is feminine.
@@ -216,17 +228,14 @@
 * 
 * My conclusions:
 < Every man is not a daughter. Because:
-<	- Every daughter is feminine.
 <	- Every man is masculine.
+<	- Every daughter is not masculine.
 < Every man is not a mother. Because:
-<	- Every mother is feminine.
 <	- Every man is masculine.
+<	- Every mother is not masculine.
 < Every man is not feminine. Because:
 <	- Every man is masculine.
 < Every man is not a woman. Because:
-<	- Every woman is feminine.
-<	- Every man is not feminine.
-* 	and:
 <	- Every man is masculine.
 <	- Every woman is not masculine.
 * 
@@ -238,19 +247,16 @@
 * 
 * My conclusions:
 < Every woman is not a son. Because:
-<	- Every son is masculine.
 <	- Every woman is feminine.
+<	- Every son is not feminine.
 < Every woman is not a father. Because:
-<	- Every father is masculine.
 <	- Every woman is feminine.
+<	- Every father is not feminine.
 < Every woman is not masculine. Because:
 <	- Every woman is feminine.
 < Every woman is not a man. Because:
 <	- Every woman is feminine.
 <	- Every man is not feminine.
-* 	and:
-<	- Every man is masculine.
-<	- Every woman is not masculine.
 * 
 * My assumptions:
 < A woman is probably a person. Because:
@@ -260,11 +266,11 @@
 * 
 * My conclusions:
 < Every son is not a daughter. Because:
-<	- Every son is masculine.
-<	- Every daughter is not masculine.
-* 	and:
 <	- Every son is a man.
 <	- Every man is not a daughter.
+* 	and:
+<	- Every son is masculine.
+<	- Every daughter is not masculine.
 < Every son is masculine. Because:
 <	- Every son is a man.
 <	- Every man is masculine.

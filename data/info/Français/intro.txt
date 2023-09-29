@@ -7,13 +7,13 @@ Affichez " comme une source d'intelligence naturelle. J'utilise la conception in
 Affichez " humain afin de reproduire l'intelligence humaine dans un logiciel.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " La logique naturelle du langage est démontrée par:".
-Affichez " * Raisonnement en Langue contrôlée:".
-Affichez "   - tirer des conclusions (plus avancés que les solutions scientifiques),".
-Affichez "   - faire des hypothèses (avec niveau d'incertitude auto-réglage),".
-Affichez "   - poser des questions (environ lacunes dans les connaissances),".
-Affichez "   - l'affichage de rapports de justification pour la connaissance autoproduite,".
-Affichez "   - détection des confirmations et des conflits, et capacités d'auto-organisation;".
-Affichez " * Multilinguisme, prouver: Langues naturelles ont une origine commune et logique.".
+Affichez " * Raisonnement (dans des phrases à grammaire restreinte):".
+Affichez "   - en tirant des conclusions (plus avancées que les solutions scientifiques),".
+Affichez "   - en faisant des hypothèses (avec un niveau d'incertitude auto-ajustable),".
+Affichez "   - en posant des questions sur les lacunes dans les connaissances,".
+Affichez "   - en affichant des rapports de justification pour les connaissances auto-générées,".
+Affichez "   - en détectant les confirmations et les conflits; en utilisant des capacités d'auto-organisation;".
+Affichez " * Multilinguisme, en supposant que les langues ont une origine commune et logique.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " Je défie quiconque de battre les résultats les plus simples de ce système de raisonnement d'une".
 Affichez " manière générique: à partir de phrases à grammaire restreinte, par des algorithmes, retour à cette".

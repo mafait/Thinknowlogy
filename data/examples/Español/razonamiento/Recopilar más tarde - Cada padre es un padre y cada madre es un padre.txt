@@ -2,6 +2,6 @@
 Juan es un padre.
 Ana es una madre.
 Cada niño es un hijo y cada niña es una hija.
-Pablo es un niño.
+Paz es un niño.
 Luisa es una niña.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

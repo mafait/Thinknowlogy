@@ -288,7 +288,7 @@
 
 
 #--- Masculino terminaciones de nombre propio ---
-#@0		:3001
+@0		:3001	$o
 
 
 #--- Femeninas terminaciones de sustantivo singular ---

@@ -1,10 +1,10 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-¿Es Pablo un hijo?
-¿Es Pablo hijo de Juan?
-¿Es Pablo hijo de Juan y Ana?
-¿Es Pablo hijo de Juan y Ana?
-¿Es Pablo posiblemente hijo de Juan y Ana?
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+¿Es Paz un hijo?
+¿Es Paz hijo de Juan?
+¿Es Paz hijo de Juan y Ana?
+¿Es Paz hijo de Juan y Ana?
+¿Es Paz posiblemente hijo de Juan y Ana?
 ¿Es Luisa una hija?
 ¿Es Luisa hija de Juan?
 ¿Es Luisa hija de Juan y Ana?

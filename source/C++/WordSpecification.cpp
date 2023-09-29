@@ -1255,9 +1255,9 @@ class WordSpecification
 					// Opposite negative of conflicting specification word
 					if( conflictingSpecificationItem->hasCompoundSpecificationCollection() &&
 					( relatedSpecificationItem = myWordItem_->bestMatchingSpecificationWordSpecificationItem( true, !isNegative, isPossessive, NO_QUESTION_PARAMETER, conflictingSpecificationItem->specificationCollectionNr(), NULL ) ) != NULL &&
-					relatedSpecificationItem == myWordItem_->firstSpecificationItem( !isNegative, isPossessive, false, specificationWordItem ) &&
 					relatedSpecificationItem != previousConflictingSpecificationItem &&
 					relatedSpecificationItem != previousConflictingSpecificationItem_ &&
+					relatedSpecificationItem == myWordItem_->firstSpecificationItem( !isNegative, isPossessive, false, specificationWordItem ) &&
 					// Write conflicting specification
 					relatedSpecificationItem->writeSpecificationConflict( false, true ) != RESULT_OK )
 						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a related conflicting specification" );
@@ -1468,12 +1468,21 @@ class WordSpecification
 					obsoleteSpecificationItem = myWordItem_->firstSelfGeneratedCheckSpecificationItem( false, false, isNegative, isPossessive, false, questionParameter, NO_COLLECTION_NR, ( isAssignment ? NO_CONTEXT_NR : relationContextNr ), specificationWordItem );
 				else
 					{
-					if( ( foundSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, isArchivedAssignment, isNegative, isPossessive, isQuestion, specificationCollectionNr, ( isAssignment && !isArchivedAssignment ? NO_CONTEXT_NR : ( hasCopiedRelationContext ? copiedRelationContextNr : relationContextNr ) ), specificationWordItem ) ) == NULL &&
-					// Try to find alternative
-					!isArchivedAssignment &&
-					( tempSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, isArchivedAssignment, isNegative, isPossessive, isQuestion, specificationCollectionNr, NO_CONTEXT_NR, specificationWordItem ) ) != NULL &&
-					tempSpecificationItem->isSelfGeneratedConclusion() )
-						foundSpecificationItem = tempSpecificationItem;
+					if( ( foundSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, isArchivedAssignment, isNegative, isPossessive, isQuestion, specificationCollectionNr, ( isAssignment && !isArchivedAssignment ? NO_CONTEXT_NR : ( hasCopiedRelationContext ? copiedRelationContextNr : relationContextNr ) ), specificationWordItem ) ) == NULL )
+						{
+						// Try to find alternative
+						if( !isArchivedAssignment &&
+						( tempSpecificationItem = myWordItem_->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, isArchivedAssignment, isNegative, isPossessive, isQuestion, specificationCollectionNr, NO_CONTEXT_NR, specificationWordItem ) ) != NULL &&
+						tempSpecificationItem->isSelfGeneratedConclusion() )
+							foundSpecificationItem = tempSpecificationItem;
+						}
+					else
+						{
+						if( isExclusiveSpecification &&
+						!foundSpecificationItem->isExclusiveSpecification() &&
+						myWordItem_->firstExclusiveSpecificationItem( specificationWordItem ) != NULL )
+							return myWordItem_->startCreateAndAssignResultErrorInWord( functionNameString, moduleNameString_, "An exclusive specification was requested. But I selected a non-exclusive specification instead" );
+						}
 
 					if( foundSpecificationItem == NULL )
 						{
@@ -1618,8 +1627,8 @@ class WordSpecification
 									// Test file: "Paul - Joe - Laura - John and Anna (parents)"
 									!foundSpecificationItem->hasCurrentCreationSentenceNr() ) &&
 
-									firstJustificationItem->isReversibleConclusion() &&
-									foundSpecificationItem->hasNonCompoundSpecificationCollection() &&
+					firstJustificationItem->isReversibleConclusion() &&
+					foundSpecificationItem->hasNonCompoundSpecificationCollection() &&
 									!relationWordItem->hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation() )
 										obsoleteAssumptionSpecificationItem = foundSpecificationItem;
 									}
@@ -1678,7 +1687,8 @@ class WordSpecification
 						else
 							{
 							// Typical for Spanish
-							if( spanishPreviousSpecificationWordItem_ != NULL )
+							if( spanishPreviousSpecificationWordItem_ != NULL &&
+							spanishPreviousSpecificationWordItem_ != specificationWordItem )
 								{
 								specificationCollectionNr = spanishCompoundSpecificationCollectionNr_;
 

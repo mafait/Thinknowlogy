@@ -98,14 +98,15 @@ class ContextList : private List
 	void addToContextWordQuickAccessList()
 		{
 		WordItem *lastContextWordItem = globalVariables()->lastContextWordItem;
+		WordItem *_myWordItem = myWordItem();
 
 		if( lastContextWordItem == NULL )
-			globalVariables()->firstContextWordItem = myWordItem();
+			globalVariables()->firstContextWordItem = _myWordItem;
 		else
 			// Word order is important: Add word at end of context word list
-			lastContextWordItem->nextContextWordItem = myWordItem();
+			lastContextWordItem->nextContextWordItem = _myWordItem;
 
-		globalVariables()->lastContextWordItem = myWordItem();
+		globalVariables()->lastContextWordItem = _myWordItem;
 		}
 
 	bool hasContext( unsigned int contextNr )

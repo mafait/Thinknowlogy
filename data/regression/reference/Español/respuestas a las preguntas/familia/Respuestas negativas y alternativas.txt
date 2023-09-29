@@ -46,16 +46,16 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 < Cada padre no es una madre.
+< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
 < Cada madre no es masculino.
 < Cada madre no es un hombre.
-< Cada hombre no es una madre.
 < Cada padre es femenina o masculino.
 < Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona.
@@ -90,6 +90,10 @@
 < Un hombre no es probablemente un niño.
 < 
 * 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
@@ -112,9 +116,9 @@
 < Juan no es una mujer.
 < Juan es masculino.
 < Juan no es una hija.
-< Pablo tiene un padre, llamado Juan.
-< Pablo tiene 2 padres, llamados Juan y Ana.
-< Pablo tiene una madre, llamada Ana.
+< Paz tiene un padre, llamado Juan.
+< Paz tiene 2 padres, llamados Juan y Ana.
+< Paz tiene una madre, llamada Ana.
 < José tiene un padre, llamado Juan.
 < José tiene 2 padres, llamados Juan y Ana.
 < José tiene una madre, llamada Ana.
@@ -134,8 +138,8 @@
 < Juan es probablemente una persona.
 < Juan no es probablemente un niño.
 < Juan tiene puede-ser una hija, llamada Luisa.
-< Pablo es probablemente parte de una familia.
-< Pablo es posiblemente una persona.
+< Paz es probablemente parte de una familia.
+< Paz es posiblemente una persona.
 < José es probablemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es puede-ser hija de Juan y Ana.
@@ -152,9 +156,9 @@
 < Ana tiene puede-ser una hija, llamada Luisa.
 * 
 * Mis preguntas:
-< ¿Es Pablo femenina o masculino?
-< ¿Es Pablo una niña, una mujer, un niño o un hombre?
-< ¿Es Pablo un hijo o una hija?
+< ¿Es Paz femenina o masculino?
+< ¿Es Paz una niña, una mujer, un niño o un hombre?
+< ¿Es Paz un hijo o una hija?
 < ¿Es José femenina o masculino?
 < ¿Es José una niña, una mujer, un niño o un hombre?
 < ¿Es José un hijo o una hija?
@@ -168,15 +172,15 @@
 < ¿Es Juan una madre?
 * 
 * Mi respuesta:
-< No, Juan es el padre de Pablo, José y Luisa.
-< Ana es la madre de Pablo, José y Luisa.
+< No, Juan es el padre de Paz, José y Luisa.
+< Ana es la madre de Paz, José y Luisa.
 < 
 * 
 * Tenías una pregunta similar antes:
-< ¿Es Juan la madre de Pablo?
+< ¿Es Juan la madre de Paz?
 * 
 * Mi respuesta:
-< No, Juan es el padre de Pablo, José y Luisa.
+< No, Juan es el padre de Paz, José y Luisa.
 < 
 * 
 * Mis conclusiones:
@@ -188,18 +192,18 @@
 < Jorge no es una mujer.
 < Jorge es masculino.
 < Jorge no es una hija.
-< Alfonso tiene un padre, llamado Jorge.
+< Diaz tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
 < Jorge no es probablemente un niño.
-< Alfonso es probablemente parte de una familia.
-< Alfonso es posiblemente una persona.
+< Diaz es probablemente parte de una familia.
+< Diaz es posiblemente una persona.
 * 
 * Mis preguntas:
-< ¿Es Alfonso femenina o masculino?
-< ¿Es Alfonso una niña, una mujer, un niño o un hombre?
-< ¿Es Alfonso un hijo o una hija?
+< ¿Es Diaz femenina o masculino?
+< ¿Es Diaz una niña, una mujer, un niño o un hombre?
+< ¿Es Diaz un hijo o una hija?
 < 
 * 
 * Tenías la misma pregunta antes.
@@ -207,11 +211,11 @@
 * Esta pregunta ya ha sido respondida.
 * 
 * Mi respuesta:
-< No, Juan es el padre de Pablo, José y Luisa.
-< Jorge es el padre de Alfonso.
+< No, Juan es el padre de Paz, José y Luisa.
+< Jorge es el padre de Diaz.
 < 
-< No, Jorge es el padre de Alfonso.
-< Juan es el padre de Pablo, José y Luisa.
+< No, Jorge es el padre de Diaz.
+< Juan es el padre de Paz, José y Luisa.
 < 
 * 
 * Mis conclusiones:
@@ -229,7 +233,7 @@
 < Santiago no es probablemente un niño.
 < Santiago tiene probablemente un hijo.
 < 
-< No, Juan es el padre de Pablo, José y Luisa.
+< No, Juan es el padre de Paz, José y Luisa.
 * 
 * Sólo sé:
 < Santiago es un padre.
@@ -300,51 +304,51 @@
 < 
 * 
 * Mis conclusiones:
-< Pablo tiene un padre, llamado Juan. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
-< Pablo tiene 2 padres, llamados Juan y Ana. Porque:
-<	- Juan es el padre de Pablo, José y Luisa.
-<	- Ana es la madre de Pablo, José y Luisa.
-< Pablo tiene una madre, llamada Ana. Porque:
-<	- Ana es la madre de Pablo, José y Luisa.
+< Paz tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Paz, José y Luisa.
+< Paz tiene 2 padres, llamados Juan y Ana. Porque:
+<	- Juan es el padre de Paz, José y Luisa.
+<	- Ana es la madre de Paz, José y Luisa.
+< Paz tiene una madre, llamada Ana. Porque:
+<	- Ana es la madre de Paz, José y Luisa.
 * 
 * Mis suposiciones:
-< Pablo es probablemente parte de una familia. Porque:
-<	- ¿Es Pablo un hijo o una hija?
+< Paz es probablemente parte de una familia. Porque:
+<	- ¿Es Paz un hijo o una hija?
 <	- Hijos son parte de cada familia.
-< Pablo es posiblemente una persona. Porque:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Pablo tiene una madre, llamada Ana.
+< Paz es posiblemente una persona. Porque:
+<	- Paz tiene un padre, llamado Juan.
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 
 * Mis preguntas:
-< ¿Es Pablo femenina o masculino? Porque:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Pablo tiene una madre, llamada Ana.
+< ¿Es Paz femenina o masculino? Porque:
+<	- Paz tiene un padre, llamado Juan.
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es femenina o masculino.
 * 	y:
-<	- ¿Es Pablo una niña, una mujer, un niño o un hombre?
+<	- ¿Es Paz una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Pablo es posiblemente una persona.
+<	- Paz es posiblemente una persona.
 <	- Cada persona es masculino o femenina.
-< ¿Es Pablo una niña, una mujer, un niño o un hombre? Porque:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Pablo tiene una madre, llamada Ana.
+< ¿Es Paz una niña, una mujer, un niño o un hombre? Porque:
+<	- Paz tiene un padre, llamado Juan.
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
-< ¿Es Pablo un hijo o una hija? Porque:
-<	- Pablo tiene un padre, llamado Juan.
-<	- Pablo tiene 2 padres, llamados Juan y Ana.
-<	- Pablo tiene una madre, llamada Ana.
+< ¿Es Paz un hijo o una hija? Porque:
+<	- Paz tiene un padre, llamado Juan.
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 < 
@@ -477,38 +481,38 @@
 < 
 * 
 * Mis conclusiones:
-< Alfonso tiene un padre, llamado Jorge. Porque:
-<	- Jorge es el padre de Alfonso.
+< Diaz tiene un padre, llamado Jorge. Porque:
+<	- Jorge es el padre de Diaz.
 * 
 * Mis suposiciones:
-< Alfonso es probablemente parte de una familia. Porque:
-<	- ¿Es Alfonso un hijo o una hija?
+< Diaz es probablemente parte de una familia. Porque:
+<	- ¿Es Diaz un hijo o una hija?
 <	- Hijos son parte de cada familia.
-< Alfonso es posiblemente una persona. Porque:
-<	- Alfonso tiene un padre, llamado Jorge.
+< Diaz es posiblemente una persona. Porque:
+<	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
 * 
 * Mis preguntas:
-< ¿Es Alfonso femenina o masculino? Porque:
-<	- Alfonso tiene un padre, llamado Jorge.
+< ¿Es Diaz femenina o masculino? Porque:
+<	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es femenina o masculino.
 * 	y:
-<	- ¿Es Alfonso una niña, una mujer, un niño o un hombre?
+<	- ¿Es Diaz una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Alfonso es posiblemente una persona.
+<	- Diaz es posiblemente una persona.
 <	- Cada persona es masculino o femenina.
-< ¿Es Alfonso una niña, una mujer, un niño o un hombre? Porque:
-<	- Alfonso tiene un padre, llamado Jorge.
+< ¿Es Diaz una niña, una mujer, un niño o un hombre? Porque:
+<	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es una niña, una mujer, un niño o un hombre.
-< ¿Es Alfonso un hijo o una hija? Porque:
-<	- Alfonso tiene un padre, llamado Jorge.
+< ¿Es Diaz un hijo o una hija? Porque:
+<	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 < 

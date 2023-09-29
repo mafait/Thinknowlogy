@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere moeder is geen vader.
 < Iedere vader is geen moeder.
+< Iedere moeder is geen vader.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -368,6 +368,9 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul, Johan, Laura en Peter.
 <	- Jan is een ouder van Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 < Jan heeft mogelijk een dochter, genaamd Laura. Omdat:
 <	- Laura is mogelijk een dochter van Jan en Anna.
 < 
@@ -560,11 +563,11 @@
 <	- Paul heeft een moeder, genaamd Anna.
 <	- Een moeder is waarschijnlijk een ouder.
 < Paul is waarschijnlijk een persoon. Omdat:
-<	- Paul is een man.
-<	- Een man is waarschijnlijk een persoon.
-* 	en:
 <	- Paul is een zoon.
 <	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is een man.
+<	- Een man is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -750,13 +753,13 @@
 < Claudia is mogelijk een kind van Anna.
 < Claudia is mogelijk deel van een gezin.
 < Claudia is misschien een persoon.
+< Claudia is misschien een dochter van Anna.
 < Claudia is misschien een vrouw.
 < Claudia is misschien geen zoon.
 < Claudia is misschien geen vader.
 < Claudia is misschien niet mannelijk.
 < Claudia is misschien geen man.
 < Claudia is misschien vrouwelijk.
-< Claudia is misschien een dochter van Anna.
 < 
 * 
 * Mijn conclusies:
@@ -853,6 +856,9 @@
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul, Johan, Laura en Peter.
 <	- Jan is een ouder van Laura.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Laura heeft 2 ouders, genaamd Jan en Anna.
 < Jan is waarschijnlijk een ouder van Paul, Johan, Laura en Peter. Omdat:
 <	- Peter heeft een vader, genaamd Jan.
 <	- Paul heeft een vader, genaamd Jan.
@@ -1094,11 +1100,11 @@
 <	- Paul heeft een moeder, genaamd Anna.
 <	- Een moeder is waarschijnlijk een ouder.
 < Paul is waarschijnlijk een persoon. Omdat:
-<	- Paul is een man.
-<	- Een man is waarschijnlijk een persoon.
-* 	en:
 <	- Paul is een zoon.
 <	- Een zoon is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is een man.
+<	- Een man is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -1296,11 +1302,16 @@
 < Claudia is misschien een persoon. Omdat:
 <	- Claudia is mogelijk een kind van Anna.
 <	- Een kind is waarschijnlijk een persoon.
-< Claudia is misschien een vrouw. Omdat:
+< Claudia is misschien een dochter van Anna. Omdat:
 <	- Claudia is mogelijk een kind van Anna.
-<	- Ieder kind is een vrouw of een man.
+<	- Ieder kind is een zoon of een dochter.
 <	- Eigennaam "Claudia" is waarschijnlijk vrouwelijk.
 * 	en:
+<	- Anna is waarschijnlijk een ouder van Paul, Johan, Laura en Claudia.
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Eigennaam "Claudia" is waarschijnlijk vrouwelijk.
+< Claudia is misschien een vrouw. Omdat:
 <	- Claudia is misschien een dochter van Anna.
 <	- Iedere dochter is een vrouw.
 < Claudia is misschien geen zoon. Omdat:
@@ -1342,22 +1353,12 @@
 * 	en:
 <	- Claudia is misschien een dochter van Anna.
 <	- Iedere dochter is vrouwelijk.
-< Claudia is misschien een dochter van Anna. Omdat:
-<	- Claudia is mogelijk een kind van Anna.
-<	- Ieder kind is een zoon of een dochter.
-<	- Eigennaam "Claudia" is waarschijnlijk vrouwelijk.
-* 	en:
-<	- Anna is waarschijnlijk een ouder van Paul, Johan, Laura en Claudia.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Ieder kind is een zoon of een dochter.
-<	- Eigennaam "Claudia" is waarschijnlijk vrouwelijk.
 < 
 * 
 * Mijn veronderstellingen die bevestigd zijn:
 < Claudia is misschien een dochter van Anna.
 * 
 * Mijn veronderstellingen die aangepast zijn:
-< Claudia is waarschijnlijk een persoon.
 < Claudia is waarschijnlijk een kind van Anna.
 < Anna heeft mogelijk 2 dochter [meervoud van 'dochter' is onbekend], genaamd Laura en Claudia.
 * 
@@ -1370,6 +1371,7 @@
 < Claudia is vrouwelijk.
 * 
 * Mijn veronderstellingen die aangepast zijn:
+< Claudia is waarschijnlijk een persoon.
 < Claudia is waarschijnlijk deel van een gezin.
 < 
 * 
@@ -1546,11 +1548,11 @@
 * 
 * Mijn veronderstellingen:
 < Claudia is waarschijnlijk een persoon. Omdat:
-<	- Claudia is een dochter van Anna.
-<	- Een dochter is waarschijnlijk een persoon.
-* 	en:
 <	- Claudia is een vrouw.
 <	- Een vrouw is waarschijnlijk een persoon.
+* 	en:
+<	- Claudia is een dochter van Anna.
+<	- Een dochter is waarschijnlijk een persoon.
 < Claudia is waarschijnlijk een kind van Anna. Omdat:
 <	- Claudia is een dochter van Anna.
 <	- Een dochter is waarschijnlijk een kind.

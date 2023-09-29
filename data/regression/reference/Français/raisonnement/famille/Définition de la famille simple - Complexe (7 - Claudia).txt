@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -368,6 +368,9 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre.
 <	- Olivier est un parent de Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine a 2 parents, appelés Olivier et Amélie.
 < Olivier a possible une fille, appelée Lorraine. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
 < 
@@ -560,11 +563,11 @@
 <	- Pascal a une mère, appelée Amélie.
 <	- Une mère est probablement un parent.
 < Pascal est probablement une personne. En raison:
-<	- Pascal est un homme.
-<	- Un homme est probablement une personne.
-* 	et:
 <	- Pascal est un fils.
 <	- Un fils est probablement une personne.
+* 	et:
+<	- Pascal est un homme.
+<	- Un homme est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -750,13 +753,13 @@
 < Claudia est possible un enfant de Amélie.
 < Claudia est possible partie d'une famille.
 < Claudia est peut-être une personne.
+< Claudia est peut-être une fille de Amélie.
 < Claudia est peut-être une femme.
 < Claudia n'est peut-être pas un fils.
 < Claudia n'est peut-être pas un père.
 < Claudia n'est peut-être pas masculin.
 < Claudia n'est peut-être pas un homme.
 < Claudia est peut-être féminin.
-< Claudia est peut-être une fille de Amélie.
 < 
 * 
 * Mes conclusions:
@@ -853,6 +856,9 @@
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre.
 <	- Olivier est un parent de Lorraine.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Lorraine a 2 parents, appelés Olivier et Amélie.
 < Olivier est probablement un parent de Pascal, Julien, Lorraine et Pierre. En raison:
 <	- Pierre a un père, appelé Olivier.
 <	- Pascal a un père, appelé Olivier.
@@ -1094,11 +1100,11 @@
 <	- Pascal a une mère, appelée Amélie.
 <	- Une mère est probablement un parent.
 < Pascal est probablement une personne. En raison:
-<	- Pascal est un homme.
-<	- Un homme est probablement une personne.
-* 	et:
 <	- Pascal est un fils.
 <	- Un fils est probablement une personne.
+* 	et:
+<	- Pascal est un homme.
+<	- Un homme est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -1296,11 +1302,16 @@
 < Claudia est peut-être une personne. En raison:
 <	- Claudia est possible un enfant de Amélie.
 <	- Un enfant est probablement une personne.
-< Claudia est peut-être une femme. En raison:
+< Claudia est peut-être une fille de Amélie. En raison:
 <	- Claudia est possible un enfant de Amélie.
-<	- Chaque enfant est une femme ou un homme.
+<	- Chaque enfant est un fils ou une fille.
 <	- Nom propre «Claudia» est probablement féminin.
 * 	et:
+<	- Amélie est probablement un parent de Pascal, Julien, Lorraine et Claudia.
+<	- Chaque famille a parents et enfants.
+<	- Chaque enfant est un fils ou une fille.
+<	- Nom propre «Claudia» est probablement féminin.
+< Claudia est peut-être une femme. En raison:
 <	- Claudia est peut-être une fille de Amélie.
 <	- Chaque fille est une femme.
 < Claudia n'est peut-être pas un fils. En raison:
@@ -1342,22 +1353,12 @@
 * 	et:
 <	- Claudia est peut-être une fille de Amélie.
 <	- Chaque fille est féminin.
-< Claudia est peut-être une fille de Amélie. En raison:
-<	- Claudia est possible un enfant de Amélie.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Claudia» est probablement féminin.
-* 	et:
-<	- Amélie est probablement un parent de Pascal, Julien, Lorraine et Claudia.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est un fils ou une fille.
-<	- Nom propre «Claudia» est probablement féminin.
 < 
 * 
 * Mes hypothèses qui sont confirmées:
 < Claudia est peut-être une fille de Amélie.
 * 
 * Mes hypothèses qui ont été ajustées:
-< Claudia est probablement une personne.
 < Claudia est probablement un enfant de Amélie.
 < Amélie a possible 2 fille [pluriel de «fille» est inconnue], appelés Lorraine et Claudia.
 * 
@@ -1370,6 +1371,7 @@
 < Claudia est féminin.
 * 
 * Mes hypothèses qui ont été ajustées:
+< Claudia est probablement une personne.
 < Claudia est probablement partie d'une famille.
 < 
 * 
@@ -1546,11 +1548,11 @@
 * 
 * Mes hypothèses:
 < Claudia est probablement une personne. En raison:
-<	- Claudia est une fille de Amélie.
-<	- Une fille est probablement une personne.
-* 	et:
 <	- Claudia est une femme.
 <	- Une femme est probablement une personne.
+* 	et:
+<	- Claudia est une fille de Amélie.
+<	- Une fille est probablement une personne.
 < Claudia est probablement un enfant de Amélie. En raison:
 <	- Claudia est une fille de Amélie.
 <	- Une fille est probablement un enfant.

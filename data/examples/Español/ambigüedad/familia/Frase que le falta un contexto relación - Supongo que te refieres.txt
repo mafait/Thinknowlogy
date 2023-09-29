@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 # The next sentence will not be accepted. Don't worry: It is a test. In testing mode, the test will continue.
 Juan es el padre.
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
 Juan es el padre.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

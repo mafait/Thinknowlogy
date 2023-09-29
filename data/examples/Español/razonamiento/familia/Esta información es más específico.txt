@@ -4,10 +4,10 @@ Ana es una madre.
 # Two extra checks
 #Dev#Juan tiene 3 hijos.
 #Dev#Ana tiene 3 hijos.
-Juan es el padre y Ana es la madre de Pablo, José y Luisa.
-#Dev#Mostrar el informe de justificación sobre Pablo.
-Pablo es un hijo.
-#Dev#Mostrar el informe de justificación sobre Pablo.
-Pablo es hijo de Juan y Ana.
-#Dev#Mostrar el informe de justificación sobre Pablo.
+Juan es el padre y Ana es la madre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Paz.
+Paz es un hijo.
+#Dev#Mostrar el informe de justificación sobre Paz.
+Paz es hijo de Juan y Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

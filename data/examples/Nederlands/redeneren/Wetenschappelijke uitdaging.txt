@@ -26,8 +26,13 @@ Paul heeft 2 ouders, genaamd Jan en Anna.
 #-----------------------------------------------------------------------------
 # Blok 4: Redeneren in de verleden tijd
 #-----------------------------------------------------------------------------
-Johan was de vader van Peter.
+Johan was de vader van Jeroen.
 Iedere vader is een man.
+#-----------------------------------------------------------------
+# Natuurlijke redeneerconstructie beschreven door Aristoteles; in de verleden tijd
+#-----------------------------------------------------------------
+Iedere filosoof is sterfelijk.
+Socrates was een filosoof.
 #-----------------------------------------------------------------------------
 # Blok 5: Conflictdetectie en het genereren van een vraag
 #-----------------------------------------------------------------------------
@@ -40,4 +45,39 @@ Anne is geen vrouw.
 #-----------------------------------------------------------------------------
 Barack Obama is de president van de Verenigde Staten.
 Donald Trump is de president van de Verenigde Staten.
+#-----------------------------------------------------------------
+# Blok 7: Geavanceerd redeneren
+#-----------------------------------------------------------------
+Iedere vrouw is vrouwelijk.
+Iedere man is mannelijk.
+Iedere ouder is een man of een vrouw.
+Iedere vader is een man.
+Iedere moeder is een vrouw.
+Iedere ouder is een vader of een moeder.
+Ieder meisje is vrouwelijk.
+Iedere jongen is mannelijk.
+Iedere zoon is een jongen of een man.
+Iedere dochter is een meisje of een vrouw.
+#-----------------------------------------------------------------
+# Blok 8: Verantwoordingsrapportage
+#-----------------------------------------------------------------
+Toon de verantwoordingsrapportage over mannen.
+Toon de verantwoordingsrapportage over vrouwen.
+Toon de verantwoordingsrapportage over personen.
+Toon de verantwoordingsrapportage over vaders.
+Toon de verantwoordingsrapportage over moeders.
+Toon de verantwoordingsrapportage over ouders.
+Toon de verantwoordingsrapportage over Paul.
+Toon de verantwoordingsrapportage over Jan.
+Toon de verantwoordingsrapportage over Anna.
+Toon de verantwoordingsrapportage over Laura.
+Toon de verantwoordingsrapportage over Sjors.
+Toon de verantwoordingsrapportage over André.
+Toon de verantwoordingsrapportage over Peter.
+Toon de verantwoordingsrapportage over Willem.
+Toon de verantwoordingsrapportage over Johan.
+Toon de verantwoordingsrapportage over Jeroen.
+Toon de verantwoordingsrapportage over Socrates.
+Toon de verantwoordingsrapportage over Anne.
+Toon informatie over Anne.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
+< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -94,6 +94,10 @@
 < Un garçon est probablement une personne.
 < Un homme n'est probablement pas un garçon.
 < 
+* 
+* Mes hypothèses qui ont été conclues:
+< Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -401,6 +405,9 @@
 <	- Pascal est possible un enfant de Olivier et Amélie.
 <	- Julien est possible un enfant de Olivier et Amélie.
 <	- Lorraine est possible un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a un parent, appelé Olivier.
 < Olivier a peut-être une fille, appelée Lorraine. En raison:
 <	- Lorraine est peut-être une fille de Olivier et Amélie.
 < Olivier n'est probablement pas un garçon. En raison:
@@ -648,6 +655,9 @@
 <	- Pascal est probablement un enfant de Olivier et Amélie.
 <	- Julien est possible un enfant de Olivier et Amélie.
 <	- Lorraine est possible un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a un parent, appelée Amélie.
 < Amélie a peut-être une fille, appelée Lorraine. En raison:
 <	- Lorraine est peut-être une fille de Olivier et Amélie.
 < Amélie n'est probablement pas une jeune-fille. En raison:

@@ -1,0 +1,5 @@
+﻿Cada persona es un hombre o una mujer.
+Angel es una persona.
+Angel no es una mujer.
+#Dev#Mostrar el informe de justificación sobre Angel.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

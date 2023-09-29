@@ -1,0 +1,299 @@
+﻿* 
+* Mis suposiciones:
+< Un hombre no es probablemente una mujer.
+< Una mujer no es probablemente un hombre.
+< 
+* 
+* Mis conclusiones:
+< Cada mujer no es masculino.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hombre no es una mujer.
+< Cada mujer no es un hombre.
+* 
+* Mis conclusiones:
+< Cada hombre no es femenina.
+< Cada persona es masculino o femenina.
+* 
+* Mis suposiciones:
+< Un hombre es probablemente una persona.
+< Una mujer es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Padres y hijos son parte de cada familia.
+< 
+* 
+* Mis suposiciones:
+< Un padre no es probablemente una madre.
+< Una madre no es probablemente un padre.
+< 
+* 
+* Mis suposiciones:
+< Un hijo no es probablemente una hija.
+< Una hija no es probablemente un hijo.
+< 
+* 
+* Mis conclusiones:
+< Cada padre es masculino.
+< Cada padre no es femenina.
+< Cada padre no es una mujer.
+< Cada mujer no es un padre.
+* 
+* Mis suposiciones:
+< Un padre es probablemente una persona.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada padre no es una madre.
+< Cada madre no es un padre.
+* 
+* Mis conclusiones:
+< Cada madre es femenina.
+< Cada madre no es masculino.
+< Cada madre no es un hombre.
+< Cada padre es femenina o masculino.
+< Cada padre es una mujer o un hombre.
+< Cada hombre no es una madre.
+* 
+* Mis suposiciones:
+< Una madre es probablemente una persona.
+< 
+* 
+* Mis conclusiones:
+< Cada niña no es masculino.
+< Cada niña no es un padre.
+< Cada niña no es un hombre.
+< Cada padre no es una niña.
+< Cada hombre no es una niña.
+< 
+* 
+* Mis conclusiones:
+< Cada niño no es femenina.
+< Cada niño no es una niña.
+< Cada niño no es una madre.
+< Cada niño no es una mujer.
+< Cada niña no es un niño.
+< Cada madre no es un niño.
+< Cada mujer no es un niño.
+< 
+* 
+* Mis conclusiones:
+< Cada hijo es masculino.
+< Cada hijo no es femenina.
+* 
+* Mis suposiciones:
+< Un hijo es probablemente una persona.
+< Un niño no es probablemente un hombre.
+< Un niño es probablemente una persona.
+< Un hombre no es probablemente un niño.
+< 
+* 
+* Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
+< Cada hijo no es una hija.
+* 
+* Mis conclusiones:
+< Cada hija es femenina.
+< Cada hija no es masculino.
+< Cada hijo es femenina o masculino.
+< Cada hijo es una niña, una mujer, un niño o un hombre.
+* 
+* Mis suposiciones:
+< Una hija es probablemente una persona.
+< Una niña no es probablemente una mujer.
+< Una niña es probablemente una persona.
+< Una mujer no es probablemente una niña.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia.
+< Juan es un hombre.
+< Juan no es una madre.
+< Juan no es una niña.
+< Juan no es femenina.
+< Juan no es una mujer.
+< Juan es masculino.
+< Juan no es una hija.
+< Paz tiene un padre, llamado Juan.
+< José tiene un padre, llamado Juan.
+< Luisa tiene un padre, llamado Juan.
+* 
+* Mis suposiciones:
+< Juan es probablemente una persona.
+< Juan no es probablemente un niño.
+< Juan tiene puede-ser una hija, llamada Luisa.
+< Paz es probablemente parte de una familia.
+< Paz es posiblemente una persona.
+< José es probablemente parte de una familia.
+< José es posiblemente una persona.
+< Luisa es puede-ser hija de Juan.
+< Luisa es puede-ser parte de una familia.
+< Luisa es puede-ser femenina.
+< Luisa no es puede-ser un hijo.
+< Luisa no es puede-ser un niño.
+< Luisa no es puede-ser un padre.
+< Luisa no es puede-ser un hombre.
+< Luisa no es puede-ser masculino.
+< Luisa es puede-ser una persona.
+* 
+* Mis preguntas:
+< ¿Es Paz femenina o masculino?
+< ¿Es Paz una niña, una mujer, un niño o un hombre?
+< ¿Es Paz un hijo o una hija?
+< ¿Es José femenina o masculino?
+< ¿Es José una niña, una mujer, un niño o un hombre?
+< ¿Es José un hijo o una hija?
+< ¿Es Luisa una niña o una mujer?
+< 
+* 
+* Mis preguntas que han sido respondidas:
+< ¿Es Paz un hijo o una hija?
+* 
+* Mis suposiciones que ya no se han ocultado:
+< Paz es probablemente hijo de Juan.
+< Juan tiene probablemente 3 hijos, llamados Paz, José y Luisa.
+* 
+* Mis suposiciones que se han ajustado:
+< Luisa es probablemente parte de una familia.
+* 
+* Mis suposiciones que se han concluido:
+< Paz es parte de una familia.
+* 
+* Mis suposiciones que se han ajustado:
+< Paz es probablemente una persona.
+* 
+* Mis preguntas que se han ajustado:
+< ¿Es Paz un hombre o un niño?
+* 
+* Mis preguntas que han sido respondidas:
+< ¿Es Paz femenina o masculino?
+* 
+* Mis conclusiones:
+< Paz no es femenina.
+< Paz es masculino.
+< Paz no es una hija.
+< Paz no es una niña.
+< Paz no es una madre.
+< Paz no es una mujer.
+< 
+* 
+* Mis conclusiones:
+< Juan es parte de una familia. Porque:
+<	- Juan es un padre.
+<	- Padres son parte de cada familia.
+< Juan es un hombre. Porque:
+<	- Juan es un padre.
+<	- Cada padre es un hombre.
+< Juan no es una madre. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+< Juan no es una niña. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es femenina. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es femenina.
+< Juan no es una mujer. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
+< Juan es masculino. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 
+* Mis suposiciones:
+< Juan tiene probablemente 3 hijos, llamados Paz, José y Luisa. Porque:
+<	- Paz es probablemente hijo de Juan.
+* 	y:
+<	- Cada familia tiene padres y hijos.
+<	- Juan es el padre de Paz, José y Luisa.
+* 	y:
+<	- Cada familia tiene padres y hijos.
+<	- Paz tiene un padre, llamado Juan.
+<	- José tiene un padre, llamado Juan.
+<	- Luisa tiene un padre, llamado Juan.
+< Juan es probablemente una persona. Porque:
+<	- Juan es un padre.
+<	- Un padre es probablemente una persona.
+* 	y:
+<	- Juan es un hombre.
+<	- Un hombre es probablemente una persona.
+< Juan no es probablemente un niño. Porque:
+<	- Juan es un hombre.
+<	- Un hombre no es probablemente un niño.
+< Juan tiene puede-ser una hija, llamada Luisa. Porque:
+<	- Luisa es puede-ser hija de Juan.
+< 
+* 
+* Mis conclusiones:
+< Paz es parte de una familia. Porque:
+<	- Paz es un hijo.
+<	- Hijos son parte de cada familia.
+< Paz no es femenina. Porque:
+<	- Paz es un hijo.
+<	- Cada hijo no es femenina.
+< Paz es masculino. Porque:
+<	- Paz es un hijo.
+<	- Cada hijo es masculino.
+< Paz no es una hija. Porque:
+<	- Paz es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Paz es un hijo.
+<	- Cada hijo no es una hija.
+< Paz no es una niña. Porque:
+<	- Paz es masculino.
+<	- Cada niña no es masculino.
+< Paz no es una madre. Porque:
+<	- Paz es masculino.
+<	- Cada madre no es masculino.
+< Paz no es una mujer. Porque:
+<	- Paz es masculino.
+<	- Cada mujer no es masculino.
+< Paz tiene un padre, llamado Juan. Porque:
+<	- Juan es el padre de Paz, José y Luisa.
+* 
+* Mis suposiciones:
+< Paz es probablemente una persona. Porque:
+<	- Paz es un hijo.
+<	- Un hijo es probablemente una persona.
+< Paz es probablemente hijo de Juan. Porque:
+<	- Cada familia tiene padres y hijos.
+<	- Juan es el padre de Paz, José y Luisa.
+* 	y:
+<	- Cada familia tiene padres y hijos.
+<	- Paz tiene un padre, llamado Juan.
+* 
+* Mis preguntas:
+< ¿Es Paz un hombre o un niño? Porque:
+<	- Paz es un hijo.
+<	- Cada hijo es un niño o un hombre.
+< 

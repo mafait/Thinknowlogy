@@ -202,8 +202,10 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan heeft 2 zoons en een dochter (voor gezinsdefinitie)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan heeft een dochter en 2 zoons".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is een vader - Paul heeft 2 ouders".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is een ouder - Paul - Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is een ouder - Paul is een kind van Jan en Anna".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is een ouder - Paul is een zoon".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is de vader - Paul - Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan is de vader van Paul - Johan - Laura - Claudia".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan was de vader van Paul, Johan en Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Verantwoordingsrapportage".
@@ -216,6 +218,7 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Laura is een kind - Jan en Anna".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (kind)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (ouders)".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Jan)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Jan en Anna)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Jan en Anna - omgekeerd)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn veronderstellingen die bevestigd zijn (Jan en Paul)".

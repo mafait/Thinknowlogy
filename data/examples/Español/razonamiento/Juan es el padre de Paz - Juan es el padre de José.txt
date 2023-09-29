@@ -1,0 +1,5 @@
+﻿Juan es el padre de Paz.
+Juan es el padre de José.
+Mostrar información sobre Juan.
+Juan es el padre de Paz y José.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

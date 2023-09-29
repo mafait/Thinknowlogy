@@ -389,7 +389,7 @@ class JustificationItem extends Item
 		return ( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION );
 		}
 
-	protected boolean isObsoleteAssumptionJustification( boolean isIncludingNegativeAssumptionOrConclusion, boolean isIncludingReversibleAssumptionOrConclusion, boolean isIncludingSpecificationSubstitutionAssumptionOrConclusion, boolean isOnlySelectingOlderJustifications, short assumptionLevel )
+	protected boolean isObsoleteAssumptionJustification( boolean hasOnlyOneRelationWord, boolean isIncludingNegativeAssumptionOrConclusion, boolean isIncludingReversibleAssumptionOrConclusion, boolean isIncludingSpecificationSubstitutionAssumptionOrConclusion, boolean isOnlySelectingOlderJustifications, short assumptionLevel )
 		{
 		return 	( primarySpecificationItem_ != null &&
 
@@ -402,11 +402,17 @@ class JustificationItem extends Item
 				justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
 
 				( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION &&
-				isIncludingReversibleAssumptionOrConclusion ) ||
+				isIncludingReversibleAssumptionOrConclusion &&
+
+				( !hasOnlyOneRelationWord ||
+				isOnlySelectingOlderJustifications ||
+				primarySpecificationItem_.isOlderItem() ) ) ||
 
 				( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION &&
 				isIncludingNegativeAssumptionOrConclusion &&
-				!primarySpecificationItem_.isSpecificationAdjective() ) ||
+
+				( !primarySpecificationItem_.isSpecificationAdjective() ||
+				primarySpecificationItem_.isExclusiveSpecification() ) ) ||
 
 				( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION &&
 				isIncludingSpecificationSubstitutionAssumptionOrConclusion ) ||
@@ -450,6 +456,11 @@ class JustificationItem extends Item
 		return ( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION );
 		}
 
+	protected boolean isUniqueUserRelationAssumptionOrConclusion()
+		{
+		return ( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION );
+		}
+
 	protected short justificationTypeNr()
 		{
 		return justificationTypeNr_;
@@ -462,7 +473,7 @@ class JustificationItem extends Item
 
 	protected int justificationAssumptionLevel()
 		{
-		return assumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
+		return justificationAssumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
 		}
 
 	protected int nJustificationContextRelations( int relationContextNr, int nRelationWords )
