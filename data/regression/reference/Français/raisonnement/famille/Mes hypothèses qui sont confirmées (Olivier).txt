@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -115,6 +127,7 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un père.
+< Olivier n'est probablement pas une fille.
 < Olivier n'est probablement pas une jeune-fille.
 < Olivier n'est probablement pas une mère.
 < Olivier n'est probablement pas féminin.
@@ -122,7 +135,6 @@
 < Olivier est probablement un homme.
 < Olivier n'est possible pas un garçon.
 < Olivier est probablement masculin.
-< Olivier n'est probablement pas une fille.
 < Olivier est possible une personne.
 < Olivier est possible un parent.
 < Olivier est possible partie d'une famille.
@@ -133,6 +145,15 @@
 * Mes hypothèses:
 < Olivier est probablement un père. En raison:
 <	- Est Olivier le père de Pascal?
+< Olivier n'est probablement pas une fille. En raison:
+<	- Olivier est probablement un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est probablement un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est probablement masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est probablement pas une jeune-fille. En raison:
 <	- Olivier est probablement un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -178,9 +199,6 @@
 * 	et:
 <	- Olivier est probablement un père.
 <	- Chaque père est masculin.
-< Olivier n'est probablement pas une fille. En raison:
-<	- Olivier est probablement masculin.
-<	- Chaque fille n'est pas masculin.
 < Olivier est possible une personne. En raison:
 <	- Olivier est probablement un homme.
 <	- Un homme est probablement une personne.
@@ -265,6 +283,12 @@
 < Olivier n'est pas féminin. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas une jeune-fille.
@@ -283,9 +307,6 @@
 * 	et:
 <	- Olivier est masculin.
 <	- Chaque femme n'est pas masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -321,6 +342,12 @@
 < Olivier n'est pas féminin. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas une jeune-fille.
@@ -339,9 +366,6 @@
 * 	et:
 <	- Olivier est masculin.
 <	- Chaque femme n'est pas masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne. En raison:
@@ -365,6 +389,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -401,9 +434,6 @@
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent.
 <	- Parents sont partie de chaque famille.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne. En raison:
@@ -428,6 +458,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -464,9 +503,6 @@
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent.
 <	- Parents sont partie de chaque famille.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement une personne. En raison:
@@ -488,6 +524,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -524,9 +569,6 @@
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent.
 <	- Parents sont partie de chaque famille.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -539,6 +581,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -566,9 +617,6 @@
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent.
 <	- Parents sont partie de chaque famille.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -581,6 +629,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -599,9 +656,6 @@
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent.
 <	- Parents sont partie de chaque famille.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -614,6 +668,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -629,9 +692,6 @@
 * 	et:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -644,6 +704,15 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
@@ -659,9 +728,6 @@
 * 	et:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 < 
 * 
 * Mes conclusions qui sont confirmées:
@@ -669,15 +735,21 @@
 < 
 * 
 * Mes conclusions:
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
 < Olivier n'est pas féminin. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas féminin.
 * 	et:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 < 
 * 
 * Mes conclusions qui sont confirmées:
@@ -686,6 +758,12 @@
 * 
 * Mes conclusions:
 < Olivier n'est pas une fille. En raison:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
 <	- Olivier est masculin.
 <	- Chaque fille n'est pas masculin.
 < 

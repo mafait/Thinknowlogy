@@ -62,9 +62,9 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
 < Cada padre no es una madre.
 < Juan no era una madre.
-< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -99,6 +99,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -108,14 +114,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.

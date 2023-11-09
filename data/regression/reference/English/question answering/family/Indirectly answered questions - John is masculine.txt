@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -85,6 +85,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -96,12 +102,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -141,8 +153,8 @@
 < Laura is maybe not masculine.
 * 
 * My questions:
-< Is John feminine or masculine?
 < Is John a woman or a man?
+< Is John feminine or masculine?
 < Is John a father or a mother?
 < Is Paul a girl, a woman, a boy or a man?
 < Is Paul a son or a daughter?
@@ -178,12 +190,6 @@
 <	- Laura is maybe a daughter of John.
 * 
 * My questions:
-< Is John feminine or masculine? Because:
-<	- John is a parent of Paul, Joe and Laura.
-<	- Every parent is feminine or masculine.
-* 	and:
-<	- John is probably a person.
-<	- Every person is masculine or feminine.
 < Is John a woman or a man? Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Every parent is a woman or a man.
@@ -194,6 +200,12 @@
 <	- Is John a father or a mother?
 <	- Every father is a man.
 <	- Every mother is a woman.
+< Is John feminine or masculine? Because:
+<	- John is a parent of Paul, Joe and Laura.
+<	- Every parent is feminine or masculine.
+* 	and:
+<	- John is probably a person.
+<	- Every person is masculine or feminine.
 < Is John a father or a mother? Because:
 <	- John is a parent of Paul, Joe and Laura.
 <	- Every parent is a father or a mother.
@@ -205,6 +217,7 @@
 < Is John a woman or a man?
 * 
 * My conclusions:
+< John is not a daughter.
 < John is not a girl.
 < John is not a mother.
 < John is not a woman.
@@ -217,6 +230,9 @@
 < 
 * 
 * My conclusions:
+< John is not a daughter. Because:
+<	- John is masculine.
+<	- Every daughter is not masculine.
 < John is not a girl. Because:
 <	- John is masculine.
 <	- Every girl is not masculine.

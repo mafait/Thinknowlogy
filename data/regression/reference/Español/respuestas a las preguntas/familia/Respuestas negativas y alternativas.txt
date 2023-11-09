@@ -46,8 +46,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada padre no es una madre.
 < Cada madre no es un padre.
+< Cada padre no es una madre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -82,6 +82,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -91,14 +97,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
@@ -110,12 +122,12 @@
 * Mis conclusiones:
 < Juan es parte de una familia.
 < Juan es un hombre.
+< Juan no es una hija.
 < Juan no es una madre.
 < Juan no es una niña.
 < Juan no es femenina.
 < Juan no es una mujer.
 < Juan es masculino.
-< Juan no es una hija.
 < Paz tiene un padre, llamado Juan.
 < Paz tiene 2 padres, llamados Juan y Ana.
 < Paz tiene una madre, llamada Ana.
@@ -128,18 +140,18 @@
 < Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un padre.
+< Ana no es un hijo.
 < Ana no es un niño.
 < Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un hijo.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
 < Juan no es probablemente un niño.
 < Juan tiene puede-ser una hija, llamada Luisa.
-< Paz es probablemente parte de una familia.
 < Paz es posiblemente una persona.
+< Paz es probablemente parte de una familia.
 < José es probablemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es puede-ser hija de Juan y Ana.
@@ -186,19 +198,19 @@
 * Mis conclusiones:
 < Jorge es parte de una familia.
 < Jorge es un hombre.
+< Jorge no es una hija.
 < Jorge no es una madre.
 < Jorge no es una niña.
 < Jorge no es femenina.
 < Jorge no es una mujer.
 < Jorge es masculino.
-< Jorge no es una hija.
 < Diaz tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
 < Jorge no es probablemente un niño.
-< Diaz es probablemente parte de una familia.
 < Diaz es posiblemente una persona.
+< Diaz es probablemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Diaz femenina o masculino?
@@ -222,11 +234,11 @@
 < Santiago no es femenina.
 < Santiago es parte de una familia.
 < Santiago es un hombre.
+< Santiago no es una hija.
 < Santiago no es una madre.
 < Santiago no es una niña.
 < Santiago no es una mujer.
 < Santiago es masculino.
-< Santiago no es una hija.
 * 
 * Mis suposiciones:
 < Santiago es probablemente una persona.
@@ -246,6 +258,15 @@
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una madre.
@@ -285,9 +306,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -313,15 +331,15 @@
 <	- Ana es la madre de Paz, José y Luisa.
 * 
 * Mis suposiciones:
-< Paz es probablemente parte de una familia. Porque:
-<	- ¿Es Paz un hijo o una hija?
-<	- Hijos son parte de cada familia.
 < Paz es posiblemente una persona. Porque:
 <	- Paz tiene un padre, llamado Juan.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
+< Paz es probablemente parte de una familia. Porque:
+<	- ¿Es Paz un hijo o una hija?
+<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
 < ¿Es Paz femenina o masculino? Porque:
@@ -331,14 +349,14 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es femenina o masculino.
 * 	y:
+<	- Paz es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
+* 	y:
 <	- ¿Es Paz una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
-* 	y:
-<	- Paz es posiblemente una persona.
-<	- Cada persona es masculino o femenina.
 < ¿Es Paz una niña, una mujer, un niño o un hombre? Porque:
 <	- Paz tiene un padre, llamado Juan.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
@@ -360,6 +378,15 @@
 < Jorge es un hombre. Porque:
 <	- Jorge es un padre.
 <	- Cada padre es un hombre.
+< Jorge no es una hija. Porque:
+<	- Jorge es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Jorge es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Jorge es un padre.
+<	- Cada padre no es una hija.
 < Jorge no es una madre. Porque:
 <	- Jorge es un padre.
 <	- Cada padre no es una madre.
@@ -399,9 +426,6 @@
 * 	y:
 <	- Jorge es un padre.
 <	- Cada padre es masculino.
-< Jorge no es una hija. Porque:
-<	- Jorge es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona. Porque:
@@ -428,6 +452,15 @@
 < Santiago es un hombre. Porque:
 <	- Santiago es un padre.
 <	- Cada padre es un hombre.
+< Santiago no es una hija. Porque:
+<	- Santiago es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Santiago es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Santiago es un padre.
+<	- Cada padre no es una hija.
 < Santiago no es una madre. Porque:
 <	- Santiago es un padre.
 <	- Cada padre no es una madre.
@@ -461,9 +494,6 @@
 * 	y:
 <	- Santiago es un padre.
 <	- Cada padre es masculino.
-< Santiago no es una hija. Porque:
-<	- Santiago es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Santiago es probablemente una persona. Porque:
@@ -485,13 +515,13 @@
 <	- Jorge es el padre de Diaz.
 * 
 * Mis suposiciones:
-< Diaz es probablemente parte de una familia. Porque:
-<	- ¿Es Diaz un hijo o una hija?
-<	- Hijos son parte de cada familia.
 < Diaz es posiblemente una persona. Porque:
 <	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
+< Diaz es probablemente parte de una familia. Porque:
+<	- ¿Es Diaz un hijo o una hija?
+<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
 < ¿Es Diaz femenina o masculino? Porque:
@@ -499,14 +529,14 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es femenina o masculino.
 * 	y:
+<	- Diaz es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
+* 	y:
 <	- ¿Es Diaz una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
-* 	y:
-<	- Diaz es posiblemente una persona.
-<	- Cada persona es masculino o femenina.
 < ¿Es Diaz una niña, una mujer, un niño o un hombre? Porque:
 <	- Diaz tiene un padre, llamado Jorge.
 <	- Cada familia tiene padres y hijos.

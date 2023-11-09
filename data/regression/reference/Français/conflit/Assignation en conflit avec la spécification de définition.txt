@@ -1,8 +1,8 @@
 ﻿* 
 * Mes conclusions:
-< Une tête est partie d'une personne.
+< Une tête est partie de chaque personne.
 < 
 * 
 * Cette assignation ne sont pas acceptées, parce qu'il est en conflit avec la spécification de définition:
-< Une personne a une tête.
+< Chaque personne a une tête.
 < 

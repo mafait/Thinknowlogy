@@ -81,14 +81,12 @@
 < 
 * 
 * My assumptions that have been concluded:
+< Every mother is not a father.
 < Every father is not a mother.
 * 
 * My assumptions that have been adjusted:
 < John is probably not a mother.
 < James was probably not a mother.
-* 
-* My assumptions that have been concluded:
-< Every mother is not a father.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -124,6 +122,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -135,12 +139,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -187,11 +197,11 @@
 < Laura has a mother, called Anna.
 < Anna is a woman.
 < Anna is not a father.
+< Anna is not a son.
 < Anna is not a boy.
 < Anna is not masculine.
 < Anna is not a man.
 < Anna is feminine.
-< Anna is not a son.
 * 
 * My assumptions:
 < Paul has probably 2 parents, called John and Anna.
@@ -235,12 +245,12 @@
 * 
 * My conclusions:
 < Michael is a man.
+< Michael is not a daughter.
 < Michael is not a mother.
 < Michael is not a girl.
 < Michael is not feminine.
 < Michael is not a woman.
 < Michael is masculine.
-< Michael is not a daughter.
 < Adam has a father, called Michael.
 * 
 * My assumptions:

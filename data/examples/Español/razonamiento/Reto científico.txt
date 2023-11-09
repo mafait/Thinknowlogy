@@ -63,11 +63,10 @@ Cada hija es una niña o una mujer.
 #-----------------------------------------------------------------
 # Bloque 8: Informes de justificación
 #-----------------------------------------------------------------
-Mostrar el informe de justificación sobre los hombres.
-Mostrar el informe de justificación sobre las mujeres.
-Mostrar el informe de justificación sobre personas.
 Mostrar el informe de justificación sobre los padres.
+Mostrar el informe de justificación sobre personas.
 Mostrar el informe de justificación sobre las madres.
+Mostrar el informe de justificación sobre las mujeres.
 Mostrar el informe de justificación sobre Paz.
 Mostrar el informe de justificación sobre Pablo.
 Mostrar el informe de justificación sobre Ana.

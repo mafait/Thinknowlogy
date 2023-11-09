@@ -199,6 +199,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 < Pascal est masculin.
 < Pascal n'est pas une jeune-fille.
 < Pascal n'est pas une mère.
@@ -216,6 +222,14 @@
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un fils.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un homme.
+< Chaque fille n'est pas un père.
+< Chaque fils n'est pas une fille.
+< Chaque garçon n'est pas une fille.
+< Chaque homme n'est pas une fille.
+< Chaque père n'est pas une fille.
 < Lorraine est féminin.
 < Lorraine n'est pas un fils.
 < Lorraine n'est pas un garçon.
@@ -232,122 +246,6 @@
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme?
-< 
-* 
-* Mes conclusions:
-< Chaque homme n'est pas une jeune-fille. En raison:
-<	- Chaque homme est masculin.
-<	- Chaque jeune-fille n'est pas masculin.
-< Chaque homme n'est pas une mère. En raison:
-<	- Chaque homme est masculin.
-<	- Chaque mère n'est pas masculin.
-< Chaque homme n'est pas féminin. En raison:
-<	- Chaque homme est masculin.
-< Chaque homme n'est pas une femme. En raison:
-<	- Chaque homme est masculin.
-<	- Chaque femme n'est pas masculin.
-* 
-* Mes hypothèses:
-< Un homme n'est probablement pas un garçon. En raison:
-<	- Chaque fils est un garçon ou un homme.
-< Un homme est probablement une personne. En raison:
-<	- Chaque personne est masculin ou féminin.
-<	- Chaque homme est masculin.
-< 
-* 
-* Mes conclusions:
-< Chaque femme n'est pas un garçon. En raison:
-<	- Chaque femme est féminin.
-<	- Chaque garçon n'est pas féminin.
-< Chaque femme n'est pas un père. En raison:
-<	- Chaque femme est féminin.
-<	- Chaque père n'est pas féminin.
-< Chaque femme n'est pas masculin. En raison:
-<	- Chaque femme est féminin.
-< Chaque femme n'est pas un homme. En raison:
-<	- Chaque femme est féminin.
-<	- Chaque homme n'est pas féminin.
-* 
-* Mes hypothèses:
-< Une femme n'est probablement pas une jeune-fille. En raison:
-<	- Chaque fille est une jeune-fille ou une femme.
-< Une femme est probablement une personne. En raison:
-<	- Chaque personne est masculin ou féminin.
-<	- Chaque femme est féminin.
-< 
-* 
-* Mes conclusions:
-< Chaque personne est masculin ou féminin. En raison:
-<	- Chaque personne est un homme ou une femme.
-<	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
-< 
-* 
-* Mes conclusions:
-< Chaque père n'est pas une jeune-fille. En raison:
-<	- Chaque père est masculin.
-<	- Chaque jeune-fille n'est pas masculin.
-< Chaque père n'est pas une mère. En raison:
-<	- Chaque père est masculin.
-<	- Chaque mère est féminin.
-* 	et:
-<	- Chaque père est masculin.
-<	- Chaque mère n'est pas masculin.
-* 	et:
-<	- Chaque père est un homme.
-<	- Chaque homme n'est pas une mère.
-< Chaque père est masculin. En raison:
-<	- Chaque père est un homme.
-<	- Chaque homme est masculin.
-< Chaque père n'est pas une femme. En raison:
-<	- Chaque père est un homme.
-<	- Chaque homme n'est pas une femme.
-* 	et:
-<	- Chaque père est masculin.
-<	- Chaque femme n'est pas masculin.
-< Chaque père n'est pas féminin. En raison:
-<	- Chaque père est un homme.
-<	- Chaque homme n'est pas féminin.
-* 
-* Mes hypothèses:
-< Un père est probablement une personne. En raison:
-<	- Chaque père est un homme.
-<	- Un homme est probablement une personne.
-< 
-* 
-* Mes conclusions:
-< Chaque mère n'est pas un garçon. En raison:
-<	- Chaque mère est féminin.
-<	- Chaque garçon n'est pas féminin.
-< Chaque mère est féminin. En raison:
-<	- Chaque mère est une femme.
-<	- Chaque femme est féminin.
-< Chaque mère n'est pas un père. En raison:
-<	- Chaque mère est une femme.
-<	- Chaque femme n'est pas un père.
-* 	et:
-<	- Chaque mère est féminin.
-<	- Chaque père n'est pas féminin.
-< Chaque mère n'est pas masculin. En raison:
-<	- Chaque mère est une femme.
-<	- Chaque femme n'est pas masculin.
-< Chaque mère n'est pas un homme. En raison:
-<	- Chaque mère est une femme.
-<	- Chaque femme n'est pas un homme.
-* 	et:
-<	- Chaque mère est féminin.
-<	- Chaque homme n'est pas féminin.
-* 
-* Mes hypothèses:
-< Un mère est probablement une personne. En raison:
-<	- Chaque personne est masculin ou féminin.
-<	- Chaque mère est féminin.
-* 	et:
-<	- Chaque personne est un homme ou une femme.
-<	- Chaque mère est une femme.
-* 	et:
-<	- Chaque mère est une femme.
-<	- Une femme est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -372,18 +270,90 @@
 < 
 * 
 * Mes conclusions:
+< Chaque personne est masculin ou féminin. En raison:
+<	- Chaque personne est un homme ou une femme.
+<	- Chaque femme est féminin.
+<	- Chaque homme est masculin.
+< 
+* 
+* Mes conclusions:
+< Chaque mère n'est pas un fils. En raison:
+<	- Chaque mère est féminin.
+<	- Chaque fils n'est pas féminin.
+< Chaque mère n'est pas un garçon. En raison:
+<	- Chaque mère est féminin.
+<	- Chaque garçon n'est pas féminin.
+< Chaque mère est féminin. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme est féminin.
+< Chaque mère n'est pas un père. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas un père.
+* 	et:
+<	- Chaque mère est féminin.
+<	- Chaque père n'est pas féminin.
+< Chaque mère n'est pas masculin. En raison:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas masculin.
+< Chaque mère n'est pas un homme. En raison:
+<	- Chaque mère est féminin.
+<	- Chaque homme n'est pas féminin.
+* 	et:
+<	- Chaque mère est une femme.
+<	- Chaque femme n'est pas un homme.
+* 
+* Mes hypothèses:
+< Un mère est probablement une personne. En raison:
+<	- Chaque mère est une femme.
+<	- Une femme est probablement une personne.
+< 
+* 
+* Mes conclusions:
+< Chaque femme n'est pas un fils. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque fils n'est pas féminin.
+< Chaque femme n'est pas un garçon. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque garçon n'est pas féminin.
+< Chaque femme n'est pas un père. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque père n'est pas féminin.
+< Chaque femme n'est pas masculin. En raison:
+<	- Chaque femme est féminin.
+< Chaque femme n'est pas un homme. En raison:
+<	- Chaque femme est féminin.
+<	- Chaque homme n'est pas féminin.
+* 
+* Mes hypothèses:
+< Une femme n'est probablement pas une jeune-fille. En raison:
+<	- Chaque fille est une jeune-fille ou une femme.
+< Une femme est probablement une personne. En raison:
+<	- Chaque personne est masculin ou féminin.
+<	- Chaque femme est féminin.
+< 
+* 
+* Mes conclusions:
 < Pascal est masculin. En raison:
 <	- Pascal est un fils de Olivier.
 <	- Chaque fils est masculin.
 < Pascal n'est pas une jeune-fille. En raison:
 <	- Pascal est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Pascal est un fils de Olivier.
+<	- Chaque fils n'est pas une jeune-fille.
 < Pascal n'est pas une mère. En raison:
 <	- Pascal est masculin.
 <	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Pascal est un fils de Olivier.
+<	- Chaque fils n'est pas une mère.
 < Pascal n'est pas une femme. En raison:
 <	- Pascal est masculin.
 <	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Pascal est un fils de Olivier.
+<	- Chaque fils n'est pas une femme.
 < Pascal n'est pas féminin. En raison:
 <	- Pascal est un fils de Olivier.
 <	- Chaque fils n'est pas féminin.
@@ -506,15 +476,27 @@
 < Lorraine n'est pas un fils. En raison:
 <	- Lorraine est féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille n'est pas un fils.
 < Lorraine n'est pas un garçon. En raison:
 <	- Lorraine est féminin.
 <	- Chaque garçon n'est pas féminin.
+* 	et:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille n'est pas un garçon.
 < Lorraine n'est pas un homme. En raison:
 <	- Lorraine est féminin.
 <	- Chaque homme n'est pas féminin.
+* 	et:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille n'est pas un homme.
 < Lorraine n'est pas un père. En raison:
 <	- Lorraine est féminin.
 <	- Chaque père n'est pas féminin.
+* 	et:
+<	- Lorraine est une fille de Amélie.
+<	- Chaque fille n'est pas un père.
 < Lorraine n'est pas masculin. En raison:
 <	- Lorraine est une fille de Amélie.
 <	- Chaque fille n'est pas masculin.
@@ -590,11 +572,11 @@
 * 
 * Mes questions:
 < Est Louis masculin ou féminin? En raison:
-<	- Louis est possible une personne.
-<	- Chaque personne est masculin ou féminin.
-* 	et:
 <	- Louis est probablement un parent.
 <	- Chaque parent est masculin ou féminin.
+* 	et:
+<	- Louis est possible une personne.
+<	- Chaque personne est masculin ou féminin.
 < Est Louis un homme ou une femme? En raison:
 <	- Louis est possible une personne.
 <	- Chaque personne est un homme ou une femme.

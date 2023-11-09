@@ -307,6 +307,12 @@ class JustificationItem extends Item
 //				additionalProperNounSpecificationItem_ == additionalProperNounSpecificationItem );
 		}
 
+	protected boolean hasPrimarySpecificationCurrentCreationSentenceNr()
+		{
+		return ( primarySpecificationItem_ != null &&
+				primarySpecificationItem_.hasCurrentCreationSentenceNr() );
+		}
+
 	protected boolean hasPrimarySpecificationRelationContext()
 		{
 		return ( primarySpecificationItem_ != null &&
@@ -319,10 +325,10 @@ class JustificationItem extends Item
 				primarySpecificationItem_.isExclusiveSpecification() );
 		}
 
-	protected boolean isNegativePrimarySpecification()
+	protected boolean isOlderPrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != null &&
-				primarySpecificationItem_.isNegative() );
+				primarySpecificationItem_.isOlderItem() );
 		}
 
 	protected boolean isPossessivePrimarySpecification()
@@ -454,11 +460,6 @@ class JustificationItem extends Item
 	protected boolean isSuggestiveQuestionAssumption()
 		{
 		return ( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION );
-		}
-
-	protected boolean isUniqueUserRelationAssumptionOrConclusion()
-		{
-		return ( justificationTypeNr_ == Constants.JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION );
 		}
 
 	protected short justificationTypeNr()

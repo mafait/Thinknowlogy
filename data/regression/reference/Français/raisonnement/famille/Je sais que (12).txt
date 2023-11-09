@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -124,12 +136,12 @@
 < Amélie est possible une mère de Pascal, Julien et Lorraine.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas une jeune-fille.
+< Amélie n'est possible pas un fils.
 < Amélie n'est possible pas un garçon.
 < Amélie n'est possible pas un père.
 < Amélie n'est possible pas masculin.
 < Amélie n'est possible pas un homme.
 < Amélie est possible féminin.
-< Amélie n'est possible pas un fils.
 < Amélie a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 < Amélie a peut-être une fille, appelée Lorraine.
 < Pascal a possible une mère, appelée Amélie.
@@ -166,6 +178,7 @@
 < Est Lorraine une jeune-fille ou une femme?
 * 
 * Mes hypothèses qui ont été conclues:
+< Lorraine n'est pas un fils.
 < Lorraine n'est pas un garçon.
 < Lorraine n'est pas masculin.
 < Lorraine n'est pas un père.
@@ -176,7 +189,6 @@
 * 
 * Mes hypothèses qui ont été conclues:
 < Lorraine est féminin.
-< Lorraine n'est pas un fils.
 * 
 * Mes hypothèses:
 < Lorraine n'est probablement pas une femme.
@@ -186,18 +198,18 @@
 < Lorraine a possible une mère, appelée Amélie.
 * 
 * Mes hypothèses qui ont été conclues:
+< Amélie n'est pas un fils.
+< Amélie n'est pas un garçon.
+< Amélie n'est pas un père.
+< Amélie n'est pas masculin.
+< Amélie n'est pas un homme.
 < Amélie est une femme.
 * 
 * Mes hypothèses qui ont été ajustées:
 < Amélie n'est probablement pas une jeune-fille.
 * 
 * Mes hypothèses qui ont été conclues:
-< Amélie n'est pas un garçon.
-< Amélie n'est pas un père.
-< Amélie n'est pas masculin.
-< Amélie n'est pas un homme.
 < Amélie est féminin.
-< Amélie n'est pas un fils.
 * 
 * Mes conclusions:
 < Amélie est une mère de Lorraine.
@@ -214,6 +226,18 @@
 * 	et:
 <	- Amélie est une mère de Lorraine.
 <	- Chaque mère est une femme.
+< Amélie n'est pas un fils. En raison:
+<	- Lorraine a une mère, appelée Amélie.
+<	- Chaque mère n'est pas un fils.
+* 	et:
+<	- Amélie est une femme.
+<	- Chaque femme n'est pas un fils.
+* 	et:
+<	- Amélie est féminin.
+<	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Amélie est une mère de Lorraine.
+<	- Chaque mère n'est pas un fils.
 < Amélie n'est pas un garçon. En raison:
 <	- Lorraine a une mère, appelée Amélie.
 <	- Chaque mère n'est pas un garçon.
@@ -268,9 +292,6 @@
 * 	et:
 <	- Amélie est une mère de Lorraine.
 <	- Chaque mère est féminin.
-< Amélie n'est pas un fils. En raison:
-<	- Amélie est féminin.
-<	- Chaque fils n'est pas féminin.
 < Amélie est partie d'une famille. En raison:
 <	- Amélie est un parent de Pascal, Julien et Lorraine.
 <	- Parents sont partie de chaque famille.
@@ -313,6 +334,12 @@
 < 
 * 
 * Mes conclusions:
+< Lorraine n'est pas un fils. En raison:
+<	- Lorraine est une jeune-fille.
+<	- Chaque jeune-fille n'est pas un fils.
+* 	et:
+<	- Lorraine est féminin.
+<	- Chaque fils n'est pas féminin.
 < Lorraine n'est pas un garçon. En raison:
 <	- Lorraine est une jeune-fille.
 <	- Chaque jeune-fille n'est pas un garçon.
@@ -337,9 +364,6 @@
 < Lorraine est féminin. En raison:
 <	- Lorraine est une jeune-fille.
 <	- Chaque jeune-fille est féminin.
-< Lorraine n'est pas un fils. En raison:
-<	- Lorraine est féminin.
-<	- Chaque fils n'est pas féminin.
 < Lorraine a un parent, appelée Amélie. En raison:
 <	- Amélie est un parent de Pascal, Julien et Lorraine.
 * 

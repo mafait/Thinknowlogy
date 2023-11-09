@@ -46,8 +46,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada padre no es una madre.
 < Cada madre no es un padre.
+< Cada padre no es una madre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -82,6 +82,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -91,14 +97,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
@@ -109,6 +121,7 @@
 * 
 * Mis suposiciones:
 < Juan es probablemente una madre.
+< Juan no es probablemente un hijo.
 < Juan no es probablemente un niño.
 < Juan no es probablemente un padre.
 < Juan no es probablemente masculino.
@@ -116,7 +129,6 @@
 < Juan es probablemente una mujer.
 < Juan no es posiblemente una niña.
 < Juan es probablemente femenina.
-< Juan no es probablemente un hijo.
 < Juan es posiblemente una persona.
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
@@ -125,6 +137,15 @@
 * Mis suposiciones:
 < Juan es probablemente una madre. Porque:
 <	- ¿Es Juan la madre de Paz?
+< Juan no es probablemente un hijo. Porque:
+<	- Juan es probablemente una madre.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Juan es probablemente una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Juan es probablemente femenina.
+<	- Cada hijo no es femenina.
 < Juan no es probablemente un niño. Porque:
 <	- Juan es probablemente una madre.
 <	- Cada madre no es un niño.
@@ -170,9 +191,6 @@
 * 	y:
 <	- Juan es probablemente una madre.
 <	- Cada madre es femenina.
-< Juan no es probablemente un hijo. Porque:
-<	- Juan es probablemente femenina.
-<	- Cada hijo no es femenina.
 < Juan es posiblemente una persona. Porque:
 <	- Juan es probablemente una mujer.
 <	- Una mujer es probablemente una persona.
@@ -189,8 +207,8 @@
 * 
 * Mis suposiciones anteriores que han sido corregidas por una sugerente pregunta opuesta:
 < Juan es probablemente femenina.
-< Juan no es probablemente un niño.
 < Juan no es probablemente un hijo.
+< Juan no es probablemente un niño.
 < Juan no es probablemente un padre.
 < Juan no es probablemente masculino.
 < Juan no es probablemente un hombre.
@@ -198,9 +216,9 @@
 < Juan no es posiblemente una niña.
 * 
 * Mis preguntas:
+< ¿Es Juan una madre o un padre?
 < ¿Es Juan femenina o masculino?
 < ¿Es Juan un hombre o una mujer?
-< ¿Es Juan una madre o un padre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -212,17 +230,21 @@
 <	- Un padre es probablemente una persona.
 * 
 * Mis preguntas:
+< ¿Es Juan una madre o un padre? Porque:
+<	- ¿Es Juan el padre de Paz?
+* 	y:
+<	- ¿Es Juan la madre de Paz?
 < ¿Es Juan femenina o masculino? Porque:
+<	- ¿Es Juan una madre o un padre?
+<	- Cada padre es masculino.
+<	- Cada madre es femenina.
+* 	y:
 <	- Juan es posiblemente una persona.
 <	- Cada persona es masculino o femenina.
 * 	y:
 <	- ¿Es Juan un hombre o una mujer?
 <	- Cada hombre es masculino.
 <	- Cada mujer es femenina.
-* 	y:
-<	- ¿Es Juan una madre o un padre?
-<	- Cada padre es masculino.
-<	- Cada madre es femenina.
 < ¿Es Juan un hombre o una mujer? Porque:
 <	- Juan es posiblemente una persona.
 <	- Cada persona es un hombre o una mujer.
@@ -230,8 +252,4 @@
 <	- ¿Es Juan una madre o un padre?
 <	- Cada madre es una mujer.
 <	- Cada padre es un hombre.
-< ¿Es Juan una madre o un padre? Porque:
-<	- ¿Es Juan el padre de Paz?
-* 	y:
-<	- ¿Es Juan la madre de Paz?
 < 

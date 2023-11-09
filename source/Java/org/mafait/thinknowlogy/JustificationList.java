@@ -643,7 +643,7 @@ class JustificationList extends List
 		return null;
 		}
 
-	protected JustificationItem primaryAndSecondarySpecificationJustificationItem( boolean isSelectingOlderItemOnly, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem secondarySpecificationItem )
+	protected JustificationItem primaryAndSecondarySpecificationJustificationItem( short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem secondarySpecificationItem )
 		{
 		JustificationItem searchJustificationItem = firstActiveJustificationItem();
 
@@ -651,10 +651,7 @@ class JustificationList extends List
 			{
 			if( searchJustificationItem.justificationTypeNr() == justificationTypeNr &&
 			searchJustificationItem.primarySpecificationItem() == primarySpecificationItem &&
-			searchJustificationItem.secondarySpecificationItem() == secondarySpecificationItem &&
-
-			( !isSelectingOlderItemOnly ||
-			searchJustificationItem.isOlderItem() ) )
+			searchJustificationItem.secondarySpecificationItem() == secondarySpecificationItem )
 				return searchJustificationItem;
 
 			searchJustificationItem = searchJustificationItem.nextJustificationItem();

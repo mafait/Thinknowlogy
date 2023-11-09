@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -85,6 +85,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een kind.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen vader.
+< Iedere dochter is geen man.
+< Iedere jongen is geen dochter.
+< Iedere vader is geen dochter.
+< Iedere man is geen dochter.
 < Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
@@ -115,12 +127,12 @@
 * 
 * Mijn conclusies:
 < Cor was een man.
+< Cor was geen dochter.
 < Cor was geen moeder.
 < Cor was geen meisje.
 < Cor was niet vrouwelijk.
 < Cor was geen vrouw.
 < Cor was mannelijk.
-< Cor was geen dochter.
 < Kees heeft geen vader meer.
 < Kees had een vader, genaamd Cor.
 * 
@@ -145,6 +157,15 @@
 < Cor was een man. Omdat:
 <	- Cor was de vader van Kees.
 <	- Iedere vader is een man.
+< Cor was geen dochter. Omdat:
+<	- Cor was een man.
+<	- Iedere man is geen dochter.
+* 	en:
+<	- Cor was mannelijk.
+<	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is geen dochter.
 < Cor was geen moeder. Omdat:
 <	- Cor was de vader van Kees.
 <	- Iedere vader is geen moeder.
@@ -184,9 +205,6 @@
 * 	en:
 <	- Cor was de vader van Kees.
 <	- Iedere vader is mannelijk.
-< Cor was geen dochter. Omdat:
-<	- Cor was mannelijk.
-<	- Iedere dochter is niet mannelijk.
 * 
 * Mijn veronderstellingen:
 < Cor heeft mogelijk een kind, genaamd Kees. Omdat:

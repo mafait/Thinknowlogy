@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -79,8 +79,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -147,9 +147,6 @@
 * My conclusions:
 < Every father is not a daughter. Because:
 <	- Every father is masculine.
-<	- Every daughter is feminine.
-* 	and:
-<	- Every father is masculine.
 <	- Every daughter is not masculine.
 * 	and:
 <	- Every father is a man.
@@ -167,17 +164,14 @@
 <	- Every father is a man.
 <	- Every man is not feminine.
 < Every father is not a woman. Because:
-<	- Every father is a man.
-<	- Every man is not a woman.
-* 	and:
 <	- Every father is masculine.
 <	- Every woman is not masculine.
+* 	and:
+<	- Every father is a man.
+<	- Every man is not a woman.
 * 
 * My assumptions:
 < A father is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Every father is a man.
-* 	and:
 <	- Every father is a man.
 <	- A man is probably a person.
 < A father is probably a parent. Because:
@@ -187,9 +181,6 @@
 * 
 * My conclusions:
 < Every mother is not a son. Because:
-<	- Every mother is feminine.
-<	- Every son is masculine.
-* 	and:
 <	- Every mother is feminine.
 <	- Every son is not feminine.
 * 	and:
@@ -208,17 +199,14 @@
 <	- Every mother is a woman.
 <	- Every woman is not masculine.
 < Every mother is not a man. Because:
-<	- Every mother is a woman.
-<	- Every woman is not a man.
-* 	and:
 <	- Every mother is feminine.
 <	- Every man is not feminine.
+* 	and:
+<	- Every mother is a woman.
+<	- Every woman is not a man.
 * 
 * My assumptions:
 < A mother is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Every mother is a woman.
-* 	and:
 <	- Every mother is a woman.
 <	- A woman is probably a person.
 < A mother is probably a parent. Because:
@@ -284,17 +272,14 @@
 <	- Every son is a man.
 <	- Every man is not feminine.
 < Every son is not a woman. Because:
-<	- Every son is a man.
-<	- Every man is not a woman.
-* 	and:
 <	- Every son is masculine.
 <	- Every woman is not masculine.
+* 	and:
+<	- Every son is a man.
+<	- Every man is not a woman.
 * 
 * My assumptions:
 < A son is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Every son is a man.
-* 	and:
 <	- Every son is a man.
 <	- A man is probably a person.
 < A son is probably a child. Because:
@@ -322,17 +307,14 @@
 <	- Every daughter is a woman.
 <	- Every woman is not masculine.
 < Every daughter is not a man. Because:
-<	- Every daughter is a woman.
-<	- Every woman is not a man.
-* 	and:
 <	- Every daughter is feminine.
 <	- Every man is not feminine.
+* 	and:
+<	- Every daughter is a woman.
+<	- Every woman is not a man.
 * 
 * My assumptions:
 < A daughter is probably a person. Because:
-<	- Every person is a man or a woman.
-<	- Every daughter is a woman.
-* 	and:
 <	- Every daughter is a woman.
 <	- A woman is probably a person.
 < A daughter is probably a child. Because:

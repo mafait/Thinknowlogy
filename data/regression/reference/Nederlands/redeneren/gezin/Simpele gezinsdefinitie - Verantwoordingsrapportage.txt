@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -147,9 +147,6 @@
 * Mijn conclusies:
 < Iedere vader is geen dochter. Omdat:
 <	- Iedere vader is mannelijk.
-<	- Iedere dochter is vrouwelijk.
-* 	en:
-<	- Iedere vader is mannelijk.
 <	- Iedere dochter is niet mannelijk.
 * 	en:
 <	- Iedere vader is een man.
@@ -167,17 +164,14 @@
 <	- Iedere vader is een man.
 <	- Iedere man is niet vrouwelijk.
 < Iedere vader is geen vrouw. Omdat:
-<	- Iedere vader is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
 <	- Iedere vader is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Iedere vader is een man.
+<	- Iedere man is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Iedere vader is een man.
-* 	en:
 <	- Iedere vader is een man.
 <	- Een man is waarschijnlijk een persoon.
 < Een vader is waarschijnlijk een ouder. Omdat:
@@ -187,9 +181,6 @@
 * 
 * Mijn conclusies:
 < Iedere moeder is geen zoon. Omdat:
-<	- Iedere moeder is vrouwelijk.
-<	- Iedere zoon is mannelijk.
-* 	en:
 <	- Iedere moeder is vrouwelijk.
 <	- Iedere zoon is niet vrouwelijk.
 * 	en:
@@ -208,17 +199,14 @@
 <	- Iedere moeder is een vrouw.
 <	- Iedere vrouw is niet mannelijk.
 < Iedere moeder is geen man. Omdat:
-<	- Iedere moeder is een vrouw.
-<	- Iedere vrouw is geen man.
-* 	en:
 <	- Iedere moeder is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Iedere moeder is een vrouw.
+<	- Iedere vrouw is geen man.
 * 
 * Mijn veronderstellingen:
 < Een moeder is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Iedere moeder is een vrouw.
-* 	en:
 <	- Iedere moeder is een vrouw.
 <	- Een vrouw is waarschijnlijk een persoon.
 < Een moeder is waarschijnlijk een ouder. Omdat:
@@ -284,17 +272,14 @@
 <	- Iedere zoon is een man.
 <	- Iedere man is niet vrouwelijk.
 < Iedere zoon is geen vrouw. Omdat:
-<	- Iedere zoon is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
 <	- Iedere zoon is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Iedere zoon is een man.
+<	- Iedere man is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Iedere zoon is een man.
-* 	en:
 <	- Iedere zoon is een man.
 <	- Een man is waarschijnlijk een persoon.
 < Een zoon is waarschijnlijk een kind. Omdat:
@@ -322,17 +307,14 @@
 <	- Iedere dochter is een vrouw.
 <	- Iedere vrouw is niet mannelijk.
 < Iedere dochter is geen man. Omdat:
-<	- Iedere dochter is een vrouw.
-<	- Iedere vrouw is geen man.
-* 	en:
 <	- Iedere dochter is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Iedere dochter is een vrouw.
+<	- Iedere vrouw is geen man.
 * 
 * Mijn veronderstellingen:
 < Een dochter is waarschijnlijk een persoon. Omdat:
-<	- Iedere persoon is een man of een vrouw.
-<	- Iedere dochter is een vrouw.
-* 	en:
 <	- Iedere dochter is een vrouw.
 <	- Een vrouw is waarschijnlijk een persoon.
 < Een dochter is waarschijnlijk een kind. Omdat:

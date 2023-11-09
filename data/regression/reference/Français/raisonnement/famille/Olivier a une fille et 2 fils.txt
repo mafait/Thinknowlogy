@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -121,8 +133,8 @@
 < Olivier est peut-être une personne.
 * 
 * Mes questions:
-< Est Olivier masculin ou féminin?
 < Est Olivier une femme ou un homme?
+< Est Olivier féminin ou masculin?
 < Est Olivier un père ou une mère?
 < 
 * 
@@ -139,20 +151,6 @@
 <	- Un parent est probablement une personne.
 * 
 * Mes questions:
-< Est Olivier masculin ou féminin? En raison:
-<	- Est Olivier une femme ou un homme?
-<	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
-* 	et:
-<	- Olivier est possible un parent.
-<	- Chaque parent est féminin ou masculin.
-* 	et:
-<	- Est Olivier un père ou une mère?
-<	- Chaque mère est féminin.
-<	- Chaque père est masculin.
-* 	et:
-<	- Olivier est peut-être une personne.
-<	- Chaque personne est masculin ou féminin.
 < Est Olivier une femme ou un homme? En raison:
 <	- Olivier est possible un parent.
 <	- Chaque parent est une femme ou un homme.
@@ -163,6 +161,20 @@
 <	- Est Olivier un père ou une mère?
 <	- Chaque père est un homme.
 <	- Chaque mère est une femme.
+< Est Olivier féminin ou masculin? En raison:
+<	- Est Olivier une femme ou un homme?
+<	- Chaque homme est masculin.
+<	- Chaque femme est féminin.
+* 	et:
+<	- Olivier est possible un parent.
+<	- Chaque parent est féminin ou masculin.
+* 	et:
+<	- Est Olivier un père ou une mère?
+<	- Chaque père est masculin.
+<	- Chaque mère est féminin.
+* 	et:
+<	- Olivier est peut-être une personne.
+<	- Chaque personne est masculin ou féminin.
 < Est Olivier un père ou une mère? En raison:
 <	- Olivier est possible un parent.
 <	- Chaque parent est un père ou une mère.
@@ -177,7 +189,7 @@
 < Olivier est peut-être une personne.
 * 
 * Mes questions:
-< Est Olivier masculin ou féminin?
 < Est Olivier une femme ou un homme?
+< Est Olivier féminin ou masculin?
 < Est Olivier un père ou une mère?
 < 

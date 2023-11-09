@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -115,12 +127,12 @@
 * 
 * Mes conclusions:
 < Philippe était un homme.
+< Philippe ne était pas une fille.
 < Philippe ne était pas une mère.
 < Philippe ne était pas une jeune-fille.
 < Philippe ne était pas féminin.
 < Philippe ne était pas une femme.
 < Philippe était masculin.
-< Philippe ne était pas une fille.
 < Antoine n'a aucun père plus.
 < Antoine avait un père, appelé Philippe.
 * 
@@ -145,6 +157,15 @@
 < Philippe était un homme. En raison:
 <	- Philippe était le père de Antoine.
 <	- Chaque père est un homme.
+< Philippe ne était pas une fille. En raison:
+<	- Philippe était un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Philippe était masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Philippe était le père de Antoine.
+<	- Chaque père n'est pas une fille.
 < Philippe ne était pas une mère. En raison:
 <	- Philippe était le père de Antoine.
 <	- Chaque père n'est pas une mère.
@@ -184,9 +205,6 @@
 * 	et:
 <	- Philippe était le père de Antoine.
 <	- Chaque père est masculin.
-< Philippe ne était pas une fille. En raison:
-<	- Philippe était masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Philippe a possible un enfant, appelé Antoine. En raison:

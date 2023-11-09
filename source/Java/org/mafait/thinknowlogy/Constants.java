@@ -272,7 +272,7 @@ class Constants
 	protected static final String QUERY_LIST_START_STRING =										"<";
 	protected static final String QUERY_SEPARATOR_SPACE_STRING =								", ";
 	protected static final String QUERY_SEPARATOR_STRING =										",";
-	protected static final String QUERY_WORD_TYPE_STRING =										EMPTY_STRING +	QUERY_WORD_TYPE_CHAR;
+	protected static final String QUERY_WORD_TYPE_STRING =										EMPTY_STRING + QUERY_WORD_TYPE_CHAR;
 
 	// Result constants
 	protected static final byte RESULT_OK =														1;

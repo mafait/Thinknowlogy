@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -85,6 +85,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een kind.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen vader.
+< Iedere dochter is geen man.
+< Iedere jongen is geen dochter.
+< Iedere vader is geen dochter.
+< Iedere man is geen dochter.
 < Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
@@ -160,11 +172,11 @@
 * Mijn conclusies:
 < Anna is een vrouw.
 < Anna is geen vader.
+< Anna is geen zoon.
 < Anna is geen jongen.
 < Anna is niet mannelijk.
 < Anna is geen man.
 < Anna is vrouwelijk.
-< Anna is geen zoon.
 < Paul heeft een moeder, genaamd Anna.
 * 
 * Mijn veronderstellingen:
@@ -188,12 +200,12 @@
 * 
 * Mijn conclusies:
 < Sjors was een man.
+< Sjors was geen dochter.
 < Sjors was geen moeder.
 < Sjors was geen meisje.
 < Sjors was niet vrouwelijk.
 < Sjors was geen vrouw.
 < Sjors was mannelijk.
-< Sjors was geen dochter.
 < André heeft geen vader meer.
 < André had een vader, genaamd Sjors.
 * 

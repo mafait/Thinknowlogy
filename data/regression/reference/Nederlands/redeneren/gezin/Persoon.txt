@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -85,6 +85,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een kind.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen vader.
+< Iedere dochter is geen man.
+< Iedere jongen is geen dochter.
+< Iedere vader is geen dochter.
+< Iedere man is geen dochter.
 < Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
@@ -134,12 +146,12 @@
 * Mijn veronderstellingen:
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen meisje.
+< Anna is mogelijk geen zoon.
 < Anna is mogelijk geen jongen.
 < Anna is mogelijk geen vader.
 < Anna is mogelijk niet mannelijk.
 < Anna is mogelijk geen man.
 < Anna is mogelijk vrouwelijk.
-< Anna is mogelijk geen zoon.
 < 
 * 
 * Mijn veronderstellingen:
@@ -150,6 +162,12 @@
 < Anna is misschien geen meisje. Omdat:
 <	- Anna is mogelijk een vrouw.
 <	- Een vrouw is waarschijnlijk geen meisje.
+< Anna is mogelijk geen zoon. Omdat:
+<	- Anna is mogelijk een vrouw.
+<	- Iedere vrouw is geen zoon.
+* 	en:
+<	- Anna is mogelijk vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
 < Anna is mogelijk geen jongen. Omdat:
 <	- Anna is mogelijk een vrouw.
 <	- Iedere vrouw is geen jongen.
@@ -174,20 +192,17 @@
 < Anna is mogelijk vrouwelijk. Omdat:
 <	- Anna is mogelijk een vrouw.
 <	- Iedere vrouw is vrouwelijk.
-< Anna is mogelijk geen zoon. Omdat:
-<	- Anna is mogelijk vrouwelijk.
-<	- Iedere zoon is niet vrouwelijk.
 < 
 * 
 * Mijn veronderstellingen:
 < Marinus is mogelijk een man.
+< Marinus is mogelijk geen dochter.
 < Marinus is misschien geen jongen.
 < Marinus is mogelijk geen meisje.
 < Marinus is mogelijk geen moeder.
 < Marinus is mogelijk niet vrouwelijk.
 < Marinus is mogelijk geen vrouw.
 < Marinus is mogelijk mannelijk.
-< Marinus is mogelijk geen dochter.
 < 
 * 
 * Mijn veronderstellingen:
@@ -195,6 +210,12 @@
 <	- Marinus is een persoon.
 <	- Iedere persoon is een man of een vrouw.
 <	- Eigennaam "Marinus" is waarschijnlijk mannelijk.
+< Marinus is mogelijk geen dochter. Omdat:
+<	- Marinus is mogelijk een man.
+<	- Iedere man is geen dochter.
+* 	en:
+<	- Marinus is mogelijk mannelijk.
+<	- Iedere dochter is niet mannelijk.
 < Marinus is misschien geen jongen. Omdat:
 <	- Marinus is mogelijk een man.
 <	- Een man is waarschijnlijk geen jongen.
@@ -222,7 +243,4 @@
 < Marinus is mogelijk mannelijk. Omdat:
 <	- Marinus is mogelijk een man.
 <	- Iedere man is mannelijk.
-< Marinus is mogelijk geen dochter. Omdat:
-<	- Marinus is mogelijk mannelijk.
-<	- Iedere dochter is niet mannelijk.
 < 

@@ -46,8 +46,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada padre no es una madre.
 < Cada madre no es un padre.
+< Cada padre no es una madre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -82,6 +82,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -91,14 +97,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
@@ -110,12 +122,12 @@
 * Mis conclusiones:
 < Juan es parte de una familia.
 < Juan es un hombre.
+< Juan no es una hija.
 < Juan no es una madre.
 < Juan no es una niña.
 < Juan no es femenina.
 < Juan no es una mujer.
 < Juan es masculino.
-< Juan no es una hija.
 < Paz tiene un padre, llamado Juan.
 < Paz tiene 2 padres, llamados Juan y Ana.
 < Paz tiene una madre, llamada Ana.
@@ -128,18 +140,18 @@
 < Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un padre.
+< Ana no es un hijo.
 < Ana no es un niño.
 < Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un hijo.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
 < Juan no es probablemente un niño.
 < Juan tiene puede-ser una hija, llamada Luisa.
-< Paz es probablemente parte de una familia.
 < Paz es posiblemente una persona.
+< Paz es probablemente parte de una familia.
 < José es probablemente parte de una familia.
 < José es posiblemente una persona.
 < Luisa es puede-ser hija de Juan y Ana.
@@ -174,6 +186,15 @@
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una madre.
@@ -213,9 +234,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -252,6 +270,15 @@
 * 	y:
 <	- Ana es femenina.
 <	- Cada padre no es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer no es un niño.
@@ -282,9 +309,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 * 
 * Mis suposiciones:
 < Ana no es probablemente una niña. Porque:
@@ -310,15 +334,15 @@
 <	- Ana es la madre de Paz, José y Luisa.
 * 
 * Mis suposiciones:
-< Paz es probablemente parte de una familia. Porque:
-<	- ¿Es Paz un hijo o una hija?
-<	- Hijos son parte de cada familia.
 < Paz es posiblemente una persona. Porque:
 <	- Paz tiene un padre, llamado Juan.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Paz tiene una madre, llamada Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Un hijo es probablemente una persona.
+< Paz es probablemente parte de una familia. Porque:
+<	- ¿Es Paz un hijo o una hija?
+<	- Hijos son parte de cada familia.
 * 
 * Mis preguntas:
 < ¿Es Paz femenina o masculino? Porque:
@@ -328,14 +352,14 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es femenina o masculino.
 * 	y:
+<	- Paz es posiblemente una persona.
+<	- Cada persona es masculino o femenina.
+* 	y:
 <	- ¿Es Paz una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
 <	- Cada hombre es masculino.
-* 	y:
-<	- Paz es posiblemente una persona.
-<	- Cada persona es masculino o femenina.
 < ¿Es Paz una niña, una mujer, un niño o un hombre? Porque:
 <	- Paz tiene un padre, llamado Juan.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
@@ -438,12 +462,21 @@
 < Luisa no es puede-ser un niño. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada niño no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un niño.
 < Luisa no es puede-ser un padre. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada padre no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un padre.
 < Luisa no es puede-ser un hombre. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un hombre.
 < Luisa no es puede-ser masculino. Porque:
 <	- Luisa es puede-ser hija de Juan y Ana.
 <	- Cada hija no es masculino.
@@ -468,6 +501,18 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana no es un hijo. Porque:
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- José tiene una madre, llamada Ana.
 <	- Cada madre no es un niño.
@@ -522,9 +567,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- José tiene una madre, llamada Ana.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
@@ -640,6 +682,15 @@
 < Juan es un hombre. Porque:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una madre. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una madre.
@@ -679,9 +730,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan tiene probablemente 3 hijos, llamados Paz, José y Luisa. Porque:
@@ -714,6 +762,18 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana no es un hijo. Porque:
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- José tiene una madre, llamada Ana.
 <	- Cada madre no es un niño.
@@ -768,9 +828,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- José tiene una madre, llamada Ana.
 <	- Paz tiene 2 padres, llamados Juan y Ana.
@@ -824,12 +881,21 @@
 < Paz no es una niña. Porque:
 <	- Paz es masculino.
 <	- Cada niña no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una niña.
 < Paz no es una madre. Porque:
 <	- Paz es masculino.
 <	- Cada madre no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una madre.
 < Paz no es una mujer. Porque:
 <	- Paz es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una mujer.
 < Paz no es femenina. Porque:
 <	- Paz es hijo de Juan y Ana.
 <	- Cada hijo no es femenina.
@@ -863,6 +929,18 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- Paz tiene un padre, llamado Juan.
 <	- Cada padre no es una niña.
@@ -917,9 +995,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -967,12 +1042,21 @@
 < Paz no es una niña. Porque:
 <	- Paz es masculino.
 <	- Cada niña no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una niña.
 < Paz no es una madre. Porque:
 <	- Paz es masculino.
 <	- Cada madre no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una madre.
 < Paz no es una mujer. Porque:
 <	- Paz es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una mujer.
 < Paz no es femenina. Porque:
 <	- Paz es hijo de Juan y Ana.
 <	- Cada hijo no es femenina.
@@ -1005,6 +1089,19 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- José tiene un padre, llamado Juan.
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- José tiene un padre, llamado Juan.
 <	- Paz tiene un padre, llamado Juan.
@@ -1064,9 +1161,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -1156,6 +1250,19 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- José tiene un padre, llamado Juan.
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- José tiene un padre, llamado Juan.
 <	- Paz tiene un padre, llamado Juan.
@@ -1215,9 +1322,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -1262,6 +1366,19 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1321,9 +1438,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1396,12 +1510,21 @@
 < Luisa no es puede-ser un niño. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada niño no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un niño.
 < Luisa no es puede-ser un padre. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada padre no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un padre.
 < Luisa no es puede-ser un hombre. Porque:
 <	- Luisa es puede-ser femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Luisa es puede-ser hija de Juan y Ana.
+<	- Cada hija no es un hombre.
 < Luisa no es puede-ser masculino. Porque:
 <	- Luisa es puede-ser hija de Juan y Ana.
 <	- Cada hija no es masculino.
@@ -1423,21 +1546,29 @@
 < ¿Es Luisa una niña o una mujer?
 * 
 * Mis suposiciones que se han concluido:
+< Luisa no es un hijo.
 < Luisa no es un niño.
 < Luisa no es un padre.
 < Luisa no es masculino.
 < Luisa no es un hombre.
-< Luisa es femenina.
-< Luisa no es un hijo.
 * 
 * Mis suposiciones que se han ajustado:
 < Luisa es probablemente una persona.
+* 
+* Mis suposiciones que se han concluido:
+< Luisa es femenina.
 * 
 * Mis suposiciones:
 < Luisa no es probablemente una niña.
 < 
 * 
 * Mis conclusiones:
+< Luisa no es un hijo. Porque:
+<	- Luisa es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Luisa es femenina.
+<	- Cada hijo no es femenina.
 < Luisa no es un niño. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un niño.
@@ -1462,9 +1593,6 @@
 < Luisa es femenina. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer es femenina.
-< Luisa no es un hijo. Porque:
-<	- Luisa es femenina.
-<	- Cada hijo no es femenina.
 < Luisa tiene un padre, llamado Juan. Porque:
 <	- Juan es el padre de Paz, José y Luisa.
 < Luisa tiene 2 padres, llamados Juan y Ana. Porque:
@@ -1502,6 +1630,19 @@
 < 
 * 
 * Mis conclusiones:
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1561,9 +1702,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1622,6 +1760,19 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- José tiene un padre, llamado Juan.
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- José tiene un padre, llamado Juan.
 <	- Paz tiene un padre, llamado Juan.
@@ -1681,9 +1832,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -1718,6 +1866,19 @@
 * Mis conclusiones:
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1777,9 +1938,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -1829,26 +1987,41 @@
 <	- Luisa es una mujer.
 <	- Cada mujer es femenina.
 < Luisa no es un hijo. Porque:
+<	- Luisa es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
 <	- Luisa es femenina.
 <	- Cada hijo no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un hijo.
 < Luisa no es un niño. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un niño.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada niño no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un niño.
 < Luisa no es un padre. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un padre.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada padre no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un padre.
 < Luisa no es un hombre. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un hombre.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un hombre.
 < Luisa no es masculino. Porque:
 <	- Luisa es hija de Juan y Ana.
 <	- Cada hija no es masculino.
@@ -1885,6 +2058,19 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- José tiene un padre, llamado Juan.
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- José tiene un padre, llamado Juan.
 <	- Paz tiene un padre, llamado Juan.
@@ -1944,9 +2130,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -1981,6 +2164,19 @@
 * Mis conclusiones:
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -2040,9 +2236,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -2097,12 +2290,21 @@
 < Paz no es una niña. Porque:
 <	- Paz es masculino.
 <	- Cada niña no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una niña.
 < Paz no es una madre. Porque:
 <	- Paz es masculino.
 <	- Cada madre no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una madre.
 < Paz no es una mujer. Porque:
 <	- Paz es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- Paz es hijo de Juan y Ana.
+<	- Cada hijo no es una mujer.
 < Paz no es femenina. Porque:
 <	- Paz es hijo de Juan y Ana.
 <	- Cada hijo no es femenina.
@@ -2181,26 +2383,41 @@
 <	- Luisa es una mujer.
 <	- Cada mujer es femenina.
 < Luisa no es un hijo. Porque:
+<	- Luisa es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
 <	- Luisa es femenina.
 <	- Cada hijo no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un hijo.
 < Luisa no es un niño. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un niño.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada niño no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un niño.
 < Luisa no es un padre. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un padre.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada padre no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un padre.
 < Luisa no es un hombre. Porque:
 <	- Luisa es una mujer.
 <	- Cada mujer no es un hombre.
 * 	y:
 <	- Luisa es femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Luisa es hija de Juan y Ana.
+<	- Cada hija no es un hombre.
 < Luisa no es masculino. Porque:
 <	- Luisa es hija de Juan y Ana.
 <	- Cada hija no es masculino.
@@ -2275,6 +2492,19 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
+< Juan no es una hija. Porque:
+<	- José tiene un padre, llamado Juan.
+<	- Paz tiene un padre, llamado Juan.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
 < Juan no es una niña. Porque:
 <	- José tiene un padre, llamado Juan.
 <	- Paz tiene un padre, llamado Juan.
@@ -2334,9 +2564,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -2372,6 +2599,19 @@
 <	- Luisa tiene una madre, llamada Ana.
 < Ana tiene una hija, llamada Luisa. Porque:
 <	- Luisa es hija de Juan y Ana.
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- José tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
 < Ana no es un niño. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -2431,9 +2671,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
-< Ana no es un hijo. Porque:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- José tiene una madre, llamada Ana.
@@ -2481,12 +2718,21 @@
 < José no es una niña. Porque:
 <	- José es masculino.
 <	- Cada niña no es masculino.
+* 	y:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo no es una niña.
 < José no es una madre. Porque:
 <	- José es masculino.
 <	- Cada madre no es masculino.
+* 	y:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo no es una madre.
 < José no es una mujer. Porque:
 <	- José es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- José es hijo de Juan y Ana.
+<	- Cada hijo no es una mujer.
 < José no es femenina. Porque:
 <	- José es hijo de Juan y Ana.
 <	- Cada hijo no es femenina.

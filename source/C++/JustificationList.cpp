@@ -727,7 +727,7 @@ class JustificationList : private List
 		return NULL;
 		}
 
-	JustificationItem *primaryAndSecondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
+	JustificationItem *primaryAndSecondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
 		{
 		JustificationItem *searchJustificationItem = firstActiveJustificationItem();
 
@@ -735,10 +735,7 @@ class JustificationList : private List
 			{
 			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
 			searchJustificationItem->primarySpecificationItem() == primarySpecificationItem &&
-			searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem &&
-
-			( !isSelectingOlderItemOnly ||
-			searchJustificationItem->isOlderItem() ) )
+			searchJustificationItem->secondarySpecificationItem() == secondarySpecificationItem )
 				return searchJustificationItem;
 
 			searchJustificationItem = searchJustificationItem->nextJustificationItem();

@@ -409,6 +409,9 @@ class AdminReadSentence
 
 			adminItem_.initializeAdminVariables();
 
+			// Used for developer statistics
+			GlobalVariables.nReadSentences++;
+
 			do	{
 				switch( currentGeneralizationReadItem.grammarParameter )
 					{

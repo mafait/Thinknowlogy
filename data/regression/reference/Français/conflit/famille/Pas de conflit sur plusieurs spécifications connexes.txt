@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -117,10 +129,10 @@
 < Olivier n'est pas féminin.
 < Olivier est masculin.
 < Olivier est un homme.
+< Olivier n'est pas une fille.
 < Olivier n'est pas une mère.
 < Olivier n'est pas une jeune-fille.
 < Olivier n'est pas une femme.
-< Olivier n'est pas une fille.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon.
@@ -152,6 +164,18 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un fils.
+<	- Chaque fils n'est pas une fille.
 < Olivier n'est pas une mère. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une mère.
@@ -161,6 +185,9 @@
 * 	et:
 <	- Olivier est masculin.
 <	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Olivier est un fils.
+<	- Chaque fils n'est pas une mère.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas une jeune-fille.
@@ -170,6 +197,9 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une jeune-fille.
+* 	et:
+<	- Olivier est un fils.
+<	- Chaque fils n'est pas une jeune-fille.
 < Olivier n'est pas une femme. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas une femme.
@@ -179,12 +209,9 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une femme.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 	et:
 <	- Olivier est un fils.
-<	- Chaque fils n'est pas une fille.
+<	- Chaque fils n'est pas une femme.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:

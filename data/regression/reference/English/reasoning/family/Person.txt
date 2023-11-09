@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -85,6 +85,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -96,12 +102,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -134,12 +146,12 @@
 * My assumptions:
 < Anna is possibly a woman.
 < Anna is maybe not a girl.
+< Anna is possibly not a son.
 < Anna is possibly not a boy.
 < Anna is possibly not a father.
 < Anna is possibly not masculine.
 < Anna is possibly not a man.
 < Anna is possibly feminine.
-< Anna is possibly not a son.
 < 
 * 
 * My assumptions:
@@ -150,6 +162,12 @@
 < Anna is maybe not a girl. Because:
 <	- Anna is possibly a woman.
 <	- A woman is probably not a girl.
+< Anna is possibly not a son. Because:
+<	- Anna is possibly a woman.
+<	- Every woman is not a son.
+* 	and:
+<	- Anna is possibly feminine.
+<	- Every son is not feminine.
 < Anna is possibly not a boy. Because:
 <	- Anna is possibly a woman.
 <	- Every woman is not a boy.
@@ -174,7 +192,4 @@
 < Anna is possibly feminine. Because:
 <	- Anna is possibly a woman.
 <	- Every woman is feminine.
-< Anna is possibly not a son. Because:
-<	- Anna is possibly feminine.
-<	- Every son is not feminine.
 < 

@@ -61,12 +61,10 @@ Iedere dochter is een meisje of een vrouw.
 #-----------------------------------------------------------------
 # Blok 8: Verantwoordingsrapportage
 #-----------------------------------------------------------------
-Toon de verantwoordingsrapportage over mannen.
-Toon de verantwoordingsrapportage over vrouwen.
-Toon de verantwoordingsrapportage over personen.
-Toon de verantwoordingsrapportage over vaders.
-Toon de verantwoordingsrapportage over moeders.
 Toon de verantwoordingsrapportage over ouders.
+Toon de verantwoordingsrapportage over personen.
+Toon de verantwoordingsrapportage over moeders.
+Toon de verantwoordingsrapportage over vrouwen.
 Toon de verantwoordingsrapportage over Paul.
 Toon de verantwoordingsrapportage over Jan.
 Toon de verantwoordingsrapportage over Anna.

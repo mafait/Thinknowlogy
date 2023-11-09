@@ -170,8 +170,7 @@ class AdminWrite
 				primarySpecificationItem->hasOnlyOneRelationWord() &&
 				!primarySpecificationItem->isArchivedAssignment() &&
 				primarySpecificationItem->isSelfGeneratedConclusion() &&
-				!currentJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() &&
-				!currentJustificationItem->isUniqueUserRelationAssumptionOrConclusion() )
+				!currentJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() )
 					isHidingAlmostSimilarSpanishAmbiguousPrimarySpecification = true;
 				}
 
@@ -218,7 +217,7 @@ class AdminWrite
 				if( primarySpecificationItem->isSelfGeneratedQuestion() &&
 
 				( currentJustificationItem->isQuestionJustification() ||
-				// Correct invalid assumption by opposite suggestive question
+				// Correct invalid suggestive assumption by opposite suggestive question
 				primarySpecificationItem->isCorrectedSpecification() ) &&
 
 				( generalizationWordItem = primarySpecificationItem->generalizationWordItem() ) != NULL )
@@ -243,8 +242,6 @@ class AdminWrite
 		{
 		bool isExclusiveSpecification;
 		bool isNegative;
-		bool isNegativeAssumptionOrConclusion;
-		bool isNegativePrimarySpecification = false;
 		bool isPossessive;
 		bool isQuestion;
 		bool isSelfGeneratedQuestion;
@@ -285,91 +282,79 @@ class AdminWrite
 		if( writeJustificationSpecifications( true, !isFirstJustificationType, writeJustificationItem, selfGeneratedSpecificationItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification specifications" );
 
+		if( !writeJustificationItem->isNegativeAssumptionOrConclusion() &&
 		// Find a related specification
-		if( ( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( false, selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL &&
+		( currentSpecificationItem = generalizationWordItem->firstSpecificationItem( false, selfGeneratedSpecificationItem->isAssignment(), selfGeneratedSpecificationItem->isInactiveAssignment(), selfGeneratedSpecificationItem->isArchivedAssignment(), selfGeneratedSpecificationItem->questionParameter() ) ) != NULL &&
 		// Found a related specification
 		currentSpecificationItem != selfGeneratedSpecificationItem )
 			{
 			isExclusiveSpecification = selfGeneratedSpecificationItem->isExclusiveSpecification();
-			isNegativeAssumptionOrConclusion = writeJustificationItem->isNegativeAssumptionOrConclusion();
+			isNegative = selfGeneratedSpecificationItem->isNegative();
+			isPossessive = selfGeneratedSpecificationItem->isPossessive();
+			isQuestion = selfGeneratedSpecificationItem->isQuestion();
+			isSpecificationGeneralization = selfGeneratedSpecificationItem->isSpecificationGeneralization();
+			assumptionLevel = selfGeneratedSpecificationItem->assumptionLevel();
+			specificationCollectionNr = selfGeneratedSpecificationItem->specificationCollectionNr();
+			specificationWordTypeNr = selfGeneratedSpecificationItem->specificationWordTypeNr();
+			generalizationContextNr = selfGeneratedSpecificationItem->generalizationContextNr();
+			relationContextNr = selfGeneratedSpecificationItem->relationContextNr();
 
-			if( isNegativeAssumptionOrConclusion &&
-			!currentSpecificationItem->hasRelationContext() &&
-			writeJustificationItem->isNegativePrimarySpecification() )
-				isNegativePrimarySpecification = true;
+			do	{
+				if( lastWrittenJustificationItem_ != NULL &&
+				currentSpecificationItem != selfGeneratedSpecificationItem &&
+				currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr ) != NULL )
+					{
+					currentPrimarySpecificationItem = writeJustificationItem->primarySpecificationItem();
 
-			if( !isNegativeAssumptionOrConclusion ||
+					isSelfGeneratedQuestion = ( ( currentSecondarySpecificationItem = writeJustificationItem->secondarySpecificationItem() ) != NULL &&
+												selfGeneratedSpecificationItem->isQuestion() );
 
-			( isNegativePrimarySpecification &&
-			currentSpecificationItem->hasNonCompoundSpecificationCollection() ) )
-				{
-				isNegative = selfGeneratedSpecificationItem->isNegative();
-				isPossessive = selfGeneratedSpecificationItem->isPossessive();
-				isQuestion = selfGeneratedSpecificationItem->isQuestion();
-				isSpecificationGeneralization = selfGeneratedSpecificationItem->isSpecificationGeneralization();
-				assumptionLevel = selfGeneratedSpecificationItem->assumptionLevel();
-				specificationCollectionNr = selfGeneratedSpecificationItem->specificationCollectionNr();
-				specificationWordTypeNr = selfGeneratedSpecificationItem->specificationWordTypeNr();
-				generalizationContextNr = selfGeneratedSpecificationItem->generalizationContextNr();
-				relationContextNr = selfGeneratedSpecificationItem->relationContextNr();
+													// Test file: "No conflict on multiple related specifications"
+					selectedJustificationTypeNr = ( isPossessive ? JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION :
 
-				do	{
-					if( lastWrittenJustificationItem_ != NULL &&
-					currentSpecificationItem != selfGeneratedSpecificationItem &&
-					currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr ) != NULL )
+													// Test files: "Collect afterwards - Past tense" and "Collect afterwards - Uncertainty"
+													( isSpecificationGeneralization ? JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION :
+
+													// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
+													( currentSecondarySpecificationItem == NULL &&
+													currentSpecificationItem->isCorrectedSpecification() ? lastWrittenJustificationItem_->justificationTypeNr() :
+
+													// Test file: "This information is more specific (non-exclusive)"
+													( isSelfGeneratedQuestion &&
+													currentPrimarySpecificationItem != NULL &&
+													!currentPrimarySpecificationItem->isPossessive() ? JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION :
+																										JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION ) ) ) );
+
+					// Find related justification in current specification
+					currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_->justificationOrderNr ) :
+																			currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr ) );
+
+					if( currentJustificationItem != NULL &&
+
+					// Exclude question justification with primary specification that has relation context
+					( !isQuestion ||
+					// Suggestive question assumption
+					currentSecondarySpecificationItem == NULL ||
+					!currentJustificationItem->hasPrimarySpecificationRelationContext() ) )
 						{
-						currentPrimarySpecificationItem = writeJustificationItem->primarySpecificationItem();
+						isWritingPrimarySpecificationOrSeparator = ( ( currentSecondarySpecificationItem == NULL &&
+																	currentJustificationItem->isSuggestiveQuestionAssumption() ) ||
 
-						isSelfGeneratedQuestion = ( ( currentSecondarySpecificationItem = writeJustificationItem->secondarySpecificationItem() ) != NULL &&
-													selfGeneratedSpecificationItem->isQuestion() );
+																	( currentSecondarySpecificationItem != NULL &&
 
-														// Test file: "No conflict on multiple related specifications"
-						selectedJustificationTypeNr = ( isPossessive ? JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION :
+																	( currentSecondarySpecificationItem->isGeneralizationProperNoun() ||
 
-														// Test files: "Collect afterwards - Past tense" and "Collect afterwards - Uncertainty"
-														( isSpecificationGeneralization ? JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION :
+																	( !isSelfGeneratedQuestion &&
+																	currentPrimarySpecificationItem != NULL &&
+																	currentPrimarySpecificationItem->isGeneralizationProperNoun() ) ) ) );
 
-														// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
-														( 
-										currentSecondarySpecificationItem == NULL &&
-										currentSpecificationItem->isCorrectedSpecification() ? lastWrittenJustificationItem_->justificationTypeNr() :
-														// Test file: "This information is more specific (non-exclusive)"
-														( isSelfGeneratedQuestion &&
-														currentPrimarySpecificationItem != NULL &&
-														!currentPrimarySpecificationItem->isPossessive() ? JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION :
-																											JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION ) ) ) );
-
-						// Find related justification in current specification
-						currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_->justificationOrderNr ) :
-																				currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr ) );
-
-						if( currentJustificationItem != NULL &&
-
-						// Exclude question justification with primary specification that has relation context
-						( !isQuestion ||
-						// Suggestive question assumption
-						currentSecondarySpecificationItem == NULL ||
-						!currentJustificationItem->hasPrimarySpecificationRelationContext() ) )
-							{
-							isWritingPrimarySpecificationOrSeparator = ( ( currentSecondarySpecificationItem == NULL &&
-																		currentJustificationItem->isSuggestiveQuestionAssumption() ) ||
-
-																		( currentSecondarySpecificationItem != NULL &&
-
-																		( currentSecondarySpecificationItem->isGeneralizationProperNoun() ||
-
-																		( !isSelfGeneratedQuestion &&
-																		currentPrimarySpecificationItem != NULL &&
-																		currentPrimarySpecificationItem->isGeneralizationProperNoun() ) ) ) );
-
-							// Write related justification specifications
-							if( writeJustificationSpecifications( isWritingPrimarySpecificationOrSeparator, isWritingPrimarySpecificationOrSeparator, currentJustificationItem, NULL ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write related justification specifications" );
-							}
+						// Write related justification specifications
+						if( writeJustificationSpecifications( isWritingPrimarySpecificationOrSeparator, isWritingPrimarySpecificationOrSeparator, currentJustificationItem, NULL ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write related justification specifications" );
 						}
 					}
-				while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 				}
+			while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 			}
 
 		return RESULT_OK;

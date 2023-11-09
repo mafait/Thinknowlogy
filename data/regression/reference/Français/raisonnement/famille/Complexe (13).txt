@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -131,12 +143,12 @@
 < Amélie a probablement un enfant, appelé Pascal.
 < Amélie est possible une femme.
 < Amélie n'est peut-être pas une jeune-fille.
+< Amélie n'est possible pas un fils.
 < Amélie n'est possible pas un garçon.
 < Amélie n'est possible pas un père.
 < Amélie n'est possible pas masculin.
 < Amélie n'est possible pas un homme.
 < Amélie est possible féminin.
-< Amélie n'est possible pas un fils.
 * 
 * Mes questions:
 < Est Pascal féminin ou masculin?
@@ -303,6 +315,12 @@
 < Amélie n'est peut-être pas une jeune-fille. En raison:
 <	- Amélie est possible une femme.
 <	- Une femme n'est probablement pas une jeune-fille.
+< Amélie n'est possible pas un fils. En raison:
+<	- Amélie est possible une femme.
+<	- Chaque femme n'est pas un fils.
+* 	et:
+<	- Amélie est possible féminin.
+<	- Chaque fils n'est pas féminin.
 < Amélie n'est possible pas un garçon. En raison:
 <	- Amélie est possible une femme.
 <	- Chaque femme n'est pas un garçon.
@@ -327,9 +345,6 @@
 < Amélie est possible féminin. En raison:
 <	- Amélie est possible une femme.
 <	- Chaque femme est féminin.
-< Amélie n'est possible pas un fils. En raison:
-<	- Amélie est possible féminin.
-<	- Chaque fils n'est pas féminin.
 < Amélie est probablement une personne. En raison:
 <	- Amélie est un parent de Pascal.
 <	- Un parent est probablement une personne.
@@ -431,12 +446,21 @@
 < Lorraine n'est possible pas un garçon. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque garçon n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un garçon.
 < Lorraine n'est possible pas un père. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque père n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un père.
 < Lorraine n'est possible pas un homme. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque homme n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un homme.
 < Lorraine n'est possible pas masculin. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
 <	- Chaque fille n'est pas masculin.
@@ -464,14 +488,14 @@
 < Amélie est peut-être une mère de Pascal, Julien et Lorraine.
 * 
 * Mes hypothèses qui ont été conclues:
-< Pascal a une mère, appelée Amélie.
 < Amélie est féminin.
 < Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
 < Amélie n'est pas un père.
-< Amélie n'est pas un homme.
 < Amélie n'est pas masculin.
+< Amélie n'est pas un homme.
 < Amélie est une femme.
+< Pascal a une mère, appelée Amélie.
 * 
 * Mes hypothèses qui ont été ajustées:
 < Amélie n'est probablement pas une jeune-fille.
@@ -483,12 +507,12 @@
 * Mes conclusions:
 < Pascal a un père, appelé Olivier.
 < Olivier est un homme.
+< Olivier n'est pas une fille.
 < Olivier n'est pas une mère.
 < Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
 < Olivier n'est pas une femme.
 < Olivier est masculin.
-< Olivier n'est pas une fille.
 < Julien a un père, appelé Olivier.
 < Lorraine a un père, appelé Olivier.
 * 
@@ -500,6 +524,15 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
 < Olivier n'est pas une mère. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une mère.
@@ -539,9 +572,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 < Olivier est un parent de Pascal. En raison:
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
 < Olivier est partie d'une famille. En raison:
@@ -596,35 +626,41 @@
 <	- Amélie est une femme.
 <	- Chaque femme est féminin.
 < Amélie n'est pas un fils. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme n'est pas un fils.
+* 	et:
 <	- Amélie est féminin.
 <	- Chaque fils n'est pas féminin.
+* 	et:
+<	- Amélie est une mère.
+<	- Chaque mère n'est pas un fils.
 < Amélie n'est pas un garçon. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme n'est pas un garçon.
+* 	et:
 <	- Amélie est féminin.
 <	- Chaque garçon n'est pas féminin.
 * 	et:
 <	- Amélie est une mère.
 <	- Chaque mère n'est pas un garçon.
-* 	et:
-<	- Amélie est une femme.
-<	- Chaque femme n'est pas un garçon.
 < Amélie n'est pas un père. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme n'est pas un père.
+* 	et:
 <	- Amélie est féminin.
 <	- Chaque père n'est pas féminin.
 * 	et:
 <	- Amélie est une mère.
 <	- Chaque mère n'est pas un père.
-* 	et:
-<	- Amélie est une femme.
-<	- Chaque femme n'est pas un père.
 < Amélie n'est pas un homme. En raison:
+<	- Amélie est une femme.
+<	- Chaque femme n'est pas un homme.
+* 	et:
 <	- Amélie est féminin.
 <	- Chaque homme n'est pas féminin.
 * 	et:
 <	- Amélie est une mère.
 <	- Chaque mère n'est pas un homme.
-* 	et:
-<	- Amélie est une femme.
-<	- Chaque femme n'est pas un homme.
 < Amélie n'est pas masculin. En raison:
 <	- Amélie est une mère.
 <	- Chaque mère n'est pas masculin.
@@ -661,11 +697,11 @@
 <	- Amélie est une femme.
 <	- Une femme n'est probablement pas une jeune-fille.
 < Amélie est probablement une personne. En raison:
-<	- Amélie est une femme.
-<	- Une femme est probablement une personne.
-* 	et:
 <	- Amélie est une mère.
 <	- Une mère est probablement une personne.
+* 	et:
+<	- Amélie est une femme.
+<	- Une femme est probablement une personne.
 * 	et:
 <	- Amélie est un parent de Pascal.
 <	- Un parent est probablement une personne.
@@ -810,12 +846,21 @@
 < Lorraine n'est possible pas un garçon. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque garçon n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un garçon.
 < Lorraine n'est possible pas un père. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque père n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un père.
 < Lorraine n'est possible pas un homme. En raison:
 <	- Lorraine est possible féminin.
 <	- Chaque homme n'est pas féminin.
+* 	et:
+<	- Lorraine est possible une fille de Olivier et Amélie.
+<	- Chaque fille n'est pas un homme.
 < Lorraine n'est possible pas masculin. En raison:
 <	- Lorraine est possible une fille de Olivier et Amélie.
 <	- Chaque fille n'est pas masculin.

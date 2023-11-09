@@ -60,6 +60,7 @@ class GlobalVariables
 	protected static int removeStartItemNr;
 
 	protected static int nConstructedSentences;
+	protected static int nReadSentences;
 
 	protected static int nCreatedJustificationItems;
 	protected static int nCreatedSpecificationItems;
@@ -72,6 +73,65 @@ class GlobalVariables
 	protected static int nDeletedJustificationItems;
 	protected static int nDeletedSpecificationItems;
 	protected static int nTotalDeletedItems;
+
+	// Used for developer statistics
+	protected static int nIdleReasoningCalls;
+	protected static int nUsefulReasoningCalls;
+	protected static int nTotalReasoningCalls;
+	protected static int nSkippedRemovingObsoleteJustifications;
+
+	// Private methods
+	protected static int nIdleCalls_askQuestions1;
+	protected static int nIdleCalls_askQuestions2;
+	protected static int nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification;
+	protected static int nIdleCalls_askSimpleQuestions;
+	protected static int nIdleCalls_askSpanishQuestionAboutGeneralizationWord;
+	protected static int nIdleCalls_askSpanishQuestionAboutRelationWord;
+	protected static int nIdleCalls_drawNegativeAdjectiveConclusions;
+	protected static int nIdleCalls_drawOnlyOptionLeftProperNounConclusion;
+	protected static int nIdleCalls_drawProperNounPartOfConclusions;
+	protected static int nIdleCalls_drawPossessiveReversibleConclusions;
+	protected static int nIdleCalls_drawReversibleConclusions;
+	protected static int nIdleCalls_drawUserReversibleConclusions;
+	protected static int nIdleCalls_makeOppositePossessiveSpecificationAssumption;
+
+	protected static int nUsefulCalls_askQuestions1;
+	protected static int nUsefulCalls_askQuestions2;
+	protected static int nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification;
+	protected static int nUsefulCalls_askSimpleQuestions;
+	protected static int nUsefulCalls_askSpanishQuestionAboutGeneralizationWord;
+	protected static int nUsefulCalls_askSpanishQuestionAboutRelationWord;
+	protected static int nUsefulCalls_drawNegativeAdjectiveConclusions;
+	protected static int nUsefulCalls_drawOnlyOptionLeftProperNounConclusion;
+	protected static int nUsefulCalls_drawProperNounPartOfConclusions;
+	protected static int nUsefulCalls_drawPossessiveReversibleConclusions;
+	protected static int nUsefulCalls_drawReversibleConclusions;
+	protected static int nUsefulCalls_drawUserReversibleConclusions;
+	protected static int nUsefulCalls_makeOppositePossessiveSpecificationAssumption;
+
+	// Protected methods
+	protected static int nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion;
+	protected static int nIdleCalls_drawCompoundSpecificationSubstitutionConclusion;
+	protected static int nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords;
+	protected static int nIdleCalls_drawSimpleNegativeConclusions;
+	protected static int nIdleCalls_drawSpecificationGeneralizationConclusion;
+	protected static int nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion;
+	protected static int nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption;
+	protected static int nIdleCalls_makeIndirectlyAnsweredQuestionAssumption;
+	protected static int nIdleCalls_makeSpecificationSubstitutionPartOfAssumption;
+	protected static int nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound;
+
+	protected static int nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion;
+	protected static int nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion;
+	protected static int nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords;
+	protected static int nUsefulCalls_drawSimpleNegativeConclusions;
+	protected static int nUsefulCalls_drawSpecificationGeneralizationConclusion;
+	protected static int nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion;
+	protected static int nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption;
+	protected static int nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption;
+	protected static int nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption;
+	protected static int nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound;
+
 
 	protected static SelectionList adminConditionList;
 	protected static SelectionList adminActionList;
@@ -141,7 +201,9 @@ class GlobalVariables
 		removeSentenceNr = Constants.NO_SENTENCE_NR;
 		removeStartItemNr = Constants.NO_ITEM_NR;
 
+		// Used for developer statistics
 		nConstructedSentences = 0;
+		nReadSentences = 0;
 
 		nCreatedJustificationItems = 0;
 		nCreatedSpecificationItems = 0;
@@ -154,6 +216,64 @@ class GlobalVariables
 		nDeletedJustificationItems = 0;
 		nDeletedSpecificationItems = 0;
 		nTotalDeletedItems = 0;
+
+		nIdleReasoningCalls = 0;
+		nUsefulReasoningCalls = 0;
+		nTotalReasoningCalls = 0;
+		nSkippedRemovingObsoleteJustifications = 0;
+
+		// Private methods
+		nIdleCalls_askQuestions1 = 0;
+		nIdleCalls_askQuestions2 = 0;
+		nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification = 0;
+		nIdleCalls_askSimpleQuestions = 0;
+		nIdleCalls_askSpanishQuestionAboutGeneralizationWord = 0;
+		nIdleCalls_askSpanishQuestionAboutRelationWord = 0;
+		nIdleCalls_drawNegativeAdjectiveConclusions = 0;
+		nIdleCalls_drawOnlyOptionLeftProperNounConclusion = 0;
+		nIdleCalls_drawProperNounPartOfConclusions = 0;
+		nIdleCalls_drawPossessiveReversibleConclusions = 0;
+		nIdleCalls_drawReversibleConclusions = 0;
+		nIdleCalls_drawUserReversibleConclusions = 0;
+		nIdleCalls_makeOppositePossessiveSpecificationAssumption = 0;
+
+		nUsefulCalls_askQuestions1 = 0;
+		nUsefulCalls_askQuestions2 = 0;
+		nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification = 0;
+		nUsefulCalls_askSimpleQuestions = 0;
+		nUsefulCalls_askSpanishQuestionAboutGeneralizationWord = 0;
+		nUsefulCalls_askSpanishQuestionAboutRelationWord = 0;
+		nUsefulCalls_drawNegativeAdjectiveConclusions = 0;
+		nUsefulCalls_drawOnlyOptionLeftProperNounConclusion = 0;
+		nUsefulCalls_drawProperNounPartOfConclusions = 0;
+		nUsefulCalls_drawPossessiveReversibleConclusions = 0;
+		nUsefulCalls_drawReversibleConclusions = 0;
+		nUsefulCalls_drawUserReversibleConclusions = 0;
+		nUsefulCalls_makeOppositePossessiveSpecificationAssumption = 0;
+
+		// Protected methods
+		nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion = 0;
+		nIdleCalls_drawCompoundSpecificationSubstitutionConclusion = 0;
+		nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords = 0;
+		nIdleCalls_drawSimpleNegativeConclusions = 0;
+		nIdleCalls_drawSpecificationGeneralizationConclusion = 0;
+		nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
+		nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+		nIdleCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
+		nIdleCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
+		nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
+
+		nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion = 0;
+		nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion = 0;
+		nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords = 0;
+		nUsefulCalls_drawSimpleNegativeConclusions = 0;
+		nUsefulCalls_drawSpecificationGeneralizationConclusion = 0;
+		nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
+		nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+		nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
+		nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
+		nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
+
 
 		adminConditionList = null;
 		adminActionList = null;

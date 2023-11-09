@@ -1202,8 +1202,9 @@ class WordSpecification
 			conflictingSpecificationItem = ( isNegative ? myWordItem_->bestMatchingSpecificationWordSpecificationItem( true, true, false, NO_QUESTION_PARAMETER, specificationCollectionNr, NULL ) :
 															relatedSpecificationItem );
 
+			if( conflictingSpecificationItem != NULL &&
 			// No conflict found yet
-			if( previousConflictingSpecificationItem_ == NULL &&
+			previousConflictingSpecificationItem_ == NULL &&
 			!relatedSpecificationItem->hasRelationContext() )
 				{
 				if( conflictingSpecificationItem->isUserSpecification() )
@@ -1220,16 +1221,15 @@ class WordSpecification
 
 						// Write opposite negative conflicting specification
 						if( relatedSpecificationItem->writeSpecificationConflict( false, true ) != RESULT_OK )
-							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the conflicting specification" );
+							return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write an opposite negative conflicting specification" );
 						}
 					}
 				else
 					{
-					// Typical for Spanish
-					// Write conflicting specification
+					// Write conflicting negative specification
 					if( isNegative &&
-					conflictingSpecificationItem->writeSpecificationConflict( false, true ) != RESULT_OK )
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the conflicting specification" );
+					relatedSpecificationItem->writeSpecificationConflict( false, true ) != RESULT_OK )
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a negative conflicting specification" );
 					}
 				}
 			}
@@ -1241,6 +1241,8 @@ class WordSpecification
 				if( !isNegative &&
 				conflictingSpecificationItem != negativeConflictingSpecificationItem &&
 				conflictingSpecificationItem != previousConflictingSpecificationItem_ &&
+				// Don't remove
+				!conflictingSpecificationItem->isHiddenSpanishSpecification() &&
 
 				( previousConflictingSpecificationItem == NULL ||
 				!previousConflictingSpecificationItem->isSpecificationWordSpanishAmbiguous() ||
@@ -1248,7 +1250,7 @@ class WordSpecification
 					{
 					// Write conflicting specification
 					if( conflictingSpecificationItem->writeSpecificationConflict( false, true ) != RESULT_OK )
-						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write the conflicting specification" );
+						return myWordItem_->addErrorInWord( functionNameString, moduleNameString_, "I failed to write a conflicting specification" );
 
 					previousConflictingSpecificationItem_ = conflictingSpecificationItem;
 
@@ -1627,8 +1629,8 @@ class WordSpecification
 									// Test file: "Paul - Joe - Laura - John and Anna (parents)"
 									!foundSpecificationItem->hasCurrentCreationSentenceNr() ) &&
 
-					firstJustificationItem->isReversibleConclusion() &&
-					foundSpecificationItem->hasNonCompoundSpecificationCollection() &&
+									firstJustificationItem->isReversibleConclusion() &&
+									foundSpecificationItem->hasNonCompoundSpecificationCollection() &&
 									!relationWordItem->hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation() )
 										obsoleteAssumptionSpecificationItem = foundSpecificationItem;
 									}

@@ -1,8 +1,8 @@
 ﻿* 
 * My conclusions:
-< A head is part of a person.
+< A head is part of every person.
 < 
 * 
 * This assignment is not accepted, because it is in conflict with definition specification:
-< A person has a head.
+< Every person has a head.
 < 

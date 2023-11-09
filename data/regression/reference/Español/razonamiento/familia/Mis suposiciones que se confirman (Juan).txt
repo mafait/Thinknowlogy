@@ -46,8 +46,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada padre no es una madre.
 < Cada madre no es un padre.
+< Cada padre no es una madre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -82,6 +82,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -91,14 +97,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
@@ -109,6 +121,7 @@
 * 
 * Mis suposiciones:
 < Juan es probablemente un padre.
+< Juan no es probablemente una hija.
 < Juan no es probablemente una niña.
 < Juan no es probablemente una madre.
 < Juan no es probablemente femenina.
@@ -118,7 +131,6 @@
 < Juan es probablemente un hombre.
 < Juan no es posiblemente un niño.
 < Juan es probablemente masculino.
-< Juan no es probablemente una hija.
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -126,6 +138,15 @@
 * Mis suposiciones:
 < Juan es probablemente un padre. Porque:
 <	- ¿Es Juan el padre de Paz?
+< Juan no es probablemente una hija. Porque:
+<	- Juan es probablemente un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es probablemente un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es probablemente masculino.
+<	- Cada hija no es masculino.
 < Juan no es probablemente una niña. Porque:
 <	- Juan es probablemente un padre.
 <	- Cada padre no es una niña.
@@ -180,9 +201,6 @@
 * 	y:
 <	- Juan es probablemente un padre.
 <	- Cada padre es masculino.
-< Juan no es probablemente una hija. Porque:
-<	- Juan es probablemente masculino.
-<	- Cada hija no es masculino.
 < 
 * 
 * Mis suposiciones que han sido confirmadas:
@@ -252,6 +270,12 @@
 < Juan no es femenina. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
+< Juan no es una hija. Porque:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre no es una niña.
@@ -270,9 +294,6 @@
 * 	y:
 <	- Juan es masculino.
 <	- Cada mujer no es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
@@ -302,6 +323,15 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -335,9 +365,6 @@
 * 	y:
 <	- Juan es masculino.
 <	- Cada mujer no es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -362,6 +389,15 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -395,9 +431,6 @@
 * 	y:
 <	- Juan es masculino.
 <	- Cada mujer no es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -419,6 +452,15 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -452,9 +494,6 @@
 * 	y:
 <	- Juan es masculino.
 <	- Cada mujer no es masculino.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
@@ -470,6 +509,15 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -494,9 +542,6 @@
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
@@ -512,6 +557,15 @@
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -527,9 +581,6 @@
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
@@ -542,6 +593,15 @@
 < 
 * 
 * Mis conclusiones:
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -557,9 +617,6 @@
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
@@ -572,6 +629,15 @@
 < 
 * 
 * Mis conclusiones:
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -587,12 +653,18 @@
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < 
 * 
 * Mis conclusiones:
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es una niña. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es una niña.
@@ -608,9 +680,6 @@
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < 
 * Anteriormente, se ha utilizado un artículo indefinido diferente en combinación con sustantivo "niña".
 * 
@@ -619,15 +688,21 @@
 < 
 * 
 * Mis conclusiones:
+< Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
 < Juan no es femenina. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es femenina.
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una hija. Porque:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
 < 
 * 
 * Mis conclusiones que han sido confirmadas:
@@ -636,6 +711,12 @@
 * 
 * Mis conclusiones:
 < Juan no es una hija. Porque:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
 <	- Juan es masculino.
 <	- Cada hija no es masculino.
 < 

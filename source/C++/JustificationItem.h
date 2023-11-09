@@ -92,9 +92,10 @@ class JustificationItem : private Item
 	bool hasFeminineOrMasculineProperNounEnding();
 	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 
+	bool hasPrimarySpecificationCurrentCreationSentenceNr();
 	bool hasPrimarySpecificationRelationContext();
 	bool isExclusivePrimarySpecification();
-	bool isNegativePrimarySpecification();
+	bool isOlderPrimarySpecification();
 	bool isPossessivePrimarySpecification();
 	bool isPrimaryAssignmentSpecification();
 	bool isPrimaryNounSpecification();
@@ -116,7 +117,6 @@ class JustificationItem : private Item
 	bool isSpecificationSubstitutionAssumptionOrConclusion();
 	bool isSpecificationSubstitutionPartOfAssumptionOrConclusion();
 	bool isSuggestiveQuestionAssumption();
-	bool isUniqueUserRelationAssumptionOrConclusion();
 
 	unsigned short justificationTypeNr();
 	unsigned short primarySpecificationWordTypeNr();

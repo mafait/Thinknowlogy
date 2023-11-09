@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -115,6 +127,7 @@
 * 
 * Mes hypothèses:
 < Olivier est probablement un père.
+< Olivier n'est probablement pas une fille.
 < Olivier n'est probablement pas une jeune-fille.
 < Olivier n'est probablement pas une mère.
 < Olivier n'est probablement pas féminin.
@@ -122,7 +135,6 @@
 < Olivier est probablement un homme.
 < Olivier n'est possible pas un garçon.
 < Olivier est probablement masculin.
-< Olivier n'est probablement pas une fille.
 < Olivier est possible une personne.
 < Olivier est possible un parent.
 < Olivier est possible partie d'une famille.
@@ -149,6 +161,7 @@
 < Est Olivier le père de Julien?
 * 
 * Mes hypothèses qui ont été conclues:
+< Olivier n'est pas une fille.
 < Olivier n'est pas une jeune-fille.
 < Olivier n'est pas une mère.
 < Olivier n'est pas féminin.
@@ -160,7 +173,6 @@
 * 
 * Mes hypothèses qui ont été conclues:
 < Olivier est masculin.
-< Olivier n'est pas une fille.
 * 
 * Mes hypothèses qui ont été ajustées:
 < Olivier est probablement une personne.
@@ -179,11 +191,11 @@
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
 < Amélie n'est pas un père.
+< Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
 < Amélie n'est pas masculin.
 < Amélie n'est pas un homme.
 < Amélie est féminin.
-< Amélie n'est pas un fils.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal, Julien et Lorraine.

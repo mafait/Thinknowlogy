@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -85,6 +85,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -96,12 +102,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -124,12 +136,12 @@
 < Anna is possibly a mother of Paul, Joe and Laura.
 < Anna is possibly a woman.
 < Anna is maybe not a girl.
+< Anna is possibly not a son.
 < Anna is possibly not a boy.
 < Anna is possibly not a father.
 < Anna is possibly not masculine.
 < Anna is possibly not a man.
 < Anna is possibly feminine.
-< Anna is possibly not a son.
 < Anna has probably 3 children, called Paul, Joe and Laura.
 < Anna has maybe a daughter, called Laura.
 < Paul has possibly a mother, called Anna.
@@ -166,6 +178,7 @@
 < Is Laura a girl or a woman?
 * 
 * My assumptions that have been concluded:
+< Laura is not a son.
 < Laura is not a boy.
 < Laura is not masculine.
 < Laura is not a father.
@@ -176,7 +189,6 @@
 * 
 * My assumptions that have been concluded:
 < Laura is feminine.
-< Laura is not a son.
 * 
 * My assumptions:
 < Laura is probably not a woman.
@@ -186,18 +198,18 @@
 < Laura has possibly a mother, called Anna.
 * 
 * My assumptions that have been concluded:
+< Anna is not a son.
+< Anna is not a boy.
+< Anna is not a father.
+< Anna is not masculine.
+< Anna is not a man.
 < Anna is a woman.
 * 
 * My assumptions that have been adjusted:
 < Anna is probably not a girl.
 * 
 * My assumptions that have been concluded:
-< Anna is not a boy.
-< Anna is not a father.
-< Anna is not masculine.
-< Anna is not a man.
 < Anna is feminine.
-< Anna is not a son.
 * 
 * My conclusions:
 < Anna is a mother of Laura.
@@ -214,6 +226,18 @@
 * 	and:
 <	- Anna is a mother of Laura.
 <	- Every mother is a woman.
+< Anna is not a son. Because:
+<	- Laura has a mother, called Anna.
+<	- Every mother is not a son.
+* 	and:
+<	- Anna is a woman.
+<	- Every woman is not a son.
+* 	and:
+<	- Anna is feminine.
+<	- Every son is not feminine.
+* 	and:
+<	- Anna is a mother of Laura.
+<	- Every mother is not a son.
 < Anna is not a boy. Because:
 <	- Laura has a mother, called Anna.
 <	- Every mother is not a boy.
@@ -268,9 +292,6 @@
 * 	and:
 <	- Anna is a mother of Laura.
 <	- Every mother is feminine.
-< Anna is not a son. Because:
-<	- Anna is feminine.
-<	- Every son is not feminine.
 < Anna is part of a family. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
@@ -313,6 +334,12 @@
 < 
 * 
 * My conclusions:
+< Laura is not a son. Because:
+<	- Laura is a girl.
+<	- Every girl is not a son.
+* 	and:
+<	- Laura is feminine.
+<	- Every son is not feminine.
 < Laura is not a boy. Because:
 <	- Laura is a girl.
 <	- Every girl is not a boy.
@@ -337,9 +364,6 @@
 < Laura is feminine. Because:
 <	- Laura is a girl.
 <	- Every girl is feminine.
-< Laura is not a son. Because:
-<	- Laura is feminine.
-<	- Every son is not feminine.
 < Laura has a parent, called Anna. Because:
 <	- Anna is a parent of Paul, Joe and Laura.
 * 

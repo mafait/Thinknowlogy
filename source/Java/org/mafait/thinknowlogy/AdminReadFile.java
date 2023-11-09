@@ -1633,6 +1633,7 @@ class AdminReadFile
 
 			// Used for developer statistics
 			GlobalVariables.nConstructedSentences = 0;
+			GlobalVariables.nReadSentences = 0;
 
 			GlobalVariables.nCreatedJustificationItems = 0;
 			GlobalVariables.nCreatedSpecificationItems = 0;
@@ -1645,6 +1646,63 @@ class AdminReadFile
 			GlobalVariables.nDeletedJustificationItems = 0;
 			GlobalVariables.nDeletedSpecificationItems = 0;
 			GlobalVariables.nTotalDeletedItems = 0;
+
+			GlobalVariables.nIdleReasoningCalls = 0;
+			GlobalVariables.nUsefulReasoningCalls = 0;
+			GlobalVariables.nTotalReasoningCalls = 0;
+			GlobalVariables.nSkippedRemovingObsoleteJustifications = 0;
+
+			// Private methods
+			GlobalVariables.nIdleCalls_askQuestions1 = 0;
+			GlobalVariables.nIdleCalls_askQuestions2 = 0;
+			GlobalVariables.nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification = 0;
+			GlobalVariables.nIdleCalls_askSimpleQuestions = 0;
+			GlobalVariables.nIdleCalls_askSpanishQuestionAboutGeneralizationWord = 0;
+			GlobalVariables.nIdleCalls_askSpanishQuestionAboutRelationWord = 0;
+			GlobalVariables.nIdleCalls_drawNegativeAdjectiveConclusions = 0;
+			GlobalVariables.nIdleCalls_drawOnlyOptionLeftProperNounConclusion = 0;
+			GlobalVariables.nIdleCalls_drawProperNounPartOfConclusions = 0;
+			GlobalVariables.nIdleCalls_drawPossessiveReversibleConclusions = 0;
+			GlobalVariables.nIdleCalls_drawReversibleConclusions = 0;
+			GlobalVariables.nIdleCalls_drawUserReversibleConclusions = 0;
+			GlobalVariables.nIdleCalls_makeOppositePossessiveSpecificationAssumption = 0;
+
+			GlobalVariables.nUsefulCalls_askQuestions1 = 0;
+			GlobalVariables.nUsefulCalls_askQuestions2 = 0;
+			GlobalVariables.nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification = 0;
+			GlobalVariables.nUsefulCalls_askSimpleQuestions = 0;
+			GlobalVariables.nUsefulCalls_askSpanishQuestionAboutGeneralizationWord = 0;
+			GlobalVariables.nUsefulCalls_askSpanishQuestionAboutRelationWord = 0;
+			GlobalVariables.nUsefulCalls_drawNegativeAdjectiveConclusions = 0;
+			GlobalVariables.nUsefulCalls_drawOnlyOptionLeftProperNounConclusion = 0;
+			GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusions = 0;
+			GlobalVariables.nUsefulCalls_drawPossessiveReversibleConclusions = 0;
+			GlobalVariables.nUsefulCalls_drawReversibleConclusions = 0;
+			GlobalVariables.nUsefulCalls_drawUserReversibleConclusions = 0;
+			GlobalVariables.nUsefulCalls_makeOppositePossessiveSpecificationAssumption = 0;
+
+			// Protected methods
+			GlobalVariables.nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion = 0;
+			GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion = 0;
+			GlobalVariables.nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords = 0;
+			GlobalVariables.nIdleCalls_drawSimpleNegativeConclusions = 0;
+			GlobalVariables.nIdleCalls_drawSpecificationGeneralizationConclusion = 0;
+			GlobalVariables.nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
+			GlobalVariables.nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+			GlobalVariables.nIdleCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
+			GlobalVariables.nIdleCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
+			GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
+
+			GlobalVariables.nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion = 0;
+			GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion = 0;
+			GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords = 0;
+			GlobalVariables.nUsefulCalls_drawSimpleNegativeConclusions = 0;
+			GlobalVariables.nUsefulCalls_drawSpecificationGeneralizationConclusion = 0;
+			GlobalVariables.nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
+			GlobalVariables.nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+			GlobalVariables.nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
+			GlobalVariables.nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
+			GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
 		}
 		else
 			testFileNr_++;
@@ -1679,8 +1737,84 @@ class AdminReadFile
 				totalTime = ( new Date().getTime() - startTime_ );
 
 				// Developer statistics
-				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec.\nNumber of constructed sentences: " + GlobalVariables.nConstructedSentences + "\nNumber of created items:\t" + GlobalVariables.nTotalCreatedItems + "\t(JustificationItems: " + GlobalVariables.nCreatedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nCreatedSpecificationItems + ")\nNumber of replaced items:\t" + GlobalVariables.nTotalReplacedItems + "\t(JustificationItems: " + GlobalVariables.nReplacedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nReplacedSpecificationItems + ")\nNumber of deleted items:\t" + GlobalVariables.nTotalDeletedItems + "\t(JustificationItems: " + GlobalVariables.nDeletedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nDeletedSpecificationItems + ")" ) != Constants.RESULT_OK )
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Done in: " + String.format( "%.1f", ( totalTime / 1e3 ) ) + " sec.\n\nDeveloper statistics:\nNumber of read sentences: " + GlobalVariables.nReadSentences + ";\nNumber of constructed sentences: " + GlobalVariables.nConstructedSentences + ";\nNumber of created items:\t" + GlobalVariables.nTotalCreatedItems + "\t(JustificationItems: " + GlobalVariables.nCreatedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nCreatedSpecificationItems + ")\nNumber of replaced items:\t" + GlobalVariables.nTotalReplacedItems + "\t(JustificationItems: " + GlobalVariables.nReplacedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nReplacedSpecificationItems + ")\nNumber of deleted items:\t" + GlobalVariables.nTotalDeletedItems + "\t(JustificationItems: " + GlobalVariables.nDeletedJustificationItems + ")\t(SpecificationItems: " + GlobalVariables.nDeletedSpecificationItems + ")" ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Number of reasoning calls:\t" + GlobalVariables.nTotalReasoningCalls + "\t(Idle calls: " + GlobalVariables.nIdleReasoningCalls + ")\t(Useful calls: " + GlobalVariables.nUsefulReasoningCalls + ")\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulReasoningCalls ) / GlobalVariables.nTotalReasoningCalls ) + "%)." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "Number of skipped removeObsoleteAssumptionJustifications:\t" + GlobalVariables.nSkippedRemovingObsoleteJustifications + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "\nPrivate methods:\naskQuestions1:\t\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_askQuestions1 + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_askQuestions1 + ( ( GlobalVariables.nIdleCalls_askQuestions1 + GlobalVariables.nUsefulCalls_askQuestions1 ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askQuestions1 ) / ( GlobalVariables.nIdleCalls_askQuestions1 + GlobalVariables.nUsefulCalls_askQuestions1 ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "askQuestions2:\t\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_askQuestions2 + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_askQuestions2 + ( ( GlobalVariables.nIdleCalls_askQuestions2 + GlobalVariables.nUsefulCalls_askQuestions2 ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askQuestions2 ) / ( GlobalVariables.nIdleCalls_askQuestions2 + GlobalVariables.nUsefulCalls_askQuestions2 ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "askQuestionsWithQuestionAsPrimarySpecification:\t\tIdle calls: " + GlobalVariables.nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification + ( ( GlobalVariables.nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification + GlobalVariables.nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification ) / ( GlobalVariables.nIdleCalls_askQuestionsWithQuestionAsPrimarySpecification + GlobalVariables.nUsefulCalls_askQuestionsWithQuestionAsPrimarySpecification ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "askSimpleQuestions:\t\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_askSimpleQuestions + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_askSimpleQuestions + ( ( GlobalVariables.nIdleCalls_askSimpleQuestions + GlobalVariables.nUsefulCalls_askSimpleQuestions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askSimpleQuestions ) / ( GlobalVariables.nIdleCalls_askSimpleQuestions + GlobalVariables.nUsefulCalls_askSimpleQuestions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "askSpanishQuestionAboutGeneralizationWord:\t\tIdle calls: " + GlobalVariables.nIdleCalls_askSpanishQuestionAboutGeneralizationWord + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutGeneralizationWord + ( ( GlobalVariables.nIdleCalls_askSpanishQuestionAboutGeneralizationWord + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutGeneralizationWord ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askSpanishQuestionAboutGeneralizationWord ) / ( GlobalVariables.nIdleCalls_askSpanishQuestionAboutGeneralizationWord + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutGeneralizationWord ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "askSpanishQuestionAboutRelationWord:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_askSpanishQuestionAboutRelationWord + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutRelationWord + ( ( GlobalVariables.nIdleCalls_askSpanishQuestionAboutRelationWord + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutRelationWord ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askSpanishQuestionAboutRelationWord ) / ( GlobalVariables.nIdleCalls_askSpanishQuestionAboutRelationWord + GlobalVariables.nUsefulCalls_askSpanishQuestionAboutRelationWord ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawNegativeAdjectiveConclusions:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawNegativeAdjectiveConclusions + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_drawNegativeAdjectiveConclusions + ( ( GlobalVariables.nIdleCalls_drawNegativeAdjectiveConclusions + GlobalVariables.nUsefulCalls_drawNegativeAdjectiveConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawNegativeAdjectiveConclusions ) / ( GlobalVariables.nIdleCalls_drawNegativeAdjectiveConclusions + GlobalVariables.nUsefulCalls_drawNegativeAdjectiveConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawOnlyOptionLeftProperNounConclusion:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawOnlyOptionLeftProperNounConclusion + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_drawOnlyOptionLeftProperNounConclusion + ( ( GlobalVariables.nIdleCalls_drawOnlyOptionLeftProperNounConclusion + GlobalVariables.nUsefulCalls_drawOnlyOptionLeftProperNounConclusion ) == 0 ? Constants.EMPTY_STRING : ";\t\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawOnlyOptionLeftProperNounConclusion ) / ( GlobalVariables.nIdleCalls_drawOnlyOptionLeftProperNounConclusion + GlobalVariables.nUsefulCalls_drawOnlyOptionLeftProperNounConclusion ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawProperNounPartOfConclusions:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawProperNounPartOfConclusions + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusions + ( ( GlobalVariables.nIdleCalls_drawProperNounPartOfConclusions + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusions ) / ( GlobalVariables.nIdleCalls_drawProperNounPartOfConclusions + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawPossessiveReversibleConclusions:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawPossessiveReversibleConclusions + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawPossessiveReversibleConclusions + ( ( GlobalVariables.nIdleCalls_drawPossessiveReversibleConclusions + GlobalVariables.nUsefulCalls_drawPossessiveReversibleConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawPossessiveReversibleConclusions ) / ( GlobalVariables.nIdleCalls_drawPossessiveReversibleConclusions + GlobalVariables.nUsefulCalls_drawPossessiveReversibleConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawReversibleConclusions:\t\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawReversibleConclusions + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawReversibleConclusions + ( ( GlobalVariables.nIdleCalls_drawReversibleConclusions + GlobalVariables.nUsefulCalls_drawReversibleConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawReversibleConclusions ) / ( GlobalVariables.nIdleCalls_drawReversibleConclusions + GlobalVariables.nUsefulCalls_drawReversibleConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawUserReversibleConclusions:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawUserReversibleConclusions + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_drawUserReversibleConclusions + ( ( GlobalVariables.nIdleCalls_drawUserReversibleConclusions + GlobalVariables.nUsefulCalls_drawUserReversibleConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawUserReversibleConclusions ) / ( GlobalVariables.nIdleCalls_drawUserReversibleConclusions + GlobalVariables.nUsefulCalls_drawUserReversibleConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "makeOppositePossessiveSpecificationAssumption:\t\tIdle calls: " + GlobalVariables.nIdleCalls_makeOppositePossessiveSpecificationAssumption + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_makeOppositePossessiveSpecificationAssumption + ( ( GlobalVariables.nIdleCalls_makeOppositePossessiveSpecificationAssumption + GlobalVariables.nUsefulCalls_makeOppositePossessiveSpecificationAssumption ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_makeOppositePossessiveSpecificationAssumption ) / ( GlobalVariables.nIdleCalls_makeOppositePossessiveSpecificationAssumption + GlobalVariables.nUsefulCalls_makeOppositePossessiveSpecificationAssumption ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "\nProtected methods:\naskSpecificationSubstitutionQuestionOrDrawNegativeConclusion:\tIdle calls: " + GlobalVariables.nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion + ( ( GlobalVariables.nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion + GlobalVariables.nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion ) / ( GlobalVariables.nIdleCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion + GlobalVariables.nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawCompoundSpecificationSubstitutionConclusion:\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion + ( ( GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion ) / ( GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawProperNounPartOfConclusionsInProperNounWords:\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords + ( ( GlobalVariables.nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords ) / ( GlobalVariables.nIdleCalls_drawProperNounPartOfConclusionsInProperNounWords + GlobalVariables.nUsefulCalls_drawProperNounPartOfConclusionsInProperNounWords ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawSimpleNegativeConclusions:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawSimpleNegativeConclusions + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawSimpleNegativeConclusions + ( ( GlobalVariables.nIdleCalls_drawSimpleNegativeConclusions + GlobalVariables.nUsefulCalls_drawSimpleNegativeConclusions ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawSimpleNegativeConclusions ) / ( GlobalVariables.nIdleCalls_drawSimpleNegativeConclusions + GlobalVariables.nUsefulCalls_drawSimpleNegativeConclusions ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawSpecificationGeneralizationConclusion:\t\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawSpecificationGeneralizationConclusion + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_drawSpecificationGeneralizationConclusion + ( ( GlobalVariables.nIdleCalls_drawSpecificationGeneralizationConclusion + GlobalVariables.nUsefulCalls_drawSpecificationGeneralizationConclusion ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawSpecificationGeneralizationConclusion ) / ( GlobalVariables.nIdleCalls_drawSpecificationGeneralizationConclusion + GlobalVariables.nUsefulCalls_drawSpecificationGeneralizationConclusion ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawSpecificationSubstitutionConclusionOrAskQuestion:\t\tIdle calls: " + GlobalVariables.nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion + ( ( GlobalVariables.nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion + GlobalVariables.nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion ) / ( GlobalVariables.nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion + GlobalVariables.nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "makeExclusiveSpecificationSubstitutionAssumption:\t\tIdle calls: " + GlobalVariables.nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption + ( ( GlobalVariables.nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption + GlobalVariables.nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption ) / ( GlobalVariables.nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption + GlobalVariables.nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "makeIndirectlyAnsweredQuestionAssumption:\t\tIdle calls: " + GlobalVariables.nIdleCalls_makeIndirectlyAnsweredQuestionAssumption + ";\t\tUseful calls: " + GlobalVariables.nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption + ( ( GlobalVariables.nIdleCalls_makeIndirectlyAnsweredQuestionAssumption + GlobalVariables.nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption ) == 0 ? Constants.EMPTY_STRING : ";\t\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption ) / ( GlobalVariables.nIdleCalls_makeIndirectlyAnsweredQuestionAssumption + GlobalVariables.nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "makeSpecificationSubstitutionPartOfAssumption:\t\tIdle calls: " + GlobalVariables.nIdleCalls_makeSpecificationSubstitutionPartOfAssumption + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption + ( ( GlobalVariables.nIdleCalls_makeSpecificationSubstitutionPartOfAssumption + GlobalVariables.nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption ) / ( GlobalVariables.nIdleCalls_makeSpecificationSubstitutionPartOfAssumption + GlobalVariables.nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
+				if( InputOutput.writeText( true, true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.NO_CENTER_WIDTH, "drawCompoundSpecificationSubstitutionConclusion (Compound):\tIdle calls: " + GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound + ";\tUseful calls: " + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound + ( ( GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound ) == 0 ? Constants.EMPTY_STRING : ";\t(Efficiency: " + ( ( 100 * GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound ) / ( GlobalVariables.nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound + GlobalVariables.nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound ) ) + "%)" ) + "." ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write the test statistics text" );
+
 
 				cleanupDeletedItems();
 				}

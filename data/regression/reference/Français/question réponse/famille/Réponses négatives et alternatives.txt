@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -115,12 +127,12 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier n'est pas une fille.
 < Olivier n'est pas une mère.
 < Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
 < Olivier n'est pas une femme.
 < Olivier est masculin.
-< Olivier n'est pas une fille.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -129,11 +141,11 @@
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
 < Amélie n'est pas un père.
+< Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
 < Amélie n'est pas masculin.
 < Amélie n'est pas un homme.
 < Amélie est féminin.
-< Amélie n'est pas un fils.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon.
@@ -198,12 +210,12 @@
 * 
 * Mes conclusions:
 < Guillaume est un homme.
+< Guillaume n'est pas une fille.
 < Guillaume n'est pas une mère.
 < Guillaume n'est pas une jeune-fille.
 < Guillaume n'est pas féminin.
 < Guillaume n'est pas une femme.
 < Guillaume est masculin.
-< Guillaume n'est pas une fille.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:
@@ -239,10 +251,10 @@
 < Fabrice n'est pas féminin.
 < Fabrice est masculin.
 < Fabrice est un homme.
+< Fabrice n'est pas une fille.
 < Fabrice n'est pas une mère.
 < Fabrice n'est pas une jeune-fille.
 < Fabrice n'est pas une femme.
-< Fabrice n'est pas une fille.
 * 
 * Mes hypothèses:
 < Fabrice n'est probablement pas un garçon.
@@ -261,6 +273,15 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
 < Olivier n'est pas une mère. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une mère.
@@ -300,9 +321,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -398,6 +416,15 @@
 < Guillaume est un homme. En raison:
 <	- Guillaume est un père.
 <	- Chaque père est un homme.
+< Guillaume n'est pas une fille. En raison:
+<	- Guillaume est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Guillaume est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Guillaume est un père.
+<	- Chaque père n'est pas une fille.
 < Guillaume n'est pas une mère. En raison:
 <	- Guillaume est un père.
 <	- Chaque père n'est pas une mère.
@@ -437,9 +464,6 @@
 * 	et:
 <	- Guillaume est un père.
 <	- Chaque père est masculin.
-< Guillaume n'est pas une fille. En raison:
-<	- Guillaume est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Guillaume n'est probablement pas un garçon. En raison:
@@ -482,6 +506,15 @@
 < Fabrice est un homme. En raison:
 <	- Fabrice est un père.
 <	- Chaque père est un homme.
+< Fabrice n'est pas une fille. En raison:
+<	- Fabrice est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Fabrice est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Fabrice est un père.
+<	- Chaque père n'est pas une fille.
 < Fabrice n'est pas une mère. En raison:
 <	- Fabrice est un père.
 <	- Chaque père n'est pas une mère.
@@ -509,9 +542,6 @@
 * 	et:
 <	- Fabrice est un père.
 <	- Chaque père n'est pas une femme.
-< Fabrice n'est pas une fille. En raison:
-<	- Fabrice est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Fabrice n'est probablement pas un garçon. En raison:

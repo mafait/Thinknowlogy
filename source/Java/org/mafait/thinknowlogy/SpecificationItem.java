@@ -146,45 +146,6 @@ class SpecificationItem extends Item
 		return false;
 		}
 
-	private byte addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion()
-		{
-		SpecificationItem existingSpecificationItem;
-		SpecificationItem negativeDefinitionSpecificationItem;
-		WordItem definitionSpecificationWordItem;
-		WordItem _myWordItem = myWordItem();
-
-		if( isNegative_ )
-			return startError( 1, null, "I am a negative specification" );
-
-		if( specificationWordItem_ == null )
-			return startError( 1, null, "I have no specification word item" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
-
-		if( isReplacedOrDeletedItem() )
-			return startError( 1, null, "I am a replaced or deleted specification" );
-
-		if( ( negativeDefinitionSpecificationItem = specificationWordItem_.firstNegativeSpecificationItem() ) != null )
-			{
-			// Do for all context words with my relation context number
-			do	{
-				if( ( definitionSpecificationWordItem = negativeDefinitionSpecificationItem.specificationWordItem() ) != null &&
-				( existingSpecificationItem = _myWordItem.firstSpecificationItem( true, false, false, definitionSpecificationWordItem ) ) != null &&
-				// Justification doesn't exist yet in existing specification
-				!existingSpecificationItem.hasSecondarySpecificationJustification( negativeDefinitionSpecificationItem ) &&
-				// Justification has at least the same assumption level
-				existingSpecificationItem.assumptionLevel() >= this.justificationAssumptionLevel( false, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, null, negativeDefinitionSpecificationItem, null ) &&
-				// Add negative justification to existing specification
-				existingSpecificationItem.addJustificationToSpecification( false, Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, null, negativeDefinitionSpecificationItem ) != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to add a negative justification to the existing specification" );
-				}
-			while( ( negativeDefinitionSpecificationItem = negativeDefinitionSpecificationItem.nextNegativeSpecificationItem() ) != null );
-			}
-
-		return Constants.RESULT_OK;
-		}
-
 	private byte addJustificationsToContextSpecifications()
 		{
 		SpecificationItem definitionSpecificationItem;
@@ -319,10 +280,12 @@ class SpecificationItem extends Item
 		if( isReplacedOrDeletedItem() )
 			return startError( 1, null, "I am a replaced or deleted specification" );
 
+		// Quick condition check
 		if( ( !_hasRelationContext ||
 		assumptionLevel_ <= previousAssumptionLevel ||
 		assumptionLevel_ >= Constants.NUMBER_OF_ASSUMPTION_LEVELS ) &&
 
+		// Within defined number of assumption levels
 		( previousAssumptionLevel < Constants.NUMBER_OF_ASSUMPTION_LEVELS ||
 		assumptionLevel_ < Constants.NUMBER_OF_ASSUMPTION_LEVELS ) &&
 
@@ -361,29 +324,21 @@ class SpecificationItem extends Item
 			}
 		else
 			{
-			if( generalizationWordTypeNr_ == Constants.WORD_TYPE_PROPER_NOUN )
+			// Definition specification
+			if( generalizationWordTypeNr_ == Constants.WORD_TYPE_NOUN_SINGULAR &&
+			// Get first generalization specification proper noun word
+			( currentGeneralizationItem = specificationWordItem_.firstProperNounSpecificationGeneralizationItem() ) != null )
 				{
-				if( !isNegative_ &&
-				// Add negative justifications to simple specifications, from positive conclusion
-				addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion() != Constants.RESULT_OK )
-					return addError( 1, null, "I failed to add negative justifications to simple specifications, from a positive conclusion" );
-				}
-			else	// Definition specification
-				{
-				// Get first generalization specification proper noun word
-				if( ( currentGeneralizationItem = specificationWordItem_.firstProperNounSpecificationGeneralizationItem() ) != null )
-					{
-					// Do for all generalization specification proper noun words
-					do	{
-						if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
-							return addError( 1, null, "I found an undefined generalization word" );
+				// Do for all generalization specification proper noun words
+				do	{
+					if( ( currentGeneralizationWordItem = currentGeneralizationItem.generalizationWordItem() ) == null )
+						return addError( 1, null, "I found an undefined generalization word" );
 
-						// Recalculate assumption levels of specifications in proper noun word
-						if( currentGeneralizationWordItem.recalculateAssumptionLevelsInWord() != Constants.RESULT_OK )
-							return addError( 1, null, "I failed to recalculate the assumption levels of specifications in proper noun word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
-						}
-					while( ( currentGeneralizationItem = currentGeneralizationItem.nextProperNounSpecificationGeneralizationItem() ) != null );
+					// Recalculate assumption levels of specifications in proper noun word
+					if( currentGeneralizationWordItem.recalculateAssumptionLevelsInWord() != Constants.RESULT_OK )
+						return addError( 1, null, "I failed to recalculate the assumption levels of specifications in proper noun word \"" + currentGeneralizationWordItem.anyWordTypeString() + "\"" );
 					}
+				while( ( currentGeneralizationItem = currentGeneralizationItem.nextProperNounSpecificationGeneralizationItem() ) != null );
 				}
 			}
 
@@ -988,6 +943,21 @@ class SpecificationItem extends Item
 		return false;
 		}
 
+	protected boolean hasJustificationWithAdditionalDefinitionSpecification()
+		{
+		JustificationItem searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != null )
+			{
+			if( searchJustificationItem.additionalDefinitionSpecificationItem() != null )
+				return true;
+
+			searchJustificationItem = searchJustificationItem.attachedJustificationItem();
+			}
+
+		return false;
+		}
+
 	protected boolean hasPrimaryNounSpecificationJustification()
 		{
 		JustificationItem searchJustificationItem = firstJustificationItem_;
@@ -1285,22 +1255,6 @@ class SpecificationItem extends Item
 			{
 			if( searchJustificationItem.justificationTypeNr() == justificationTypeNr &&
 			searchJustificationItem.primaryGeneralizationWordItem() == primaryGeneralizationWordItem )
-				return searchJustificationItem;
-
-			searchJustificationItem = searchJustificationItem.attachedJustificationItem();
-			}
-
-		return null;
-		}
-
-	protected JustificationItem firstOlderJustificationItem( short justificationTypeNr )
-		{
-		JustificationItem searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != null )
-			{
-			if( searchJustificationItem.isOlderItem() &&
-			searchJustificationItem.justificationTypeNr() == justificationTypeNr )
 				return searchJustificationItem;
 
 			searchJustificationItem = searchJustificationItem.attachedJustificationItem();
@@ -2034,8 +1988,7 @@ class SpecificationItem extends Item
 					if( changeFirstJustification( true, attachJustificationItem ) != Constants.RESULT_OK )
 						return addError( 1, null, "I failed to change my first justification item" );
 
-					if( !_myWordItem.hasCurrentlyCorrectedAssumptionByKnowledge() &&
-					attachJustificationItem.attachJustification( originalFirstJustificationItem, this ) != Constants.RESULT_OK )
+					if( attachJustificationItem.attachJustification( originalFirstJustificationItem, this ) != Constants.RESULT_OK )
 						return addError( 1, null, "I failed to attach the first justification item of myself to the given attached justification item" );
 					}
 				else
@@ -2292,25 +2245,27 @@ class SpecificationItem extends Item
 			{
 			hasChangedAssumptionLevel = ( previousAssumptionLevel != assumptionLevel_ );
 
-			// Older specification
-			if( ( isOlderSpecification ||
+			if( ( ( isOlderSpecification &&
+			!isNegative_ ) ||
 
-			// Not older specification
 			( isSituationStable &&
+
+			// No relation context
+			( ( !_hasRelationContext &&
 
 			( isNegative_ ||
 
-			// Test file: "Complex (12)"
+			// Test file: "John - Anna (before family definition)"
 			( !hasChangedAssumptionLevel &&
-			isPartOf_ ) ||
+			isPartOf_ ) ) ) ||
 
+			// Relation context
 			( _hasRelationContext &&
-			hasNonCompoundSpecificationCollection() ) ) &&
+			hasNonCompoundSpecificationCollection() &&
 
-			( !_hasRelationContext ||
-			isPossessive_ ||
+			( isPossessive_ ||
 			myWordItem().isUserRelationWord ||
-			firstJustificationItem( Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == null ) ) ) &&
+			firstJustificationItem( Constants.JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == null ) ) ) ) ) &&
 
 			// Remove obsolete assumption justifications
 			removeObsoleteAssumptionJustifications( isOlderSpecification, isSituationStable ) != Constants.RESULT_OK )
@@ -2352,9 +2307,12 @@ class SpecificationItem extends Item
 		if( !hasCurrentCreationSentenceNr() )
 			return startError( 1, null, "It isn't allowed to change an older item afterwards" );
 
-//		isOnlySelectingOlderJustifications = isOlderItem();
+		isIncludingNegativeAssumptionOrConclusion = ( ( assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL &&
 
-		isIncludingNegativeAssumptionOrConclusion = ( assumptionLevel_ == Constants.NO_ASSUMPTION_LEVEL ||
+													( !hasConfirmedAnySpecification ||
+													!isOnlySelectingOlderJustifications ||
+													// Test file: "My assumptions that are confirmed (John)"
+													!firstJustificationItem_.hasPrimarySpecificationCurrentCreationSentenceNr() ) ) ||
 
 													( !hasConfirmedAnySpecification &&
 													// Typical for Spanish
@@ -2376,7 +2334,7 @@ class SpecificationItem extends Item
 									hasOnlyOneRelationWord() );
 
 		do	{
-			if( currentJustificationItem.isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_))
+			if( currentJustificationItem.isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_) )
 				{
 				attachedJustificationItem = currentJustificationItem.attachedJustificationItem();
 
@@ -2452,6 +2410,9 @@ class SpecificationItem extends Item
 						}
 					else
 						{
+						// Used for developer statistics
+						GlobalVariables.nSkippedRemovingObsoleteJustifications++;
+
 						previousPreviousJustificationItem = previousJustificationItem;
 						previousJustificationItem = currentJustificationItem;
 						currentJustificationItem = currentJustificationItem.attachedJustificationItem();
@@ -2513,7 +2474,7 @@ class SpecificationItem extends Item
 		StringBuffer writtenSentenceStringBuffer;
 
 		if( myWordItem().writeSelectedSpecification( false, isWritingCurrentSpecificationWordOnly, this ) != Constants.RESULT_OK )
-			return addError( 1, null, "I failed to write the conflicting specification" );
+			return addError( 1, null, "I failed to write a conflicting specification" );
 
 		if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) == null ||
 		writtenSentenceStringBuffer.length() == 0 )

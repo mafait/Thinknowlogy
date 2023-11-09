@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -85,6 +85,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een kind.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen vader.
+< Iedere dochter is geen man.
+< Iedere jongen is geen dochter.
+< Iedere vader is geen dochter.
+< Iedere man is geen dochter.
 < Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
@@ -141,8 +153,8 @@
 < Laura is misschien niet mannelijk.
 * 
 * Mijn vragen:
-< Is Jan vrouwelijk of mannelijk?
 < Is Jan een vrouw of een man?
+< Is Jan vrouwelijk of mannelijk?
 < Is Jan een vader of een moeder?
 < Is Paul een meisje, een vrouw, een jongen of een man?
 < Is Paul een zoon of een dochter?
@@ -199,12 +211,6 @@
 <	- Laura is misschien een dochter van Jan.
 * 
 * Mijn vragen:
-< Is Jan vrouwelijk of mannelijk? Omdat:
-<	- Jan is een ouder van Paul, Johan en Laura.
-<	- Iedere ouder is vrouwelijk of mannelijk.
-* 	en:
-<	- Jan is waarschijnlijk een persoon.
-<	- Iedere persoon is mannelijk of vrouwelijk.
 < Is Jan een vrouw of een man? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vrouw of een man.
@@ -215,6 +221,12 @@
 <	- Is Jan een vader of een moeder?
 <	- Iedere vader is een man.
 <	- Iedere moeder is een vrouw.
+< Is Jan vrouwelijk of mannelijk? Omdat:
+<	- Jan is een ouder van Paul, Johan en Laura.
+<	- Iedere ouder is vrouwelijk of mannelijk.
+* 	en:
+<	- Jan is waarschijnlijk een persoon.
+<	- Iedere persoon is mannelijk of vrouwelijk.
 < Is Jan een vader of een moeder? Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 <	- Iedere ouder is een vader of een moeder.
@@ -236,12 +248,21 @@
 < Paul is geen meisje. Omdat:
 <	- Paul is mannelijk.
 <	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Paul is een zoon.
+<	- Iedere zoon is geen meisje.
 < Paul is geen moeder. Omdat:
 <	- Paul is mannelijk.
 <	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Paul is een zoon.
+<	- Iedere zoon is geen moeder.
 < Paul is geen vrouw. Omdat:
 <	- Paul is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Paul is een zoon.
+<	- Iedere zoon is geen vrouw.
 < Paul heeft een ouder, genaamd Jan. Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
 * 

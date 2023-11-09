@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -85,6 +85,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -96,12 +102,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -115,12 +127,12 @@
 * 
 * My conclusions:
 < John is a man.
+< John is not a daughter.
 < John is not a mother.
 < John is not a girl.
 < John is not feminine.
 < John is not a woman.
 < John is masculine.
-< John is not a daughter.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.
@@ -129,11 +141,11 @@
 < Laura has a mother, called Anna.
 < Anna is a woman.
 < Anna is not a father.
+< Anna is not a son.
 < Anna is not a boy.
 < Anna is not masculine.
 < Anna is not a man.
 < Anna is feminine.
-< Anna is not a son.
 * 
 * My assumptions:
 < John is probably not a boy.
@@ -198,12 +210,12 @@
 * 
 * My conclusions:
 < Michael is a man.
+< Michael is not a daughter.
 < Michael is not a mother.
 < Michael is not a girl.
 < Michael is not feminine.
 < Michael is not a woman.
 < Michael is masculine.
-< Michael is not a daughter.
 < Adam has a father, called Michael.
 * 
 * My assumptions:
@@ -239,10 +251,10 @@
 < Richard is not feminine.
 < Richard is masculine.
 < Richard is a man.
+< Richard is not a daughter.
 < Richard is not a mother.
 < Richard is not a girl.
 < Richard is not a woman.
-< Richard is not a daughter.
 * 
 * My assumptions:
 < Richard is probably not a boy.
@@ -261,6 +273,15 @@
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
+< John is not a daughter. Because:
+<	- John is a man.
+<	- Every man is not a daughter.
+* 	and:
+<	- John is masculine.
+<	- Every daughter is not masculine.
+* 	and:
+<	- John is a father.
+<	- Every father is not a daughter.
 < John is not a mother. Because:
 <	- John is a father.
 <	- Every father is not a mother.
@@ -300,9 +321,6 @@
 * 	and:
 <	- John is a father.
 <	- Every father is masculine.
-< John is not a daughter. Because:
-<	- John is masculine.
-<	- Every daughter is not masculine.
 * 
 * My assumptions:
 < John is probably not a boy. Because:
@@ -398,6 +416,15 @@
 < Michael is a man. Because:
 <	- Michael is a father.
 <	- Every father is a man.
+< Michael is not a daughter. Because:
+<	- Michael is a man.
+<	- Every man is not a daughter.
+* 	and:
+<	- Michael is masculine.
+<	- Every daughter is not masculine.
+* 	and:
+<	- Michael is a father.
+<	- Every father is not a daughter.
 < Michael is not a mother. Because:
 <	- Michael is a father.
 <	- Every father is not a mother.
@@ -437,9 +464,6 @@
 * 	and:
 <	- Michael is a father.
 <	- Every father is masculine.
-< Michael is not a daughter. Because:
-<	- Michael is masculine.
-<	- Every daughter is not masculine.
 * 
 * My assumptions:
 < Michael is probably not a boy. Because:
@@ -482,6 +506,15 @@
 < Richard is a man. Because:
 <	- Richard is a father.
 <	- Every father is a man.
+< Richard is not a daughter. Because:
+<	- Richard is a man.
+<	- Every man is not a daughter.
+* 	and:
+<	- Richard is masculine.
+<	- Every daughter is not masculine.
+* 	and:
+<	- Richard is a father.
+<	- Every father is not a daughter.
 < Richard is not a mother. Because:
 <	- Richard is a father.
 <	- Every father is not a mother.
@@ -509,9 +542,6 @@
 * 	and:
 <	- Richard is a father.
 <	- Every father is not a woman.
-< Richard is not a daughter. Because:
-<	- Richard is masculine.
-<	- Every daughter is not masculine.
 * 
 * My assumptions:
 < Richard is probably not a boy. Because:

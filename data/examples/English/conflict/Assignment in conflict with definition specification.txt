@@ -1,2 +1,2 @@
-﻿A person has a head.
+﻿Every person has a head.
 The person has a head.

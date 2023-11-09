@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -85,6 +85,12 @@
 * My conclusions:
 < Every son is masculine.
 < Every son is not feminine.
+< Every son is not a girl.
+< Every son is not a mother.
+< Every son is not a woman.
+< Every girl is not a son.
+< Every mother is not a son.
+< Every woman is not a son.
 * 
 * My assumptions:
 < A son is probably a child.
@@ -96,12 +102,18 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every daughter is not a son.
 < Every son is not a daughter.
+< Every daughter is not a son.
 * 
 * My conclusions:
 < Every daughter is feminine.
 < Every daughter is not masculine.
+< Every daughter is not a boy.
+< Every daughter is not a father.
+< Every daughter is not a man.
+< Every boy is not a daughter.
+< Every father is not a daughter.
+< Every man is not a daughter.
 < Every child is feminine or masculine.
 < Every child is a girl, a woman, a boy or a man.
 * 
@@ -114,12 +126,12 @@
 < 
 * 
 * My conclusions:
+< Paul is not a daughter.
 < Paul is not a girl.
 < Paul is not a mother.
 < Paul is not feminine.
 < Paul is not a woman.
 < Paul is masculine.
-< Paul is not a daughter.
 * 
 * My assumptions:
 < Paul is probably not a boy.
@@ -137,6 +149,9 @@
 <	- Paul is a son.
 <	- Every son is not a daughter.
 * 	and:
+<	- Paul is a man.
+<	- Every man is not a daughter.
+* 	and:
 <	- Paul is masculine.
 <	- Every daughter is not masculine.
 < Paul is not feminine. Because:
@@ -145,30 +160,39 @@
 * 	and:
 <	- Paul is a man.
 <	- Every man is not feminine.
-< Paul is masculine. Because:
-<	- Paul is a son.
-<	- Every son is masculine.
-* 	and:
-<	- Paul is a man.
-<	- Every man is masculine.
 < Paul is not a girl. Because:
+<	- Paul is a son.
+<	- Every son is not a girl.
+* 	and:
 <	- Paul is a man.
 <	- Every man is not a girl.
 * 	and:
 <	- Paul is masculine.
 <	- Every girl is not masculine.
 < Paul is not a mother. Because:
+<	- Paul is a son.
+<	- Every son is not a mother.
+* 	and:
 <	- Paul is a man.
 <	- Every man is not a mother.
 * 	and:
 <	- Paul is masculine.
 <	- Every mother is not masculine.
 < Paul is not a woman. Because:
+<	- Paul is a son.
+<	- Every son is not a woman.
+* 	and:
 <	- Paul is a man.
 <	- Every man is not a woman.
 * 	and:
 <	- Paul is masculine.
 <	- Every woman is not masculine.
+< Paul is masculine. Because:
+<	- Paul is a son.
+<	- Every son is masculine.
+* 	and:
+<	- Paul is a man.
+<	- Every man is masculine.
 * 
 * My assumptions:
 < Paul is probably a child. Because:

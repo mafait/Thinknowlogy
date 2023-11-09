@@ -1,8 +1,8 @@
 ﻿* 
 * Mijn conclusies:
-< Een hoofd is deel van een man.
+< Een hoofd is deel van iedere man.
 < 
 * 
 * Deze toewijzing is niet geaccepteerd, omdat het in conflict is met definitie-specificatie:
-< Een man heeft een hoofd.
+< Iedere man heeft een hoofd.
 < 

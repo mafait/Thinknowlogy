@@ -1048,7 +1048,6 @@ class List
 
 	protected byte deleteItem( Item deleteItem )
 		{
-
 		// Used for developer statistics
 		GlobalVariables.nTotalDeletedItems++;
 
@@ -1136,7 +1135,6 @@ class List
 
 	protected byte replaceItem( Item replaceItem )
 		{
-
 		// Used for developer statistics
 		GlobalVariables.nTotalReplacedItems++;
 

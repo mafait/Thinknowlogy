@@ -31,16 +31,14 @@ class AdminReasoning
 
 	// Private constructed variables
 
-	bool hasSuggestiveQuestionAssumption_ = false;
-
 	SpecificationItem *adjustedSpanishQuestionSecondarySpecificationItem_ = NULL;
 	SpecificationItem *alternativeSpanishAdditionalDefinitionSpecificationItem_ = NULL;
 	SpecificationItem *oppositePossessiveDefinitionSpecificationItem_ = NULL;
 	SpecificationItem *possessiveDefinitionSpecificationItem_ = NULL;
 
-	WordItem *feminineSpecificationWordItem_ = NULL;
 	WordItem *firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = NULL;
 	WordItem *secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = NULL;
+	WordItem *spanishFeminineSpecificationWordItem_ = NULL;
 
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReasoning";
 
@@ -94,13 +92,20 @@ class AdminReasoning
 		return false;
 		}
 
-	signed char askQuestions( SpecificationItem *userSpecificationItem )
+	signed char askQuestions( bool isSpanishCurrentLanguage, SpecificationItem *simpleUserSpecificationItem, SpecificationItem *userSpecificationItem )
 		{
+		bool hasUserSpecificationCurrentlyMoreSpecificSpecification;
+		bool hasUserSpecificationNonCompoundCollection;
 		bool isAllowingSpanishPossessiveSpecification;
 		bool isArchivedUserAssignment;
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-		unsigned int userSpecificationCollectionNr;
+		bool isCurrentTouchedRelationWord;
+		bool isPossessiveUserSpecification;
+		unsigned int candidateForQuestionSpecificationCollectionNr;
+		unsigned int nRelationContextWords;
+		unsigned int nUserRelationWords;
 		SpecificationItem *additionalDefinitionSpecificationItem = NULL;
+		SpecificationItem *candidateForQuestionSpecificationItem;
+		SpecificationItem *foundQuestionSpecificationItem;
 		WordItem *currentTouchedWordItem;
 		WordItem *userGeneralizationWordItem;
 		WordItem *userSpecificationWordItem;
@@ -109,37 +114,44 @@ class AdminReasoning
 		if( userSpecificationItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
 
-		isArchivedUserAssignment = userSpecificationItem->isArchivedAssignment();
-		userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
-		userSpecificationWordItem = userSpecificationItem->specificationWordItem();
+		if( ( userGeneralizationWordItem = userSpecificationItem->generalizationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The generalization word of the given user specification item is undefined" );
 
-		if( userSpecificationItem->isGeneralizationProperNoun() &&
-		( userGeneralizationWordItem = userSpecificationItem->generalizationWordItem() ) != NULL )
+		if( ( userSpecificationWordItem = userSpecificationItem->specificationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item has no specification word" );
+
+		isPossessiveUserSpecification = userSpecificationItem->isPossessive();
+
+		if( userSpecificationItem->isGeneralizationProperNoun() )
 			{
 			additionalDefinitionSpecificationItem = getAdditionalDefinitionSpecificationItem( userSpecificationWordItem );
 
 			if( userSpecificationItem->isExclusiveSpecification() )
 				{
 				// Question part doesn't exist yet
-				if( !userGeneralizationWordItem->hasJustification( userSpecificationItem, NULL, NULL ) &&
-				// Ask question after more specific non-exclusive user specification
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedUserAssignment, isArchivedUserAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, userSpecificationItem->generalizationWordTypeNr(), userSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, userGeneralizationWordItem, userSpecificationWordItem, NULL ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about the current user sentence" );
+				if( !userGeneralizationWordItem->hasJustification( userSpecificationItem, NULL, NULL ) )
+					{
+					isArchivedUserAssignment = userSpecificationItem->isArchivedAssignment();
+
+					// Ask question after more specific non-exclusive user specification
+					if( adminItem_->addSelfGeneratedSpecification( false, isArchivedUserAssignment, isArchivedUserAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, userSpecificationItem->generalizationWordTypeNr(), userSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, userGeneralizationWordItem, userSpecificationWordItem, NULL ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about the current user sentence" );
+					}
 				}
 			else
 				{
-				if( userSpecificationItem->isPossessive() )
+				if( isPossessiveUserSpecification )
 					{
-					if( !userGeneralizationWordItem->hasFeminineOrMasculineProperNounEnding() &&
+					// Typical for Spanish
+					if( isSpanishCurrentLanguage &&
+					!userGeneralizationWordItem->hasFeminineOrMasculineProperNounEnding() &&
 
-					( ( isSpanishCurrentLanguage &&
-					userSpecificationItem->isSpecificationWordSpanishAmbiguous() ) ||
-
+					( userSpecificationItem->isSpecificationWordSpanishAmbiguous() ||
 					!userGeneralizationWordItem->hasActiveQuestionWithCompoundCollection() ) &&
 
 					// Ask questions about generalization word with possessive primary specification
-					askQuestionsAboutGeneralizationWordWithPossessivePrimarySpecification( isArchivedUserAssignment, true, isSpanishCurrentLanguage, userSpecificationItem->specificationCollectionNr(), userSpecificationItem, additionalDefinitionSpecificationItem, userGeneralizationWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about word \"", userGeneralizationWordItem->anyWordTypeString(), "\" with possessive user specification as primary specification" );
+					askSpanishQuestionAboutGeneralizationWord( true, userSpecificationItem->specificationCollectionNr(), userSpecificationItem, additionalDefinitionSpecificationItem, userGeneralizationWordItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about generalization word \"", userGeneralizationWordItem->anyWordTypeString(), "\" with possessive user specification as primary specification" );
 					}
 				else
 					{
@@ -155,24 +167,88 @@ class AdminReasoning
 
 		if( ( currentTouchedWordItem = globalVariables_->firstTouchedWordItem ) != NULL )
 			{
+			hasUserSpecificationCurrentlyMoreSpecificSpecification = userGeneralizationWordItem->hasCurrentlyMoreSpecificSpecification();
+
+			hasUserSpecificationNonCompoundCollection = userSpecificationItem->hasNonCompoundSpecificationCollection();
+			nRelationContextWords = userSpecificationItem->nRelationContextWords();
+
+			nUserRelationWords = globalVariables_->nUserRelationWords;
+
 			// Do for all words touched during current sentence
 			do	{
-				// Typical for Spanish
-				isAllowingSpanishPossessiveSpecification = ( isSpanishCurrentLanguage &&
-															currentTouchedWordItem->isUserRelationWord );
-
-				if( currentTouchedWordItem->firstCandidateForQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification ) != NULL )
+				if( currentTouchedWordItem->isProperNounWord() )
 					{
-					// Ask questions
-					if( askQuestions( isAllowingSpanishPossessiveSpecification, userSpecificationCollectionNr, additionalDefinitionSpecificationItem, userSpecificationItem, currentTouchedWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about proper noun word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
+					isCurrentTouchedRelationWord = currentTouchedWordItem->isUserRelationWord;
+					// Typical for Spanish
+					isAllowingSpanishPossessiveSpecification = ( isSpanishCurrentLanguage &&
+																isCurrentTouchedRelationWord );
 
-					if( additionalDefinitionSpecificationItem != NULL &&
-					// Avoid idle call
-					currentTouchedWordItem->firstExclusiveSpecificationItem( false ) != NULL &&
-					// Ask questions with question as primary specification
-					askQuestionsWithQuestionAsPrimarySpecification( userSpecificationItem, currentTouchedWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about proper noun word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
+					if( ( candidateForQuestionSpecificationItem = currentTouchedWordItem->firstCandidateForQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification ) ) != NULL )
+						{
+						candidateForQuestionSpecificationCollectionNr = candidateForQuestionSpecificationItem->specificationCollectionNr();
+						foundQuestionSpecificationItem = currentTouchedWordItem->firstSpecificationItem( false, false, false, true );
+
+						if( ( ( simpleUserSpecificationItem != NULL &&
+
+						// Non-possessive user specification
+						( ( !isPossessiveUserSpecification &&
+						!isCurrentTouchedRelationWord &&
+						candidateForQuestionSpecificationItem == simpleUserSpecificationItem &&
+
+						( ( !isSpanishCurrentLanguage &&
+
+						( userSpecificationItem == simpleUserSpecificationItem ||
+
+						( foundQuestionSpecificationItem == NULL &&
+
+						( nUserRelationWords == 1 ||
+						nRelationContextWords < nUserRelationWords ) ) ) ) ||
+
+						// Typical for Spanish
+						// Spanish test file: "Que haya confirmado al menos una palabra de relación"
+						( isSpanishCurrentLanguage &&
+						userSpecificationItem == simpleUserSpecificationItem &&
+						foundQuestionSpecificationItem != NULL &&
+						foundQuestionSpecificationItem->isOlderItem() ) ) ) ||
+
+						( !isPossessiveUserSpecification &&
+						isCurrentTouchedRelationWord &&
+						// Positive specification doesn't exist
+						currentTouchedWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, candidateForQuestionSpecificationCollectionNr, NULL ) == NULL ) ||
+
+						// Possessive user specification
+						// Test file: "Sentence with possessive verb"
+						( isPossessiveUserSpecification &&
+						isCurrentTouchedRelationWord &&
+						// No question exists
+						foundQuestionSpecificationItem == NULL ) ) ) ||
+
+						// Negative specification doesn't exist
+						currentTouchedWordItem->bestMatchingRelationContextNrSpecificationItem( true, false, candidateForQuestionSpecificationCollectionNr, NULL ) == NULL ) &&
+
+						// Ask questions
+						askQuestions( isAllowingSpanishPossessiveSpecification, isSpanishCurrentLanguage, additionalDefinitionSpecificationItem, userSpecificationItem, currentTouchedWordItem ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about proper noun word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
+
+						if( additionalDefinitionSpecificationItem != NULL &&
+
+						( hasUserSpecificationCurrentlyMoreSpecificSpecification ||
+						isAllowingSpanishPossessiveSpecification ||
+						nUserRelationWords <= 1 ||
+						candidateForQuestionSpecificationItem->isOlderItem() ||
+
+						( !candidateForQuestionSpecificationItem->hasJustificationWithAdditionalDefinitionSpecification() &&
+
+						( hasUserSpecificationNonCompoundCollection ||
+						// Adjective questions don't exist yet
+						currentTouchedWordItem->firstAdjectiveSpecificationItem( false, true ) == NULL ) ) ) &&
+
+						// Avoid idle call
+						currentTouchedWordItem->firstExclusiveSpecificationItem( false ) != NULL &&
+						// Ask questions with question as primary specification
+						askQuestionsWithQuestionAsPrimarySpecification( userSpecificationItem, currentTouchedWordItem ) != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions about proper noun word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
+						}
 					}
 				}
 			while( ( currentTouchedWordItem = currentTouchedWordItem->nextTouchedWordItem ) != NULL );
@@ -181,50 +257,30 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char askQuestions( bool isAllowingSpanishPossessiveSpecification, unsigned int userSpecificationCollectionNr, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+	signed char askQuestions( bool isAllowingSpanishPossessiveSpecification, bool isSpanishCurrentLanguage, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
-		bool hasExclusiveSecondarySpecificationCompoundCollection;
 		bool hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation;
-		bool hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion;
 		bool hasGeneralizationWordFeminineOrMasculineProperNounEnding;
-		bool hasPrimarySpecificationCompoundCollection;
-		bool hasPrimarySpecificationRelationContext;
-		bool hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection;
-		bool hasSkippedAskingQuestion;
-		bool hasUserSpecificationCompoundCollection;
-		bool hasUserSpecificationRelationContext;
 		bool isArchivedAssignment;
-		bool isCompoundGeneralizationWordSpanishAmbiguous;
-		bool isOlderPrimarySpecification;
-		bool isOlderUserSpecification;
-		bool isPossessivePrimarySpecification;
+		bool isExclusiveUserSpecification;
 		bool isPossessiveUserSpecification;
 		bool isPrimarySameAsUserSpecification;
 		bool isPrimarySpecificationWordSpanishAmbiguous;
-		bool isPrimaryUserSpecification;
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
+		bool isSkippingSimpleQuestions;
 		bool isUserGeneralizationWord;
-		bool isUserQuestion;
 		bool isUserSpecificationWordSpanishAmbiguous;
 		unsigned short generalizationWordTypeNr;
 		unsigned int exclusiveSecondarySpecificationCollectionNr;
-		unsigned int primarySpecificationCollectionNr;
-		SpecificationItem *alternativePrimarySpecificationItem;
+		unsigned int userSpecificationCollectionNr;
 		SpecificationItem *archivedPrimarySpecificationItem;
-		SpecificationItem *createdOrFoundSpecificationItem;
 		SpecificationItem *exclusiveSecondarySpecificationItem;
-		SpecificationItem *exclusiveSpecificationItem;
 		SpecificationItem *existingQuestionSpecificationItem;
-		SpecificationItem *foundSpecificationItem;
+		SpecificationItem *positiveSpecificationItem;
 		SpecificationItem *primarySpecificationItem;
-		SpecificationItem *questionPrimarySpecificationItem;
-		SpecificationItem *questionSecondarySpecificationItem;
-		WordItem *collectionWordItem;
-		WordItem *compoundGeneralizationWordItem;
-		WordItem *exclusiveSpecificationWordItem;
+		SpecificationItem *questionSpecificationItem;
+		SpecificationItem *selectedPrimarySpecificationItem;
 		WordItem *exclusiveSecondarySpecificationWordItem;
 		WordItem *primarySpecificationWordItem;
-		CreateAndAssignResultType createAndAssignResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askQuestions";
 
 		if( userSpecificationItem == NULL )
@@ -235,396 +291,133 @@ class AdminReasoning
 
 		if( ( primarySpecificationItem = generalizationWordItem->firstCandidateForQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification ) ) != NULL )
 			{
-			hasUserSpecificationCompoundCollection = userSpecificationItem->hasCompoundSpecificationCollection();
-			hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
-			isOlderUserSpecification = userSpecificationItem->isOlderItem();
+			isExclusiveUserSpecification = userSpecificationItem->isExclusiveSpecification();
 			isPossessiveUserSpecification = userSpecificationItem->isPossessive();
-			isUserQuestion = userSpecificationItem->isQuestion();
 			isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
+			userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
 
 			hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation = generalizationWordItem->hasCurrentlyConfirmedSpecificationButNoRelation();
-			hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion = generalizationWordItem->hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion();
 			hasGeneralizationWordFeminineOrMasculineProperNounEnding = generalizationWordItem->hasFeminineOrMasculineProperNounEnding();
 			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
 
 			do	{
 				if( ( primarySpecificationWordItem = primarySpecificationItem->specificationWordItem() ) != NULL )
 					{
-					hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
-					isArchivedAssignment = primarySpecificationItem->isArchivedAssignment();
-					isPossessivePrimarySpecification = primarySpecificationItem->isPossessive();
-					isPrimarySameAsUserSpecification = ( primarySpecificationItem == userSpecificationItem );
-					isPrimarySpecificationWordSpanishAmbiguous = primarySpecificationItem->isSpecificationWordSpanishAmbiguous();
-					primarySpecificationCollectionNr = primarySpecificationItem->specificationCollectionNr();
-
-					if( isPossessivePrimarySpecification )
+					if( primarySpecificationItem->isPossessive() )
 						{
 						if( !hasGeneralizationWordFeminineOrMasculineProperNounEnding )
 							{
-							archivedPrimarySpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( true, true, false, true, false, primarySpecificationWordItem );
+							selectedPrimarySpecificationItem = ( ( archivedPrimarySpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( true, true, false, true, false, primarySpecificationWordItem ) ) != NULL &&
+																archivedPrimarySpecificationItem->isArchivedAssignment() ? archivedPrimarySpecificationItem :
+																															primarySpecificationItem );
 
 							// Typical for Spanish
 							// Specification with user specification collection doesn't exist yet
 							if( generalizationWordItem->firstUserSpecificationItem( false, false, userSpecificationCollectionNr, NO_CONTEXT_NR, NULL ) == NULL &&
 							// Ask questions about generalization word with possessive primary specification
-							askQuestionsAboutGeneralizationWordWithPossessivePrimarySpecification( isArchivedAssignment, isPossessiveUserSpecification, true, userSpecificationCollectionNr, ( archivedPrimarySpecificationItem != NULL && archivedPrimarySpecificationItem->isArchivedAssignment() ? archivedPrimarySpecificationItem : primarySpecificationItem ), additionalDefinitionSpecificationItem, generalizationWordItem ) != RESULT_OK )
+							askSpanishQuestionAboutGeneralizationWord( isPossessiveUserSpecification, userSpecificationCollectionNr, selectedPrimarySpecificationItem, additionalDefinitionSpecificationItem, generalizationWordItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask Spanish questions about word \"", generalizationWordItem->anyWordTypeString(), "\" with possessive primary specification" );
 							}
 						}
 					else
 						{
-						hasPrimarySpecificationCompoundCollection = primarySpecificationItem->hasCompoundSpecificationCollection();
+						isPrimarySameAsUserSpecification = ( primarySpecificationItem == userSpecificationItem );
+						isPrimarySpecificationWordSpanishAmbiguous = primarySpecificationItem->isSpecificationWordSpanishAmbiguous();
 
 						if( ( !hasGeneralizationWordFeminineOrMasculineProperNounEnding ||
-						hasPrimarySpecificationCompoundCollection ||
 						isPrimarySpecificationWordSpanishAmbiguous ||
 
 						( isPrimarySameAsUserSpecification &&
-						!hasPrimarySpecificationRelationContext ) ) &&
+						!primarySpecificationItem->hasRelationContext() ) ||
 
-						( primarySpecificationWordItem = primarySpecificationItem->specificationWordItem() ) != NULL &&
-						( exclusiveSecondarySpecificationItem = primarySpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
+						primarySpecificationItem->hasCompoundSpecificationCollection() ) &&
+
+						( exclusiveSecondarySpecificationItem = primarySpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL &&
+						( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL )
 							{
-							hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection = generalizationWordItem->hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection();
-							hasSkippedAskingQuestion = false;
-
-							isOlderPrimarySpecification = primarySpecificationItem->isOlderItem();
-							isPrimaryUserSpecification = primarySpecificationItem->isUserSpecification();
-
+							isSkippingSimpleQuestions = false;
 							generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
-
-							alternativePrimarySpecificationItem = NULL;
 
 							if( isUserGeneralizationWord )
 								{
-								if( hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation &&
-								!isPrimaryUserSpecification )
-									alternativePrimarySpecificationItem = userSpecificationItem;
+								if( hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation )
+									isSkippingSimpleQuestions = true;
 								}
 							else
 								{
+								isArchivedAssignment = primarySpecificationItem->isArchivedAssignment();
+
 								if( isPossessiveUserSpecification )
 									{
 									// Typical for Spanish
 									if( isUserSpecificationWordSpanishAmbiguous &&
 									// Number of relation words of user specification item
 									userSpecificationItem->nContextRelations() > 1 &&
+
+									// Skip if current questions exist
+									( ( questionSpecificationItem = generalizationWordItem->firstActiveQuestionSpecificationItem() ) == NULL ||
+									questionSpecificationItem->isOlderItem() ) &&
+
 									( exclusiveSecondarySpecificationCollectionNr = exclusiveSecondarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR &&
 									// Skip invalid questions / similar specification doesn't exist yet
-									generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL &&
-									// Ask Spanish question about word relation word with possessive primary specification
-									askSpanishQuestionAboutRelationWordWithPossessivePrimarySpecification( isArchivedAssignment, generalizationWordTypeNr, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a Spanish question about word \"", generalizationWordItem->anyWordTypeString(), "\" with possessive primary specification" );
+									generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL )
+										{
+										isSkippingSimpleQuestions = true;
+
+										// Ask Spanish question about word relation word with possessive primary specification
+										if( askSpanishQuestionAboutRelationWord( isArchivedAssignment, generalizationWordTypeNr, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a Spanish question about relation word \"", generalizationWordItem->anyWordTypeString(), "\" with possessive primary specification" );
+										}
 									}
 								else
 									{
-									if( primarySpecificationItem->isSelfGeneratedAssumption() )
-										alternativePrimarySpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, false, false, false, primarySpecificationWordItem, NULL );
+									if( generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( true, isArchivedAssignment, false, false, false, primarySpecificationWordItem, NULL ) != NULL )
+										isSkippingSimpleQuestions = true;
 									}
 								}
 
-							do	{
-								hasExclusiveSecondarySpecificationCompoundCollection = exclusiveSecondarySpecificationItem->hasCompoundSpecificationCollection();
+							if( !isSkippingSimpleQuestions &&
+							// Positive specification doesn't exist
+							generalizationWordItem->firstSpecificationItem( false, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
 
-								if( ( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL )
-									{
-									exclusiveSpecificationItem = NULL;
-									foundSpecificationItem = NULL;
+							// Negative specification doesn't exist
+							( ( generalizationWordItem->firstSpecificationItem( true, false, false, exclusiveSecondarySpecificationWordItem ) == NULL ||
+							// Positive specification doesn't exist
+							( positiveSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, userSpecificationCollectionNr, NULL ) ) == NULL ||
 
-									if( ( exclusiveSpecificationItem = exclusiveSecondarySpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
-										{
-										// Do for all exclusive specifications of this word (including adjectives)
-										do	{
-											if( ( exclusiveSpecificationWordItem = exclusiveSpecificationItem->specificationWordItem() ) != NULL )
-												foundSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, exclusiveSpecificationWordItem );
-											}
-										while( foundSpecificationItem == NULL &&
-										( exclusiveSpecificationItem = exclusiveSpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
-										}
+							( isPrimarySpecificationWordSpanishAmbiguous &&
+							!positiveSpecificationItem->isOlderItem() ) ) ) &&
 
-									if( foundSpecificationItem == NULL )
-										{
-										if( ( exclusiveSecondarySpecificationCollectionNr = exclusiveSecondarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
-											{
-											isCompoundGeneralizationWordSpanishAmbiguous = ( ( compoundGeneralizationWordItem = exclusiveSecondarySpecificationWordItem->compoundGeneralizationWordItem( exclusiveSecondarySpecificationCollectionNr ) ) != NULL &&
-																							compoundGeneralizationWordItem->isNounWordSpanishAmbiguous() );
+							( isPossessiveUserSpecification ||
+							isPrimarySameAsUserSpecification ||
 
-											existingQuestionSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, true, exclusiveSecondarySpecificationWordItem );
+							// Typical for Spanish
+							( isPrimarySpecificationWordSpanishAmbiguous &&
+							isUserGeneralizationWord ) ||
 
-											// Useful user specification without relation
-											if( ( ( hasPrimarySpecificationCompoundCollection &&
-											isPrimaryUserSpecification &&
-											!exclusiveSecondarySpecificationItem->isSpecificationAdjective() &&
+							// Test file: "This information is more specific (non-exclusive)"
+							( isExclusiveUserSpecification &&
+							!primarySpecificationItem->hasSpecificationCollection() ) ||
 
-											( !isUserSpecificationWordSpanishAmbiguous ||
+							// Exclusive specification doesn't exist
+							( existingQuestionSpecificationItem = generalizationWordItem->firstExclusiveSpecificationItem( exclusiveSecondarySpecificationWordItem ) ) == NULL ||
 
-											// Typical for Spanish
-											( isPrimarySameAsUserSpecification &&
-											!hasPrimarySpecificationRelationContext &&
-											!exclusiveSecondarySpecificationWordItem->isFeminineWord() ) ) ) ||
+							// Test file: "Skip invalid questions (1)"
+							( ( !isUserGeneralizationWord ||
+							// Negative specification doesn't exist
+							generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( true, false, userSpecificationCollectionNr, NULL ) == NULL ) &&
 
-											// No useful user specification without relation
-											( !hasUserSpecificationCompoundCollection &&
-											!hasPrimarySpecificationRelationContext &&
-											!isOlderPrimarySpecification &&
+							// Justification doesn't exist yet in question
+							!existingQuestionSpecificationItem->hasSecondarySpecificationJustification( exclusiveSecondarySpecificationItem ) ) ) &&
 
-											( ( hasGeneralizationWordFeminineOrMasculineProperNounEnding &&
-											hasPrimarySpecificationCompoundCollection ) ||
-
-											( isPrimaryUserSpecification &&
-											exclusiveSecondarySpecificationItem->isUserSpecification() ) ) ) ||
-
-											( hasExclusiveSecondarySpecificationCompoundCollection &&
-											hasUserSpecificationRelationContext &&
-
-											( ( hasPrimarySpecificationCompoundCollection &&
-
-											( hasGeneralizationWordFeminineOrMasculineProperNounEnding ||
-											!exclusiveSecondarySpecificationWordItem->isFeminineWord() ) ) ||
-
-											( !isUserGeneralizationWord &&
-
-											( !isPossessiveUserSpecification ||
-
-											( !isUserSpecificationWordSpanishAmbiguous &&
-											primarySpecificationWordItem->isUserSpecificationWord ) ) ) ) ) ||
-
-											// Added additional justification
-											( !hasExclusiveSecondarySpecificationCompoundCollection &&
-											!hasPrimarySpecificationRelationContext &&
-											hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection &&
-
-											( ( existingQuestionSpecificationItem == NULL &&
-											!hasUserSpecificationCompoundCollection ) ||
-
-											( existingQuestionSpecificationItem != NULL &&
-											!existingQuestionSpecificationItem->hasSecondarySpecificationCompoundCollectionJustification() ) ) ) ||
-
-											( hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection &&
-
-											// Corrected assumption by opposite suggestive question
-											( hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion ||
-											// Avoid adding non-compound justification to compound question
-											primarySpecificationCollectionNr > NO_COLLECTION_NR ) ) ) &&
-
-											( ( isCompoundGeneralizationWordSpanishAmbiguous &&
-											!isUserSpecificationWordSpanishAmbiguous ) ||
-
-											// Typical for Spanish
-											// Question part doesn't exist yet
-											!generalizationWordItem->hasJustification( ( alternativePrimarySpecificationItem == NULL ? primarySpecificationItem : alternativePrimarySpecificationItem ), NULL, exclusiveSecondarySpecificationItem ) ) )
-												{
-												// Adjusted question
-												if( alternativePrimarySpecificationItem != NULL ||
-
-												( hasPrimarySpecificationCompoundCollection &&
-												hasPrimarySpecificationRelationContext &&
-												isCompoundGeneralizationWordSpanishAmbiguous &&
-												!isUserSpecificationWordSpanishAmbiguous ) ||
-
-												( isUserSpecificationWordSpanishAmbiguous &&
-												compoundGeneralizationWordItem != primarySpecificationWordItem &&
-
-												( !hasPrimarySpecificationRelationContext ||
-												// Same specification but without relation context doesn't exist
-												// Spanish test file: "Esta información es más específico"
-												generalizationWordItem->firstAssignmentOrSpecificationItem( false, false, NO_CONTEXT_NR, primarySpecificationWordItem ) == NULL ) ) ||
-
-												// Has possibly a gap in the knowledge
-												( ( !isOlderPrimarySpecification ||
-												isUserQuestion ) &&
-
-												( !hasUserSpecificationCompoundCollection ||
-
-												// Negative specification doesn't exist yet
-												( generalizationWordItem->firstSpecificationItem( true, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
-												generalizationWordItem->hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationCollectionNr, primarySpecificationItem ) ) ) ) )
-													{
-													questionPrimarySpecificationItem = ( alternativePrimarySpecificationItem == NULL ? primarySpecificationItem :
-																																		alternativePrimarySpecificationItem );
-													questionSecondarySpecificationItem = ( isPrimarySpecificationWordSpanishAmbiguous &&
-																						isUserGeneralizationWord &&
-																						adjustedSpanishQuestionSecondarySpecificationItem_ != NULL ? adjustedSpanishQuestionSecondarySpecificationItem_ :
-																																					exclusiveSecondarySpecificationItem );
-
-													if( ( collectionWordItem = exclusiveSecondarySpecificationWordItem->collectionWordItem( exclusiveSecondarySpecificationCollectionNr ) ) != NULL &&
-													// Avoid asking invalid questions:
-													// 1) Check for existing knowledge with same specification collection
-													generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, exclusiveSecondarySpecificationWordItem ) == NULL &&
-													// 2) Check for existing negative specification
-													generalizationWordItem->firstSpecificationItem( true, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
-													// 3) Check for existing negative specification. Test file: "Complex (3)"
-													generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( true, true, true, false, collectionWordItem, NULL ) == NULL &&
-
-													( existingQuestionSpecificationItem == NULL ||
-
-													( ( !isSpanishCurrentLanguage ||
-													// Typical for Spanish
-													// Avoid almost duplicate justifications
-													!hasPrimarySpecificationRelationContext ||
-													!isPossessiveUserSpecification ) &&
-
-													// Justification doesn't exist yet in specification
-													( !existingQuestionSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( questionPrimarySpecificationItem, questionSecondarySpecificationItem ) &&
-													// Spanish test file: "Que haya confirmado al menos una palabra de relación"
-													// Justification doesn't exist yet in word
-													generalizationWordItem->primaryAndSecondarySpecificationJustificationItem( true, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, questionPrimarySpecificationItem, questionSecondarySpecificationItem ) == NULL ) ) ) )
-														{
-														// Ask a specification substitution question
-														if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, questionPrimarySpecificationItem, NULL, questionSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ) ).result != RESULT_OK )
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
-
-														// Typical for Spanish
-														if( isPrimarySpecificationWordSpanishAmbiguous )
-															{
-															if( adjustedSpanishQuestionSecondarySpecificationItem_ == NULL &&
-															createAndAssignResult.createdSpecificationItem == NULL )
-																// Adjusted question
-																adjustedSpanishQuestionSecondarySpecificationItem_ = exclusiveSecondarySpecificationItem;
-															}
-														else
-															{
-															if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
-															createdOrFoundSpecificationItem->isCorrectedSpecification() )
-																{
-																if( firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ == NULL )
-																	firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = primarySpecificationWordItem;
-																else
-																	{
-																	if( firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ != primarySpecificationWordItem )
-																		secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = primarySpecificationWordItem;
-																	}
-																}
-															}
-														}
-													else
-														hasSkippedAskingQuestion = true;
-													}
-												else
-													{
-													if( isUserGeneralizationWord &&
-													hasExclusiveSecondarySpecificationCompoundCollection &&
-													hasUserSpecificationCompoundCollection &&
-													!isOlderUserSpecification &&
-													primarySpecificationWordItem->hasCollectionNr( userSpecificationCollectionNr ) &&
-													exclusiveSecondarySpecificationWordItem->nonCompoundCollectionNr() > NO_COLLECTION_NR &&
-													// Question exists
-													generalizationWordItem->firstSpecificationItem( false, false, true, exclusiveSecondarySpecificationWordItem ) != NULL &&
-													// Find question to be adjusted by compound collection
-													findQuestionToBeAdjustedByCompoundCollection( generalizationWordItem, primarySpecificationWordItem, userSpecificationItem, exclusiveSecondarySpecificationItem ) != RESULT_OK )
-														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a question to be adjusted by a compound collection about word \"", generalizationWordItem->anyWordTypeString(), "\" by compound collection" );
-													}
-												}
-											}
-										}
-									else
-										{
-										// Test file: "Skip invalid questions (1)"
-										if( generalizationWordItem != exclusiveSecondarySpecificationWordItem && 
-										// Specification doesn't exist yet
-										generalizationWordItem->firstSpecificationItem( false, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
-										// Make exclusive specification substitution assumption
-										adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, exclusiveSecondarySpecificationItem, exclusiveSpecificationItem, foundSpecificationItem, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an exclusive specification substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
-										}
-									}
-								}
-							while( !hasSkippedAskingQuestion &&
-							( exclusiveSecondarySpecificationItem = exclusiveSecondarySpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
+							// Ask simple questions
+							askSimpleQuestions( isSpanishCurrentLanguage, exclusiveSecondarySpecificationItem, primarySpecificationItem, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask simple questions about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
 					}
 				}
 			while( ( primarySpecificationItem = primarySpecificationItem->nextCandidateForQuestionSpecificationItem( isAllowingSpanishPossessiveSpecification ) ) != NULL );
-			}
-
-		return RESULT_OK;
-		}
-
-	signed char askQuestionsAboutGeneralizationWordWithPossessivePrimarySpecification( bool isArchivedAssignment, bool isPossessiveUserSpecification, bool isSpanishCurrentLanguage, unsigned int userSpecificationCollectionNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, WordItem *generalizationWordItem )
-		{
-		bool hasMultipleUserGeneralizationWords = false;
-		bool hasPrimarySpecificationCompoundCollection;
-		bool hasPrimarySpecificationRelationContext;
-		bool isOlderPrimarySpecification;
-		bool isUserGeneralizationWord;
-		unsigned short generalizationWordTypeNr;
-		unsigned int exclusiveSecondarySpecificationCollectionNr;
-		SpecificationItem *exclusiveSecondarySpecificationItem;
-		SpecificationItem *existingQuestionSpecificationItem;
-		WordItem *additionalDefinitionSpecificationWordItem;
-		WordItem *exclusiveSecondarySpecificationWordItem;
-		WordItem *compoundGeneralizationWordItem = NULL;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askQuestionsAboutGeneralizationWordWithPossessivePrimarySpecification";
-
-		if( primarySpecificationItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item is undefined" );
-
-		if( additionalDefinitionSpecificationItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given additional definition specification item is undefined" );
-
-		if( generalizationWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
-
-		// Question about generalization word
-		if( ( additionalDefinitionSpecificationWordItem = additionalDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
-		( exclusiveSecondarySpecificationItem = additionalDefinitionSpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
-			{
-			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
-
-			hasPrimarySpecificationCompoundCollection = primarySpecificationItem->hasCompoundSpecificationCollection();
-			hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
-			isOlderPrimarySpecification = primarySpecificationItem->isOlderItem();
-			generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
-
-			if( isSpanishCurrentLanguage )
-				hasMultipleUserGeneralizationWords = ( globalVariables_->nUserGeneralizationWords > 1 );
-
-			do	{
-				// Current question part doesn't exist yet
-				if( !generalizationWordItem->hasJustification( primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem ) &&
-				( exclusiveSecondarySpecificationCollectionNr = exclusiveSecondarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR &&
-				( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL &&
-
-				// No answered questions
-				( ( ( existingQuestionSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, false, WORD_PARAMETER_SINGULAR_VERB_IS ) ) == NULL &&
-				isUserGeneralizationWord &&
-				hasPrimarySpecificationRelationContext &&
-				// User specification doesn't exist yet
-				generalizationWordItem->firstUserSpecificationItem( false, false, userSpecificationCollectionNr, NO_CONTEXT_NR, NULL ) == NULL ) ||
-
-				// Typical for Spanish
-				( isSpanishCurrentLanguage &&
-
-				( ( isUserGeneralizationWord ||
-
-				( isOlderPrimarySpecification &&
-				!isPossessiveUserSpecification ) ||
-
-				( hasMultipleUserGeneralizationWords ||
-
-				( hasPrimarySpecificationCompoundCollection &&
-				!isPossessiveUserSpecification ) ) ) &&
-
-				( exclusiveSecondarySpecificationItem->isSelfGeneratedSpecification() ||
-
-				( ( compoundGeneralizationWordItem = exclusiveSecondarySpecificationWordItem->compoundGeneralizationWordItem( exclusiveSecondarySpecificationCollectionNr ) ) != NULL &&
-				!compoundGeneralizationWordItem->isNounWordSpanishAmbiguous() ) ) &&
-
-				// Positive specification doesn't exist yet
-				generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL &&
-				// Negative specification doesn't exist yet
-				generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, true, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL &&
-
-				( existingQuestionSpecificationItem == NULL ||
-				// Justification has at least the same assumption level
-				existingQuestionSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem, NULL ) ) ) ) ) &&
-
-				// Ask a specification substitution question
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
-				}
-			while( ( exclusiveSecondarySpecificationItem = exclusiveSecondarySpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
 			}
 
 		return RESULT_OK;
@@ -692,7 +485,7 @@ class AdminReasoning
 					isArchivedAssignment = primarySpecificationItem->isArchivedAssignment();
 
 					// Ask a specification substitution question
-					if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, primarySpecificationItem->generalizationWordTypeNr(), secondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
+					if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, primarySpecificationItem->generalizationWordTypeNr(), secondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question with a question as primary specification about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondarySpecificationWordItem->anyWordTypeString(), "\"" );
 					}
 				}
@@ -702,12 +495,376 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char askSpanishQuestionAboutRelationWordWithPossessivePrimarySpecification( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+	signed char askSimpleQuestions( bool isSpanishCurrentLanguage, SpecificationItem *exclusiveSecondarySpecificationItem, SpecificationItem *primarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+		{
+		bool hasExclusiveSecondarySpecificationCompoundCollection;
+		bool hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion;
+		bool hasGeneralizationWordFeminineOrMasculineProperNounEnding;
+		bool hasPrimarySpecificationCompoundCollection;
+		bool hasPrimarySpecificationRelationContext;
+		bool hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection;
+		bool hasSkippedAskingQuestion = false;
+		bool hasUserSpecificationCompoundCollection;
+		bool hasUserSpecificationRelationContext;
+		bool isArchivedAssignment;
+		bool isCompoundGeneralizationWordSpanishAmbiguous;
+		bool isOlderPrimarySpecification;
+		bool isPossessiveUserSpecification;
+		bool isPrimarySameAsUserSpecification;
+		bool isPrimarySpecificationWordSpanishAmbiguous;
+		bool isPrimaryUserSpecification;
+		bool isUserGeneralizationWord;
+		bool isUserQuestion;
+		bool isUserSpecificationWordSpanishAmbiguous;
+		unsigned short generalizationWordTypeNr;
+		unsigned int exclusiveSecondarySpecificationCollectionNr;
+		unsigned int primarySpecificationCollectionNr;
+		unsigned int userSpecificationCollectionNr;
+		SpecificationItem *createdOrFoundSpecificationItem;
+		SpecificationItem *exclusiveSpecificationItem;
+		SpecificationItem *existingQuestionSpecificationItem;
+		SpecificationItem *foundSpecificationItem;
+		SpecificationItem *questionSecondarySpecificationItem;
+		WordItem *compoundGeneralizationWordItem;
+		WordItem *exclusiveSpecificationWordItem;
+		WordItem *exclusiveSecondarySpecificationWordItem;
+		WordItem *primarySpecificationWordItem;
+		CreateAndAssignResultType createAndAssignResult;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askSimpleQuestions";
+
+		if( exclusiveSecondarySpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given exclusive secondary specification item is undefined" );
+
+		if( primarySpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item is undefined" );
+
+		if( userSpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
+
+		if( generalizationWordItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+
+		if( ( primarySpecificationWordItem = primarySpecificationItem->specificationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item has no specification word item" );
+
+		hasPrimarySpecificationCompoundCollection = primarySpecificationItem->hasCompoundSpecificationCollection();
+		hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
+		isArchivedAssignment = primarySpecificationItem->isArchivedAssignment();
+		isOlderPrimarySpecification = primarySpecificationItem->isOlderItem();
+		isPrimarySameAsUserSpecification = ( primarySpecificationItem == userSpecificationItem );
+		isPrimarySpecificationWordSpanishAmbiguous = primarySpecificationItem->isSpecificationWordSpanishAmbiguous();
+		isPrimaryUserSpecification = primarySpecificationItem->isUserSpecification();
+		generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
+		primarySpecificationCollectionNr = primarySpecificationItem->specificationCollectionNr();
+
+		hasUserSpecificationCompoundCollection = userSpecificationItem->hasCompoundSpecificationCollection();
+		hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
+		isPossessiveUserSpecification = userSpecificationItem->isPossessive();
+		isUserQuestion = userSpecificationItem->isQuestion();
+		isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
+		userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
+
+		hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion = generalizationWordItem->hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion();
+		hasGeneralizationWordFeminineOrMasculineProperNounEnding = generalizationWordItem->hasFeminineOrMasculineProperNounEnding();
+		hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection = generalizationWordItem->hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection();
+		isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
+
+		do	{
+			hasExclusiveSecondarySpecificationCompoundCollection = exclusiveSecondarySpecificationItem->hasCompoundSpecificationCollection();
+
+			if( ( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL )
+				{
+				exclusiveSpecificationItem = NULL;
+				foundSpecificationItem = NULL;
+
+				if( ( exclusiveSpecificationItem = exclusiveSecondarySpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
+					{
+					// Do for all exclusive specifications of this word (including adjectives)
+					do	{
+						if( ( exclusiveSpecificationWordItem = exclusiveSpecificationItem->specificationWordItem() ) != NULL )
+							foundSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, exclusiveSpecificationWordItem );
+						}
+					while( foundSpecificationItem == NULL &&
+					( exclusiveSpecificationItem = exclusiveSpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
+					}
+
+				if( foundSpecificationItem == NULL )
+					{
+					if( ( exclusiveSecondarySpecificationCollectionNr = exclusiveSecondarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR )
+						{
+						isCompoundGeneralizationWordSpanishAmbiguous = ( ( compoundGeneralizationWordItem = exclusiveSecondarySpecificationWordItem->compoundGeneralizationWordItem( exclusiveSecondarySpecificationCollectionNr ) ) != NULL &&
+																		compoundGeneralizationWordItem->isNounWordSpanishAmbiguous() );
+
+						existingQuestionSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, true, exclusiveSecondarySpecificationWordItem );
+
+						// Useful user specification without relation
+						if( ( ( hasPrimarySpecificationCompoundCollection &&
+						isPrimaryUserSpecification &&
+						!exclusiveSecondarySpecificationItem->isSpecificationAdjective() &&
+
+						( !isUserSpecificationWordSpanishAmbiguous ||
+
+						// Typical for Spanish
+						( isPrimarySameAsUserSpecification &&
+						!hasPrimarySpecificationRelationContext &&
+						!exclusiveSecondarySpecificationWordItem->isFeminineWord() ) ) ) ||
+
+						// No useful user specification without relation
+						( !hasUserSpecificationCompoundCollection &&
+						!hasPrimarySpecificationRelationContext &&
+						!isOlderPrimarySpecification &&
+
+						( ( hasGeneralizationWordFeminineOrMasculineProperNounEnding &&
+						hasPrimarySpecificationCompoundCollection ) ||
+
+						( isPrimaryUserSpecification &&
+						exclusiveSecondarySpecificationItem->isUserSpecification() ) ) ) ||
+
+						( hasExclusiveSecondarySpecificationCompoundCollection &&
+						hasUserSpecificationRelationContext &&
+
+						( ( hasPrimarySpecificationCompoundCollection &&
+
+						( hasGeneralizationWordFeminineOrMasculineProperNounEnding ||
+						!exclusiveSecondarySpecificationWordItem->isFeminineWord() ) ) ||
+
+						( !isUserGeneralizationWord &&
+
+						( !isPossessiveUserSpecification ||
+
+						( !isUserSpecificationWordSpanishAmbiguous &&
+						primarySpecificationWordItem->isUserSpecificationWord ) ) ) ) ) ||
+
+						// Added additional justification
+						( !hasExclusiveSecondarySpecificationCompoundCollection &&
+						!hasPrimarySpecificationRelationContext &&
+						hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection &&
+
+						( ( existingQuestionSpecificationItem == NULL &&
+						!hasUserSpecificationCompoundCollection ) ||
+
+						( existingQuestionSpecificationItem != NULL &&
+						!existingQuestionSpecificationItem->hasSecondarySpecificationCompoundCollectionJustification() ) ) ) ||
+
+						( ( hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection ||
+
+						( isUserGeneralizationWord &&
+						!hasGeneralizationWordFeminineOrMasculineProperNounEnding &&
+						!isSpanishCurrentLanguage ) ) &&
+
+						// Corrected assumption by opposite suggestive question
+						( hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion ||
+						// Avoid adding non-compound justification to compound question
+						primarySpecificationCollectionNr > NO_COLLECTION_NR ) ) ) &&
+
+						( ( isCompoundGeneralizationWordSpanishAmbiguous &&
+						!isUserSpecificationWordSpanishAmbiguous ) ||
+
+						// Typical for Spanish
+						// Question part doesn't exist yet
+						!generalizationWordItem->hasJustification( primarySpecificationItem, NULL, exclusiveSecondarySpecificationItem ) ) )
+							{
+							// Adjusted question
+							if( ( hasPrimarySpecificationCompoundCollection &&
+							hasPrimarySpecificationRelationContext &&
+							isCompoundGeneralizationWordSpanishAmbiguous &&
+							!isUserSpecificationWordSpanishAmbiguous ) ||
+
+							( isUserSpecificationWordSpanishAmbiguous &&
+							compoundGeneralizationWordItem != primarySpecificationWordItem &&
+
+							( !hasPrimarySpecificationRelationContext ||
+							// Same specification but without relation context doesn't exist
+							// Spanish test file: "Esta información es más específico"
+							generalizationWordItem->firstAssignmentOrSpecificationItem( false, false, NO_CONTEXT_NR, primarySpecificationWordItem ) == NULL ) ) ||
+
+							// Has possibly a gap in the knowledge
+							( ( !isOlderPrimarySpecification ||
+							isUserQuestion ) &&
+
+							( !hasUserSpecificationCompoundCollection ||
+
+							// Negative specification doesn't exist yet
+							( generalizationWordItem->firstSpecificationItem( true, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
+							generalizationWordItem->hasPossiblyGapInKnowledge( exclusiveSecondarySpecificationCollectionNr, primarySpecificationCollectionNr, primarySpecificationItem ) ) ) ) )
+								{
+								questionSecondarySpecificationItem = ( isPrimarySpecificationWordSpanishAmbiguous &&
+																	isUserGeneralizationWord &&
+																	adjustedSpanishQuestionSecondarySpecificationItem_ != NULL ? adjustedSpanishQuestionSecondarySpecificationItem_ :
+																																exclusiveSecondarySpecificationItem );
+
+								// Avoid asking invalid questions:
+								// 1) Check for existing knowledge with same specification collection
+								if( generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, exclusiveSecondarySpecificationWordItem ) == NULL &&
+								// 2) Check for existing negative specification
+								generalizationWordItem->firstSpecificationItem( true, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
+
+								( existingQuestionSpecificationItem == NULL ||
+
+								( ( !isSpanishCurrentLanguage ||
+								// Typical for Spanish
+								// Avoid almost duplicate justifications
+								!hasPrimarySpecificationRelationContext ||
+								!isPossessiveUserSpecification ) &&
+
+								// Justification doesn't exist yet in specification
+								!existingQuestionSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( primarySpecificationItem, questionSecondarySpecificationItem ) ) ) )
+									{
+									// Ask a specification substitution question
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, questionSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ) ).result != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
+
+									// Typical for Spanish
+									if( isPrimarySpecificationWordSpanishAmbiguous )
+										{
+										if( adjustedSpanishQuestionSecondarySpecificationItem_ == NULL &&
+										createAndAssignResult.createdSpecificationItem == NULL )
+											// Adjusted question
+											adjustedSpanishQuestionSecondarySpecificationItem_ = exclusiveSecondarySpecificationItem;
+										}
+									else
+										{
+										if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
+										createdOrFoundSpecificationItem->isCorrectedSpecification() )
+											{
+											if( firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ == NULL )
+												firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = primarySpecificationWordItem;
+											else
+												{
+												if( firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ != primarySpecificationWordItem )
+													secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = primarySpecificationWordItem;
+												}
+											}
+										}
+									}
+								else
+									hasSkippedAskingQuestion = true;
+								}
+							else
+								{
+								if( isUserGeneralizationWord &&
+								hasExclusiveSecondarySpecificationCompoundCollection &&
+								hasUserSpecificationCompoundCollection &&
+								primarySpecificationWordItem->hasCollectionNr( userSpecificationCollectionNr ) &&
+								exclusiveSecondarySpecificationWordItem->nonCompoundCollectionNr() > NO_COLLECTION_NR &&
+								// Question exists
+								generalizationWordItem->firstSpecificationItem( false, false, true, exclusiveSecondarySpecificationWordItem ) != NULL &&
+								// Find question to be adjusted by compound collection
+								findQuestionToBeAdjustedByCompoundCollection( generalizationWordItem, primarySpecificationWordItem, userSpecificationItem, exclusiveSecondarySpecificationItem ) != RESULT_OK )
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a question to be adjusted by a compound collection about word \"", generalizationWordItem->anyWordTypeString(), "\" by compound collection" );
+								}
+							}
+						}
+					}
+				else
+					{
+					// Test file: "Skip invalid questions (1)"
+					// Specification doesn't exist yet
+					if( generalizationWordItem->firstSpecificationItem( false, false, false, exclusiveSecondarySpecificationWordItem ) == NULL &&
+					// Make exclusive specification substitution assumption
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, exclusiveSecondarySpecificationItem, exclusiveSpecificationItem, foundSpecificationItem, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an exclusive specification substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
+					}
+				}
+			}
+		while( !hasSkippedAskingQuestion &&
+		( exclusiveSecondarySpecificationItem = exclusiveSecondarySpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
+
+		return RESULT_OK;
+		}
+
+	signed char askSpanishQuestionAboutGeneralizationWord( bool isPossessiveUserSpecification, unsigned int userSpecificationCollectionNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, WordItem *generalizationWordItem )
+		{
+		bool hasMultipleUserGeneralizationWords = ( globalVariables_->nUserGeneralizationWords > 1 );
+		bool hasPrimarySpecificationCompoundCollection;
+		bool hasPrimarySpecificationRelationContext;
+		bool isOlderPrimarySpecification;
+		bool isUserGeneralizationWord;
+		unsigned short generalizationWordTypeNr;
+		unsigned int exclusiveSecondarySpecificationCollectionNr;
+		SpecificationItem *exclusiveSecondarySpecificationItem;
+		SpecificationItem *existingQuestionSpecificationItem;
+		WordItem *additionalDefinitionSpecificationWordItem;
+		WordItem *exclusiveSecondarySpecificationWordItem;
+		WordItem *compoundGeneralizationWordItem = NULL;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askSpanishQuestionAboutGeneralizationWord";
+
+		if( primarySpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item is undefined" );
+
+		if( additionalDefinitionSpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given additional definition specification item is undefined" );
+
+		if( generalizationWordItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
+
+		// Question about generalization word
+		if( ( additionalDefinitionSpecificationWordItem = additionalDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
+		( exclusiveSecondarySpecificationItem = additionalDefinitionSpecificationWordItem->firstExclusiveSpecificationItem( true ) ) != NULL )
+			{
+			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
+
+			hasPrimarySpecificationCompoundCollection = primarySpecificationItem->hasCompoundSpecificationCollection();
+			hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
+			isOlderPrimarySpecification = primarySpecificationItem->isOlderItem();
+			generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
+
+			do	{
+				// Current question part doesn't exist yet
+				if( !generalizationWordItem->hasJustification( primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem ) &&
+				( exclusiveSecondarySpecificationCollectionNr = exclusiveSecondarySpecificationItem->specificationCollectionNr() ) > NO_COLLECTION_NR &&
+				( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL &&
+
+				// No answered questions
+				( ( ( existingQuestionSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, false, WORD_PARAMETER_SINGULAR_VERB_IS ) ) == NULL &&
+				isUserGeneralizationWord &&
+				hasPrimarySpecificationRelationContext &&
+				// User specification doesn't exist yet
+				generalizationWordItem->firstUserSpecificationItem( false, false, userSpecificationCollectionNr, NO_CONTEXT_NR, NULL ) == NULL ) ||
+
+				// Typical for Spanish
+				( //isSpanishCurrentLanguage &&
+
+				( ( isUserGeneralizationWord ||
+
+				( isOlderPrimarySpecification &&
+				!isPossessiveUserSpecification ) ||
+
+				( hasMultipleUserGeneralizationWords ||
+
+				( hasPrimarySpecificationCompoundCollection &&
+				!isPossessiveUserSpecification ) ) ) &&
+
+				( exclusiveSecondarySpecificationItem->isSelfGeneratedSpecification() ||
+
+				( ( compoundGeneralizationWordItem = exclusiveSecondarySpecificationWordItem->compoundGeneralizationWordItem( exclusiveSecondarySpecificationCollectionNr ) ) != NULL &&
+				!compoundGeneralizationWordItem->isNounWordSpanishAmbiguous() ) ) &&
+
+				// Positive specification doesn't exist yet
+				generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL &&
+				// Negative specification doesn't exist yet
+				generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, true, false, NO_QUESTION_PARAMETER, exclusiveSecondarySpecificationCollectionNr, NULL ) == NULL &&
+
+				( existingQuestionSpecificationItem == NULL ||
+				// Justification has at least the same assumption level
+				existingQuestionSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem, NULL ) ) ) ) ) &&
+
+				// Ask a specification substitution question
+				adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, exclusiveSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
+				}
+			while( ( exclusiveSecondarySpecificationItem = exclusiveSecondarySpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
+			}
+
+		return RESULT_OK;
+		}
+
+	signed char askSpanishQuestionAboutRelationWord( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
 		SpecificationItem *exclusiveSecondarySpecificationItem;
 		WordItem *exclusiveSecondarySpecificationWordItem;
 		WordItem *userSpecificationWordItem;
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askSpanishQuestionAboutRelationWordWithPossessivePrimarySpecification";
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askSpanishQuestionAboutRelationWord";
 
 		if( userSpecificationItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
@@ -725,7 +882,7 @@ class AdminReasoning
 				if( !generalizationWordItem->hasJustification( userSpecificationItem, NULL, exclusiveSecondarySpecificationItem ) &&
 				( exclusiveSecondarySpecificationWordItem = exclusiveSecondarySpecificationItem->specificationWordItem() ) != NULL &&
 				// Ask a specification substitution question
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, exclusiveSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
+				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, exclusiveSecondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, exclusiveSecondarySpecificationItem, NULL, generalizationWordItem, exclusiveSecondarySpecificationWordItem, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", exclusiveSecondarySpecificationWordItem->anyWordTypeString(), "\"" );
 				}
 			while( ( exclusiveSecondarySpecificationItem = exclusiveSecondarySpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
@@ -734,47 +891,91 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char correctSuggestiveAssumptionsByKnowledge( SpecificationItem *createdSpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *createdSpecificationWordItem )
+	signed char correctSuggestiveAssumptionsByKnowledge( SpecificationItem *correctedSpecificationItem, WordItem *generalizationWordItem )
 		{
+		unsigned int correctedSpecificationCollectionNr;
+		JustificationItem *attachedJustificationItem;
+		JustificationItem *previousJustificationItem;
+		SpecificationItem *currentSpecificationItem;
 		SpecificationItem *obsoleteSpecificationItem;
-		WordItem *userSpecificationWordItem;
+		WordItem *correctedSpecificationWordItem;
+		WordItem *oppositeSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "correctSuggestiveAssumptionsByKnowledge";
 
-		if( createdSpecificationItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given created specification item is undefined" );
-
-		if( userSpecificationItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
+		if( correctedSpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given corrected specification item is undefined" );
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( createdSpecificationWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given created specification word item is undefined" );
+		if( ( correctedSpecificationWordItem = correctedSpecificationItem->specificationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The corrected specification item has no specification word" );
 
-		if( ( userSpecificationWordItem = userSpecificationItem->specificationWordItem() ) == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item has no specification word" );
+		correctedSpecificationCollectionNr = correctedSpecificationItem->specificationCollectionNr();
 
-		if( ( obsoleteSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, createdSpecificationWordItem ) ) != NULL )
+		// Negative specification
+		if( ( obsoleteSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, correctedSpecificationWordItem ) ) != NULL )
 			{
-			// Write invalid positive assumption by knowledge
-			if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, false, false, obsoleteSpecificationItem ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid positive assumption by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+			// Write invalid negative suggestive assumption by knowledge
+			if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, true, false, obsoleteSpecificationItem ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid negative suggestive assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
-			// Replace invalid positive assumption by knowledge
-			if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, createdSpecificationItem ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid positive assumption by knowledge in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+			// Replace invalid negative suggestive assumption by knowledge
+			if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, correctedSpecificationItem ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid negative suggestive assumption in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 			}
 
-		if( ( obsoleteSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, userSpecificationWordItem ) ) != NULL )
+		if( ( oppositeSpecificationWordItem = correctedSpecificationWordItem->collectionWordItem( correctedSpecificationCollectionNr ) ) != NULL &&
+		( obsoleteSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, oppositeSpecificationWordItem ) ) != NULL )
 			{
-			// Write invalid user assumption by knowledge
-			if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, true, false, obsoleteSpecificationItem ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid user assumption by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+			// Write invalid opposite suggestive assumption by knowledge
+			if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, false, false, obsoleteSpecificationItem ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid opposite assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
-			// Replace invalid user assumption by knowledge
-			if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, userSpecificationItem ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid user assumption by knowledge in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+			// Replace invalid opposite suggestive assumption by knowledge
+			if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, correctedSpecificationItem ) != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid opposite assumption in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+			}
+
+		if( correctedSpecificationItem->hasNonCompoundSpecificationCollection() &&
+		( currentSpecificationItem = generalizationWordItem->firstNonQuestionSpecificationItem() ) != NULL )
+			{
+			// Do for all non-question specifications
+			do	{
+				if( currentSpecificationItem->isOlderItem() &&
+				( previousJustificationItem = currentSpecificationItem->firstJustificationItem() ) != NULL &&
+				currentSpecificationItem->hasCurrentCreationSentenceNr() )
+					{
+					while( ( attachedJustificationItem = previousJustificationItem->attachedJustificationItem() ) != NULL &&
+					// Remove justification with replaced primary specification
+					!attachedJustificationItem->isReplacedPrimarySpecification() &&
+					// Remove corrupted justification
+					attachedJustificationItem->primarySpecificationWordItem() == attachedJustificationItem->secondaryGeneralizationWordItem() )
+						previousJustificationItem = attachedJustificationItem;
+
+					// Found justification with replaced primary specification
+					if( attachedJustificationItem != NULL )
+						{
+						if( previousJustificationItem->isOlderPrimarySpecification() )
+							{
+							// Write invalid negative suggestive assumption by knowledge
+							if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, true, false, currentSpecificationItem ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid negative suggestive assumption with older primary specification about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+
+							// Replace invalid negative suggestive assumption by knowledge
+							if( generalizationWordItem->replaceOrDeleteSpecification( currentSpecificationItem, correctedSpecificationItem ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid negative suggestive assumption with older primary specification in generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+							}
+						else
+							{
+							// Remove justification with replaced primary specification
+							if( previousJustificationItem->changeAttachedJustification( attachedJustificationItem->isOlderItem() ? NULL : attachedJustificationItem->attachedJustificationItem() ) != RESULT_OK )
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove a justification with replaced primary specification" );
+							}
+						}
+					}
+				}
+			while( ( currentSpecificationItem = currentSpecificationItem->nextSelectedSpecificationItem() ) != NULL );
 			}
 
 		return RESULT_OK;
@@ -793,7 +994,7 @@ class AdminReasoning
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		// Replace all invalid assumptions by opposite suggestive question
+		// Replace all invalid suggestive assumptions by opposite suggestive question
 		if( ( obsoleteSpecificationItem = generalizationWordItem->firstOlderNonPossessiveNonQuestionSpecificationItem( false ) ) != NULL )
 			{
 			do	{
@@ -801,13 +1002,13 @@ class AdminReasoning
 				( obsoleteSpecificationWordItem = obsoleteSpecificationItem->specificationWordItem() ) != NULL &&
 				obsoleteSpecificationWordItem->isExclusiveCollection( obsoleteSpecificationCollectionNr ) )
 					{
-					// Write invalid assumption by opposite suggestive question (obsolete)
+					// Write invalid suggestive assumption by opposite suggestive question (obsolete)
 					if( generalizationWordItem->writeUpdatedSpecification( false, false, true, false, false, true, false, obsoleteSpecificationItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid suggestive assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
-					// Replace invalid assumption by opposite suggestive question (obsolete)
+					// Replace invalid suggestive assumption by opposite suggestive question (obsolete)
 					if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, userSpecificationItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an invalid suggestive assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 					obsoleteSpecificationItem = generalizationWordItem->firstOlderNonPossessiveNonQuestionSpecificationItem( false );
 					}
@@ -855,14 +1056,14 @@ class AdminReasoning
 			return adminItem_->startError( functionNameString, moduleNameString_, "The old suggestive question assumption specification item has no specification word item" );
 
 		// Correct old question
-		if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, oldSuggestiveQuestionAssumptionAssignmentItem, NULL, NULL, NULL, generalizationWordItem, oldSuggestiveSpecificationWordItem, NULL ) ).result != RESULT_OK )
+		if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, oldSuggestiveQuestionAssumptionAssignmentItem, NULL, NULL, NULL, generalizationWordItem, oldSuggestiveSpecificationWordItem, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about a corrected assumption by opposite suggestive question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", oldSuggestiveSpecificationWordItem->anyWordTypeString(), "\"" );
 
 		if( ( createdOldSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't create the old suggestive question assumption" );
 
 		// Correct new question
-		if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, NULL ) ).result != RESULT_OK )
+		if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, NULL ) ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about a corrected assumption by opposite suggestive question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 		if( ( createdNewSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL )
@@ -876,12 +1077,12 @@ class AdminReasoning
 			{
 			if( ( definitionSpecificationItem = oldSuggestiveSpecificationWordItem->firstSpecificationItem( isPossessive, false, false, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ ) ) != NULL &&
 			// Add first old created specification justification to corrected assumption (by opposite suggestive question)
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOldSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOldSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the first old created specification justification to corrected assumption (by opposite suggestive question) about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_->anyWordTypeString(), "\"" );
 
 			if( ( definitionSpecificationItem = specificationWordItem->firstSpecificationItem( isPossessive, false, false, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ ) ) != NULL &&
 			// Add first new created specification justification to corrected assumption (by opposite suggestive question)
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdNewSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdNewSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the first new created specification justification to corrected assumption (by opposite suggestive question) about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_->anyWordTypeString(), "\"" );
 			}
 
@@ -889,12 +1090,12 @@ class AdminReasoning
 			{
 			if( ( definitionSpecificationItem = oldSuggestiveSpecificationWordItem->firstSpecificationItem( false, false, false, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ ) ) != NULL &&
 			// Add second old created specification justification to corrected assumption (by opposite suggestive question)
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOldSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOldSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the second old created specification justification to corrected assumption (by opposite suggestive question) about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_->anyWordTypeString(), "\"" );
 
 			if( ( definitionSpecificationItem = specificationWordItem->firstSpecificationItem( false, false, false, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ ) ) != NULL &&
 			// Add second new created specification justification to corrected assumption (by opposite suggestive question)
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdNewSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdNewSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the second new created specification justification to corrected assumption (by opposite suggestive question) about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_->anyWordTypeString(), "\"" );
 			}
 
@@ -943,7 +1144,7 @@ class AdminReasoning
 				existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, primarySpecificationItem, NULL, secondarySpecificationItem, NULL ) ) ) &&
 
 				// Draw negative adjective conclusion
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative adjective conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 				}
 			while( ( currentGeneralizationItem = currentGeneralizationItem->nextNounSpecificationGeneralizationItem() ) != NULL );
@@ -1029,30 +1230,37 @@ class AdminReasoning
 			// Spanish test file: "Reto científico"
 			if( generalizationWordItem->firstSpecificationItem( false, false, true, additionalDefinitionSpecificationWordItem ) == NULL &&
 			// Ask a specification substitution question
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, additionalDefinitionSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, negativeConclusionPrimarySpecificationItem, NULL, negativeConclusionAdditionalDefinitionSpecificationItem, NULL, generalizationWordItem, additionalDefinitionSpecificationWordItem, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, additionalDefinitionSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, negativeConclusionPrimarySpecificationItem, NULL, negativeConclusionAdditionalDefinitionSpecificationItem, NULL, generalizationWordItem, additionalDefinitionSpecificationWordItem, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", additionalDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 			}
 		else
 			{
 			// Draw negative conclusion
-			if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, additionalDefinitionSpecificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, negativeConclusionPrimarySpecificationItem, negativeConclusionAdditionalDefinitionSpecificationItem, negativeConclusionSecondarySpecificationItem, NULL, generalizationWordItem, additionalDefinitionSpecificationWordItem, NULL ).result != RESULT_OK )
+			if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, additionalDefinitionSpecificationCollectionNr, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, negativeConclusionPrimarySpecificationItem, negativeConclusionAdditionalDefinitionSpecificationItem, negativeConclusionSecondarySpecificationItem, NULL, generalizationWordItem, additionalDefinitionSpecificationWordItem, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", additionalDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 			}
 
 		return RESULT_OK;
 		}
 
-	signed char drawNegativeDefinitionConclusions( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short negativeSpecificationWordTypeNr, WordItem *generalizationWordItem, WordItem *negativeSpecificationWordItem, WordItem *specificationWordItem )
+	signed char drawNegativeDefinitionConclusions( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short negativeSpecificationWordTypeNr, SpecificationItem *negativeDefinitionSpecificationItem, WordItem *generalizationWordItem, WordItem *negativeSpecificationWordItem, WordItem *specificationWordItem )
 		{
-		SpecificationItem *definitionSpecificationItem = NULL;
+		bool isProperNounArchivedAssignment;
+		GeneralizationItem *currentGeneralizationItem;
+		SpecificationItem *definitionSpecificationItem;
 		SpecificationItem *existingSpecificationItem;
 		SpecificationItem *positiveAdjectiveDefinitionSpecificationItem;
 		SpecificationItem *positiveSpecificationItem;
+		SpecificationItem *negativeSpecificationItem;
 		SpecificationItem *negativeAdjectiveDefinitionSpecificationItem;
-		SpecificationItem *secondAdjectiveDefinitionSpecificationItem;
-		WordItem *oppositeSpecificationWordItem;
-		CreateAndAssignResultType createAndAssignResult;
+		SpecificationItem *secondaryAdjectiveDefinitionSpecificationItem;
+		WordItem *currentGeneralizationWordItem;
+		WordItem *currentSpecificationWordItem;
+		WordItem *reversedNegativeSpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeDefinitionConclusions";
+
+		if( negativeDefinitionSpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given negative definition specification item is undefined" );
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
@@ -1063,21 +1271,62 @@ class AdminReasoning
 		if( specificationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
 
-		if( ( positiveAdjectiveDefinitionSpecificationItem = negativeSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL )
+		if( negativeSpecificationWordTypeNr == WORD_TYPE_ADJECTIVE )
 			{
-			// Try to find negative first
-			if( ( secondAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstAdjectiveSpecificationItem( true ) ) != NULL ||
-			( secondAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL )
+			// Negative specification is adjective
+			if( ( currentSpecificationWordItem = globalVariables_->firstSpecificationWordItem ) != NULL )
 				{
-				// Draw simple negative adjective conclusion
-				if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, secondAdjectiveDefinitionSpecificationItem, NULL, negativeSpecificationWordItem, generalizationWordItem, NULL ) ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a simple negative adjective conclusion about generalization word \"", negativeSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+				// Do for all specification words
+				do	{
+					if( currentSpecificationWordItem != generalizationWordItem &&
+					currentSpecificationWordItem != specificationWordItem &&
+					currentSpecificationWordItem->isSingularNounWord() &&
+					( positiveAdjectiveDefinitionSpecificationItem = currentSpecificationWordItem->firstNonExclusiveSpecificationItem( false, false, false, negativeSpecificationWordItem ) ) != NULL &&
+					( negativeAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstNonExclusiveSpecificationItem( true, false, false, negativeSpecificationWordItem ) ) != NULL )
+						{
+						// Negative specification doesn't exist yet
+						if( ( ( existingSpecificationItem = currentSpecificationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL ||
 
-				definitionSpecificationItem = createAndAssignResult.createdSpecificationItem;
+						// Justification doesn't exist yet in specification
+						( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveAdjectiveDefinitionSpecificationItem, negativeAdjectiveDefinitionSpecificationItem ) &&
+						// Justification has at least the same assumption level
+						existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL ) ) ) &&
+
+						// Draw reverse negative adjective conclusion (on generalization word)
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL, currentSpecificationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reverse negative adjective conclusion (on generalization word) about generalization word \"", currentSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+
+						// Refresh negative adjective definition specification
+						if( ( negativeAdjectiveDefinitionSpecificationItem = specificationWordItem->firstNonExclusiveSpecificationItem( true, false, false, negativeSpecificationWordItem ) ) != NULL &&
+
+						// Negative specification doesn't exist yet
+						( ( existingSpecificationItem = currentSpecificationWordItem->firstSpecificationItem( true, false, false, specificationWordItem ) ) == NULL ||
+
+						// Justification doesn't exist yet in specification
+						( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveAdjectiveDefinitionSpecificationItem, negativeAdjectiveDefinitionSpecificationItem ) &&
+						// Justification has at least the same assumption level
+						existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL ) ) ) &&
+
+						// Draw reverse negative adjective conclusion (on specification word)
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL, currentSpecificationWordItem, specificationWordItem, NULL ).result != RESULT_OK )
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reverse negative adjective conclusion (on specification word) about generalization word \"", currentSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
+						}
+					}
+				while( ( currentSpecificationWordItem = currentSpecificationWordItem->nextSpecificationWordItem ) != NULL );
 				}
+			}
+		else	// Negative specification is non-adjective
+			{
+			// Test file: "Scientific challenge"
+			if( !negativeDefinitionSpecificationItem->hasSpecificationCollection() &&
+			( positiveAdjectiveDefinitionSpecificationItem = negativeSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
+			( secondaryAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
+			// Draw simple negative adjective conclusion
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, secondaryAdjectiveDefinitionSpecificationItem, NULL, negativeSpecificationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a simple negative adjective conclusion about generalization word \"", negativeSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
-			if( ( positiveAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL &&
-			( negativeAdjectiveDefinitionSpecificationItem = negativeSpecificationWordItem->firstAdjectiveSpecificationItem( true ) ) != NULL &&
+			if( ( positiveAdjectiveDefinitionSpecificationItem = generalizationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
+			( negativeAdjectiveDefinitionSpecificationItem = negativeSpecificationWordItem->firstAdjectiveSpecificationItem( true, false ) ) != NULL &&
 
 			// Specification doesn't exist yet
 			( ( existingSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, negativeSpecificationWordItem ) ) == NULL ||
@@ -1088,31 +1337,84 @@ class AdminReasoning
 			existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL ) ) ) &&
 
 			// Draw another simple negative adjective conclusion
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveAdjectiveDefinitionSpecificationItem, NULL, negativeAdjectiveDefinitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw another simple negative adjective conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", negativeSpecificationWordItem->anyWordTypeString(), "\"" );
+			}
 
-			if( definitionSpecificationItem != NULL &&
-			( oppositeSpecificationWordItem = generalizationWordItem->collectionWordItem( definitionSpecificationItem->specificationCollectionNr() ) ) != NULL &&
-			( positiveSpecificationItem = oppositeSpecificationWordItem->firstSpecificationItem( false, false, false, negativeSpecificationWordItem ) ) != NULL )
-				{
-				// Specification doesn't exist yet
-				if( ( ( existingSpecificationItem = oppositeSpecificationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL ||
+		if( ( definitionSpecificationItem = negativeSpecificationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL )
+			definitionSpecificationItem = negativeDefinitionSpecificationItem;
+
+		// Get first generalization specification proper noun word
+		if( ( currentGeneralizationItem = generalizationWordItem->firstProperNounSpecificationGeneralizationItem() ) != NULL )
+			{
+			// Do for all generalization specification proper noun words
+			do	{
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
+
+				if( ( positiveSpecificationItem = currentGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, negativeSpecificationWordItem ) ) != NULL &&
+
+				( ( existingSpecificationItem = currentGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, true, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, generalizationWordItem ) ) == NULL ||
 
 				// Justification doesn't exist yet in specification
 				( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, definitionSpecificationItem ) &&
 				// Justification has at least the same assumption level
-				existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) &&
+				existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) )
+					{
+					isProperNounArchivedAssignment = positiveSpecificationItem->isArchivedAssignment();
 
-				// Draw opposite simple negative conclusion
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL, oppositeSpecificationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw an opposite simple negative conclusion about generalization word \"", oppositeSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-
-				// Test file: "James was the father of Peter (before family definition)"
-				if( existingSpecificationItem != NULL &&
-				// Recalculate assumption level of existing specification
-				existingSpecificationItem->recalculateAssumptionLevel( false ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to recalculate the assumption level of the existing specification" );
+					// Draw negative conclusion
+					if( adminItem_->addSelfGeneratedSpecification( false, isProperNounArchivedAssignment, isProperNounArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, generalizationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative conclusion about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+					}
 				}
+			while( ( currentGeneralizationItem = currentGeneralizationItem->nextProperNounSpecificationGeneralizationItem() ) != NULL );
+			}
+
+		// Get first generalization specification noun word
+		if( ( currentGeneralizationItem = generalizationWordItem->firstNounSpecificationGeneralizationItem() ) != NULL )
+			{
+			// Do for all generalization specification noun words
+			do	{
+				if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
+					return adminItem_->startSystemError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
+
+				if( currentGeneralizationWordItem != generalizationWordItem &&
+				currentGeneralizationWordItem != negativeSpecificationWordItem )
+					{
+					if( ( positiveSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( false, false, false, negativeSpecificationWordItem ) ) != NULL &&
+					!positiveSpecificationItem->isExclusiveSpecification() &&
+
+					// Specification doesn't exist yet
+					( ( existingSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL ||
+
+					// Justification doesn't exist yet in specification
+					( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, definitionSpecificationItem ) &&
+					// Justification has at least the same assumption level
+					existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) &&
+
+					// Draw negative adjective conclusion
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative adjective conclusion about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+
+					if( ( reversedNegativeSpecificationWordItem = negativeSpecificationWordItem->collectionWordItem( definitionSpecificationItem->specificationCollectionNr() ) ) != NULL &&
+					( negativeSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( true, false, false, reversedNegativeSpecificationWordItem ) ) != NULL &&
+					( positiveSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, reversedNegativeSpecificationWordItem ) ) != NULL &&
+
+					// Specification doesn't exist yet
+					( ( existingSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, currentGeneralizationWordItem ) ) == NULL ||
+
+					// Justification doesn't exist yet in specification
+					( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, negativeSpecificationItem ) &&
+					// Justification has at least the same assumption level
+					existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, negativeSpecificationItem, NULL ) ) ) &&
+
+					// Draw negative adjective conclusion
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, negativeSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative adjective conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
+					}
+				}
+			while( ( currentGeneralizationItem = currentGeneralizationItem->nextNounSpecificationGeneralizationItem() ) != NULL );
 			}
 
 		return RESULT_OK;
@@ -1121,6 +1423,7 @@ class AdminReasoning
 	signed char drawNegativeExclusiveConclusions( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, SpecificationItem *negativePrimarySpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		SpecificationItem *exclusiveSpecificationItem;
+		SpecificationItem *existingSpecificationItem;
 		WordItem *secondarySpecificationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawNegativeExclusiveConclusions";
 
@@ -1137,9 +1440,19 @@ class AdminReasoning
 			{
 			// Do for all exclusive specifications of this word (including adjectives)
 			do	{
+				// Test file: "Knowledge of organisms (1)"
 				if( ( secondarySpecificationWordItem = exclusiveSpecificationItem->specificationWordItem() ) != NULL &&
+
+				// Specification doesn't exist yet
+				( ( existingSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, secondarySpecificationWordItem ) ) == NULL ||
+
+				// Justification doesn't exist yet in specification
+				( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( negativePrimarySpecificationItem, exclusiveSpecificationItem ) &&
+				// Justification has at least the same assumption level
+				existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, negativePrimarySpecificationItem, NULL, exclusiveSpecificationItem, NULL ) ) ) &&
+
 				// Draw exclusive negative compound conclusion
-				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, exclusiveSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, negativePrimarySpecificationItem, NULL, exclusiveSpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
+				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, exclusiveSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, negativePrimarySpecificationItem, NULL, exclusiveSpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw an exclusive negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondarySpecificationWordItem->anyWordTypeString(), "\"" );
 				}
 			while( ( exclusiveSpecificationItem = exclusiveSpecificationItem->nextExclusiveSpecificationItem( true ) ) != NULL );
@@ -1205,7 +1518,7 @@ class AdminReasoning
 						isArchivedAssignment = primarySpecificationItem->isArchivedAssignment();
 
 						// Draw an only option left conclusion
-						if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, primarySpecificationItem->generalizationWordTypeNr(), primarySpecificationItem->specificationWordTypeNr(), primarySpecificationItem->relationWordTypeNr(), NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, foundDefinitionSpecificationItem, negativeSpecificationItem, NULL, generalizationWordItem, foundDefinitionSpecificationWordItem, relationWordItem ).result != RESULT_OK )
+						if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, primarySpecificationItem->generalizationWordTypeNr(), primarySpecificationItem->specificationWordTypeNr(), primarySpecificationItem->relationWordTypeNr(), NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, foundDefinitionSpecificationItem, negativeSpecificationItem, NULL, generalizationWordItem, foundDefinitionSpecificationWordItem, relationWordItem ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw an only option left noun conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 						hasCreatedSpecification = true;
@@ -1354,7 +1667,7 @@ class AdminReasoning
 						// Draw a 'part of' generalization conclusion
 						// See Block 1 and Block 2 of the included challenge document,
 						// or https://www.mafait.org/block_1 and https://www.mafait.org/block_2
-						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationArchivedAssignment, isPrimarySpecificationArchivedAssignment, false, false, false, false, false, true, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, partOfDefinitionSpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ) ).result != RESULT_OK )
+						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationArchivedAssignment, isPrimarySpecificationArchivedAssignment, false, false, false, false, true, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, partOfDefinitionSpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a self-generated specification substitution 'part of' specification to word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 						createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem;
@@ -1380,7 +1693,7 @@ class AdminReasoning
 						// Draw a 'part of' generalization conclusion
 						// See Block 1 and Block 2 of the included challenge document,
 						// or https://www.mafait.org/block_1 and https://www.mafait.org/block_2
-						adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationArchivedAssignment, isPrimarySpecificationArchivedAssignment, false, false, false, false, false, true, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, partOfDefinitionSpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationArchivedAssignment, isPrimarySpecificationArchivedAssignment, false, false, false, false, true, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, partOfDefinitionSpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a self-generated specification substitution 'part of' specification to word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
@@ -1391,13 +1704,11 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawPossessiveReversibleConclusions( bool isActiveUserAssignment, SpecificationItem *givenSpecificationItem, WordItem *generalizationWordItem )
+	signed char drawPossessiveReversibleConclusions( bool isActiveUserAssignment, bool isSpanishCurrentLanguage, SpecificationItem *givenSpecificationItem, WordItem *generalizationWordItem )
 		{
 		bool hasGeneralizationWordCurrentlyConfirmedSpecification;
 		bool hasNonCompoundSpecificationCollection;
 		bool hasNonCompoundUserSpecificationCollection;
-		bool hasUserSpecificationAssumptionLevel;
-		bool hasUserSpecificationRelationContext;
 		bool isArchivedAssignment;
 		bool isAssignment;
 		bool isExclusiveGeneralizationAssignment;
@@ -1407,10 +1718,8 @@ class AdminReasoning
 		bool isOlderExistingSpecification;
 		bool isOlderSpecification;
 		bool isOlderUserSpecification;
-		bool isPossessiveUserSpecification;
 		bool isSelfGeneratedAssumption;
 		bool isSelfGeneratedSpecification;
-		bool isSpanishCurrentLanguage;
 		bool isSpanishSpecificationFemaleWord = false;
 		bool isSpecificationWordSpanishAmbiguous = false;
 		bool isUniqueUserRelation;
@@ -1424,6 +1733,8 @@ class AdminReasoning
 		unsigned int relationContextNr;
 		unsigned int spanishAmbiguousSpecificationCollectionNr = NO_COLLECTION_NR;
 		unsigned int specificationCollectionNr;
+		SpecificationItem *collectedSpecificationItem;
+		SpecificationItem *conclusionSpecificationItem;
 		JustificationItem *createdJustificationItem;
 		JustificationItem *foundJustificationItem;
 		JustificationItem *obsoleteJustificationItem;
@@ -1431,8 +1742,6 @@ class AdminReasoning
 		SpecificationItem *additionalUserSpecificationItem;
 		SpecificationItem *alternativeSpecificationItem;
 		SpecificationItem *assumptionSpecificationItem;
-		SpecificationItem *collectedSpecificationItem;
-		SpecificationItem *conclusionSpecificationItem;
 		SpecificationItem *createdOrFoundSpecificationItem;
 		SpecificationItem *createdSpecificationItem;
 		SpecificationItem *currentExistingSpecificationItem;
@@ -1445,6 +1754,7 @@ class AdminReasoning
 		SpecificationItem *partOfSpecificationItem;
 		SpecificationItem *possessiveDefinitionSpecificationItem = NULL;
 		SpecificationItem *primarySpecificationItem;
+		SpecificationItem *replacingSpecificationItem;
 		SpecificationItem *secondarySpecificationItem;
 		SpecificationItem *spanishMasculineSpecificationItem;
 		SpecificationItem *userSpecificationItem;
@@ -1479,12 +1789,7 @@ class AdminReasoning
 			hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem->hasCurrentlyConfirmedSpecification();
 			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
 
-			isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-
 			hasNonCompoundUserSpecificationCollection = userSpecificationItem->hasNonCompoundSpecificationCollection();
-			hasUserSpecificationAssumptionLevel = userSpecificationItem->hasAssumptionLevel();
-			hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
-			isPossessiveUserSpecification = userSpecificationItem->isPossessive();
 			isUserAssignmentSpecification = userSpecificationItem->isAssignment();
 
 			hasNonCompoundSpecificationCollection = givenSpecificationItem->hasNonCompoundSpecificationCollection();
@@ -1503,7 +1808,7 @@ class AdminReasoning
 													givenSpecificationItem->isExclusiveGeneralization() );
 
 			if( ( specificationWordItem = givenSpecificationItem->specificationWordItem() ) == NULL )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The secondary specification item has no specification word" );
+				return adminItem_->startError( functionNameString, moduleNameString_, "The given specification item has no specification word" );
 
 			// Compound generalization word
 			if( ( possessiveNounWordItem = specificationWordItem->compoundGeneralizationWordItem( specificationCollectionNr ) ) != NULL )
@@ -1545,7 +1850,7 @@ class AdminReasoning
 					// Specification doesn't exist yet
 					if( existingSpecificationItem == NULL &&
 					// Draw possessive reversible conclusion
-					adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ).result != RESULT_OK )
+					adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a possessive reversible conclusion with current context word \"", currentContextWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 					}
 				else
@@ -1623,7 +1928,7 @@ class AdminReasoning
 																													NO_COLLECTION_NR );
 
 								// Draw reversible conclusion
-								if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, false, true, isUniqueUserRelation, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, spanishAmbiguousSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+								if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, true, isUniqueUserRelation, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, spanishAmbiguousSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible conclusion about word \"", currentContextWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 								createdSpecificationItem = createAndAssignResult.createdSpecificationItem;
@@ -1652,7 +1957,7 @@ class AdminReasoning
 								givenSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, createdOrFoundSpecificationItem, NULL, NULL, NULL ) )
 									{
 									// Draw reversible conclusion
-									if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, currentContextWordItem ).result != RESULT_OK )
+									if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, currentContextWordItem ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible conclusion with generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 									if( isActiveUserAssignment &&
@@ -1850,7 +2155,7 @@ class AdminReasoning
 											if( possessiveDefinitionSpecificationItem != NULL &&
 											oppositePossessiveDefinitionSpecificationWordItem != NULL &&
 											// Make an opposite possessive specification assumption
-											adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, possessiveDefinitionSpecificationItem, NULL, createdSpecificationItem, NULL, currentContextWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+											adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, possessiveDefinitionSpecificationItem, NULL, createdSpecificationItem, NULL, currentContextWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption about generalization word \"", currentContextWordItem->anyWordTypeString(), "\" and opposite possessive specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 											}
 										}
@@ -1868,9 +2173,9 @@ class AdminReasoning
 										if( ( findSpecificationResult = findPossessiveSpecifications( possessiveNounWordItem, specificationWordItem ) ).result != RESULT_OK )
 											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find possessive specifications in possessive noun word \"", possessiveNounWordItem->anyWordTypeString(), "\"" );
 
+										// Test files: "Complex (14)" and "Paul - Anna - Joe - Laura - Joe - John - Paul"
 										if( ( oppositePossessiveDefinitionSpecificationItem = findSpecificationResult.foundOppositePossessiveDefinitionSpecificationItem ) != NULL &&
 										( oppositePossessiveDefinitionSpecificationWordItem = oppositePossessiveDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
-										oppositePossessiveDefinitionSpecificationWordItem != specificationWordItem &&
 										( secondarySpecificationItem = currentContextWordItem->firstSpecificationItem( false, false, false, oppositePossessiveDefinitionSpecificationWordItem ) ) != NULL )
 											{
 											// Recalculate assumption level of found specification
@@ -1935,81 +2240,53 @@ class AdminReasoning
 					alternativeSpecificationItem != NULL &&
 					existingSpecificationItem == userSpecificationItem &&
 					// Make an opposite possessive specification assumption
-					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, false, true, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, relationWordTypeNr, ( isSelfGeneratedAssumption ? alternativeSpecificationItem : givenSpecificationItem ), NULL, userSpecificationItem, currentContextWordItem, generalizationWordItem ) != RESULT_OK )
+					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, false, true, false, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, relationWordTypeNr, ( isSelfGeneratedAssumption ? alternativeSpecificationItem : givenSpecificationItem ), NULL, userSpecificationItem, currentContextWordItem, generalizationWordItem ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption during the drawing of a reversible conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
-					// Alternative specification is same as current secondary specification
-					if( givenSpecificationItem == alternativeSpecificationItem )
+					if( existingSpecificationItem != NULL &&
+
+					( isSpecificationWordSpanishAmbiguous ||
+					// Test file: "John - Anna (before family definition)"
+					specificationCollectionNr == NO_COLLECTION_NR ||
+
+					( hasNonCompoundSpecificationCollection &&
+					!isExistingUserSpecification &&
+					isOlderExistingSpecification &&
+					givenSpecificationItem == alternativeSpecificationItem &&
+					!givenSpecificationItem->hasCurrentCreationSentenceNr() &&
+					!currentContextWordItem->hasCurrentlyConfirmedSpecification() ) ||
+
+					( isExistingUserSpecification &&
+					givenSpecificationItem != alternativeSpecificationItem &&
+					currentContextWordItem->hasCurrentlyConfirmedSpecification() ) ) )
 						{
-						if( isOlderExistingSpecification &&
-						isSelfGeneratedSpecification &&
-						existingSpecificationItem != NULL &&
-						existingSpecificationItem->hasNonCompoundSpecificationCollection() )
+						// Alternative specification is same as current secondary specification
+						if( ( alternativeSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, specificationWordItem, currentContextWordItem ) ) == givenSpecificationItem )
 							{
-							if( isOlderSpecification &&
-							firstUserSpecificationItem == NULL &&
-							// Secondary specification word is same as user specification word
-							specificationWordItem == userSpecificationWordItem &&
-							// Justification doesn't exist yet in specification
-							!givenSpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) &&
-							( conclusionSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( false, true, false, false, false, specificationWordItem, userGeneralizationWordItem ) ) != NULL )
+							if( isOlderExistingSpecification &&
+							existingSpecificationItem->hasNonCompoundSpecificationCollection() &&
+							givenSpecificationItem->isSelfGeneratedSpecification() )
 								{
-								// Add reversible user justification
-								if( givenSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, NULL ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a reversible user justification to the current secondary specification" );
-
-								givenSpecificationItem = givenSpecificationItem->updatedSpecificationItem();
-
-								// Add context
-								if( userGeneralizationWordItem->addContext( WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, givenSpecificationItem->relationContextNr(), NO_COLLECTION_NR, specificationWordItem ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a relation context to word \"", userGeneralizationWordItem->anyWordTypeString(), "\"" );
-
-								if( ( collectedSpecificationItem = userGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, NO_QUESTION_PARAMETER, givenSpecificationItem->specificationCollectionNr(), NULL ) ) != NULL &&
-								// Common word
-								( possessiveNounWordItem = specificationWordItem->commonWordItem( specificationCollectionNr ) ) != NULL )
+								if( isOlderSpecification &&
+								// Secondary specification word is same as user specification word
+								specificationWordItem == userSpecificationWordItem &&
+								// Justification doesn't exist yet in specification
+								!givenSpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) &&
+								// Possessive user specification doesn't exist
+								currentContextWordItem->firstUserSpecificationItem( false, true, NO_COLLECTION_NR, NO_CONTEXT_NR, specificationWordItem ) == NULL &&
+								( conclusionSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( false, true, false, false, false, specificationWordItem, userGeneralizationWordItem ) ) != NULL )
 									{
-									// Find possessive specifications
-									if( ( findSpecificationResult = findPossessiveSpecifications( possessiveNounWordItem, specificationWordItem ) ).result != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find possessive specifications in possessive noun word \"", possessiveNounWordItem->anyWordTypeString(), "\"" );
+									// Add reversible user justification
+									if( givenSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, NULL ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a reversible user justification to the current secondary specification" );
 
-									if( ( oppositePossessiveDefinitionSpecificationItem = findSpecificationResult.foundOppositePossessiveDefinitionSpecificationItem ) != NULL &&
-									!collectedSpecificationItem->isOlderItem() &&
-									// Justification doesn't exist yet in specification
-									!givenSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( oppositePossessiveDefinitionSpecificationItem, collectedSpecificationItem ) &&
-									// Add collected opposite possessive justification
-									givenSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, oppositePossessiveDefinitionSpecificationItem, NULL, collectedSpecificationItem ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a collected opposite possessive justification to the current secondary specification" );
+									givenSpecificationItem = givenSpecificationItem->updatedSpecificationItem();
 
-									if( ( possessiveDefinitionSpecificationItem = findSpecificationResult.foundPossessiveDefinitionSpecificationItem ) != NULL &&
-									// Justification doesn't exist yet in specification
-									!collectedSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( possessiveDefinitionSpecificationItem, conclusionSpecificationItem ) &&
-									// Add opposite possessive conclusion justification to collected specification
-									collectedSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, possessiveDefinitionSpecificationItem, NULL, conclusionSpecificationItem ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an opposite possessive conclusion justification to the collected specification" );
-									}
-								}
-							}
-						}
-					else	// Alternative is different from current secondary
-						{
-						if( hasNonCompoundSpecificationCollection )
-							{
-							if( alternativeSpecificationItem != NULL &&
-							// Secondary specification word is same as user specification word
-							specificationWordItem == userSpecificationWordItem &&
-							!alternativeSpecificationItem->isReplacedItem() )
-								{
-								if( isSpanishCurrentLanguage )
-									{
-									// Typical for Spanish
-									// Replace assumption by conclusion
-									if( generalizationWordItem->replaceOrDeleteSpecification( givenSpecificationItem, alternativeSpecificationItem ) != RESULT_OK )
-										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace a Spanish assumption specification by a conclusion specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-									}
-								else
-									{
-									if( !isOlderExistingSpecification &&
-									alternativeSpecificationItem->isSelfGeneratedAssumption() &&
+									// Add context
+									if( userGeneralizationWordItem->addContext( WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, givenSpecificationItem->relationContextNr(), NO_COLLECTION_NR, specificationWordItem ) != RESULT_OK )
+										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a relation context to word \"", userGeneralizationWordItem->anyWordTypeString(), "\"" );
+
+									if( ( collectedSpecificationItem = userGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, NO_QUESTION_PARAMETER, givenSpecificationItem->specificationCollectionNr(), NULL ) ) != NULL &&
 									// Common word
 									( possessiveNounWordItem = specificationWordItem->commonWordItem( specificationCollectionNr ) ) != NULL )
 										{
@@ -2018,48 +2295,111 @@ class AdminReasoning
 											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find possessive specifications in possessive noun word \"", possessiveNounWordItem->anyWordTypeString(), "\"" );
 
 										if( ( oppositePossessiveDefinitionSpecificationItem = findSpecificationResult.foundOppositePossessiveDefinitionSpecificationItem ) != NULL &&
-										( oppositePossessiveDefinitionSpecificationWordItem = oppositePossessiveDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
-										( foundSpecificationItem = currentContextWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ) ) != NULL &&
-										foundSpecificationItem->hasSecondarySpecificationJustification( alternativeSpecificationItem ) &&
-										// Replace assumption justification by conclusion justification of involved word
-										currentContextWordItem->updateSpecificationOfJustificationsInWord( alternativeSpecificationItem, givenSpecificationItem ) != RESULT_OK )
-											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to update the specifications in the justification items in word \"", currentContextWordItem->anyWordTypeString(), "\"" );
+										!collectedSpecificationItem->isOlderItem() &&
+										// Justification doesn't exist yet in specification
+										!givenSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( oppositePossessiveDefinitionSpecificationItem, collectedSpecificationItem ) &&
+										// Add collected opposite possessive justification
+										givenSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, oppositePossessiveDefinitionSpecificationItem, NULL, collectedSpecificationItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a collected opposite possessive justification to the current secondary specification" );
+
+										if( ( possessiveDefinitionSpecificationItem = findSpecificationResult.foundPossessiveDefinitionSpecificationItem ) != NULL &&
+										// Justification doesn't exist yet in specification
+										!collectedSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( possessiveDefinitionSpecificationItem, conclusionSpecificationItem ) &&
+										// Add opposite possessive conclusion justification to collected specification
+										collectedSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, possessiveDefinitionSpecificationItem, NULL, conclusionSpecificationItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an opposite possessive conclusion justification to the collected specification" );
 										}
 									}
 								}
 							}
-						else
+						else	// Alternative is different from current secondary
 							{
-							if( isOlderAlternativeSpecification &&
-							!isOlderExistingSpecification &&
-							isOlderSpecification &&
-							// Replace assumption by conclusion
-							generalizationWordItem->replaceOrDeleteSpecification( ( isSelfGeneratedAssumption ? givenSpecificationItem : alternativeSpecificationItem ), ( isSelfGeneratedAssumption ? alternativeSpecificationItem : givenSpecificationItem ) ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an assumption specification by a conclusion specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+							if( givenSpecificationItem->hasNonCompoundSpecificationCollection() )
+								{
+								if( alternativeSpecificationItem != NULL &&
+								// Secondary specification word is same as user specification word
+								specificationWordItem == userSpecificationWordItem )
+									{
+									if( isSpanishCurrentLanguage )
+										{
+										// Typical for Spanish
+										// Replace assumption by conclusion
+										if( generalizationWordItem->replaceOrDeleteSpecification( givenSpecificationItem, alternativeSpecificationItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace a Spanish assumption specification by a conclusion specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+										}
+									else
+										{
+										if( alternativeSpecificationItem->isSelfGeneratedAssumption() &&
+										// Common word
+										( possessiveNounWordItem = specificationWordItem->commonWordItem( specificationCollectionNr ) ) != NULL )
+											{
+											// Find possessive specifications
+											if( ( findSpecificationResult = findPossessiveSpecifications( possessiveNounWordItem, specificationWordItem ) ).result != RESULT_OK )
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find possessive specifications in possessive noun word \"", possessiveNounWordItem->anyWordTypeString(), "\"" );
+
+											if( ( oppositePossessiveDefinitionSpecificationItem = findSpecificationResult.foundOppositePossessiveDefinitionSpecificationItem ) != NULL &&
+											( oppositePossessiveDefinitionSpecificationWordItem = oppositePossessiveDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
+											( foundSpecificationItem = currentContextWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ) ) != NULL &&
+											foundSpecificationItem->hasSecondarySpecificationJustification( alternativeSpecificationItem ) &&
+											// Replace assumption justification by conclusion justification of involved word
+											currentContextWordItem->updateSpecificationOfJustificationsInWord( alternativeSpecificationItem, givenSpecificationItem ) != RESULT_OK )
+												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to update the specifications in the justification items in word \"", currentContextWordItem->anyWordTypeString(), "\"" );
+											}
+										}
+									}
+								}
+							else
+								{
+								if( givenSpecificationItem->isSelfGeneratedAssumption() )
+									{
+									obsoleteSpecificationItem = givenSpecificationItem;
+									replacingSpecificationItem = alternativeSpecificationItem;
+									}
+								else
+									{
+									obsoleteSpecificationItem = alternativeSpecificationItem;
+									replacingSpecificationItem = givenSpecificationItem;
+									}
+
+								if( !isOlderExistingSpecification &&
+								isOlderSpecification &&
+								alternativeSpecificationItem != NULL &&
+								alternativeSpecificationItem->isOlderItem() &&
+								// Replace assumption by conclusion
+								generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, replacingSpecificationItem ) != RESULT_OK )
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace an assumption specification by a conclusion specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+								}
 							}
 						}
 
-					// Typical for Spanish
-					if( isSpanishCurrentLanguage )
+					if( isSpanishCurrentLanguage &&
+
+					( isSpanishSpecificationFemaleWord ||
+
+					( isSpecificationWordSpanishAmbiguous &&
+					existingSpecificationItem != NULL ) ) )
 						{
-						if( isSpanishSpecificationFemaleWord &&
-						spanishMasculineSpecificationWordItem != NULL )
+						if( specificationWordItem->isFeminineWord() &&
+						( spanishMasculineSpecificationWordItem = specificationWordItem->masculineCollectionWordItem() ) != NULL )
 							{
+							hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem->hasCurrentlyConfirmedSpecification();
 							spanishMasculineSpecificationItem = currentContextWordItem->firstSpecificationItem( false, true, false, spanishMasculineSpecificationWordItem );
 
 							if( existingSpecificationItem == NULL ||
 
 							( ( hasGeneralizationWordCurrentlyConfirmedSpecification ||
-							hasUserSpecificationRelationContext ) &&
+							userSpecificationItem->hasRelationContext() ) &&
 
 							!givenSpecificationItem->hasCurrentCreationSentenceNr() &&
 							givenSpecificationItem->isSelfGeneratedSpecification() ) )
 								{
+								isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
+
 								if( spanishMasculineSpecificationItem == NULL ||
 								existingSpecificationItem == userSpecificationItem ||
 
-								( !isPossessiveUserSpecification &&
-								isUserGeneralizationWord ) ||
+								( isUserGeneralizationWord &&
+								!userSpecificationItem->isPossessive() ) ||
 
 								( !spanishMasculineSpecificationItem->isOlderItem() &&
 								spanishMasculineSpecificationItem->isHiddenSpanishSpecification() &&
@@ -2071,7 +2411,7 @@ class AdminReasoning
 									givenSpecificationItem = givenSpecificationItem->updatedSpecificationItem();
 
 									// Draw Spanish reversible conclusion
-									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, spanishMasculineSpecificationWordItem->nonCompoundCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, spanishMasculineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, spanishMasculineSpecificationWordItem->nonCompoundCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, spanishMasculineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish reversible conclusion about word \"", currentContextWordItem->anyWordTypeString(), "\" and with masculine specification word \"", spanishMasculineSpecificationWordItem->anyWordTypeString(), "\"" );
 
 									if( !isUserGeneralizationWord &&
@@ -2088,14 +2428,14 @@ class AdminReasoning
 								{
 								if( hasGeneralizationWordCurrentlyConfirmedSpecification &&
 								isOlderExistingSpecification &&
-								!hasUserSpecificationAssumptionLevel &&
 								specificationWordItem == userSpecificationWordItem &&
 								spanishMasculineSpecificationItem != NULL &&
 								spanishMasculineSpecificationItem->isHiddenSpanishSpecification() &&
 								!spanishMasculineSpecificationItem->hasCurrentCreationSentenceNr() &&
 								existingSpecificationItem->isSelfGeneratedAssumption() &&
+								!userSpecificationItem->hasAssumptionLevel() &&
 								// Draw Spanish reversible conclusion (hidden)
-								adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentContextWordItem, spanishMasculineSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+								adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentContextWordItem, spanishMasculineSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a hidden Spanish reversible conclusion about word \"", currentContextWordItem->anyWordTypeString(), "\" and with masculine specification word \"", spanishMasculineSpecificationWordItem->anyWordTypeString(), "\"" );
 								}
 							}
@@ -2106,7 +2446,7 @@ class AdminReasoning
 							existingSpecificationItem->hasCompoundSpecificationCollection() &&
 							givenSpecificationItem->isSelfGeneratedConclusion() &&
 							// Add Spanish non-compound reversible conclusion
-							adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, specificationWordItem->nonCompoundCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ).result != RESULT_OK )
+							adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, specificationWordItem->nonCompoundCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, givenSpecificationItem, NULL, NULL, NULL, currentContextWordItem, specificationWordItem, generalizationWordItem ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish non-compound reversible conclusion about word \"", currentContextWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
@@ -2128,9 +2468,9 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawReversibleConclusions( bool isAssignment, bool isArchivedAssignment, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+	signed char drawReversibleConclusions( bool isAssignment, bool isArchivedAssignment, bool isDrawingPossessiveReversibleConclusions, bool isSpanishCurrentLanguage, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
-		bool hasCurrentSpecificationCurrentCreationSentenceNr;
+		bool hasCurrentSpecificationCreationSentenceNr;
 		bool hasGeneralizationWordCurrentlyConfirmedSpecificationAndAtLeastOneRelation;
 		bool hasNonCompoundCurrentSpecificationCollection;
 		bool hasUserGeneralizationWordCurrentlyConfirmedSpecification = false;
@@ -2142,10 +2482,10 @@ class AdminReasoning
 		bool isCurrentSpecificationSelfGeneratedSpecification;
 		bool isCurrentSpecificationWordSpanishAmbiguous = false;
 		bool isOlderCurrentSpecification;
+		bool isOlderUserSpecification;
 		bool isPossessiveUserSpecification = false;
-		bool isSpanishCurrentLanguage;
 		bool isUserGeneralizationWord;
-		bool isUserSpecificationWordSpanishAmbiguous = false;
+		bool isUserSpecificationWordSpanishAmbiguous;
 		unsigned short generalizationWordTypeNr;
 		unsigned short specificationWordTypeNr;
 		unsigned short relationWordTypeNr;
@@ -2187,17 +2527,14 @@ class AdminReasoning
 			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
 			specificationWordTypeNr = currentSpecificationItem->specificationWordTypeNr();
 
-			isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-
-			if( isSpanishCurrentLanguage )
-				isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
-
 			hasUserGeneralizationWordCurrentlyConfirmedSpecification = userGeneralizationWordItem->hasCurrentlyConfirmedSpecification();
 			hasUserSpecificationCompoundCollection = userSpecificationItem->hasCompoundSpecificationCollection();
 			hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
 			isActiveUserAssignment = userSpecificationItem->isActiveAssignment();
 			isArchivedUserAssignment = userSpecificationItem->isArchivedAssignment();
+			isOlderUserSpecification = userSpecificationItem->isOlderItem();
 			isPossessiveUserSpecification = userSpecificationItem->isPossessive();
+			isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
 			userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
 
 			if( isPossessiveUserSpecification )
@@ -2206,7 +2543,7 @@ class AdminReasoning
 				// Typical for Chinese: Skip possessive inactive assignment
 				!userSpecificationItem->isInactiveAssignment() &&
 				// Draw user reversible conclusion
-				drawUserReversibleConclusions( currentSpecificationItem, generalizationWordItem ) != RESULT_OK )
+				drawUserReversibleConclusions( isSpanishCurrentLanguage, currentSpecificationItem, generalizationWordItem ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a user reversible conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 				}
 			else	// Non-possessive user specification
@@ -2225,7 +2562,7 @@ class AdminReasoning
 				existingSpecificationItem->firstJustificationItem( JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ) != NULL ) )
 					{
 					// Draw reversible user conclusion
-					if( adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, userSpecificationWordItem, userGeneralizationWordItem ).result != RESULT_OK )
+					if( adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, userSpecificationWordItem, userGeneralizationWordItem ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible user conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", userSpecificationWordItem->anyWordTypeString(), "\"" );
 
 					// Cleanup unreferenced justifications
@@ -2238,7 +2575,7 @@ class AdminReasoning
 
 			// Do for all selected specifications
 			do	{
-				hasCurrentSpecificationCurrentCreationSentenceNr = currentSpecificationItem->hasCurrentCreationSentenceNr();
+				hasCurrentSpecificationCreationSentenceNr = currentSpecificationItem->hasCurrentCreationSentenceNr();
 				hasNonCompoundCurrentSpecificationCollection = currentSpecificationItem->hasNonCompoundSpecificationCollection();
 				isCurrentSpecificationWordSpanishAmbiguous = currentSpecificationItem->isSpecificationWordSpanishAmbiguous();
 				isOlderCurrentSpecification = currentSpecificationItem->isOlderItem();
@@ -2251,7 +2588,7 @@ class AdminReasoning
 				specificationCollectionNr = currentSpecificationItem->specificationCollectionNr();
 
 				if( ( currentSpecificationWordItem = currentSpecificationItem->specificationWordItem() ) == NULL )
-					return adminItem_->startError( functionNameString, moduleNameString_, "The secondary specification item has no specification word" );
+					return adminItem_->startError( functionNameString, moduleNameString_, "The current specification item has no specification word" );
 
 				if( currentSpecificationItem->isPossessive() )
 					{
@@ -2296,7 +2633,7 @@ class AdminReasoning
 											if( existingSpecificationItem->hasCurrentCreationSentenceNr() &&
 											existingSpecificationItem->hasNonCompoundSpecificationCollection() &&
 
-											( !hasCurrentSpecificationCurrentCreationSentenceNr ||
+											( !hasCurrentSpecificationCreationSentenceNr ||
 											!isOlderCurrentSpecification ) &&
 
 											// Relation context exists in word
@@ -2330,7 +2667,7 @@ class AdminReasoning
 								// Justification doesn't exist yet in specification
 								!currentSpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) &&
 								// Draw Spanish non-compound reversible conclusion
-								adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, currentSpecificationWordItem, userGeneralizationWordItem ).result != RESULT_OK )
+								adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, currentSpecificationWordItem, userGeneralizationWordItem ).result != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a self-generated reversible specification from word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 								if( !isPossessiveUserSpecification &&
@@ -2339,7 +2676,7 @@ class AdminReasoning
 								generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, false, false, false, false, true, false, userSpecificationCollectionNr, NO_CONTEXT_NR, userSpecificationWordItem ) == NULL )
 									{
 									// Draw Spanish reversible conclusion
-									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, isArchivedUserAssignment, false, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, userSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, userSpecificationWordItem, userGeneralizationWordItem ) ).result != RESULT_OK )
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, isArchivedUserAssignment, false, false, false, false, false, true, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, userSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, userSpecificationWordItem, userGeneralizationWordItem ) ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish reversible conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", userSpecificationWordItem->anyWordTypeString(), "\"" );
 
 									if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != NULL &&
@@ -2366,7 +2703,7 @@ class AdminReasoning
 								currentContextWordItem->isUserRelationWord &&
 								currentContextWordItem->hasNegativeSpecification() &&
 								// Draw a specification substitution conclusion or ask a question
-								drawSpecificationSubstitutionConclusionOrAskQuestion( false, false, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, currentContextWordItem, currentSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
+								drawSpecificationSubstitutionConclusionOrAskQuestion( false, false, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, currentContextWordItem, currentSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion or ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 								}
 							while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
@@ -2435,7 +2772,7 @@ class AdminReasoning
 										}
 
 									// Draw reversible user conclusion
-									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, relationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedRelationContextNr, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, currentSpecificationWordItem, userGeneralizationWordItem ) ).result != RESULT_OK )
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, relationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedRelationContextNr, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, currentSpecificationWordItem, userGeneralizationWordItem ) ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a reversible user conclusion with generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 									if( conclusionSpecificationItem == NULL )
@@ -2473,9 +2810,30 @@ class AdminReasoning
 					currentContextWordItem = firstContextWordItem;
 					currentSpecificationItem = currentSpecificationItem->updatedSpecificationItem();
 
-					if( currentSpecificationItem->hasRelationContext() &&
+					if( isDrawingPossessiveReversibleConclusions &&
+					currentRelationContextNr > NO_COLLECTION_NR &&
+
+					( ( isOlderUserSpecification &&
+					currentSpecificationItem == userSpecificationItem ) ||
+
+					( !hasUserSpecificationCompoundCollection &&
+					!isArchivedUserAssignment &&
+					userSpecificationCollectionNr == specificationCollectionNr ) ||
+
+					// Has current specification creation sentence number
+					( hasCurrentSpecificationCreationSentenceNr &&
+
+					( specificationCollectionNr > NO_COLLECTION_NR ||
+					userSpecificationCollectionNr == specificationCollectionNr ||
+					// Test file: "John - Anna (before family definition)"
+					currentSpecificationItem->hasOnlyOneRelationWord() ) ) ||
+
+					// Has no current specification creation sentence number
+					( !hasCurrentSpecificationCreationSentenceNr &&
+					!generalizationWordItem->hasJustification( currentSpecificationItem, NULL, NULL ) ) ) &&
+
 					// Draw possessive reversible conclusions
-					drawPossessiveReversibleConclusions( isActiveUserAssignment, currentSpecificationItem, generalizationWordItem ) != RESULT_OK )
+					drawPossessiveReversibleConclusions( isActiveUserAssignment, isSpanishCurrentLanguage, currentSpecificationItem, generalizationWordItem ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw possessive reversible conclusions about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 					}
 				}
@@ -2489,13 +2847,12 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawUserReversibleConclusions( SpecificationItem *currentSecondarySpecificationItem, WordItem *generalizationWordItem )
+	signed char drawUserReversibleConclusions( bool isSpanishCurrentLanguage, SpecificationItem *currentSecondarySpecificationItem, WordItem *generalizationWordItem )
 		{
 		bool hasGeneralizationWordCurrentlyConfirmedSpecification;
 		bool hasNonCompoundUserSpecificationCollection = false;
 		bool isArchivedAssignment;
 		bool isAssignment;
-		bool isSpanishCurrentLanguage;
 		bool isUserSpecificationWordSpanishAmbiguous = false;
 		unsigned int spanishAmbiguousSpecificationCollectionNr = NO_COLLECTION_NR;
 		unsigned int userSpecificationCollectionNr;
@@ -2531,12 +2888,8 @@ class AdminReasoning
 			{
 			hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem->hasCurrentlyConfirmedSpecification();
 
-			isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-
-			if( isSpanishCurrentLanguage )
-				isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
-
 			hasNonCompoundUserSpecificationCollection = userSpecificationItem->hasNonCompoundSpecificationCollection();
+			isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
 			userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
 
 			// Do for all context words
@@ -2594,7 +2947,7 @@ class AdminReasoning
 							}
 
 						// Draw reversible user conclusion
-						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, spanishAmbiguousSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentContextWordItem, userSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, spanishAmbiguousSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentContextWordItem, userSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible user conclusion about word \"", currentContextWordItem->anyWordTypeString(), "\" with specification word \"", userSpecificationWordItem->anyWordTypeString(), "\"" );
 
 						// Typical for Spanish
@@ -2605,7 +2958,7 @@ class AdminReasoning
 							( definitionSpecificationItem = userSpecificationWordItem->firstSpecificationItem( false, false, false, spanishFeminineSpecificationWordItem ) ) != NULL &&
 							currentContextWordItem->firstSelfGeneratedCheckSpecificationItem( false, false, false, false, false, NO_QUESTION_PARAMETER, definitionSpecificationItem->specificationCollectionNr(), NO_CONTEXT_NR, spanishFeminineSpecificationWordItem ) == NULL &&
 							// Draw Spanish feminine exclusive specification substitution assumption
-							adminItem_->addSelfGeneratedSpecification( true, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, currentContextWordItem, spanishFeminineSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+							adminItem_->addSelfGeneratedSpecification( true, isAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, currentContextWordItem, spanishFeminineSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish exclusive specification substitution assumption about word \"", currentContextWordItem->anyWordTypeString(), "\" with specification word \"", spanishFeminineSpecificationWordItem->anyWordTypeString(), "\"" );
 							}
 						else
@@ -2820,7 +3173,7 @@ class AdminReasoning
 						!adjustedQuestionCompoundSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( userSpecificationItem, definitionSpecificationItem ) )
 							{
 							// Create adjusted question
-							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, adjustedQuestionCompoundSpecificationItem->isInactiveAssignment(), adjustedQuestionCompoundSpecificationItem->isArchivedAssignment(), false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, adjustedQuestionCompoundSpecificationItem->generalizationWordTypeNr(), adjustedQuestionCompoundSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, currentCollectionWordItem, NULL ) ).result != RESULT_OK )
+							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, adjustedQuestionCompoundSpecificationItem->isInactiveAssignment(), adjustedQuestionCompoundSpecificationItem->isArchivedAssignment(), false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, adjustedQuestionCompoundSpecificationItem->generalizationWordTypeNr(), adjustedQuestionCompoundSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, currentCollectionWordItem, NULL ) ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to create an adjusted question about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentCollectionWordItem->anyWordTypeString(), "\"" );
 
 							replacingSpecificationItem = createAndAssignResult.foundSpecificationItem;
@@ -2846,7 +3199,7 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char makeOppositePossessiveSpecificationAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isPossessive, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, SpecificationItem *secondarySpecificationItem, SpecificationItem *alternativeSecondarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *relationWordItem )
+	signed char makeOppositePossessiveSpecificationAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isPossessive, bool isSpanishCurrentLanguage, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, SpecificationItem *secondarySpecificationItem, SpecificationItem *alternativeSecondarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *relationWordItem )
 		{
 		bool hasExistingSpecificationCurrentCreationSentenceNr = false;
 		bool hasGeneralizationWordCurrentlyConfirmedSpecification;
@@ -3026,6 +3379,8 @@ class AdminReasoning
 
 		( hasGeneralizationWordCurrentlyConfirmedSpecification ||
 
+		// Typical for Spanish
+		// Spanish Test file: "Complejo (4)"
 		( isRelationWordUserWordGeneralization &&
 		existingSpecificationItem != NULL &&
 		// Justification doesn't exist yet in specification
@@ -3050,14 +3405,14 @@ class AdminReasoning
 		hasExistingSpecificationCurrentCreationSentenceNr ) ) ) ) ) )
 			{
 			// Make an opposite possessive specification assumption (normal)
-			if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, isExclusiveSpecification, false, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, secondarySpecificationItem->specificationWordTypeNr(), generalizationWordTypeNr, possessiveDefinitionSpecificationItem_->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, relationWordItem, possessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+			if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, false, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, secondarySpecificationItem->specificationWordTypeNr(), generalizationWordTypeNr, possessiveDefinitionSpecificationItem_->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, relationWordItem, possessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption about relation word \"", relationWordItem->anyWordTypeString(), "\" and specification word \"", possessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 			}
 		else
 			{
 			if( isPossessiveSpecificationWordSpanishAmbiguous &&
 			// Draw Spanish proper noun part-of conclusions in proper noun words
-			drawProperNounPartOfConclusionsInProperNounWords( isArchivedAssignment, possessiveDefinitionSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
+			drawProperNounPartOfConclusionsInProperNounWords( isArchivedAssignment, true, possessiveDefinitionSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw Spanish proper noun 'part of' conclusions in proper noun words" );
 			}
 
@@ -3069,7 +3424,7 @@ class AdminReasoning
 		// Avoid idle call
 		possessiveDefinitionSpecificationWordItem->firstNonNegativeNonPossessiveDefinitionSpecificationItem() != NULL &&
 		// Draw a specification substitution conclusion or ask a question
-		drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, relationWordItem, possessiveDefinitionSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
+		drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, relationWordItem, possessiveDefinitionSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion or ask a question about word \"", relationWordItem->anyWordTypeString(), "\"" );
 
 		if( existingSpecificationItem != NULL ||
@@ -3083,7 +3438,7 @@ class AdminReasoning
 				( foundSpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, alternativeSecondarySpecificationWordItem ) ) != NULL &&
 				!foundSpecificationItem->isHiddenSpanishSpecification() &&
 				// Draw simple negative conclusions
-				drawSimpleNegativeConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, alternativeSecondarySpecificationWordItem ) != RESULT_OK )
+				drawSimpleNegativeConclusions( isArchivedAssignment, foundSpecificationItem, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw simple negative conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 				// Try to find user specification or self-generated conclusion first
@@ -3265,7 +3620,7 @@ class AdminReasoning
 						}
 
 					// Make an assumption
-					if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasRelationWordMasculineProperNounEnding, false, false, false, false, false, isExclusiveSpecification, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, hiddenSpanishSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+					if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasRelationWordMasculineProperNounEnding, false, false, false, false, isExclusiveSpecification, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, hiddenSpanishSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an assumption from generalization word \"", relationWordItem->anyWordTypeString(), "\" to specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 
 					if( isPossessive )
@@ -3307,7 +3662,7 @@ class AdminReasoning
 								( feminineSpecificationWordItem = feminineSpecificationItem->specificationWordItem() ) != NULL )
 									{
 									// Make feminine assumption
-									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, hiddenSpanishSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, relationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, generalizationWordTypeNr, hiddenSpanishSpecificationCollectionNr, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a feminine assumption from generalization word \"", relationWordItem->anyWordTypeString(), "\" to specification word \"", feminineSpecificationWordItem->anyWordTypeString(), "\"" );
 
 									if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
@@ -3334,19 +3689,6 @@ class AdminReasoning
 								}
 							}
 						}
-					}
-				else
-					{
-					// Typical for Spanish
-					// Spanish test file: "Sé (10)"
-					if( isOppositePossessiveSpecificationWordSpanishAmbiguous &&
-					isRelationWordUserWordGeneralization &&
-					secondarySpecificationItem->isHiddenSpanishSpecification() &&
-					currentExistingSpecificationItem != NULL &&
-					!currentExistingSpecificationItem->isHiddenSpanishSpecification() &&
-					// Draw a specification substitution conclusion or ask a question
-					drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, NO_QUESTION_PARAMETER, relationWordTypeNr, specificationWordTypeNr, generalizationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion or ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 					}
 
 				if( alternativeSecondarySpecificationItem != NULL &&
@@ -3388,7 +3730,7 @@ class AdminReasoning
 						relationContextNr = ( existingSpecificationItem == NULL ? NO_CONTEXT_NR : existingSpecificationItem->relationContextNr() );
 
 						// Make a feminine possessive exclusive specification substitution assumption
-						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, isExclusiveSpecification, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, relationContextNr, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
+						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, isExclusiveSpecification, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, relationContextNr, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, relationWordItem, feminineSpecificationWordItem, generalizationWordItem ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a feminine possessive exclusive specification substitution assumption with generalization word \"", relationWordItem->anyWordTypeString(), "\" and specification word \"", feminineSpecificationWordItem->anyWordTypeString(), "\"" );
 
 						if( isPossessive )
@@ -3403,12 +3745,12 @@ class AdminReasoning
 							// Justification has at least the same assumption level
 							existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, createdOrFoundSpecificationItem, NULL, NULL, NULL ) ) ) &&
 							// Draw possessive reversible conclusion
-							adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, NULL, NULL, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ).result != RESULT_OK )
+							adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, NULL, NULL, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a possessive reversible conclusion with generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", feminineSpecificationWordItem->anyWordTypeString(), "\"" );
 							}
 						else
 							{
-							feminineSpecificationWordItem_ = feminineSpecificationWordItem;
+							spanishFeminineSpecificationWordItem_ = feminineSpecificationWordItem;
 
 							// Typical for Spanish
 							// Spanish test file: "Juan - Ana (antes de la definición de la familia)"
@@ -3531,16 +3873,14 @@ class AdminReasoning
 
 	void initializeAdminReasoningVariables()
 		{
-		hasSuggestiveQuestionAssumption_ = false;
-
 		adjustedSpanishQuestionSecondarySpecificationItem_ = NULL;
 
-		feminineSpecificationWordItem_ = NULL;
 		firstCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = NULL;
 		secondCorrectedAssumptionByOppositeSuggestiveQuestionSpecificationWordItem_ = NULL;
+		spanishFeminineSpecificationWordItem_ = NULL;
 		}
 
-	signed char askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( bool isArchivedAssignment, bool isSpanishCurrentLanguage, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *simpleUserSpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		bool hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion;
 		bool hasGeneralizationWordFeminineProperNounEnding;
@@ -3551,12 +3891,10 @@ class AdminReasoning
 		bool isCommonWordWordSpanishAmbiguous = false;
 		bool isExclusiveSecondarySpecification;
 		bool isFeminineUserSpecificationWord = false;
-		bool isHiddenSpanishPrimarySpecification;
 		bool isMasculineUserSpecificationWord = false;
 		bool isPrimarySameAsUserSpecification;
 		bool isPrimaryUserSpecification;
-		bool isSpecificationWordSpanishAmbiguous;
-		bool isUserGeneralizationWord;
+		bool isSpecificationWordSpanishAmbiguous = false;
 		unsigned int compoundSpecificationCollectionNr;
 		unsigned int nonCompoundSpecificationCollectionNr;
 		unsigned int secondarySpecificationCollectionNr;
@@ -3569,6 +3907,7 @@ class AdminReasoning
 		WordItem *collectionWordItem = NULL;
 		WordItem *commonWordItem;
 		WordItem *secondarySpecificationWordItem;
+		WordItem *userGeneralizationWordItem;
 		WordItem *userSpecificationWordItem;
 		RelatedResultType relatedResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "askSpecificationSubstitutionQuestionOrDrawNegativeConclusion";
@@ -3606,7 +3945,6 @@ class AdminReasoning
 
 		relatedSpecificationItem = relatedResult.relatedSpecificationItem;
 
-		isHiddenSpanishPrimarySpecification = primarySpecificationItem->isHiddenSpanishSpecification();
 		isPrimarySameAsUserSpecification = ( primarySpecificationItem == userSpecificationItem );
 		isPrimaryUserSpecification = primarySpecificationItem->isUserSpecification();
 
@@ -3617,9 +3955,9 @@ class AdminReasoning
 		hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion = generalizationWordItem->hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion();
 		hasGeneralizationWordFeminineProperNounEnding = generalizationWordItem->hasFeminineProperNounEnding();
 		hasGeneralizationWordFeminineOrMasculineProperNounEnding = generalizationWordItem->hasFeminineOrMasculineProperNounEnding();
-		isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
 
-		isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
+		if( isSpanishCurrentLanguage )
+			isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
 
 		hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
 		userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
@@ -3662,18 +4000,13 @@ class AdminReasoning
 					isMasculineUserSpecificationWord = true;
 				}
 
-			if( isFeminineUserSpecificationWord ||
-			isMasculineUserSpecificationWord ||
+			if( !isFeminineUserSpecificationWord &&
+			!isMasculineUserSpecificationWord &&
 
 			// Specification is Spanish ambiguous
-			( isSpecificationWordSpanishAmbiguous &&
-			!hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion &&
-
-			( hasGeneralizationWordFeminineProperNounEnding ||
-			userSpecificationItem->isQuestion() ) ) )
-				{
-				}
-			else
+			( !isSpecificationWordSpanishAmbiguous ||
+			hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion ||
+			!hasGeneralizationWordFeminineProperNounEnding ) )
 				{
 				// Skip invalid questions (step 1)
 				if( ( !hasGeneralizationWordFeminineOrMasculineProperNounEnding ||
@@ -3696,11 +4029,8 @@ class AdminReasoning
 					if( ( collectionWordItem != NULL &&
 
 					( isPrimaryUserSpecification ||
-
-					( primarySpecificationItem->hasRelationContext() ||
-					generalizationWordItem->primaryAndSecondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, primarySpecificationItem, secondarySpecificationItem ) == NULL ) ) &&
-
-					generalizationWordItem->firstUserSpecificationItem( false, false, NO_COLLECTION_NR, NO_CONTEXT_NR, collectionWordItem ) == NULL ) ||
+					primarySpecificationItem->hasRelationContext() ||
+					generalizationWordItem->primaryAndSecondarySpecificationJustificationItem( JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, primarySpecificationItem, secondarySpecificationItem ) == NULL ) ) ||
 
 					( isSpecificationWordSpanishAmbiguous &&
 
@@ -3716,25 +4046,31 @@ class AdminReasoning
 						isPrimarySameAsUserSpecification ||
 						hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion ) &&
 
+						// Typical for Spanish
+						( isSpanishCurrentLanguage ||
+						!primarySpecificationItem->hasJustificationWithAdditionalDefinitionSpecification() ||
+						primarySpecificationItem->isOlderItem() ||
+						userSpecificationItem->hasOnlyOneRelationWord() ||
+
+						( ( userGeneralizationWordItem = userSpecificationItem->generalizationWordItem() ) != NULL &&
+						userGeneralizationWordItem->hasCurrentlyMoreSpecificSpecification() ) ) &&
+
 						// Ask questions
-						askQuestions( userSpecificationItem ) != RESULT_OK )
+						askQuestions( isSpanishCurrentLanguage, simpleUserSpecificationItem, userSpecificationItem ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions" );
 
 						if( !hasUserSpecificationRelationContext &&
 						isAdjectiveSecondarySpecification &&
-						isUserGeneralizationWord &&
 
 						( !isSpecificationWordSpanishAmbiguous ||
 						// Typical for Spanish
 						// Spanish test file: "Esta información es más específico (no exclusiva)"
 						!isExclusiveSecondarySpecification ) &&
 
-						// Question doesn't exist yet as specification
-						generalizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, specificationCollectionNr, secondarySpecificationWordItem ) == NULL &&
 						// Justification doesn't exist yet in word
 						generalizationWordItem->secondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, secondarySpecificationItem ) == NULL &&
 						// Ask adjective question
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, WORD_TYPE_ADJECTIVE, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, generalizationWordTypeNr, WORD_TYPE_ADJECTIVE, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask an adjective question about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondarySpecificationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
@@ -3744,7 +4080,6 @@ class AdminReasoning
 					// Definition specification
 					if( userSpecificationItem->isGeneralizationNoun() &&
 					primarySpecificationItem->hasRelationContext() &&
-					primarySpecificationItem->isOlderItem() &&
 					primarySpecificationItem->isSelfGeneratedSpecification() &&
 
 					// Question part doesn't exist yet
@@ -3753,56 +4088,49 @@ class AdminReasoning
 					!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( primarySpecificationItem, secondarySpecificationItem ) ) &&
 
 					// Ask a specification substitution question
-					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, primarySpecificationItem->generalizationWordTypeNr(), secondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, WORD_PARAMETER_SINGULAR_VERB_IS, primarySpecificationItem->generalizationWordTypeNr(), secondarySpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a question with a question as primary specification about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", secondarySpecificationWordItem->anyWordTypeString(), "\"" );
 					}
 				}
 			}
 		else
 			{
-			if( isExclusiveSecondarySpecification )
+			if( !isCommonWordWordSpanishAmbiguous &&
+			( firstNonCompoundCollectionSpecificationItem = generalizationWordItem->firstNonCompoundCollectionSpecificationItem( secondarySpecificationCollectionNr ) ) != NULL )
+				relatedSpecificationItem = firstNonCompoundCollectionSpecificationItem;
+
+			// Typical for Spanish
+			if( isCommonWordWordSpanishAmbiguous &&
+			isSpecificationWordSpanishAmbiguous &&
+			isPrimaryUserSpecification &&
+			globalVariables_->nUserSpecificationWords == 1 &&
+			!primarySpecificationItem->hasNonCompoundSpecificationCollection() )
 				{
-				if( !isCommonWordWordSpanishAmbiguous &&
-				( firstNonCompoundCollectionSpecificationItem = generalizationWordItem->firstNonCompoundCollectionSpecificationItem( secondarySpecificationCollectionNr ) ) != NULL )
-					relatedSpecificationItem = firstNonCompoundCollectionSpecificationItem;
+				// Spanish test file: "Español ambigua - Ana es un padre - Luisa es un hijo"
+				if( hasGeneralizationWordFeminineOrMasculineProperNounEnding &&
+				// Question part doesn't exist yet
+				generalizationWordItem->firstSpecificationItem( false, false, true, secondarySpecificationWordItem ) == NULL &&
+				// Ask Spanish ambiguous questions
+				askQuestions( isSpanishCurrentLanguage, simpleUserSpecificationItem, userSpecificationItem ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask Spanish ambiguous questions" );
+				}
+			else
+				{
+				if( hasNonCompoundSecondarySpecificationCollection ||
+				secondarySpecificationCollectionNr == userSpecificationCollectionNr ||
 
-				// Typical for Spanish
-				if( isCommonWordWordSpanishAmbiguous &&
-				isSpecificationWordSpanishAmbiguous &&
-				isPrimaryUserSpecification &&
-				globalVariables_->nUserSpecificationWords == 1 &&
-				!primarySpecificationItem->hasNonCompoundSpecificationCollection() &&
-				primarySpecificationItem->specificationCollectionNr() != secondarySpecificationCollectionNr )
+				( secondarySpecificationItem->isUserSpecification() &&
+				secondarySpecificationWordItem->compoundCollectionNr() == secondarySpecificationCollectionNr ) )
 					{
-					// Ask Spanish ambiguous questions
-					// Spanish test file: "Español ambigua - Ana es un padre - Luisa es un hijo"
-					if( hasGeneralizationWordFeminineOrMasculineProperNounEnding &&
-					// Question part doesn't exist yet
-					generalizationWordItem->firstSpecificationItem( false, false, true, secondarySpecificationWordItem ) == NULL &&
-					askQuestions( userSpecificationItem ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask questions" );
-					}
-				else
-					{
-					if( hasNonCompoundSecondarySpecificationCollection ||
-					secondarySpecificationCollectionNr == userSpecificationCollectionNr ||
+					if( relatedSpecificationItem->isOlderItem() &&
+					relatedSpecificationItem->isSelfGeneratedAssumption() &&
+					( conclusionSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( true, true, false, false, false, relatedSpecificationItem->specificationWordItem(), userSpecificationItem->generalizationWordItem() ) ) != NULL )
+						relatedSpecificationItem = conclusionSpecificationItem;
 
-					( secondarySpecificationItem->isUserSpecification() &&
-					secondarySpecificationWordItem->compoundCollectionNr() == secondarySpecificationCollectionNr ) )
-						{
-						if( relatedSpecificationItem->isOlderItem() &&
-						relatedSpecificationItem->isSelfGeneratedAssumption() &&
-						( conclusionSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( true, true, false, false, false, relatedSpecificationItem->specificationWordItem(), userSpecificationItem->generalizationWordItem() ) ) != NULL )
-							relatedSpecificationItem = conclusionSpecificationItem;
-
-						if( !isHiddenSpanishPrimarySpecification &&
-						!primarySpecificationItem->hasRelationContext() &&
-						// Negative specification doesn't exist
-						generalizationWordItem->firstAssignmentOrSpecificationItem( false, isArchivedAssignment, true, false, false, secondarySpecificationWordItem ) == NULL &&
-						// Draw negative conclusion
-						drawNegativeConclusion( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, primarySpecificationItem, secondarySpecificationItem, relatedSpecificationItem, generalizationWordItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-						}
+					if( !primarySpecificationItem->hasRelationContext() &&
+					// Draw negative conclusion
+					drawNegativeConclusion( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, primarySpecificationItem, secondarySpecificationItem, relatedSpecificationItem, generalizationWordItem ) != RESULT_OK )
+						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 					}
 				}
 			}
@@ -3810,12 +4138,12 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawCompoundSpecificationSubstitutionConclusion( bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *selectedPrimarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char drawCompoundSpecificationSubstitutionConclusion( bool isArchivedAssignment, bool isExclusiveSpecification, bool isSpanishCurrentLanguage, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *selectedPrimarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		bool hasCurrentCompoundSpecificationCollection;
 		bool hasCurrentNonCompoundSpecificationCollection;
 		bool hasCurrentSpecificationCollection;
-		bool hasCurrentSpecificationCurrentCreationSentenceNr;
+		bool hasCurrentSpecificationCreationSentenceNr;
 		bool hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation;
 		bool hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion;
 		bool hasGeneralizationWordFeminineOrMasculineProperNounEnding;
@@ -3826,11 +4154,9 @@ class AdminReasoning
 		bool isExclusiveUserSpecification = false;
 		bool isGeneralizationProperNoun = ( generalizationWordTypeNr == WORD_TYPE_PROPER_NOUN );
 		bool isOlderPrimarySpecification;
-		bool isPrimaryEveryGeneralization;
 		bool isPrimaryUserAssignment;
 		bool isPrimaryUserQuestion;
 		bool isSelectedExclusiveSpecification;
-		bool isSpanishCurrentLanguage;
 		unsigned short currentSpecificationWordTypeNr;
 		unsigned short selectedJustificationTypeNr;
 		unsigned int currentSpecificationCollectionNr;
@@ -3883,12 +4209,9 @@ class AdminReasoning
 			hasGeneralizationWordCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion = generalizationWordItem->hasCurrentlyCorrectedAssumptionByOppositeSuggestiveQuestion();
 			hasGeneralizationWordFeminineOrMasculineProperNounEnding = generalizationWordItem->hasFeminineOrMasculineProperNounEnding();
 
-			isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-
 			hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
 			isExclusivePrimarySpecification = primarySpecificationItem->isExclusiveSpecification();
 			isOlderPrimarySpecification = primarySpecificationItem->isOlderItem();
-			isPrimaryEveryGeneralization = primarySpecificationItem->isEveryGeneralization();
 			isPrimaryUserAssignment = primarySpecificationItem->isUserAssignment();
 			isPrimaryUserQuestion = primarySpecificationItem->isUserQuestion();
 			primarySpecificationCollectionNr = primarySpecificationItem->specificationCollectionNr();
@@ -4007,9 +4330,9 @@ class AdminReasoning
 								}
 							}
 
-						hasCurrentSpecificationCurrentCreationSentenceNr = currentSpecificationItem->hasCurrentCreationSentenceNr();
+						hasCurrentSpecificationCreationSentenceNr = currentSpecificationItem->hasCurrentCreationSentenceNr();
 
-						if( !hasCurrentSpecificationCurrentCreationSentenceNr ||
+						if( !hasCurrentSpecificationCreationSentenceNr ||
 						isSelectedExclusiveSpecification ||
 
 						( !isExclusiveUserSpecification &&
@@ -4029,7 +4352,7 @@ class AdminReasoning
 							!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( selectedPrimarySpecificationItem, selectedCurrentSpecificationItem ) )
 								{
 								// Draw specification substitution conclusion
-								if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, isPrimaryEveryGeneralization, false, isSelectedExclusiveSpecification, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedCurrentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
+								if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, isSelectedExclusiveSpecification, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, selectedCurrentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
 									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 								if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL )
@@ -4040,7 +4363,7 @@ class AdminReasoning
 									// Test file: "Scientific challenge"
 									specificationWordItem->bestMatchingRelationContextNrSpecificationItem( true, false, currentSpecificationCollectionNr, NULL ) != NULL &&
 									// Draw simple negative conclusions
-									drawSimpleNegativeConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+									drawSimpleNegativeConclusions( isArchivedAssignment, primarySpecificationItem, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw simple negative conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 									if( !isGeneralizationProperNoun )
@@ -4048,24 +4371,19 @@ class AdminReasoning
 										if( isSelectedExclusiveSpecification )
 											{
 											if( hasCurrentNonCompoundSpecificationCollection &&
-											hasCurrentSpecificationCurrentCreationSentenceNr &&
+											hasCurrentSpecificationCreationSentenceNr &&
 											!isSpanishCurrentLanguage &&
 											// Make generalization assumption definition
-											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, specificationWordTypeNr, generalizationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, currentSpecificationItem, NULL, specificationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, specificationWordTypeNr, generalizationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdOrFoundSpecificationItem, NULL, currentSpecificationItem, NULL, specificationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
 												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a generalization assumption definition about generalization word \"", specificationWordItem->anyWordTypeString(), "\" and specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 											}
 										else
 											{
 											if( !hasCurrentNonCompoundSpecificationCollection &&
 											selectedPrimarySpecificationItem->hasSpecificationCollection() &&
-											( adjectiveSpecificationItem = userSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL &&
-											( exclusiveSpecificationItem = currentSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL )
+											( adjectiveSpecificationItem = userSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
+											( exclusiveSpecificationItem = currentSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL )
 												{
-												if( createdOrFoundSpecificationItem->isOlderItem() &&
-												// Make user generalization assumption definition
-												( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, userSpecificationItem->generalizationWordTypeNr(), exclusiveSpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, exclusiveSpecificationItem, NULL, adjectiveSpecificationItem, NULL, userSpecificationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a user generalization assumption definition about generalization word \"", userSpecificationWordItem->anyWordTypeString(), "\" and specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
-
 												// Find previous user specification
 												if( ( relatedResult = generalizationWordItem->findRelatedSpecification( false, userSpecificationItem ) ).result != RESULT_OK )
 													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find a related specification in word \"", generalizationWordItem->anyWordTypeString(), "\" that is Spanish ambiguous" );
@@ -4073,8 +4391,8 @@ class AdminReasoning
 												if( !currentSpecificationItem->isReplacedItem() &&
 												( previousUserSpecificationItem = relatedResult.relatedSpecificationItem ) != NULL &&
 												( previousUserSpecificationWordItem = previousUserSpecificationItem->specificationWordItem() ) != NULL &&
-												( adjectiveSpecificationItem = previousUserSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL &&
-												( exclusiveSpecificationItem = currentSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL &&
+												( adjectiveSpecificationItem = previousUserSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
+												( exclusiveSpecificationItem = currentSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL &&
 
 												// Specification doesn't exist yet
 												( ( existingSpecificationItem = previousUserSpecificationWordItem->firstSpecificationItem( false, false, false, currentSpecificationWordItem ) ) == NULL ||
@@ -4082,7 +4400,7 @@ class AdminReasoning
 												!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( exclusiveSpecificationItem, adjectiveSpecificationItem ) ) )
 													{
 													// Make previous user generalization assumption definition
-													if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, previousUserSpecificationItem->generalizationWordTypeNr(), exclusiveSpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, exclusiveSpecificationItem, NULL, adjectiveSpecificationItem, NULL, previousUserSpecificationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
+													if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, previousUserSpecificationItem->generalizationWordTypeNr(), exclusiveSpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, exclusiveSpecificationItem, NULL, adjectiveSpecificationItem, NULL, previousUserSpecificationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a previous user generalization assumption definition about generalization word \"", previousUserSpecificationWordItem->anyWordTypeString(), "\" and specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 													if( ( secondarySpecificationItem = createAndAssignResult.createdSpecificationItem ) != NULL &&
@@ -4106,15 +4424,15 @@ class AdminReasoning
 						( selectedPrimarySpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( true, false, false, true, questionParameter, ( compoundGeneralizationWordItem == NULL ? specificationWordItem->compoundCollectionNr() : primarySpecificationItem->specificationCollectionNr() ), specificationWordItem ) ) != NULL )
 							{
 							// Ask adjective question
-							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
+							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION, NO_PREPOSITION_PARAMETER, questionParameter, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, NULL, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask an adjective question about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 							if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) != NULL &&
 							( obsoleteSpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( false, false, false, false, false, currentSpecificationWordItem ) ) != NULL )
 								{
-								// Write invalid assumption by opposite suggestive question (obsolete)
+								// Write invalid suggestive assumption by opposite suggestive question (obsolete)
 								if( generalizationWordItem->writeUpdatedSpecification( false, false, true, false, false, true, false, obsoleteSpecificationItem ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid suggestive assumption by opposite suggestive question (obsolete) in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 								// Replace obsolete adjective assumption by created question
 								if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, createdSpecificationItem ) != RESULT_OK )
@@ -4154,13 +4472,13 @@ class AdminReasoning
 			// Negative specification doesn't exist yet
 			if( previousSpecificationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) == NULL &&
 			// Draw negative conclusion
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, previousUserSpecificationItem, NULL, NULL, NULL, previousSpecificationWordItem, currentSpecificationWordItem, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, previousUserSpecificationItem, NULL, NULL, NULL, previousSpecificationWordItem, currentSpecificationWordItem, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative user conclusion about generalization word \"", previousSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 			// Negative specification doesn't exist yet
 			if( currentSpecificationWordItem->firstSpecificationItem( true, false, false, previousSpecificationWordItem ) == NULL &&
 			// Draw another negative conclusion
-			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentSpecificationWordItem, previousSpecificationWordItem, NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, currentSpecificationWordItem, previousSpecificationWordItem, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw another negative conclusion about generalization word \"", currentSpecificationWordItem->anyWordTypeString(), "\" with specification word \"", previousSpecificationWordItem->anyWordTypeString(), "\"" );
 			}
 
@@ -4170,7 +4488,7 @@ class AdminReasoning
 	signed char drawNegativeUserDefinitionConclusions( bool isArchivedAssignment, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *adjectiveSpecificationWordItem, WordItem *currentSpecificationWordItem )
 		{
 		GeneralizationItem *currentGeneralizationItem;
-		SpecificationItem *createdOrFoundSpecificationItem;
+		SpecificationItem *adjectiveNegativeSpecificationItem;
 		SpecificationItem *definitionSpecificationItem;
 		WordItem *currentGeneralizationWordItem;
 		CreateAndAssignResultType createAndAssignResult;
@@ -4192,10 +4510,10 @@ class AdminReasoning
 		if( generalizationWordItem->firstSpecificationItem( true, false, false, adjectiveSpecificationWordItem ) == NULL )
 			{
 			// Draw adjective negative conclusion
-			if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_ADJECTIVE, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, adjectiveSpecificationWordItem, NULL ) ).result != RESULT_OK )
+			if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_ADJECTIVE, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, NULL, NULL, generalizationWordItem, adjectiveSpecificationWordItem, NULL ) ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw another negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", adjectiveSpecificationWordItem->anyWordTypeString(), "\"" );
 
-			if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
+			if( ( adjectiveNegativeSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
 			// Get first generalization specification noun word
 			( currentGeneralizationItem = adjectiveSpecificationWordItem->firstNounSpecificationGeneralizationItem() ) != NULL )
 				{
@@ -4207,7 +4525,7 @@ class AdminReasoning
 						// Negative definition
 						if( ( definitionSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) ) != NULL &&
 						// Draw negative generalization conclusion (negative definition)
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative generalization conclusion with negative definition about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 
 						// Positive definition
@@ -4216,11 +4534,11 @@ class AdminReasoning
 							// Negative conclusion doesn't exist yet
 							if( generalizationWordItem->firstNonExclusiveSpecificationItem( true, false, false, currentGeneralizationWordItem ) == NULL &&
 							// Draw negative generalization conclusion (positive definition)
-							adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, createdOrFoundSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+							adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, adjectiveNegativeSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative generalization conclusion with positive definition about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 
 							// Draw negative generalization conclusion (reversed, positive definition)
-							if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, true, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, createdOrFoundSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
+							if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, adjectiveNegativeSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversed negative generalization conclusion with positive definition about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 							}
 						}
@@ -4295,21 +4613,21 @@ class AdminReasoning
 			if( firstNegativeOnlyOptionLeftAssignmentItem != NULL &&
 			foundOnlyOptionLeftSpecificationItem != NULL &&
 			// Draw an only option left conclusion
-			adminItem_->addSelfGeneratedSpecification( false, true, isArchivedAssignment, false, false, false, true, false, false, foundOnlyOptionLeftSpecificationItem->isPossessive(), false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, firstOnlyOptionLeftSpecificationItem->generalizationWordTypeNr(), firstOnlyOptionLeftSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, NO_CONTEXT_NR, NO_CONTEXT_NR, firstOnlyOptionLeftSpecificationItem, NULL, firstNegativeOnlyOptionLeftAssignmentItem, NULL, generalizationWordItem, foundOnlyOptionLeftSpecificationItem->specificationWordItem(), NULL ).result != RESULT_OK )
+			adminItem_->addSelfGeneratedSpecification( false, true, isArchivedAssignment, false, false, true, false, false, foundOnlyOptionLeftSpecificationItem->isPossessive(), false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, firstOnlyOptionLeftSpecificationItem->generalizationWordTypeNr(), firstOnlyOptionLeftSpecificationItem->specificationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, NO_CONTEXT_NR, NO_CONTEXT_NR, firstOnlyOptionLeftSpecificationItem, NULL, firstNegativeOnlyOptionLeftAssignmentItem, NULL, generalizationWordItem, foundOnlyOptionLeftSpecificationItem->specificationWordItem(), NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw an only option left noun conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 			}
 
 		return RESULT_OK;
 		}
 
-	signed char drawProperNounPartOfConclusionsInProperNounWords( bool isArchivedAssignment, WordItem *specificationWordItem, WordItem *spanishRelationWordItem )
+	signed char drawProperNounPartOfConclusionsInProperNounWords( bool isArchivedAssignment, bool isSpanishCurrentLanguage, WordItem *specificationWordItem, WordItem *spanishRelationWordItem )
 		{
-		bool hasUserSpecificationCollection;
+		bool hasUserSpecificationCompoundCollection;
 		bool hasUserSpecificationRelationContext;
 		bool isPossessiveUserSpecification;
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-		bool isSpecificationWordSpanishAmbiguous;
+		bool isSpecificationWordSpanishAmbiguous = false;
 		bool isUserSpecificationWordSpanishAmbiguous;
+		unsigned int userSpecificationCollectionNr;
 		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *tempSpecificationItem;
 		SpecificationItem *userSpecificationItem;
@@ -4322,15 +4640,17 @@ class AdminReasoning
 		if( ( userSpecificationItem = adminItem_->userSpecificationItem() ) == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "I couldn't find the user specification item" );
 
-		isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
-
-		hasUserSpecificationCollection = userSpecificationItem->hasSpecificationCollection();
-		hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
-		isPossessiveUserSpecification = userSpecificationItem->isPossessive();
-		isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
-
 		if( ( currentProperNounWordItem = globalVariables_->firstUserDefinedProperNounWordItem ) != NULL )
 			{
+			if( isSpanishCurrentLanguage )
+				isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
+
+			hasUserSpecificationCompoundCollection = userSpecificationItem->hasCompoundSpecificationCollection();
+			hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
+			isPossessiveUserSpecification = userSpecificationItem->isPossessive();
+			isUserSpecificationWordSpanishAmbiguous = userSpecificationItem->isSpecificationWordSpanishAmbiguous();
+			userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
+
 			// Do for all user-defined proper noun words
 			do	{
 				if( currentProperNounWordItem != spanishRelationWordItem )
@@ -4380,12 +4700,25 @@ class AdminReasoning
 
 					if( primarySpecificationItem != NULL &&
 
-					( !hasUserSpecificationCollection ||
-					!hasUserSpecificationRelationContext ||
+					( !hasUserSpecificationRelationContext ||
 					isUserSpecificationWordSpanishAmbiguous ||
-					spanishRelationWordItem != NULL ||
+					userSpecificationCollectionNr == NO_COLLECTION_NR ||
 					primarySpecificationItem == userSpecificationItem ||
-					primarySpecificationItem->hasCurrentCreationSentenceNr() ) &&
+					// Typical for Spanish
+					spanishRelationWordItem != NULL ||
+
+					( primarySpecificationItem->hasCurrentCreationSentenceNr() &&
+
+					( ( hasUserSpecificationCompoundCollection &&
+					primarySpecificationItem->hasNonCompoundSpecificationCollection() ) ||
+
+					( ( isSpanishCurrentLanguage ||
+					primarySpecificationItem->hasNonCompoundSpecificationCollection() ) &&
+
+					primarySpecificationItem->specificationCollectionNr() == userSpecificationCollectionNr ) ||
+
+					( primarySpecificationItem->isOlderItem() &&
+					primarySpecificationItem->hasCompoundSpecificationCollection() ) ) ) ) &&
 
 					// Avoid idle call
 					globalVariables_->firstPossessiveNounWordItem != NULL &&
@@ -4400,7 +4733,7 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawReversibleConclusions( SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
+	signed char drawReversibleConclusions( bool isDrawingPossessiveReversibleConclusions, bool isSpanishCurrentLanguage, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawReversibleConclusions";
 
@@ -4413,27 +4746,27 @@ class AdminReasoning
 		if( generalizationWordItem->firstNonQuestionSpecificationItem( true, true, false ) != NULL )
 			{
 			// Active assignments
-			if( drawReversibleConclusions( true, false, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+			if( drawReversibleConclusions( true, false, isDrawingPossessiveReversibleConclusions, isSpanishCurrentLanguage, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw reversible conclusions with active assignments" );
 			}
 		else
 			{
 			if( generalizationWordItem->firstNonQuestionSpecificationItem( true, true, true ) != NULL &&
 			// Archived assignments
-			drawReversibleConclusions( true, true, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+			drawReversibleConclusions( true, true, isDrawingPossessiveReversibleConclusions, isSpanishCurrentLanguage, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw reversible conclusions with archived assignments" );
 			}
 
 		// Avoid idle call
 		if( generalizationWordItem->firstNonQuestionSpecificationItem( true, false, false ) != NULL &&
 		// Specifications
-		drawReversibleConclusions( false, false, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+		drawReversibleConclusions( false, false, isDrawingPossessiveReversibleConclusions, isSpanishCurrentLanguage, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw reversible conclusions with specifications" );
 
 		return RESULT_OK;
 		}
 
-	signed char drawSimpleNegativeConclusions( bool isArchivedAssignment, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char drawSimpleNegativeConclusions( bool isArchivedAssignment, SpecificationItem *primarySpecificationItem, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem )
 		{
 		bool hasGeneralizationWordCurrentlyConfirmedSpecification;
 		bool hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation;
@@ -4442,10 +4775,7 @@ class AdminReasoning
 		bool hasUserSpecificationRelationContext;
 		bool isDrawingCompoundNegativeConclusions;
 		bool isDrawingNegativeUserConclusion;
-		bool isEveryGeneralization;
-		bool isOlderUserSpecification;
 		bool isPossessiveUserSpecification;
-		bool isProperNounArchivedAssignment;
 		bool isSelfGeneratedPrimarySpecification;
 		bool isUserAssignment;
 		bool isUserRelationWord;
@@ -4454,24 +4784,23 @@ class AdminReasoning
 		unsigned short userSpecificationWordTypeNr;
 		unsigned int compoundCollectionNr = NO_COLLECTION_NR;
 		unsigned int userSpecificationCollectionNr;
-		GeneralizationItem *currentGeneralizationItem;
 		SpecificationItem *createdOrFoundSpecificationItem;
 		SpecificationItem *definitionSpecificationItem;
 		SpecificationItem *existingSpecificationItem;
 		SpecificationItem *negativeSpecificationItem;
 		SpecificationItem *negativeDefinitionSpecificationItem;
 		SpecificationItem *obsoleteSpecificationItem;
-		SpecificationItem *positiveSpecificationItem;
-		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *properNounSpecificationItem;
 		SpecificationItem *simpleUserSpecificationItem;
 		WordItem *collectionWordItem = NULL;
-		WordItem *currentGeneralizationWordItem;
 		WordItem *negativeSpecificationWordItem;
-		WordItem *reversedNegativeSpecificationWordItem;
+		WordItem *specificationWordItem;
 		WordItem *userSpecificationWordItem;
 		CreateAndAssignResultType createAndAssignResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "drawSimpleNegativeConclusions";
+
+		if( primarySpecificationItem == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item is undefined" );
 
 		if( userSpecificationItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
@@ -4479,41 +4808,37 @@ class AdminReasoning
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( specificationWordItem == NULL )
-			return adminItem_->startError( functionNameString, moduleNameString_, "The given specification word item is undefined" );
-
 		if( ( userSpecificationWordItem = userSpecificationItem->specificationWordItem() ) == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item has no specification word" );
 
-		if( ( negativeDefinitionSpecificationItem = specificationWordItem->firstNegativeSpecificationItem() ) != NULL &&
-		( primarySpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, specificationWordItem ) ) != NULL &&
-		!primarySpecificationItem->isHiddenSpanishSpecification() )
+		if( ( specificationWordItem = primarySpecificationItem->specificationWordItem() ) == NULL )
+			return adminItem_->startError( functionNameString, moduleNameString_, "The given primary specification item has no specification word item" );
+
+		if( ( negativeDefinitionSpecificationItem = specificationWordItem->firstNegativeSpecificationItem() ) != NULL )
 			{
 			hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem->hasCurrentlyConfirmedSpecification();
 			hasGeneralizationWordCurrentlyConfirmedSpecificationButNoRelation = generalizationWordItem->hasCurrentlyConfirmedSpecificationButNoRelation();
 			hasGeneralizationWordCurrentlyCorrectedAssumptionByKnowledge = generalizationWordItem->hasCurrentlyCorrectedAssumptionByKnowledge();
 			isUserRelationWord = generalizationWordItem->isUserRelationWord;
 
-			isEveryGeneralization = primarySpecificationItem->isEveryGeneralization();
-			generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
 			isSelfGeneratedPrimarySpecification = primarySpecificationItem->isSelfGeneratedSpecification();
+			generalizationWordTypeNr = primarySpecificationItem->generalizationWordTypeNr();
 
-			isUserAssignment = userSpecificationItem->isAssignment();
-
+			// Don't move, because of redefining user specification
 			if( ( simpleUserSpecificationItem = adminItem_->simpleUserSpecificationItem() ) != NULL )
 				userSpecificationItem = simpleUserSpecificationItem;
 
 			hasUserSpecificationCurrentCreationSentenceNr = userSpecificationItem->hasCurrentCreationSentenceNr();
 			hasUserSpecificationRelationContext = userSpecificationItem->hasRelationContext();
-			isOlderUserSpecification = userSpecificationItem->isOlderItem();
 			isPossessiveUserSpecification = userSpecificationItem->isPossessive();
+			isUserAssignment = userSpecificationItem->isAssignment();
 			userSpecificationWordTypeNr = userSpecificationItem->specificationWordTypeNr();
 			userSpecificationCollectionNr = userSpecificationItem->specificationCollectionNr();
 
-			isDrawingNegativeUserConclusion = ( !isOlderUserSpecification &&
-												userSpecificationItem->isGeneralizationProperNoun() &&
 												// If the user specification is possessive, the user generalization word must be opposite, and otherwise
-												userSpecificationItem->isPossessive() == isUserRelationWord &&
+			isDrawingNegativeUserConclusion = ( isPossessiveUserSpecification == isUserRelationWord &&
+												userSpecificationItem->isGeneralizationProperNoun() &&
+												!userSpecificationItem->isOlderItem() &&
 												!userSpecificationItem->isQuestion() );
 
 			isDrawingCompoundNegativeConclusions = ( isDrawingNegativeUserConclusion &&
@@ -4569,7 +4894,7 @@ class AdminReasoning
 						existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, negativeSpecificationItem, NULL ) ) ) &&
 
 						// Draw negative user conclusion
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, isEveryGeneralization, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, negativeSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, negativeSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a simple negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", negativeSpecificationWordItem->anyWordTypeString(), "\"" );
 						}
 
@@ -4587,18 +4912,13 @@ class AdminReasoning
 
 					// Negative specification exists
 					( existingSpecificationItem != NULL &&
-
-					( !isDrawingNegativeUserConclusion ||
-					!existingSpecificationItem->isOlderItem() ||
-					existingSpecificationItem->hasPrimaryNounSpecificationJustification() ) &&
-
 					// Justification doesn't exist yet in specification
 					!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( primarySpecificationItem, negativeDefinitionSpecificationItem ) &&
 					// Justification has at least the same assumption level
 					existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, primarySpecificationItem, NULL, negativeDefinitionSpecificationItem, NULL ) ) ) )
 						{
 						// Draw simple negative conclusion
-						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, isEveryGeneralization, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, negativeDefinitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ) ).result != RESULT_OK )
+						if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, negativeDefinitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a simple negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", negativeSpecificationWordItem->anyWordTypeString(), "\"" );
 
 						if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL )
@@ -4606,93 +4926,20 @@ class AdminReasoning
 							if( obsoleteSpecificationItem != NULL &&
 							createdOrFoundSpecificationItem->isCorrectedSpecification() )
 								{
-								// Correcting invalidated assumption by knowledge
-								if( correctSuggestiveAssumptionsByKnowledge( createdOrFoundSpecificationItem, userSpecificationItem, generalizationWordItem, negativeSpecificationWordItem ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to correct invalid assumptions by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+								// Test file: "Correcting invalidated assumption (by knowledge)"
+								if( negativeDefinitionSpecificationItem->specificationCollectionNr() == userSpecificationCollectionNr &&
+								// Correct invalid suggestive assumptions by knowledge
+								correctSuggestiveAssumptionsByKnowledge( userSpecificationItem, generalizationWordItem ) != RESULT_OK )
+									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to correct invalid suggestive assumptions by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 								}
 							else
 								{
 								// Definition specification
-								if( isEveryGeneralization )
+								if( generalizationWordTypeNr == WORD_TYPE_NOUN_SINGULAR )
 									{
-									if( negativeSpecificationWordTypeNr != WORD_TYPE_ADJECTIVE &&
-									// Negative definition doesn't exist yet
-									negativeSpecificationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) == NULL &&
 									// Draw negative definition conclusions
-									drawNegativeDefinitionConclusions( isArchivedAssignment, generalizationWordTypeNr, negativeSpecificationWordTypeNr, generalizationWordItem, negativeSpecificationWordItem, specificationWordItem ) != RESULT_OK )
+									if( drawNegativeDefinitionConclusions( isArchivedAssignment, generalizationWordTypeNr, negativeSpecificationWordTypeNr, createdOrFoundSpecificationItem, generalizationWordItem, negativeSpecificationWordItem, specificationWordItem ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw negative definition conclusions" );
-
-									if( ( definitionSpecificationItem = negativeSpecificationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL )
-										definitionSpecificationItem = createdOrFoundSpecificationItem;
-
-									// Get first generalization specification proper noun word
-									if( ( currentGeneralizationItem = generalizationWordItem->firstProperNounSpecificationGeneralizationItem() ) != NULL )
-										{
-										// Do for all generalization specification proper noun words
-										do	{
-											if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
-												return adminItem_->addError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
-
-											if( ( positiveSpecificationItem = currentGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, false, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, negativeSpecificationWordItem ) ) != NULL &&
-
-											( ( existingSpecificationItem = currentGeneralizationWordItem->bestMatchingSpecificationWordSpecificationItem( true, true, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, generalizationWordItem ) ) == NULL ||
-
-											// Justification doesn't exist yet in specification
-											( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, definitionSpecificationItem ) &&
-											// Justification has at least the same assumption level
-											existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) )
-												{
-												isProperNounArchivedAssignment = positiveSpecificationItem->isArchivedAssignment();
-
-												// Draw negative conclusion
-												if( adminItem_->addSelfGeneratedSpecification( false, isProperNounArchivedAssignment, isProperNounArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, generalizationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative conclusion about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-												}
-											}
-										while( ( currentGeneralizationItem = currentGeneralizationItem->nextProperNounSpecificationGeneralizationItem() ) != NULL );
-										}
-
-									// Get first generalization specification noun word
-									if( ( currentGeneralizationItem = generalizationWordItem->firstNounSpecificationGeneralizationItem() ) != NULL )
-										{
-										// Do for all generalization specification noun words
-										do	{
-											if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
-												return adminItem_->startSystemError( functionNameString, moduleNameString_, "I found an undefined generalization word" );
-
-											if( ( positiveSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( false, false, false, negativeSpecificationWordItem ) ) != NULL &&
-											!positiveSpecificationItem->isExclusiveSpecification() &&
-
-											// Specification doesn't exist yet
-											( ( existingSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( true, false, false, generalizationWordItem ) ) == NULL ||
-
-											// Justification doesn't exist yet in specification
-											( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, definitionSpecificationItem ) &&
-											// Justification has at least the same assumption level
-											existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) &&
-
-											// Draw negative adjective conclusion
-											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, definitionSpecificationItem, NULL, currentGeneralizationWordItem, generalizationWordItem, NULL ).result != RESULT_OK )
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative adjective conclusion about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" with specification word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-
-											if( ( reversedNegativeSpecificationWordItem = negativeSpecificationWordItem->collectionWordItem( definitionSpecificationItem->specificationCollectionNr() ) ) != NULL &&
-											( negativeSpecificationItem = currentGeneralizationWordItem->firstSpecificationItem( true, false, false, reversedNegativeSpecificationWordItem ) ) != NULL &&
-											( positiveSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, false, reversedNegativeSpecificationWordItem ) ) != NULL &&
-
-											// Specification doesn't exist yet
-											( ( existingSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, currentGeneralizationWordItem ) ) == NULL ||
-
-											// Justification doesn't exist yet in specification
-											( !existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( positiveSpecificationItem, negativeSpecificationItem) &&
-											// Justification has at least the same assumption level
-											existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, positiveSpecificationItem, NULL, negativeSpecificationItem, NULL ) ) ) &&
-
-											// Draw negative adjective conclusion
-											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, positiveSpecificationItem, NULL, negativeSpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative adjective conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
-											}
-										while( ( currentGeneralizationItem = currentGeneralizationItem->nextNounSpecificationGeneralizationItem() ) != NULL );
-										}
 									}
 								else	// Proper noun specification
 									{
@@ -4707,17 +4954,15 @@ class AdminReasoning
 									// Justification has at least the same assumption level
 									existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, properNounSpecificationItem, NULL, definitionSpecificationItem, NULL ) &&
 									// Draw another reverse simple negative conclusion
-									adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, isEveryGeneralization, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, properNounSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
+									adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, negativeSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, properNounSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, negativeSpecificationWordItem, NULL ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw another reverse simple negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", negativeSpecificationWordItem->anyWordTypeString(), "\"" );
 									}
 								}
 
 							// Test file: "Knowledge of organisms (1)"
-							if( isDrawingNegativeUserConclusion &&
+							if( !hasUserSpecificationRelationContext &&
+							isDrawingCompoundNegativeConclusions &&
 							userSpecificationCollectionNr != compoundCollectionNr &&
-							!primarySpecificationItem->hasAssumptionLevel() &&
-							// Avoid idle call
-							negativeSpecificationWordItem->firstExclusiveSpecificationItem( true ) != NULL &&
 							// Draw negative exclusive conclusions
 							drawNegativeExclusiveConclusions( isArchivedAssignment, generalizationWordTypeNr, createdOrFoundSpecificationItem, generalizationWordItem, negativeSpecificationWordItem ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw negative exclusive conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with negative specification word \"", negativeSpecificationWordItem->anyWordTypeString(), "\"" );
@@ -4738,7 +4983,7 @@ class AdminReasoning
 						existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, definitionSpecificationItem, NULL ) ) ) &&
 
 						// Draw compound negative conclusion
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, isEveryGeneralization, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, collectionWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, userSpecificationItem, NULL, definitionSpecificationItem, NULL, generalizationWordItem, collectionWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a compound negative conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
@@ -4798,7 +5043,7 @@ class AdminReasoning
 					foundSpecificationItem->isUserSpecification() ) &&
 
 					// Draw a specification-generalization conclusion (using current specification)
-					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, true, false, assumptionLevel, JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_PLURAL, currentSpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentSpecificationItem, NULL, NULL, NULL, specificationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, true, false, assumptionLevel, JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_PLURAL, currentSpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentSpecificationItem, NULL, NULL, NULL, specificationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a self-generated specification-generalization substitution specification, using the current specification" );
 
 					if( !isSelfGenerated &&
@@ -4808,7 +5053,7 @@ class AdminReasoning
 					// Specification-generalization doesn't exist yet
 					primarySpecificationWordItem->firstSpecificationItem( false, false, false, primaryGeneralizationWordItem ) == NULL &&
 					// Draw a specification-generalization conclusion (using primary specification)
-					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, true, false, assumptionLevel, JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_PLURAL, primarySpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, primarySpecificationWordItem, primaryGeneralizationWordItem, NULL ).result != RESULT_OK )
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, true, false, assumptionLevel, JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_PLURAL, primarySpecificationItem->generalizationWordTypeNr(), NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, primarySpecificationWordItem, primaryGeneralizationWordItem, NULL ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a self-generated specification-generalization substitution specification, using the primary specification" );
 					}
 				}
@@ -4818,9 +5063,8 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char drawSpecificationSubstitutionConclusionOrAskQuestion( bool isArchivedAssignment, bool isExclusiveSpecification, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+	signed char drawSpecificationSubstitutionConclusionOrAskQuestion( bool isArchivedAssignment, bool isExclusiveSpecification, bool isSpanishCurrentLanguage, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
-		bool hasCurrentlyCorrectedAssumptionByKnowledge;
 		bool hasCurrentSpecificationCollection;
 		bool hasCurrentSpecificationCompoundCollection;
 		bool hasGeneralizationWordActiveQuestionWithCompoundCollection;
@@ -4848,9 +5092,7 @@ class AdminReasoning
 		bool isPossessiveUserSpecification = false;
 		bool isPossessivePrimarySpecification;
 		bool isQuestion = ( questionParameter > NO_QUESTION_PARAMETER );
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
-		bool isSpanishNegativeConclusion = false;
-		bool isSpecificationWordSpanishAmbiguous;
+		bool isSpecificationWordSpanishAmbiguous = false;
 		bool isUserAssignment = false;
 		bool isUserAdjectiveSpecification = false;
 		bool isUserDefinitionSpecification = false;
@@ -4875,12 +5117,15 @@ class AdminReasoning
 		SpecificationItem *existingSpecificationItem;
 		SpecificationItem *feminineOrMasculineSpecificationItem;
 		SpecificationItem *foundPrimarySpecificationItem;
-		SpecificationItem *obsoleteSpecificationItem;
+		SpecificationItem *negativeDefinitionSpecificationItem;
+		SpecificationItem *negativeProperNounSpecificationItem;
+		SpecificationItem *positiveDefinitionSpecificationItem;
 		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *questionSpecificationItem;
 		SpecificationItem *selectedPrimarySpecificationItem;
 		SpecificationItem *selectedAdditionalDefinitionSpecificationItem;
 		SpecificationItem *selectedSecondarySpecificationItem;
+		SpecificationItem *simpleUserSpecificationItem;
 		SpecificationItem *tempSpecificationItem;
 		SpecificationItem *userSpecificationItem;
 		WordItem *collectionWordItem;
@@ -4905,7 +5150,6 @@ class AdminReasoning
 
 		if( ( currentSpecificationItem = specificationWordItem->firstNonNegativeNonPossessiveDefinitionSpecificationItem() ) != NULL )
 			{
-			hasCurrentlyCorrectedAssumptionByKnowledge = generalizationWordItem->hasCurrentlyCorrectedAssumptionByKnowledge();
 			hasGeneralizationWordActiveQuestionWithCompoundCollection = generalizationWordItem->hasActiveQuestionWithCompoundCollection();
 			hasGeneralizationWordCurrentlyConfirmedSpecification = generalizationWordItem->hasCurrentlyConfirmedSpecification();
 			hasGeneralizationWordFeminineProperNounEnding = generalizationWordItem->hasFeminineProperNounEnding();
@@ -4916,8 +5160,12 @@ class AdminReasoning
 
 			isDefinitionSpanishAmbiguous = ( generalizationWordItem == specificationWordItem );
 
-			isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
+			if( isSpanishCurrentLanguage )
+				isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
+
 			compoundSpecificationCollectionNr = specificationWordItem->compoundCollectionNr();
+
+			simpleUserSpecificationItem = adminItem_->simpleUserSpecificationItem();
 
 			if( ( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL )
 				{
@@ -4976,11 +5224,6 @@ class AdminReasoning
 						// Specification doesn't exist yet
 						if( ( existingSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( true, false, isArchivedAssignment, false, isArchivedAssignment, false, false, isQuestion, currentSpecificationCollectionNr, NO_CONTEXT_NR, currentSpecificationWordItem ) ) == NULL )
 							existingSpecificationItem = generalizationWordItem->bestMatchingRelationContextNrSpecificationItem( true, false, isArchivedAssignment, false, isArchivedAssignment, false, false, isQuestion, NO_COLLECTION_NR, NO_CONTEXT_NR, currentSpecificationWordItem );
-
-						if( existingSpecificationItem != NULL &&
-						!isQuestion &&
-						!existingSpecificationItem->isExclusiveSpecification() )
-							isSpanishNegativeConclusion = true;
 
 						if( isExclusiveCurrentSpecification &&
 						!isFeminineOrMasculineGeneralizationWord &&
@@ -5088,13 +5331,13 @@ class AdminReasoning
 									selectedRelationWordTypeNr = ( selectedRelationWordItem == NULL ? NO_WORD_TYPE_NR : WORD_TYPE_PROPER_NOUN );
 
 									// Make a feminine or masculine proper noun ending assumption
-									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, foundPrimarySpecificationItem->prepositionParameter(), NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, selectedRelationWordItem ) ).result != RESULT_OK )
+									if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( true, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, foundPrimarySpecificationItem->prepositionParameter(), NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, selectedRelationWordItem ) ).result != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a feminine or masculine substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 									if( !isUserSpecificationWordSpanishAmbiguous &&
 									createAndAssignResult.createdSpecificationItem != NULL &&
 									// Draw a specification substitution conclusion or ask a question
-									drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
+									drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion or question for generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 									}
 								}
@@ -5118,86 +5361,162 @@ class AdminReasoning
 						hasCurrentSpecificationCollection &&
 						!isOlderCurrentSpecification ) ) )
 							{
+							// Non-exclusive
 							if( ( !isExclusiveSpecification &&
 							isExclusiveCurrentSpecification ) ||
 
-							( isGeneralizationProperNoun &&
-
-							( ( isExclusiveSpecification &&
-							hasCurrentSpecificationCollection &&
-							isOlderCurrentSpecification ) ||
-
-							( isSpecificationWordSpanishAmbiguous &&
-							!isFoundPrimaryHiddenSpanishSpecification &&
-
+							// Exclusive
 							( isExclusiveSpecification &&
-
-							( isUserRelationWord ||
-							isPossessiveUserSpecification ) ) ) ) ) )
+							isGeneralizationProperNoun &&
+							hasCurrentSpecificationCollection &&
+							isOlderCurrentSpecification ) )
 								{
 								// Ask a question or draw a negative conclusion
 								if( isGeneralizationProperNoun &&
 								hasCurrentSpecificationCollection &&
 								userSpecificationWordItem != NULL &&
 
-								// Question
-								( hasSuggestiveQuestionAssumption_ ||
+								// Adjective
+								( ( isAdjectiveCurrentSpecification &&
+								isUserGeneralizationWord ) ||
 
-								// Specification isn't Spanish ambiguous
-								( !isSpecificationWordSpanishAmbiguous &&
+								// Not adjective
+								( !isAdjectiveCurrentSpecification &&
 
-								( !hasGeneralizationWordActiveQuestionWithCompoundCollection ||
-								isExclusiveUserSpecification ||
-								isUserSpecificationWordSpanishAmbiguous ||
+								( hasCurrentSpecificationCompoundCollection ||
 
-								// Skip invalid questions
-								( ( !hasGeneralizationWordFeminineProperNounEnding &&
+								// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
+								( isUserGeneralizationWord &&
+								foundPrimarySpecificationItem->isCorrectedSpecification() ) ) ) ||
+
+								!foundPrimarySpecificationItem->hasCompoundSpecificationCollection() ) &&
+
+								( ( isUserGeneralizationWord &&
+								!hasGeneralizationWordFeminineProperNounEnding &&
 								!hasGeneralizationWordMasculineProperNounEnding ) ||
 
-								!foundPrimarySpecificationItem->isSelfGeneratedQuestion() ) ) &&
+								( ( !isAdjectiveCurrentSpecification ||
+								isUserSpecificationWordSpanishAmbiguous ||
+								foundPrimarySpecificationItem->hasRelationContext() ) &&
 
-								( isAdjectiveCurrentSpecification ||
-								isSpanishCurrentLanguage ||
+								!foundPrimarySpecificationItem->isSelfGeneratedQuestion() ) ) )
+									{
+									positiveDefinitionSpecificationItem = userSpecificationWordItem->firstSpecificationItem( false, false, false, currentSpecificationWordItem );
+									negativeDefinitionSpecificationItem = userSpecificationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem );
 
-								( isUserGeneralizationWord &&
+									// Question part doesn't exist yet
+									if( ( ( ( questionSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, true, currentSpecificationWordItem ) ) == NULL &&
 
-								( ( hasGeneralizationWordCurrentlyConfirmedSpecification ||
-								!hasUserSpecificationRelationContext ) &&
+									( ( negativeProperNounSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) ) == NULL ||
 
-								// Negative specification doesn't exist
-								userSpecificationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) == NULL &&
+									( hasUserSpecificationRelationContext &&
+									isAdjectiveCurrentSpecification &&
 
-								// Question part doesn't exist yet
-								( ( questionSpecificationItem = generalizationWordItem->firstSpecificationItem( false, false, true, currentSpecificationWordItem ) ) == NULL ||
+									// Test files: "Complex (18)" and "Complex (21)"
+									( negativeProperNounSpecificationItem->isOlderItem() ||
 
-								// Question to be adjusted
-								( questionSpecificationItem->isOlderItem() &&
+									( isUserGeneralizationWord &&
 
-								( hasGeneralizationWordCurrentlyConfirmedSpecification ||
-								// Justification doesn't exist yet in question
-								!questionSpecificationItem->hasPrimarySpecificationJustification( foundPrimarySpecificationItem ) ) ) ) ) ) ||
+									( foundPrimarySpecificationItem->hasRelationContext() ||
+									foundPrimarySpecificationItem->hasPrimarySpecificationJustification( simpleUserSpecificationItem ) ) ) ) ) ) ) ||
 
-								( foundPrimarySpecificationItem->isSelfGeneratedSpecification() &&
-								!foundPrimarySpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) &&
-								// Question part doesn't exist yet
-								generalizationWordItem->firstSpecificationItem( false, false, true, currentSpecificationWordItem ) == NULL ) ) ) ||
+									( questionSpecificationItem != NULL &&
 
-								// Specification is Spanish ambiguous
-								( isSpecificationWordSpanishAmbiguous &&
+									( ( ( isAdjectiveCurrentSpecification ||
 
-								( hasPrimarySpecificationNonCompoundCollection ||
-								!isExclusiveCurrentSpecification ||
-								isSpanishNegativeConclusion ||
-								isUserGeneralizationWord ) &&
+									// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
+									( negativeDefinitionSpecificationItem == NULL &&
+									questionSpecificationItem->isCorrectedSpecification() ) ) &&
 
-								( !foundPrimarySpecificationItem->isHiddenSpanishSpecification() ||
+									!questionSpecificationItem->hasPrimarySpecificationJustification( foundPrimarySpecificationItem ) ) ||
 
-								( isUserRelationWord &&
-								userSpecificationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) != NULL ) ) ) ) &&
+									( positiveDefinitionSpecificationItem != NULL &&
+									questionSpecificationItem->isOlderItem() ) ) ) ) &&
 
-								// Ask specification substitution question, or draw negative conclusion
-								askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( isArchivedAssignment, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, ( currentSpecificationWordTypeNr == WORD_TYPE_ADJECTIVE && specificationWordItem->isUserSpecificationWord ? userSpecificationItem : foundPrimarySpecificationItem ), currentSpecificationItem, userSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
-									return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
+									( ( !isSpecificationWordSpanishAmbiguous &&
+
+									( ( isAdjectiveCurrentSpecification &&
+									isUserRelationWord &&
+
+									( isUserSpecificationWordSpanishAmbiguous ||
+									negativeDefinitionSpecificationItem == NULL ) ) ||
+
+									( !isAdjectiveCurrentSpecification &&
+									isUserGeneralizationWord &&
+									negativeDefinitionSpecificationItem == NULL &&
+
+									// Question to be adjusted
+									( hasGeneralizationWordCurrentlyConfirmedSpecification ||
+
+									( !hasUserSpecificationRelationContext &&
+
+									// Question part doesn't exist yet
+									( questionSpecificationItem == NULL ||
+									// Justification doesn't exist yet in question
+									!questionSpecificationItem->hasPrimarySpecificationJustification( foundPrimarySpecificationItem ) ) ) ) ) ||
+
+									( isAdjectiveCurrentSpecification &&
+									isUserGeneralizationWord &&
+									!hasGeneralizationWordCurrentlyConfirmedSpecification &&
+
+									( !hasUserSpecificationRelationContext ||
+									isUserSpecificationWordSpanishAmbiguous ||
+									foundPrimarySpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) ) ) ||
+
+									( positiveDefinitionSpecificationItem == NULL &&
+									foundPrimarySpecificationItem->isSelfGeneratedSpecification() &&
+									!foundPrimarySpecificationItem->hasPrimarySpecificationJustification( userSpecificationItem ) ) ||
+
+									( isSpanishCurrentLanguage &&
+									!isAdjectiveCurrentSpecification &&
+
+									// Spanish test file: "Juan es el padre de Paz - José - Luisa - Bonita"
+									( !isUserGeneralizationWord ||
+									// Spanish test file: "Complejo (8)"
+									questionSpecificationItem != NULL ||
+									foundPrimarySpecificationItem->hasRelationContextCurrentlyBeenUpdated() ) ) ) ) ||
+
+									// Typical for Spanish
+									( isSpecificationWordSpanishAmbiguous &&
+
+									// User generalization word
+									( ( ( isUserGeneralizationWord ||
+									// Spanish test file: "Reto científico"
+									currentSpecificationItem == userSpecificationItem ) &&
+
+									!foundPrimarySpecificationItem->isHiddenSpanishSpecification() ) ||
+
+									// Not user generalization word
+									( !isUserGeneralizationWord &&
+									negativeDefinitionSpecificationItem != NULL &&
+									negativeDefinitionSpecificationItem->hasNonCompoundSpecificationCollection() &&
+
+									( ( isAdjectiveCurrentSpecification &&
+									foundPrimarySpecificationItem->hasRelationContextCurrentlyBeenUpdated() &&
+
+									// Spanish test files: "Complejo (13)" and "Complejo (16)"
+									( foundPrimarySpecificationItem->isOlderItem() ||
+
+									// Spanish test files: "Definición sencilla de la familia - Complejo (7 - Bonita)" and "Definición sencilla de la familia - Informe de justificación"
+									( isUserAssignment &&
+									// Question part already exists
+									questionSpecificationItem != NULL &&
+									!foundPrimarySpecificationItem->hasOnlyOneRelationWord() ) ) ) ||
+
+									// Spanish test file: "José es hijo - José tiene 2 padres"
+									( !isAdjectiveCurrentSpecification &&
+									// Question part already exists
+									questionSpecificationItem != NULL ) ) ) ) ) ) )
+										{
+										selectedPrimarySpecificationItem = ( currentSpecificationWordTypeNr == WORD_TYPE_ADJECTIVE &&
+																			specificationWordItem->isUserSpecificationWord ? userSpecificationItem :
+																															foundPrimarySpecificationItem );
+
+										// Ask specification substitution question, or draw negative conclusion
+										if( askSpecificationSubstitutionQuestionOrDrawNegativeConclusion( isArchivedAssignment, isSpanishCurrentLanguage, generalizationWordTypeNr, specificationWordTypeNr, generalizationContextNr, specificationContextNr, selectedPrimarySpecificationItem, currentSpecificationItem, simpleUserSpecificationItem, userSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to ask a specification substitution question or to draw a negative conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
+										}
+									}
 								}
 							else
 								{
@@ -5296,31 +5615,16 @@ class AdminReasoning
 												{
 												primarySpecificationItem = alternativePrimarySpecificationItem;
 
-												if( existingSpecificationItem != NULL &&
-												primarySpecificationItem != NULL )
-													{
-													if( isUserGeneralizationWord )
-														{
-														// Test file: "Laura - John and Anna - Joe"
-														if( existingSpecificationItem->hasCurrentCreationSentenceNr() &&
-														primarySpecificationItem->hasNonCompoundSpecificationCollection() &&
-														primarySpecificationItem->isSelfGeneratedAssumption() &&
-														existingSpecificationItem->assumptionLevel() > primarySpecificationItem->assumptionLevel() &&
-														// Recalculate assumption level of existing specification
-														existingSpecificationItem->recalculateAssumptionLevel( false ) != RESULT_OK )
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to recalculate the assumption level of the existing specification" );
-														}
-													else
-														{
-														// Test files: "Complex (12)" and "Complex (15)"
-														if( !existingSpecificationItem->hasCurrentCreationSentenceNr() &&
-														primarySpecificationItem->isOlderItem() &&
-														primarySpecificationItem->assumptionLevel() > existingSpecificationItem->assumptionLevel() &&
-														// Recalculate assumption level of primary specification
-														primarySpecificationItem->recalculateAssumptionLevel( false ) != RESULT_OK )
-															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to recalculate the assumption level of the primary specification" );
-														}
-													}
+												// Test file: "Complex (15)"
+												if( !isUserGeneralizationWord &&
+												existingSpecificationItem != NULL &&
+												primarySpecificationItem != NULL &&
+												!existingSpecificationItem->hasCurrentCreationSentenceNr() &&
+												primarySpecificationItem->isOlderItem() &&
+												primarySpecificationItem->assumptionLevel() > existingSpecificationItem->assumptionLevel() &&
+												// Recalculate assumption level of primary specification
+												primarySpecificationItem->recalculateAssumptionLevel( false ) != RESULT_OK )
+													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to recalculate the assumption level of the primary specification" );
 												}
 											}
 										}
@@ -5328,7 +5632,7 @@ class AdminReasoning
 									hasPrimarySpecificationRelationContext = ( primarySpecificationItem == NULL ? false : primarySpecificationItem->hasRelationContext() );
 									isPossessivePrimarySpecification = ( primarySpecificationItem == NULL ? false : primarySpecificationItem->isPossessive() );
 									archivedAssignmentItem = NULL;
-
+	
 									if( isArchivedUserAssignment &&
 									isUserDefinitionSpecification )
 										{
@@ -5406,9 +5710,6 @@ class AdminReasoning
 									( hasUserSpecificationRelationContext &&
 									isUserRelationWord ) ) ) ) &&
 
-									( !primarySpecificationItem->isCorrectedSpecification() ||
-									!primarySpecificationItem->isSelfGeneratedAssumption() ) &&
-
 									( hasPrimarySpecificationRelationContext ||
 									!existingSpecificationItem->isArchivedAssignment() ) ) ) &&
 
@@ -5438,7 +5739,7 @@ class AdminReasoning
 										selectedRelationWordTypeNr = ( selectedRelationWordItem == NULL ? NO_WORD_TYPE_NR : WORD_TYPE_PROPER_NOUN );
 
 										// Make a compound specification substitution assumption
-										if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, generalizationContextNr, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, alternativeSpanishAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, selectedRelationWordItem ) ).result != RESULT_OK )
+										if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, generalizationContextNr, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, alternativeSpanishAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, selectedRelationWordItem ) ).result != RESULT_OK )
 											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a compound specification substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 										if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL )
@@ -5460,12 +5761,12 @@ class AdminReasoning
 											hasUserSpecificationRelationContext &&
 											!isPossessiveUserSpecification &&
 											!isUserSpecificationWordSpanishAmbiguous &&
-											( selectedPrimarySpecificationItem = adminItem_->simpleUserSpecificationItem() ) != NULL &&
+											simpleUserSpecificationItem != NULL &&
 											( oppositeSpecificationWordItem = currentSpecificationWordItem->collectionWordItem( createdOrFoundSpecificationItem->specificationCollectionNr() ) ) != NULL &&
 											( collectionWordItem = specificationWordItem->collectionWordItem( userSpecificationCollectionNr ) ) != NULL &&
 											( selectedAdditionalDefinitionSpecificationItem = collectionWordItem->firstSpecificationItem( false, false, false, currentSpecificationWordItem ) ) != NULL &&
 											// Draw negative Spanish assumption
-											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, createdOrFoundSpecificationItem, NULL, generalizationWordItem, oppositeSpecificationWordItem, NULL ).result != RESULT_OK )
+											adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, simpleUserSpecificationItem, selectedAdditionalDefinitionSpecificationItem, createdOrFoundSpecificationItem, NULL, generalizationWordItem, oppositeSpecificationWordItem, NULL ).result != RESULT_OK )
 												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a negative Spanish assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", oppositeSpecificationWordItem->anyWordTypeString(), "\"" );
 											}
 										}
@@ -5484,7 +5785,7 @@ class AdminReasoning
 									existingSpecificationItem->isOlderItem() ) ) &&
 
 									// Draw a specification substitution conclusion or ask a question
-									drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, currentSpecificationWordItem, NULL ) != RESULT_OK )
+									drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, generalizationWordItem, currentSpecificationWordItem, NULL ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish specification substitution conclusion or question for generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 									}
 								else
@@ -5532,15 +5833,27 @@ class AdminReasoning
 										existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, primarySpecificationItem, NULL, currentSpecificationItem, NULL ) ) )
 											{
 											// Draw a compound specification substitution conclusion
-											if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, primarySpecificationItem->isEveryGeneralization(), false, isExclusiveSpecification, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, currentSpecificationItem->generalizationContextNr(), currentSpecificationItem->specificationContextNr(), NO_CONTEXT_NR, primarySpecificationItem, NULL, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
+											if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, isExclusiveSpecification, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, currentSpecificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, currentSpecificationItem->generalizationContextNr(), currentSpecificationItem->specificationContextNr(), NO_CONTEXT_NR, primarySpecificationItem, NULL, currentSpecificationItem, NULL, generalizationWordItem, currentSpecificationWordItem, NULL ) ).result != RESULT_OK )
 												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a specification substitution conclusion about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentSpecificationWordItem->anyWordTypeString(), "\"" );
 
 											if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
-											createdOrFoundSpecificationItem->hasCurrentCreationSentenceNr() &&
-											( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL &&
-											// Remove obsolete assumption justifications from created or found specification
-											createdOrFoundSpecificationItem->removeObsoleteAssumptionJustifications( false, false ) != RESULT_OK )
-												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove obsolete assumption justifications from the older created or found specification" );
+											createdOrFoundSpecificationItem->hasCurrentCreationSentenceNr() )
+												{
+												if( createdOrFoundSpecificationItem->isCorrectedSpecification() )
+													{
+													// Test file: "Correcting invalidated assumption (by knowledge)"
+													// Correct invalid suggestive assumptions by knowledge
+													if( correctSuggestiveAssumptionsByKnowledge( createdOrFoundSpecificationItem, generalizationWordItem ) != RESULT_OK )
+														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to correct invalid suggestive assumptions by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
+													}
+												else
+													{
+													if( ( createdSpecificationItem = createAndAssignResult.createdSpecificationItem ) == NULL &&
+													// Remove obsolete assumption justifications from created or found specification
+													createdOrFoundSpecificationItem->removeObsoleteAssumptionJustifications( false, false ) != RESULT_OK )
+														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove obsolete assumption justifications from the older created or found specification" );
+													}
+												}
 											}
 
 										if( isGeneralizationProperNoun &&
@@ -5569,7 +5882,7 @@ class AdminReasoning
 												// Avoid idle call
 												generalizationWordItem->firstSpecificationItem( false, false, isArchivedUserAssignment, true ) != NULL &&
 												// Make indirectly answered question assumption
-												makeIndirectlyAnsweredQuestionAssumption( isArchivedUserAssignment, generalizationWordTypeNr, createdOrFoundSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+												makeIndirectlyAnsweredQuestionAssumption( isArchivedUserAssignment, isSpanishCurrentLanguage, generalizationWordTypeNr, createdOrFoundSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
 													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an indirectly answered question assumption about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 												}
 
@@ -5586,7 +5899,7 @@ class AdminReasoning
 												// Avoid idle call
 												specificationWordItem->firstNegativeSpecificationItem() != NULL &&
 												// Draw simple negative conclusions
-												drawSimpleNegativeConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+												drawSimpleNegativeConclusions( isArchivedAssignment, primarySpecificationItem, userSpecificationItem, generalizationWordItem ) != RESULT_OK )
 													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw simple negative conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 												}
 											else
@@ -5612,20 +5925,6 @@ class AdminReasoning
 													existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, userSpecificationItem, NULL, definitionSpecificationItem ) != RESULT_OK )
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a specification substitution justification to the existing specification" );
 													}
-												}
-
-											if( hasCurrentlyCorrectedAssumptionByKnowledge &&
-											createdSpecificationItem != NULL &&
-											// Find obsolete specification (incorrect assumption that has been corrected)
-											( obsoleteSpecificationItem = generalizationWordItem->firstSpecificationItem( true, false, false, currentSpecificationWordItem ) ) != NULL )
-												{
-												// Write invalid assumption by knowledge
-												if( generalizationWordItem->writeUpdatedSpecification( false, true, false, false, false, false, false, obsoleteSpecificationItem ) != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an invalid assumption by knowledge about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-
-												// Replace incorrect assumption
-												if( generalizationWordItem->replaceOrDeleteSpecification( obsoleteSpecificationItem, createdSpecificationItem ) != RESULT_OK )
-													return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace a corrected specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 												}
 											}
 										}
@@ -5660,7 +5959,7 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char makeExclusiveSpecificationSubstitutionAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isUncountableGeneralizationNoun, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
+	signed char makeExclusiveSpecificationSubstitutionAssumption( bool isArchivedAssignment, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSpanishCurrentLanguage, bool isUncountableGeneralizationNoun, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem )
 		{
 		bool hasExistingSpecificationCurrentCreationSentenceNr;
 		bool hasExistingSpecificationRelationContext;
@@ -5674,6 +5973,7 @@ class AdminReasoning
 		bool hasRelationWordMasculineProperNounEnding;
 		bool hasReplacedHiddenSpecification;
 		bool hasSecondarySpecificationRelationContext;
+		bool isDrawingPossessiveReversibleConclusions;
 		bool isExistingHiddenSpanishSpecification;
 		bool isHiddenPrimarySpecification;
 		bool isHiddenSecondarySpecification;
@@ -5684,9 +5984,7 @@ class AdminReasoning
 		bool isPrimarySameAsSecondarySpecification;
 		bool isPrimarySpecificationAssignment;
 		bool isPrimaryUserSpecification;
-		bool isRelationWordUserWordGeneralization = false;
 		bool isSelectedSecondaryUserSpecification;
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
 		bool isUserRelationWord;
 		unsigned short prepositionParameter;
 		unsigned short selectedJustificationTypeNr;
@@ -5716,7 +6014,7 @@ class AdminReasoning
 		SpecificationItem *tempSpecificationItem;
 		WordItem *commonWordItem;
 		WordItem *currentPossessiveNounWordItem;
-		WordItem *feminineSpecificationWordItem;
+		WordItem *feminineSpecificationWordItem = NULL;
 		WordItem *oppositePossessiveDefinitionSpecificationWordItem = NULL;
 		WordItem *possessiveDefinitionSpecificationWordItem = NULL;
 		WordItem *possessiveSpecificationWordItem;
@@ -5777,7 +6075,6 @@ class AdminReasoning
 					{
 					hasRelationWordConfirmedSpecification = relationWordItem->hasCurrentlyConfirmedSpecification();
 					hasRelationWordFeminineOrMasculineProperNounEnding = relationWordItem->hasFeminineOrMasculineProperNounEnding();
-					isRelationWordUserWordGeneralization = relationWordItem->isUserGeneralizationWord;
 					}
 
 				// Do for all possessive noun words
@@ -5786,7 +6083,7 @@ class AdminReasoning
 					currentPossessiveNounWordItem != generalizationWordItem )
 						{
 						// Find possessive specifications
-						if( ( findSpecificationResult = findPossessiveSpecifications( currentPossessiveNounWordItem, specificationWordItem) ).result != RESULT_OK)
+						if( ( findSpecificationResult = findPossessiveSpecifications( currentPossessiveNounWordItem, specificationWordItem ) ).result != RESULT_OK)
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find possessive specifications in word \"", currentPossessiveNounWordItem->anyWordTypeString(), "\"" );
 
 						hasReplacedHiddenSpecification = false;
@@ -5815,7 +6112,7 @@ class AdminReasoning
 								primarySpecificationItem->specificationWordItem() == possessiveDefinitionSpecificationWordItem ) ) )
 									{
 									// Draw Spanish specification substitution conclusion
-									if( drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) != RESULT_OK )
+									if( drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, NO_CONTEXT_NR, NO_CONTEXT_NR, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) != RESULT_OK )
 										return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish specification substitution conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 									}
 								else
@@ -5842,7 +6139,7 @@ class AdminReasoning
 										!commonWordItem->isNounWordSpanishAmbiguous() &&
 										( definitionSpecificationItem = commonWordItem->firstAssignmentOrSpecificationItem( false, isArchivedAssignment, false, false, false, possessiveSpecificationWordItem ) ) != NULL &&
 										// Make generalization assumption
-										adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, commonWordItem, NULL ).result != RESULT_OK )
+										adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, definitionSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, commonWordItem, NULL ).result != RESULT_OK )
 											return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a generalization assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", commonWordItem->anyWordTypeString(), "\"" );
 
 										// User specification doesn't exist yet
@@ -5887,7 +6184,7 @@ class AdminReasoning
 												if( selectedSecondarySpecificationItem != NULL )
 													{
 													// Make specification substitution assumption
-													if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, prepositionParameter, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
+													if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, prepositionParameter, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, selectedSecondarySpecificationItem, NULL, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a specification substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and possessive specification word \"", possessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 
 													if( ( createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem ) != NULL &&
@@ -5902,7 +6199,7 @@ class AdminReasoning
 													// Typical for Spanish
 													if( isSpanishCurrentLanguage )
 														{
-														if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasFeminineOrMasculineProperNounEnding, isArchivedAssignment, isArchivedAssignment, false, false, false, false, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, prepositionParameter, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, foundPossessiveDefinitionSpecificationItem->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, possessiveSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
+														if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasFeminineOrMasculineProperNounEnding, isArchivedAssignment, isArchivedAssignment, false, false, false, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, prepositionParameter, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, selectedRelationWordTypeNr, foundPossessiveDefinitionSpecificationItem->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, possessiveSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, possessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
 															return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a selected assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and possessive specification word \"", possessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 
 														createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem;
@@ -5930,13 +6227,14 @@ class AdminReasoning
 												secondarySpecificationItem = createdOrFoundSpecificationItem->updatedSpecificationItem();
 
 												// Typical for Spanish
-												if( isPossessiveSpecificationWordSpanishAmbiguous )
+												if( isPossessiveSpecificationWordSpanishAmbiguous &&
+												generalizationWordItem->hasCurrentlyConfirmedSpecificationAndAtLeastOneRelation() )
 													{
 													hasReplacedHiddenSpecification = true;
 
 													// Spanish test file: "Que haya confirmado al menos una palabra de relación"
 													// Draw simple negative conclusions
-													if( drawSimpleNegativeConclusions( isArchivedAssignment, userSpecificationItem, generalizationWordItem, primarySpecificationItem->specificationWordItem() ) != RESULT_OK )
+													if( drawSimpleNegativeConclusions( isArchivedAssignment, adminItem_->simpleUserSpecificationItem(), userSpecificationItem, generalizationWordItem ) != RESULT_OK)
 														return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw simple negative conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 													}
 												}
@@ -5951,7 +6249,7 @@ class AdminReasoning
 							primarySpecificationItem != NULL &&
 							( foundSpecificationItem = currentPossessiveNounWordItem->firstSpecificationItem( false, true, false, specificationWordItem ) ) != NULL &&
 							// Uncountable generalization noun. Example: "Water ..."
-							adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationAssignment, false, false, false, false, false, false, false, false, false, false, false, isUncountableGeneralizationNoun, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, foundSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ).result != RESULT_OK )
+							adminItem_->addSelfGeneratedSpecification( false, isPrimarySpecificationAssignment, false, false, false, false, false, false, false, false, false, false, isUncountableGeneralizationNoun, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, foundSpecificationItem, NULL, primarySpecificationItem, NULL, generalizationWordItem, currentPossessiveNounWordItem, NULL ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentPossessiveNounWordItem->anyWordTypeString(), "\"" );
 							}
 
@@ -6142,7 +6440,7 @@ class AdminReasoning
 												}
 
 											// Make an opposite possessive specification assumption
-											if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasRelationWordMasculineProperNounEnding, false, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, foundPossessiveDefinitionSpecificationItem->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, oppositePossessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
+											if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( hasRelationWordMasculineProperNounEnding, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, foundPossessiveDefinitionSpecificationItem->specificationCollectionNr(), NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, oppositePossessiveDefinitionSpecificationWordItem, relationWordItem ) ).result != RESULT_OK )
 												return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and opposite possessive specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 
 											createdSpecificationItem = createAndAssignResult.createdSpecificationItem;
@@ -6163,10 +6461,7 @@ class AdminReasoning
 														if( isFeminineOrMasculineProperNounEnding( false, generalizationWordItem, oppositePossessiveDefinitionSpecificationWordItem, relationWordItem ) )
 															{
 															hasFeminineOrMasculineProperNounEnding = true;
-															feminineSpecificationWordItem = NULL;
-
-															if( feminineSpecificationWordItem_ != NULL )
-																feminineSpecificationWordItem = oppositePossessiveDefinitionSpecificationWordItem->feminineCollectionWordItem();
+															feminineSpecificationWordItem = ( spanishFeminineSpecificationWordItem_ == NULL ? NULL : oppositePossessiveDefinitionSpecificationWordItem->feminineCollectionWordItem() );
 
 															if( !hasGeneralizationWordMasculineProperNounEnding &&
 															feminineSpecificationWordItem != NULL &&
@@ -6181,7 +6476,7 @@ class AdminReasoning
 															existingSpecificationItem->assumptionLevel() >= adminItem_->justificationAssumptionLevel( true, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, primarySpecificationItem, foundOppositePossessiveDefinitionSpecificationItem, additionalDefinitionSpecificationItem, NULL ) ) ) &&
 
 															// Make exclusive Spanish feminine specification substitution assumption
-															adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, foundOppositePossessiveDefinitionSpecificationItem, additionalDefinitionSpecificationItem, NULL, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ).result != RESULT_OK )
+															adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, isNegative, false, !isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, foundOppositePossessiveDefinitionSpecificationItem, additionalDefinitionSpecificationItem, NULL, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ).result != RESULT_OK )
 																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an exclusive Spanish feminine specification substitution assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and opposite possessive specification word \"", feminineSpecificationWordItem->anyWordTypeString(), "\"" );
 															}
 
@@ -6204,12 +6499,12 @@ class AdminReasoning
 																}
 
 															// Make a compound specification exclusive specification substitution assumption (opposite)
-															if( adminItem_->addSelfGeneratedSpecification( hasFeminineOrMasculineProperNounEnding, false, false, false, false, false, false, isNegative, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, oppositePossessiveDefinitionSpecificationWordItem, relationWordItem ).result != RESULT_OK )
+															if( adminItem_->addSelfGeneratedSpecification( hasFeminineOrMasculineProperNounEnding, false, false, false, false, false, isNegative, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, selectedJustificationTypeNr, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, selectedPrimarySpecificationItem, selectedAdditionalDefinitionSpecificationItem, selectedSecondarySpecificationItem, NULL, generalizationWordItem, oppositePossessiveDefinitionSpecificationWordItem, relationWordItem ).result != RESULT_OK )
 																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a compound exclusive specification substitution assumption that is Spanish ambiguous in word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 
-															if( feminineSpecificationWordItem_ != NULL &&
-															adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, false, isNegative, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, ( hasFeminineOrMasculineProperNounEnding ? compoundSpecificationItem : foundOppositePossessiveDefinitionSpecificationItem ), ( hasFeminineOrMasculineProperNounEnding ? foundOppositePossessiveDefinitionSpecificationItem : NULL ), ( hasFeminineOrMasculineProperNounEnding ? additionalDefinitionSpecificationItem : compoundSpecificationItem ), NULL, generalizationWordItem, feminineSpecificationWordItem_, relationWordItem ).result != RESULT_OK )
-																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a feminine compound exclusive specification substitution assumption that is Spanish ambiguous in word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", feminineSpecificationWordItem_->anyWordTypeString(), "\"" );
+															if( feminineSpecificationWordItem != NULL &&
+															adminItem_->addSelfGeneratedSpecification( true, false, false, false, false, false, isNegative, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, generalizationWordTypeNr, WORD_TYPE_NOUN_SINGULAR, selectedRelationWordTypeNr, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, ( hasFeminineOrMasculineProperNounEnding ? compoundSpecificationItem : foundOppositePossessiveDefinitionSpecificationItem ), ( hasFeminineOrMasculineProperNounEnding ? foundOppositePossessiveDefinitionSpecificationItem : NULL ), ( hasFeminineOrMasculineProperNounEnding ? additionalDefinitionSpecificationItem : compoundSpecificationItem ), NULL, generalizationWordItem, feminineSpecificationWordItem, relationWordItem ).result != RESULT_OK )
+																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a Spanish feminine compound exclusive specification substitution assumption that is Spanish ambiguous in word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", feminineSpecificationWordItem->anyWordTypeString(), "\"" );
 															}
 														}
 													}
@@ -6262,7 +6557,7 @@ class AdminReasoning
 															existingSpecificationItem = existingSpecificationItem->updatedSpecificationItem();
 
 															// Draw reversible conclusion
-															if( adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, existingSpecificationItem, NULL, NULL, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+															if( adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, existingSpecificationItem, NULL, NULL, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible conclusion about word \"", relationWordItem->anyWordTypeString(), "\" with specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 															}
 
@@ -6283,20 +6578,13 @@ class AdminReasoning
 																if( isPrimarySpecificationAssignment )
 																	{
 																	if( !isSelectedSecondaryUserSpecification &&
-																	!selectedSecondarySpecificationItem->isOlderItem() )
-																		{
-																		// Test file: "John - Anna (before family definition)"
-																		// Remove obsolete assumption justifications from existing specification
-																		if( existingSpecificationItem->removeObsoleteAssumptionJustifications( false, false ) != RESULT_OK )
-																			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to remove obsolete assumption justifications from the existing specification" );
-
-																		if( ( additionalSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( false, false, false, false, false, possessiveDefinitionSpecificationWordItem, relationWordItem ) ) != NULL &&
-																		// Justification doesn't exist yet in specification
-																		!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( foundPossessiveDefinitionSpecificationItem, additionalSpecificationItem ) &&
-																		// Add additional opposite possessive conclusion justification to existing specification
-																		existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, foundPossessiveDefinitionSpecificationItem, NULL, additionalSpecificationItem ) != RESULT_OK )
-																			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an additional opposite possessive conclusion justification to the existing specification" );
-																		}
+																	!selectedSecondarySpecificationItem->isOlderItem() &&
+																	( additionalSpecificationItem = generalizationWordItem->firstSelfGeneratedCheckSpecificationItem( false, false, false, false, false, possessiveDefinitionSpecificationWordItem, relationWordItem ) ) != NULL &&
+																	// Justification doesn't exist yet in specification
+																	!existingSpecificationItem->hasPrimaryAndSecondarySpecificationJustification( foundPossessiveDefinitionSpecificationItem, additionalSpecificationItem ) &&
+																	// Add additional opposite possessive conclusion justification to existing specification
+																	existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION, foundPossessiveDefinitionSpecificationItem, NULL, additionalSpecificationItem ) != RESULT_OK )
+																		return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add an additional opposite possessive conclusion justification to the existing specification" );
 																	}
 																else
 																	{
@@ -6331,7 +6619,7 @@ class AdminReasoning
 																		return adminItem_->addError( functionNameString, moduleNameString_, "I failed to replace the existing Spanish specification in word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 																	// Typical for Spanish
-																	if( ( olderJustificationItem = existingSpecificationItem->firstOlderJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) ) != NULL &&
+																	if( ( olderJustificationItem = existingSpecificationItem->firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) ) != NULL &&
 																	// Attach older justification to created specification
 																	createdSpecificationItem->attachJustificationToSpecification( olderJustificationItem ) != RESULT_OK )
 																		return adminItem_->addError( functionNameString, moduleNameString_, "I failed to attach an older justification item to the created assumption" );
@@ -6350,7 +6638,7 @@ class AdminReasoning
 															if( !isOppositePossessiveSpecificationWordSpanishAmbiguous &&
 															( foundSpecificationItem = relationWordItem->bestMatchingRelationContextNrSpecificationItem( false, false, (unsigned int)NO_COLLECTION_NR, oppositePossessiveDefinitionSpecificationWordItem ) ) != NULL &&
 															// Draw reversible conclusion
-															adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdSpecificationItem, NULL, NULL, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
+															adminItem_->addSelfGeneratedSpecification( false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION, WORD_PARAMETER_PREPOSITION_OF, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, createdSpecificationItem, NULL, NULL, NULL, relationWordItem, oppositePossessiveDefinitionSpecificationWordItem, generalizationWordItem ).result != RESULT_OK )
 																return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a reversible conclusion about word \"", relationWordItem->anyWordTypeString(), "\" with specification word \"", oppositePossessiveDefinitionSpecificationWordItem->anyWordTypeString(), "\"" );
 															}
 														}
@@ -6371,8 +6659,15 @@ class AdminReasoning
 				secondarySpecificationItem != NULL &&
 				relationWordItem != NULL )
 					{
+					isDrawingPossessiveReversibleConclusions = ( ( !isUserRelationWord &&
+																primarySpecificationItem == userSpecificationItem ) ||
+
+																( isUserRelationWord &&
+																!isPossessive &&
+																primarySpecificationItem != secondarySpecificationItem ) );
+
 					// Draw reversible conclusions
-					if( drawReversibleConclusions( userSpecificationItem, relationWordItem ) != RESULT_OK )
+					if( drawReversibleConclusions( isDrawingPossessiveReversibleConclusions, isSpanishCurrentLanguage, userSpecificationItem, relationWordItem ) != RESULT_OK)
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw reversible conclusions about word \"", relationWordItem->anyWordTypeString(), "\"" );
 
 					if( isSpanishCurrentLanguage &&
@@ -6384,14 +6679,14 @@ class AdminReasoning
 					selectedAdditionalProperNounSpecificationItem = ( isHiddenPrimarySpecification ? userSpecificationItem :
 																									primarySpecificationItem );
 
-					if( ( ( isRelationWordUserWordGeneralization ||
+					if( ( ( isUserRelationWord ||
 					primarySpecificationItem == userSpecificationItem ) &&
 
 					( isSpanishCurrentLanguage ||
 					!secondarySpecificationItem->hasCompoundSpecificationCollection() ) ) &&
 
 					// Make an opposite possessive specification assumption (based on secondary specification)
-					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, secondarySpecificationItem, selectedAdditionalProperNounSpecificationItem, userSpecificationItem, generalizationWordItem, relationWordItem ) != RESULT_OK )
+					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, isSpanishCurrentLanguage, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, secondarySpecificationItem, selectedAdditionalProperNounSpecificationItem, userSpecificationItem, generalizationWordItem, relationWordItem ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption (based on secondary specification) during the making an exclusive specification substitution assumption about word \"", generalizationWordItem->anyWordTypeString(), "\" to specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 					if( existingSpecificationItem != NULL &&
@@ -6401,7 +6696,7 @@ class AdminReasoning
 					( ( !isSpanishCurrentLanguage &&
 					isPossessive &&
 
-					( !isRelationWordUserWordGeneralization ||
+					( !isUserRelationWord ||
 					!existingSpecificationItem->hasCurrentCreationSentenceNr() ) &&
 
 					( isUserRelationWord ||
@@ -6414,7 +6709,7 @@ class AdminReasoning
 					existingSpecificationItem->isHiddenSpanishSpecification() ) ) &&
 
 					// Make an opposite possessive specification assumption (based on existing specification)
-					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, existingSpecificationItem, ( isHiddenPrimarySpecification ? userSpecificationItem : primarySpecificationItem ), userSpecificationItem, generalizationWordItem, relationWordItem ) != RESULT_OK )
+					makeOppositePossessiveSpecificationAssumption( isArchivedAssignment, isExclusiveSpecification, isPossessive, isSpanishCurrentLanguage, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, existingSpecificationItem, ( isHiddenPrimarySpecification ? userSpecificationItem : primarySpecificationItem ), userSpecificationItem, generalizationWordItem, relationWordItem ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an opposite possessive specification assumption (based on existing specification) during the making an exclusive specification substitution assumption about word \"", generalizationWordItem->anyWordTypeString(), "\" to specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 					}
 				}
@@ -6423,14 +6718,13 @@ class AdminReasoning
 		return RESULT_OK;
 		}
 
-	signed char makeIndirectlyAnsweredQuestionAssumption( bool isArchivedAssignment, unsigned short generalizationWordTypeNr, SpecificationItem *adjectiveSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char makeIndirectlyAnsweredQuestionAssumption( bool isArchivedAssignment, bool isSpanishCurrentLanguage, unsigned short generalizationWordTypeNr, SpecificationItem *adjectiveSpecificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		unsigned short specificationWordTypeNr;
 		unsigned int currentSpecificationCollectionNr;
 		SpecificationItem *additionalDefinitionSpecificationItem;
 		SpecificationItem *createdOrFoundSpecificationItem;
 		SpecificationItem *currentQuestionSpecificationItem;
-		SpecificationItem *negativeDefinitionSpecificationItem;
 		SpecificationItem *relatedSpecificationItem;
 		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *secondarySpecificationItem;
@@ -6474,19 +6768,19 @@ class AdminReasoning
 					( primarySpecificationItem = generalizationWordItem->firstOlderNonPossessiveNonQuestionSpecificationItem( isArchivedAssignment ) ) != NULL &&
 					( primarySpecificationWordItem = primarySpecificationItem->specificationWordItem() ) != NULL &&
 					( additionalDefinitionSpecificationItem = primarySpecificationWordItem->firstSpecificationItem( false, false, false, currentQuestionSpecificationWordItem ) ) != NULL &&
-					( secondarySpecificationItem = relatedSpecificationWordItem->firstAdjectiveSpecificationItem( false ) ) != NULL )
+					( secondarySpecificationItem = relatedSpecificationWordItem->firstAdjectiveSpecificationItem( false, false ) ) != NULL )
 						{
 						// Typical for Spanish
 						if( primarySpecificationItem->isSpecificationWordSpanishAmbiguous() )
 							{
 							// Draw Spanish specification substitution conclusion or ask a question
-							if( drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, false, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, generalizationWordItem, currentQuestionSpecificationWordItem, NULL ) != RESULT_OK )
+							if( drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, false, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, generalizationWordItem, currentQuestionSpecificationWordItem, NULL ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw a Spanish specification substitution conclusion or ask a question about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 							}
 						else
 							{
 							// Draw an indirectly answered question conclusion
-							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, secondarySpecificationItem, adjectiveSpecificationItem, generalizationWordItem, currentQuestionSpecificationWordItem, NULL ) ).result != RESULT_OK )
+							if( ( createAndAssignResult = adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, secondarySpecificationItem, adjectiveSpecificationItem, generalizationWordItem, currentQuestionSpecificationWordItem, NULL ) ).result != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make an indirectly answered question assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" with specification word \"", currentQuestionSpecificationWordItem->anyWordTypeString(), "\"" );
 
 							createdOrFoundSpecificationItem = createAndAssignResult.createdOrFoundSpecificationItem;
@@ -6494,17 +6788,16 @@ class AdminReasoning
 						}
 
 					if( createdOrFoundSpecificationItem != NULL &&
-					currentQuestionSpecificationItem->isSpecificationWordSpanishAmbiguous() )
+					currentQuestionSpecificationItem->isSpecificationWordSpanishAmbiguous() &&
+					currentQuestionSpecificationItem->isExclusiveSpecification() )
 						{
 						// Spanish test file: "Preguntas respondidas indirectamente - Juan es masculino"
-						if( ( negativeDefinitionSpecificationItem = currentQuestionSpecificationWordItem->firstNegativeSpecificationItem() ) != NULL &&
-						!negativeDefinitionSpecificationItem->hasSpecificationCollection() &&
 						// Draw simple Spanish negative conclusions
-						drawSimpleNegativeConclusions( isArchivedAssignment, adjectiveSpecificationItem, generalizationWordItem, currentQuestionSpecificationWordItem ) != RESULT_OK )
+						if( drawSimpleNegativeConclusions( isArchivedAssignment, createdOrFoundSpecificationItem, adjectiveSpecificationItem, generalizationWordItem ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw simple negative Spanish conclusions about generalization word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 
 						// Draw Spanish proper noun part-of conclusions in proper noun words
-						if( drawProperNounPartOfConclusionsInProperNounWords( isArchivedAssignment, currentQuestionSpecificationWordItem, NULL ) != RESULT_OK )
+						if( drawProperNounPartOfConclusionsInProperNounWords( isArchivedAssignment, true, currentQuestionSpecificationWordItem, NULL ) != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw Spanish proper noun 'part of' conclusions in proper noun words" );
 
 						// Find answers to questions
@@ -6570,7 +6863,7 @@ class AdminReasoning
 					if( ( primarySpecificationItem = generalizationWordItem->firstAssignmentOrSpecificationItem( true, true, false, isPossessive, false, currentGeneralizationWordItem ) ) != NULL &&
 					( additionalDefinitionSpecificationItem = currentGeneralizationWordItem->firstAssignmentOrSpecificationItem( false, false, false, isPossessive, false, onlyOptionLeftSpecificationWordItem ) ) != NULL &&
 					// Make an only option left assumption
-					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, true, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, userSpecificationItem, NULL, generalizationWordItem, onlyOptionLeftSpecificationWordItem, NULL ).result != RESULT_OK )
+					adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, true, false, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, additionalDefinitionSpecificationItem, userSpecificationItem, NULL, generalizationWordItem, onlyOptionLeftSpecificationWordItem, NULL ).result != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to draw an only option left conclusion about word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 					}
 				while( ( currentGeneralizationItem = currentGeneralizationItem->nextNounSpecificationGeneralizationItem() ) != NULL );
@@ -6615,8 +6908,9 @@ class AdminReasoning
 			hasGeneralizationWordFeminineProperNounEnding = generalizationWordItem->hasFeminineProperNounEnding();
 			isChineseCurrentLanguage = adminItem_->isChineseCurrentLanguage();
 			isFeminineOrMasculineGeneralizationWord = generalizationWordItem->isFeminineOrMasculineWord();
-			isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
 			isUserGeneralizationWord = generalizationWordItem->isUserGeneralizationWord;
+
+			isSpecificationWordSpanishAmbiguous = specificationWordItem->isNounWordSpanishAmbiguous();
 
 			if( userSpecificationItem == NULL )
 				return adminItem_->startError( functionNameString, moduleNameString_, "The given user specification item is undefined" );
@@ -6679,14 +6973,10 @@ class AdminReasoning
 						primarySpecificationItem->isExclusiveSpecification() &&
 
 						( !isFeminineOrMasculineGeneralizationWord ||
-						secondarySpecificationItem->hasNonCompoundSpecificationCollection() ) &&
+						primarySpecificationItem->isSelfGeneratedSpecification() ) &&
 
-						// Skip if user specification already exists
-						generalizationWordItem->firstUserSpecificationItem( false, false, NO_COLLECTION_NR, NO_CONTEXT_NR, currentGeneralizationWordItem ) == NULL &&
-						// Skip if justification with primary specification already exists
-						generalizationWordItem->primaryAndSecondarySpecificationJustificationItem( false, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, primarySpecificationItem, secondarySpecificationItem ) == NULL &&
 						// Make generalization assumption
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, !isGeneralizationProperNoun, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, primarySpecificationItem, NULL, secondarySpecificationItem, NULL, generalizationWordItem, currentGeneralizationWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to make a generalization assumption about generalization word \"", generalizationWordItem->anyWordTypeString(), "\" and specification word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 						}
 					}
@@ -6728,29 +7018,25 @@ class AdminReasoning
 				// Typical for Spanish:
 				// Skip making suggestive assumption if specification word is Spanish ambiguous,
 				// and if user question has more than one generalization words
-				if( !primarySpecificationItem->isSpecificationWordSpanishAmbiguous() ||
-				globalVariables_->nUserGeneralizationWords == 1 )
-					{
-					hasSuggestiveQuestionAssumption_ = true;
+				if( ( !primarySpecificationItem->isSpecificationWordSpanishAmbiguous() ||
+				globalVariables_->nUserGeneralizationWords == 1 ) &&
 
-					// Make a suggestive question assumption
-					if( adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, NULL ).result != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a suggestive question assumption to word \"", generalizationWordItem->anyWordTypeString(), "\"" );
-					}
+				// Make a suggestive question assumption
+				adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, isNegative, false, isPossessive, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, generalizationContextNr, specificationContextNr, NO_CONTEXT_NR, primarySpecificationItem, NULL, NULL, NULL, generalizationWordItem, specificationWordItem, NULL ).result != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a suggestive question assumption to word \"", generalizationWordItem->anyWordTypeString(), "\"" );
 				}
 			}
 
 		return RESULT_OK;
 		}
 
-	CompoundResultType drawCompoundSpecificationSubstitutionConclusion( unsigned short specificationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *specificationWordItem )
+	CompoundResultType drawCompoundSpecificationSubstitutionConclusion( bool isSpanishCurrentLanguage, unsigned short specificationWordTypeNr, SpecificationItem *userSpecificationItem, WordItem *specificationWordItem )
 		{
 		bool hasNonCompoundUserSpecificationCollection;
 		bool hasUserSpecificationCollection;
 		bool isArchivedAssignment;
 		bool isExclusiveSpecification;
 		bool isExclusiveUserSpecification;
-		bool isSpanishCurrentLanguage = adminItem_->isSpanishCurrentLanguage();
 		unsigned short generalizationWordTypeNr;
 		GeneralizationItem *currentGeneralizationItem;
 		SpecificationItem *foundSpecificationItem;
@@ -6808,7 +7094,7 @@ class AdminReasoning
 						foundSpecificationItem->hasCompoundSpecificationCollection() ) &&
 
 						// Make a specification substitution definition assumption
-						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, foundSpecificationItem->isEveryGeneralization(), false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, foundSpecificationItem, NULL, secondaryDefinitionSpecificationItem, NULL, currentGeneralizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
+						adminItem_->addSelfGeneratedSpecification( false, isArchivedAssignment, isArchivedAssignment, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, foundSpecificationItem, NULL, secondaryDefinitionSpecificationItem, NULL, currentGeneralizationWordItem, secondarySpecificationWordItem, NULL ).result != RESULT_OK )
 							return adminItem_->addCompoundResultError( functionNameString, moduleNameString_, "I failed to make a specification substitution definition assumption about word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 
 						if( ( hasUserSpecificationCollection ||
@@ -6817,7 +7103,7 @@ class AdminReasoning
 						// Avoid idle call
 						specificationWordItem->firstNonNegativeNonPossessiveDefinitionSpecificationItem() != NULL &&
 						// Draw a compound specification substitution conclusion
-						drawCompoundSpecificationSubstitutionConclusion( isArchivedAssignment, isExclusiveSpecification, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, foundSpecificationItem, NULL, userSpecificationItem, currentGeneralizationWordItem, specificationWordItem ) != RESULT_OK )
+						drawCompoundSpecificationSubstitutionConclusion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, foundSpecificationItem, NULL, userSpecificationItem, currentGeneralizationWordItem, specificationWordItem ) != RESULT_OK )
 							return adminItem_->addCompoundResultError( functionNameString, moduleNameString_, "I failed to draw a compound specification substitution conclusion about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 						if( ( ( ( !isExclusiveSpecification ||
@@ -6840,7 +7126,7 @@ class AdminReasoning
 						userSpecificationItem->hasCompoundSpecificationCollection() ) ) &&
 
 						// Draw a specification substitution conclusion or ask a question
-						drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentGeneralizationWordItem, specificationWordItem, NULL ) != RESULT_OK )
+						drawSpecificationSubstitutionConclusionOrAskQuestion( isArchivedAssignment, isExclusiveSpecification, isSpanishCurrentLanguage, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentGeneralizationWordItem, specificationWordItem, NULL ) != RESULT_OK )
 							return adminItem_->addCompoundResultError( functionNameString, moduleNameString_, "I failed to draw a normal specification substitution conclusion or ask a question about generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 						if( isExclusiveSpecification &&
@@ -6858,7 +7144,7 @@ class AdminReasoning
 									// Avoid idle call
 									if( relatedSpecificationWordItem->firstNonNegativeNonPossessiveDefinitionSpecificationItem() != NULL &&
 									// Draw a specification substitution conclusion or ask a question
-									drawSpecificationSubstitutionConclusionOrAskQuestion( relatedSpecificationItem->isArchivedAssignment(), relatedSpecificationItem->isExclusiveSpecification(), relatedSpecificationItem->questionParameter(), relatedSpecificationItem->generalizationWordTypeNr(), specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentGeneralizationWordItem, relatedSpecificationWordItem, NULL ) != RESULT_OK )
+									drawSpecificationSubstitutionConclusionOrAskQuestion( relatedSpecificationItem->isArchivedAssignment(), relatedSpecificationItem->isExclusiveSpecification(), isSpanishCurrentLanguage, relatedSpecificationItem->questionParameter(), relatedSpecificationItem->generalizationWordTypeNr(), specificationWordTypeNr, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, currentGeneralizationWordItem, relatedSpecificationWordItem, NULL ) != RESULT_OK )
 										return adminItem_->addCompoundResultError( functionNameString, moduleNameString_, "I failed to draw a related specification substitution conclusion or question for generalization word \"", currentGeneralizationWordItem->anyWordTypeString(), "\" and specification word \"", specificationWordItem->anyWordTypeString(), "\"" );
 
 									// Make a related specification substitution 'part of' assumption

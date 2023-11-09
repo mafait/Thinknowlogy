@@ -199,6 +199,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 < Paul is mannelijk.
 < Paul is geen meisje.
 < Paul is geen moeder.
@@ -216,6 +222,14 @@
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen zoon.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen man.
+< Iedere dochter is geen vader.
+< Iedere zoon is geen dochter.
+< Iedere jongen is geen dochter.
+< Iedere man is geen dochter.
+< Iedere vader is geen dochter.
 < Laura is vrouwelijk.
 < Laura is geen zoon.
 < Laura is geen jongen.
@@ -232,122 +246,6 @@
 * 
 * Mijn vragen:
 < Is Laura een meisje of een vrouw?
-< 
-* 
-* Mijn conclusies:
-< Iedere man is geen meisje. Omdat:
-<	- Iedere man is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-< Iedere man is geen moeder. Omdat:
-<	- Iedere man is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-< Iedere man is niet vrouwelijk. Omdat:
-<	- Iedere man is mannelijk.
-< Iedere man is geen vrouw. Omdat:
-<	- Iedere man is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-* 
-* Mijn veronderstellingen:
-< Een man is waarschijnlijk geen jongen. Omdat:
-<	- Iedere zoon is een jongen of een man.
-< Een man is waarschijnlijk een persoon. Omdat:
-<	- Ieder persoon is mannelijk of vrouwelijk.
-<	- Iedere man is mannelijk.
-< 
-* 
-* Mijn conclusies:
-< Iedere vrouw is geen jongen. Omdat:
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
-< Iedere vrouw is geen vader. Omdat:
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere vader is niet vrouwelijk.
-< Iedere vrouw is niet mannelijk. Omdat:
-<	- Iedere vrouw is vrouwelijk.
-< Iedere vrouw is geen man. Omdat:
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is niet vrouwelijk.
-* 
-* Mijn veronderstellingen:
-< Een vrouw is waarschijnlijk geen meisje. Omdat:
-<	- Iedere dochter is een meisje of een vrouw.
-< Een vrouw is waarschijnlijk een persoon. Omdat:
-<	- Ieder persoon is mannelijk of vrouwelijk.
-<	- Iedere vrouw is vrouwelijk.
-< 
-* 
-* Mijn conclusies:
-< Ieder persoon is mannelijk of vrouwelijk. Omdat:
-<	- Ieder persoon is een man of een vrouw.
-<	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
-< 
-* 
-* Mijn conclusies:
-< Iedere vader is geen meisje. Omdat:
-<	- Iedere vader is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-< Iedere vader is geen moeder. Omdat:
-<	- Iedere vader is mannelijk.
-<	- Iedere moeder is vrouwelijk.
-* 	en:
-<	- Iedere vader is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-* 	en:
-<	- Iedere vader is een man.
-<	- Iedere man is geen moeder.
-< Iedere vader is mannelijk. Omdat:
-<	- Iedere vader is een man.
-<	- Iedere man is mannelijk.
-< Iedere vader is geen vrouw. Omdat:
-<	- Iedere vader is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
-<	- Iedere vader is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-< Iedere vader is niet vrouwelijk. Omdat:
-<	- Iedere vader is een man.
-<	- Iedere man is niet vrouwelijk.
-* 
-* Mijn veronderstellingen:
-< Een vader is waarschijnlijk een persoon. Omdat:
-<	- Iedere vader is een man.
-<	- Een man is waarschijnlijk een persoon.
-< 
-* 
-* Mijn conclusies:
-< Iedere moeder is geen jongen. Omdat:
-<	- Iedere moeder is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
-< Iedere moeder is vrouwelijk. Omdat:
-<	- Iedere moeder is een vrouw.
-<	- Iedere vrouw is vrouwelijk.
-< Iedere moeder is geen vader. Omdat:
-<	- Iedere moeder is een vrouw.
-<	- Iedere vrouw is geen vader.
-* 	en:
-<	- Iedere moeder is vrouwelijk.
-<	- Iedere vader is niet vrouwelijk.
-< Iedere moeder is niet mannelijk. Omdat:
-<	- Iedere moeder is een vrouw.
-<	- Iedere vrouw is niet mannelijk.
-< Iedere moeder is geen man. Omdat:
-<	- Iedere moeder is een vrouw.
-<	- Iedere vrouw is geen man.
-* 	en:
-<	- Iedere moeder is vrouwelijk.
-<	- Iedere man is niet vrouwelijk.
-* 
-* Mijn veronderstellingen:
-< Een moeder is waarschijnlijk een persoon. Omdat:
-<	- Ieder persoon is mannelijk of vrouwelijk.
-<	- Iedere moeder is vrouwelijk.
-* 	en:
-<	- Ieder persoon is een man of een vrouw.
-<	- Iedere moeder is een vrouw.
-* 	en:
-<	- Iedere moeder is een vrouw.
-<	- Een vrouw is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -372,18 +270,90 @@
 < 
 * 
 * Mijn conclusies:
+< Ieder persoon is mannelijk of vrouwelijk. Omdat:
+<	- Ieder persoon is een man of een vrouw.
+<	- Iedere vrouw is vrouwelijk.
+<	- Iedere man is mannelijk.
+< 
+* 
+* Mijn conclusies:
+< Iedere moeder is geen zoon. Omdat:
+<	- Iedere moeder is vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
+< Iedere moeder is geen jongen. Omdat:
+<	- Iedere moeder is vrouwelijk.
+<	- Iedere jongen is niet vrouwelijk.
+< Iedere moeder is vrouwelijk. Omdat:
+<	- Iedere moeder is een vrouw.
+<	- Iedere vrouw is vrouwelijk.
+< Iedere moeder is geen vader. Omdat:
+<	- Iedere moeder is een vrouw.
+<	- Iedere vrouw is geen vader.
+* 	en:
+<	- Iedere moeder is vrouwelijk.
+<	- Iedere vader is niet vrouwelijk.
+< Iedere moeder is niet mannelijk. Omdat:
+<	- Iedere moeder is een vrouw.
+<	- Iedere vrouw is niet mannelijk.
+< Iedere moeder is geen man. Omdat:
+<	- Iedere moeder is vrouwelijk.
+<	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Iedere moeder is een vrouw.
+<	- Iedere vrouw is geen man.
+* 
+* Mijn veronderstellingen:
+< Een moeder is waarschijnlijk een persoon. Omdat:
+<	- Iedere moeder is een vrouw.
+<	- Een vrouw is waarschijnlijk een persoon.
+< 
+* 
+* Mijn conclusies:
+< Iedere vrouw is geen zoon. Omdat:
+<	- Iedere vrouw is vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
+< Iedere vrouw is geen jongen. Omdat:
+<	- Iedere vrouw is vrouwelijk.
+<	- Iedere jongen is niet vrouwelijk.
+< Iedere vrouw is geen vader. Omdat:
+<	- Iedere vrouw is vrouwelijk.
+<	- Iedere vader is niet vrouwelijk.
+< Iedere vrouw is niet mannelijk. Omdat:
+<	- Iedere vrouw is vrouwelijk.
+< Iedere vrouw is geen man. Omdat:
+<	- Iedere vrouw is vrouwelijk.
+<	- Iedere man is niet vrouwelijk.
+* 
+* Mijn veronderstellingen:
+< Een vrouw is waarschijnlijk geen meisje. Omdat:
+<	- Iedere dochter is een meisje of een vrouw.
+< Een vrouw is waarschijnlijk een persoon. Omdat:
+<	- Ieder persoon is mannelijk of vrouwelijk.
+<	- Iedere vrouw is vrouwelijk.
+< 
+* 
+* Mijn conclusies:
 < Paul is mannelijk. Omdat:
 <	- Paul is een zoon van Jan.
 <	- Iedere zoon is mannelijk.
 < Paul is geen meisje. Omdat:
 <	- Paul is mannelijk.
 <	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Paul is een zoon van Jan.
+<	- Iedere zoon is geen meisje.
 < Paul is geen moeder. Omdat:
 <	- Paul is mannelijk.
 <	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Paul is een zoon van Jan.
+<	- Iedere zoon is geen moeder.
 < Paul is geen vrouw. Omdat:
 <	- Paul is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Paul is een zoon van Jan.
+<	- Iedere zoon is geen vrouw.
 < Paul is niet vrouwelijk. Omdat:
 <	- Paul is een zoon van Jan.
 <	- Iedere zoon is niet vrouwelijk.
@@ -506,15 +476,27 @@
 < Laura is geen zoon. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere zoon is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter van Anna.
+<	- Iedere dochter is geen zoon.
 < Laura is geen jongen. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter van Anna.
+<	- Iedere dochter is geen jongen.
 < Laura is geen man. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter van Anna.
+<	- Iedere dochter is geen man.
 < Laura is geen vader. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere vader is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter van Anna.
+<	- Iedere dochter is geen vader.
 < Laura is niet mannelijk. Omdat:
 <	- Laura is een dochter van Anna.
 <	- Iedere dochter is niet mannelijk.
@@ -590,11 +572,11 @@
 * 
 * Mijn vragen:
 < Is Willem mannelijk of vrouwelijk? Omdat:
-<	- Willem is mogelijk een persoon.
-<	- Ieder persoon is mannelijk of vrouwelijk.
-* 	en:
 <	- Willem is waarschijnlijk een ouder.
 <	- Iedere ouder is mannelijk of vrouwelijk.
+* 	en:
+<	- Willem is mogelijk een persoon.
+<	- Ieder persoon is mannelijk of vrouwelijk.
 < Is Willem een man of een vrouw? Omdat:
 <	- Willem is mogelijk een persoon.
 <	- Ieder persoon is een man of een vrouw.

@@ -308,6 +308,12 @@
 //				additionalProperNounSpecificationItem_ == additionalProperNounSpecificationItem );
 		}
 
+	bool JustificationItem::hasPrimarySpecificationCurrentCreationSentenceNr()
+		{
+		return ( primarySpecificationItem_ != NULL &&
+				primarySpecificationItem_->hasCurrentCreationSentenceNr() );
+		}
+
 	bool JustificationItem::hasPrimarySpecificationRelationContext()
 		{
 		return ( primarySpecificationItem_ != NULL &&
@@ -320,10 +326,10 @@
 				primarySpecificationItem_->isExclusiveSpecification() );
 		}
 
-	bool JustificationItem::isNegativePrimarySpecification()
+	bool JustificationItem::isOlderPrimarySpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isNegative() );
+				primarySpecificationItem_->isOlderItem() );
 		}
 
 	bool JustificationItem::isPossessivePrimarySpecification()
@@ -455,11 +461,6 @@
 	bool JustificationItem::isSuggestiveQuestionAssumption()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION );
-		}
-
-	bool JustificationItem::isUniqueUserRelationAssumptionOrConclusion()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION );
 		}
 
 	unsigned short JustificationItem::justificationTypeNr()

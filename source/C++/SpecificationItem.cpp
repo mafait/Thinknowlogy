@@ -167,46 +167,6 @@ class SpecificationItem : private Item
 		return false;
 		}
 
-	signed char addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion()
-		{
-		SpecificationItem *existingSpecificationItem;
-		SpecificationItem *negativeDefinitionSpecificationItem;
-		WordItem *definitionSpecificationWordItem;
-		WordItem *_myWordItem = myWordItem();
-		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion";
-
-		if( isNegative_ )
-			return startError( functionNameString, NULL, "I am a negative specification" );
-
-		if( specificationWordItem_ == NULL )
-			return startError( functionNameString, NULL, "I have no specification word item" );
-
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
-
-		if( isReplacedOrDeletedItem() )
-			return startError( functionNameString, NULL, "I am a replaced or deleted specification" );
-
-		if( ( negativeDefinitionSpecificationItem = specificationWordItem_->firstNegativeSpecificationItem() ) != NULL )
-			{
-			// Do for all context words with my relation context number
-			do	{
-				if( ( definitionSpecificationWordItem = negativeDefinitionSpecificationItem->specificationWordItem() ) != NULL &&
-				( existingSpecificationItem = _myWordItem->firstSpecificationItem( true, false, false, definitionSpecificationWordItem ) ) != NULL &&
-				// Justification doesn't exist yet in existing specification
-				!existingSpecificationItem->hasSecondarySpecificationJustification( negativeDefinitionSpecificationItem ) &&
-				// Justification has at least the same assumption level
-				existingSpecificationItem->assumptionLevel() >= Item::justificationAssumptionLevel( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem, NULL ) &&
-				// Add negative justification to existing specification
-				existingSpecificationItem->addJustificationToSpecification( false, JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION, this, NULL, negativeDefinitionSpecificationItem ) != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to add a negative justification to the existing specification" );
-				}
-			while( ( negativeDefinitionSpecificationItem = negativeDefinitionSpecificationItem->nextNegativeSpecificationItem() ) != NULL );
-			}
-
-		return RESULT_OK;
-		}
-
 	signed char addJustificationsToContextSpecifications()
 		{
 		SpecificationItem *definitionSpecificationItem;
@@ -343,10 +303,12 @@ class SpecificationItem : private Item
 		if( isReplacedOrDeletedItem() )
 			return startError( functionNameString, NULL, "I am a replaced or deleted specification" );
 
+		// Quick condition check
 		if( ( !_hasRelationContext ||
 		assumptionLevel_ <= previousAssumptionLevel ||
 		assumptionLevel_ >= NUMBER_OF_ASSUMPTION_LEVELS ) &&
 
+		// Within defined number of assumption levels
 		( previousAssumptionLevel < NUMBER_OF_ASSUMPTION_LEVELS ||
 		assumptionLevel_ < NUMBER_OF_ASSUMPTION_LEVELS ) &&
 
@@ -385,29 +347,21 @@ class SpecificationItem : private Item
 			}
 		else
 			{
-			if( generalizationWordTypeNr_ == WORD_TYPE_PROPER_NOUN )
+			// Definition specification
+			if( generalizationWordTypeNr_ == WORD_TYPE_NOUN_SINGULAR &&
+			// Get first generalization specification proper noun word
+			( currentGeneralizationItem = specificationWordItem_->firstProperNounSpecificationGeneralizationItem() ) != NULL )
 				{
-				if( !isNegative_ &&
-				// Add negative justifications to simple specifications, from positive conclusion
-				addNegativeJustificationsToSimpleSpecificationsFromPositiveConclusion() != RESULT_OK )
-					return addError( functionNameString, NULL, "I failed to add negative justifications to simple specifications, from a positive conclusion" );
-				}
-			else	// Definition specification
-				{
-				// Get first generalization specification proper noun word
-				if( ( currentGeneralizationItem = specificationWordItem_->firstProperNounSpecificationGeneralizationItem() ) != NULL )
-					{
-					// Do for all generalization specification proper noun words
-					do	{
-						if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
-							return addError( functionNameString, NULL, "I found an undefined generalization word" );
+				// Do for all generalization specification proper noun words
+				do	{
+					if( ( currentGeneralizationWordItem = currentGeneralizationItem->generalizationWordItem() ) == NULL )
+						return addError( functionNameString, NULL, "I found an undefined generalization word" );
 
-						// Recalculate assumption levels of specifications in proper noun word
-						if( currentGeneralizationWordItem->recalculateAssumptionLevelsInWord() != RESULT_OK )
-							return addError( functionNameString, NULL, "I failed to recalculate the assumption levels of specifications in proper noun word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
-						}
-					while( ( currentGeneralizationItem = currentGeneralizationItem->nextProperNounSpecificationGeneralizationItem() ) != NULL );
+					// Recalculate assumption levels of specifications in proper noun word
+					if( currentGeneralizationWordItem->recalculateAssumptionLevelsInWord() != RESULT_OK )
+						return addError( functionNameString, NULL, "I failed to recalculate the assumption levels of specifications in proper noun word \"", currentGeneralizationWordItem->anyWordTypeString(), "\"" );
 					}
+				while( ( currentGeneralizationItem = currentGeneralizationItem->nextProperNounSpecificationGeneralizationItem() ) != NULL );
 				}
 			}
 
@@ -1138,6 +1092,21 @@ class SpecificationItem : private Item
 		return false;
 		}
 
+	bool hasJustificationWithAdditionalDefinitionSpecification()
+		{
+		JustificationItem *searchJustificationItem = firstJustificationItem_;
+
+		while( searchJustificationItem != NULL )
+			{
+			if( searchJustificationItem->additionalDefinitionSpecificationItem() != NULL )
+				return true;
+
+			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
+			}
+
+		return false;
+		}
+
 	bool hasPrimaryNounSpecificationJustification()
 		{
 		JustificationItem *searchJustificationItem = firstJustificationItem_;
@@ -1483,22 +1452,6 @@ class SpecificationItem : private Item
 			{
 			if( searchJustificationItem->justificationTypeNr() == justificationTypeNr &&
 			searchJustificationItem->primaryGeneralizationWordItem() == primaryGeneralizationWordItem )
-				return searchJustificationItem;
-
-			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
-			}
-
-		return NULL;
-		}
-
-	JustificationItem *firstOlderJustificationItem( unsigned short justificationTypeNr )
-		{
-		JustificationItem *searchJustificationItem = firstJustificationItem_;
-
-		while( searchJustificationItem != NULL )
-			{
-			if( searchJustificationItem->isOlderItem() &&
-			searchJustificationItem->justificationTypeNr() == justificationTypeNr )
 				return searchJustificationItem;
 
 			searchJustificationItem = searchJustificationItem->attachedJustificationItem();
@@ -2235,8 +2188,7 @@ class SpecificationItem : private Item
 					if( changeFirstJustification( true, attachJustificationItem ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to change my first justification item" );
 
-					if( !_myWordItem->hasCurrentlyCorrectedAssumptionByKnowledge() &&
-					attachJustificationItem->attachJustification( originalFirstJustificationItem, this ) != RESULT_OK )
+					if( attachJustificationItem->attachJustification( originalFirstJustificationItem, this ) != RESULT_OK )
 						return addError( functionNameString, NULL, "I failed to attach the first justification item of myself to the given attached justification item" );
 					}
 				else
@@ -2503,25 +2455,27 @@ class SpecificationItem : private Item
 			{
 			hasChangedAssumptionLevel = ( previousAssumptionLevel != assumptionLevel_ );
 
-			// Older specification
-			if( ( isOlderSpecification ||
+			if( ( ( isOlderSpecification &&
+			!isNegative_ ) ||
 
-			// Not older specification
 			( isSituationStable &&
+
+			// No relation context
+			( ( !_hasRelationContext &&
 
 			( isNegative_ ||
 
-			// Test file: "Complex (12)"
+			// Test file: "John - Anna (before family definition)"
 			( !hasChangedAssumptionLevel &&
-			isPartOf_ ) ||
+			isPartOf_ ) ) ) ||
 
+			// Relation context
 			( _hasRelationContext &&
-			hasNonCompoundSpecificationCollection() ) ) &&
+			hasNonCompoundSpecificationCollection() &&
 
-			( !_hasRelationContext ||
-			isPossessive_ ||
+			( isPossessive_ ||
 			myWordItem()->isUserRelationWord ||
-			firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == NULL ) ) ) &&
+			firstJustificationItem( JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION ) == NULL ) ) ) ) ) &&
 
 			// Remove obsolete assumption justifications
 			removeObsoleteAssumptionJustifications( isOlderSpecification, isSituationStable ) != RESULT_OK )
@@ -2564,9 +2518,12 @@ class SpecificationItem : private Item
 		if( !hasCurrentCreationSentenceNr() )
 			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
 
-//		isOnlySelectingOlderJustifications = isOlderItem();
+		isIncludingNegativeAssumptionOrConclusion = ( ( assumptionLevel_ == NO_ASSUMPTION_LEVEL &&
 
-		isIncludingNegativeAssumptionOrConclusion = ( assumptionLevel_ == NO_ASSUMPTION_LEVEL ||
+													( !hasConfirmedAnySpecification ||
+													!isOnlySelectingOlderJustifications ||
+													// Test file: "My assumptions that are confirmed (John)"
+													!firstJustificationItem_->hasPrimarySpecificationCurrentCreationSentenceNr() ) ) ||
 
 													( !hasConfirmedAnySpecification &&
 													// Typical for Spanish
@@ -2588,7 +2545,7 @@ class SpecificationItem : private Item
 									hasOnlyOneRelationWord() );
 
 		do	{
-			if( currentJustificationItem->isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_))
+			if( currentJustificationItem->isObsoleteAssumptionJustification(_hasOnlyOneRelationWord, isIncludingNegativeAssumptionOrConclusion, isIncludingReversibleAssumptionOrConclusion, isIncludingSpecificationSubstitutionAssumptionOrConclusion, isOnlySelectingOlderJustifications, assumptionLevel_) )
 				{
 				attachedJustificationItem = currentJustificationItem->attachedJustificationItem();
 
@@ -2726,7 +2683,7 @@ class SpecificationItem : private Item
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeSpecificationConflict";
 
 		if( myWordItem()->writeSelectedSpecification( false, isWritingCurrentSpecificationWordOnly, this ) != RESULT_OK )
-			return addError( functionNameString, NULL, "I failed to write the conflicting specification" );
+			return addError( functionNameString, NULL, "I failed to write a conflicting specification" );
 
 		if( ( writtenSentenceString = globalVariables()->writtenSentenceString ) == NULL ||
 		strlen( writtenSentenceString ) == 0 )

@@ -1,2 +1,2 @@
 ﻿El hombre tiene un sombrero.
-Un hombre tiene un sombrero.
+Cada hombre tiene un sombrero.

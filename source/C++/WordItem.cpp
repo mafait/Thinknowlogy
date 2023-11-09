@@ -614,14 +614,6 @@
 		}
 
 
-	// Private word type functions
-
-	bool WordItem::isSingularNounWord()
-		{
-		return hasWordType( false, WORD_TYPE_NOUN_SINGULAR );
-		}
-
-
 	// Constructor of AdminItem
 
 	WordItem::WordItem()
@@ -2520,10 +2512,10 @@
 				justificationList_->primarySpecificationJustificationItem( justificationTypeNr, primarySpecificationItem ) : NULL );
 		}
 
-	JustificationItem *WordItem::primaryAndSecondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
+	JustificationItem *WordItem::primaryAndSecondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
 		{
 		return ( justificationList_ != NULL ?
-				justificationList_->primaryAndSecondarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, primarySpecificationItem, secondarySpecificationItem ) : NULL );
+				justificationList_->primaryAndSecondarySpecificationJustificationItem( justificationTypeNr, primarySpecificationItem, secondarySpecificationItem ) : NULL );
 		}
 
 	JustificationItem *WordItem::secondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem )
@@ -3200,9 +3192,9 @@
 		return ( specificationList_ == NULL ? NULL : specificationList_->firstActiveSpecificationItem( false, true ) );
 		}
 
-	SpecificationItem *WordItem::firstAdjectiveSpecificationItem( bool isNegative )
+	SpecificationItem *WordItem::firstAdjectiveSpecificationItem( bool isNegative, bool isQuestion )
 		{
-		return ( specificationList_ == NULL ? NULL : specificationList_->firstAdjectiveSpecificationItem( isNegative ) );
+		return ( specificationList_ == NULL ? NULL : specificationList_->firstAdjectiveSpecificationItem( isNegative, isQuestion ) );
 		}
 
 	SpecificationItem *WordItem::firstAssignmentOrSpecificationItem( bool isNegative, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem )
@@ -3811,6 +3803,11 @@
 	bool WordItem::isProperNounWord()
 		{
 		return hasWordType( false, WORD_TYPE_PROPER_NOUN );
+		}
+
+	bool WordItem::isSingularNounWord()
+		{
+		return hasWordType( false, WORD_TYPE_NOUN_SINGULAR );
 		}
 
 	signed char WordItem::deleteAllWordTypesOfCurrentSentence()

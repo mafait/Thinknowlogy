@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -85,6 +85,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -204,12 +216,30 @@
 < Armand n'est pas une jeune-fille. En raison:
 <	- Armand est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Armand est un fils de Guillaume.
+<	- Chaque fils n'est pas une jeune-fille.
+* 	et:
+<	- Guillaume a un fils, appelé Armand.
+<	- Chaque fils n'est pas une jeune-fille.
 < Armand n'est pas une mère. En raison:
 <	- Armand est masculin.
 <	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Armand est un fils de Guillaume.
+<	- Chaque fils n'est pas une mère.
+* 	et:
+<	- Guillaume a un fils, appelé Armand.
+<	- Chaque fils n'est pas une mère.
 < Armand n'est pas une femme. En raison:
 <	- Armand est masculin.
 <	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Armand est un fils de Guillaume.
+<	- Chaque fils n'est pas une femme.
+* 	et:
+<	- Guillaume a un fils, appelé Armand.
+<	- Chaque fils n'est pas une femme.
 < Armand n'est pas féminin. En raison:
 <	- Guillaume a un fils, appelé Armand.
 <	- Chaque fils n'est pas féminin.
@@ -249,12 +279,12 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
+< Olivier n'est pas une fille.
 < Olivier n'est pas une mère.
 < Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
 < Olivier n'est pas une femme.
 < Olivier est masculin.
-< Olivier n'est pas une fille.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -263,11 +293,11 @@
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
 < Amélie n'est pas un père.
+< Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
 < Amélie n'est pas masculin.
 < Amélie n'est pas un homme.
 < Amélie est féminin.
-< Amélie n'est pas un fils.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon.
@@ -316,6 +346,15 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
 < Olivier n'est pas une mère. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas une mère.
@@ -355,9 +394,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -460,6 +496,18 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
+< Olivier n'est pas une fille. En raison:
+<	- Pascal a un père, appelé Olivier.
+<	- Chaque père n'est pas une fille.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
 < Olivier n'est pas une jeune-fille. En raison:
 <	- Pascal a un père, appelé Olivier.
 <	- Chaque père n'est pas une jeune-fille.
@@ -514,9 +562,6 @@
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est masculin.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
 * 
 * Mes hypothèses:
 < Olivier est probablement un parent de Pascal, Julien et Lorraine. En raison:

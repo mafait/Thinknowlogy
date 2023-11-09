@@ -61,12 +61,10 @@ Every daughter is a girl or a woman.
 #-----------------------------------------------------------------
 # Block 8: Justification reports
 #-----------------------------------------------------------------
-Display the justification report about men.
-Display the justification report about women.
-Display the justification report about persons.
-Display the justification report about fathers.
-Display the justification report about mothers.
 Display the justification report about parents.
+Display the justification report about persons.
+Display the justification report about mothers.
+Display the justification report about women.
 Display the justification report about Paul.
 Display the justification report about John.
 Display the justification report about Anna.

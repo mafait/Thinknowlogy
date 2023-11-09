@@ -68,8 +68,8 @@
 < Juan no es probablemente femenina.
 < Juan no es probablemente una mujer.
 < Juan es probablemente masculino.
-< Juan es posiblemente una persona.
 < Juan no es posiblemente una madre.
+< Juan es posiblemente una persona.
 < Hernando era probablemente un hombre.
 < Hernando no era probablemente femenina.
 < Hernando no era probablemente una mujer.
@@ -79,14 +79,12 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
+< Cada madre no es un padre.
 < Cada padre no es una madre.
 * 
 * Mis suposiciones que se han ajustado:
 < Juan no es probablemente una madre.
 < Hernando no era probablemente una madre.
-* 
-* Mis suposiciones que se han concluido:
-< Cada madre no es un padre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -121,6 +119,12 @@
 * Mis conclusiones:
 < Cada hijo es masculino.
 < Cada hijo no es femenina.
+< Cada hijo no es una niña.
+< Cada hijo no es una madre.
+< Cada hijo no es una mujer.
+< Cada niña no es un hijo.
+< Cada madre no es un hijo.
+< Cada mujer no es un hijo.
 * 
 * Mis suposiciones:
 < Un hijo es probablemente una persona.
@@ -130,14 +134,20 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hija no es un hijo.
 < Cada hijo no es una hija.
+< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es masculino.
+< Cada hija no es un niño.
+< Cada hija no es un padre.
+< Cada hija no es un hombre.
+< Cada niño no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una niña, una mujer, un niño o un hombre.
+< Cada padre no es una hija.
+< Cada hombre no es una hija.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona.
@@ -183,19 +193,19 @@
 < Ana es parte de una familia.
 < Ana es una mujer.
 < Ana no es un padre.
+< Ana no es un hijo.
 < Ana no es un niño.
 < Ana no es masculino.
 < Ana no es un hombre.
 < Ana es femenina.
-< Ana no es un hijo.
 * 
 * Mis suposiciones:
-< Paz es probablemente parte de una familia.
 < Paz es posiblemente una persona.
+< Paz es probablemente parte de una familia.
 < Juan no es probablemente un niño.
 < Juan tiene puede-ser una hija, llamada Luisa.
-< José es probablemente parte de una familia.
 < José es posiblemente una persona.
+< José es probablemente parte de una familia.
 < Luisa es puede-ser hija de Juan y Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
@@ -222,19 +232,19 @@
 * Mis conclusiones:
 < Jorge es parte de una familia.
 < Jorge es un hombre.
+< Jorge no es una hija.
 < Jorge no es una madre.
 < Jorge no es una niña.
 < Jorge no es femenina.
 < Jorge no es una mujer.
 < Jorge es masculino.
-< Jorge no es una hija.
 < Diaz tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge es probablemente una persona.
 < Jorge no es probablemente un niño.
-< Diaz es probablemente parte de una familia.
 < Diaz es posiblemente una persona.
+< Diaz es probablemente parte de una familia.
 * 
 * Mis preguntas:
 < ¿Es Diaz femenina o masculino?

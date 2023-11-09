@@ -46,8 +46,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada padre no es una madre.
 < Cada madre no es un padre.
+< Cada padre no es una madre.
 * 
 * Mis conclusiones:
 < Cada madre es femenina.
@@ -74,17 +74,17 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
 < Cada hija no es un padre.
 < Cada hija no es masculino.
 < Cada hija no es un hombre.
-< Cada padre no es una hija.
 < Cada hijo es femenina o masculino.
 < Cada hijo es una mujer o un hombre.
+< Cada padre no es una hija.
 < Cada hombre no es una hija.
 * 
 * Mis suposiciones:
@@ -116,11 +116,11 @@
 <	- Cada padre es un hombre.
 <	- Cada hombre no es femenina.
 < Cada padre no es una mujer. Porque:
-<	- Cada padre es un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
 <	- Cada padre es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- Cada padre es un hombre.
+<	- Cada hombre no es una mujer.
 < Cada padre es una mujer o un hombre. Porque:
 <	- Cada padre es un padre o una madre.
 <	- Cada padre es un hombre.
@@ -136,18 +136,12 @@
 <	- Una madre es probablemente una persona.
 <	- Un padre es probablemente una persona.
 * 	y:
-<	- Cada persona es un hombre o una mujer.
-<	- Cada padre es un hombre.
-* 	y:
 <	- Cada padre es un hombre.
 <	- Un hombre es probablemente una persona.
 < 
 * 
 * Mis conclusiones:
 < Cada madre no es un hijo. Porque:
-<	- Cada madre es femenina.
-<	- Cada hijo es masculino.
-* 	y:
 <	- Cada madre es femenina.
 <	- Cada hijo no es femenina.
 * 	y:
@@ -166,17 +160,14 @@
 <	- Cada madre es una mujer.
 <	- Cada mujer no es masculino.
 < Cada madre no es un hombre. Porque:
-<	- Cada madre es una mujer.
-<	- Cada mujer no es un hombre.
-* 	y:
 <	- Cada madre es femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Cada madre es una mujer.
+<	- Cada mujer no es un hombre.
 * 
 * Mis suposiciones:
 < Una madre es probablemente una persona. Porque:
-<	- Cada persona es un hombre o una mujer.
-<	- Cada madre es una mujer.
-* 	y:
 <	- Cada madre es una mujer.
 <	- Una mujer es probablemente una persona.
 < 
@@ -201,11 +192,11 @@
 <	- Cada hijo es un hombre.
 <	- Cada hombre no es femenina.
 < Cada hijo no es una mujer. Porque:
-<	- Cada hijo es un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
 <	- Cada hijo es masculino.
 <	- Cada mujer no es masculino.
+* 	y:
+<	- Cada hijo es un hombre.
+<	- Cada hombre no es una mujer.
 < Cada hijo es una mujer o un hombre. Porque:
 <	- Cada hijo es un hijo o una hija.
 <	- Cada hijo es un hombre.
@@ -220,9 +211,6 @@
 <	- Cada hijo es un hijo o una hija.
 <	- Una hija es probablemente una persona.
 <	- Un hijo es probablemente una persona.
-* 	y:
-<	- Cada persona es un hombre o una mujer.
-<	- Cada hijo es un hombre.
 * 	y:
 <	- Cada hijo es un hombre.
 <	- Un hombre es probablemente una persona.
@@ -248,17 +236,14 @@
 <	- Cada hija es una mujer.
 <	- Cada mujer no es masculino.
 < Cada hija no es un hombre. Porque:
-<	- Cada hija es una mujer.
-<	- Cada mujer no es un hombre.
-* 	y:
 <	- Cada hija es femenina.
 <	- Cada hombre no es femenina.
+* 	y:
+<	- Cada hija es una mujer.
+<	- Cada mujer no es un hombre.
 * 
 * Mis suposiciones:
 < Una hija es probablemente una persona. Porque:
-<	- Cada persona es un hombre o una mujer.
-<	- Cada hija es una mujer.
-* 	y:
 <	- Cada hija es una mujer.
 <	- Una mujer es probablemente una persona.
 < 

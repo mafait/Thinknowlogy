@@ -81,14 +81,12 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
+< Chaque mère n'est pas un père.
 < Chaque père n'est pas une mère.
 * 
 * Mes hypothèses qui ont été ajustées:
 < Olivier n'est probablement pas une mère.
 < Philippe ne était probablement pas une mère.
-* 
-* Mes hypothèses qui ont été conclues:
-< Chaque mère n'est pas un père.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -124,6 +122,12 @@
 * Mes conclusions:
 < Chaque fils est masculin.
 < Chaque fils n'est pas féminin.
+< Chaque fils n'est pas une jeune-fille.
+< Chaque fils n'est pas une mère.
+< Chaque fils n'est pas une femme.
+< Chaque jeune-fille n'est pas un fils.
+< Chaque mère n'est pas un fils.
+< Chaque femme n'est pas un fils.
 * 
 * Mes hypothèses:
 < Un fils est probablement un enfant.
@@ -135,12 +139,18 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fille n'est pas un fils.
 < Chaque fils n'est pas une fille.
+< Chaque fille n'est pas un fils.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
 < Chaque fille n'est pas masculin.
+< Chaque fille n'est pas un garçon.
+< Chaque fille n'est pas un père.
+< Chaque fille n'est pas un homme.
+< Chaque garçon n'est pas une fille.
+< Chaque père n'est pas une fille.
+< Chaque homme n'est pas une fille.
 < Chaque enfant est féminin ou masculin.
 < Chaque enfant est une jeune-fille, une femme, un garçon ou un homme.
 * 
@@ -187,11 +197,11 @@
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
 < Amélie n'est pas un père.
+< Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
 < Amélie n'est pas masculin.
 < Amélie n'est pas un homme.
 < Amélie est féminin.
-< Amélie n'est pas un fils.
 * 
 * Mes hypothèses:
 < Pascal a probablement 2 parents, appelés Olivier et Amélie.
@@ -235,12 +245,12 @@
 * 
 * Mes conclusions:
 < Guillaume est un homme.
+< Guillaume n'est pas une fille.
 < Guillaume n'est pas une mère.
 < Guillaume n'est pas une jeune-fille.
 < Guillaume n'est pas féminin.
 < Guillaume n'est pas une femme.
 < Guillaume est masculin.
-< Guillaume n'est pas une fille.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:

@@ -898,9 +898,9 @@ class SpecificationList extends List
 			if( searchSpecificationItem.isSelfGeneratedSpecification() )
 				{
 				if( searchSpecificationItem.isSelfGeneratedAssumption() &&
+				// Don't calculate hidden Spanish assumptions
 				!searchSpecificationItem.isHiddenSpanishSpecification() )
 					{
-					// Don't calculate hidden Spanish assumptions
 					// Recalculate assumption level
 					if( searchSpecificationItem.recalculateAssumptionLevel( true ) != Constants.RESULT_OK )
 						return addError( 1, "I failed to recalculate the assumption level of a specification" );
@@ -1347,9 +1347,9 @@ class SpecificationList extends List
 				firstSpecificationItem.specificationItem( isIncludingAnsweredQuestions, true, questionParameter ) : null );
 		}
 
-	protected SpecificationItem firstAdjectiveSpecificationItem( boolean isNegative )
+	protected SpecificationItem firstAdjectiveSpecificationItem( boolean isNegative, boolean isQuestion )
 		{
-		SpecificationItem searchSpecificationItem = firstActiveSpecificationItem( false, false );
+		SpecificationItem searchSpecificationItem = firstActiveSpecificationItem( false, isQuestion );
 
 		while( searchSpecificationItem != null )
 			{
@@ -1823,7 +1823,6 @@ class SpecificationList extends List
 			{
 			if( searchSpecificationItem.isExclusiveSpecification() &&
 			( specificationWordItem = searchSpecificationItem.specificationWordItem() ) != null &&
-			specificationWordItem.isFeminineOrMasculineWord() &&
 			( commonWordItem = specificationWordItem.commonWordItem( searchSpecificationItem.specificationCollectionNr() ) ) != null )
 				{
 				if( commonWordItem == _myWordItem )

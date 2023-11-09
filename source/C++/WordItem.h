@@ -228,11 +228,6 @@ class WordItem : protected Item
 	SpecificationItem *firstNonNegativeUserSpecificationItem( unsigned short specificationWordTypeNr );
 
 
-	// Private word type functions
-
-	bool isSingularNounWord();
-
-
 	protected:
 	// Protected constructed variables
 
@@ -526,7 +521,7 @@ class WordItem : protected Item
 
 	JustificationItem *foundJustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem );
-	JustificationItem *primaryAndSecondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
+	JustificationItem *primaryAndSecondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *secondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem );
 
 	SpecificationItem *suggestiveQuestionAssumptionSpecificationItem();
@@ -614,7 +609,7 @@ class WordItem : protected Item
 	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isAllowingEmptyGeneralizationContext, bool isAllowingEmptyRelationContext, bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
 
 	SpecificationItem *firstActiveQuestionSpecificationItem();
-	SpecificationItem *firstAdjectiveSpecificationItem( bool isNegative );
+	SpecificationItem *firstAdjectiveSpecificationItem( bool isNegative, bool isQuestion );
 
 	SpecificationItem *firstAssignmentOrSpecificationItem( bool isNegative, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem );
 	SpecificationItem *firstAssignmentOrSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem );
@@ -687,6 +682,7 @@ class WordItem : protected Item
 	bool isNumeralWordType();
 	bool isProperNounPrecededByDefiniteArticle( unsigned short definiteArticleParameter );
 	bool isProperNounWord();
+	bool isSingularNounWord();
 
 	signed char deleteAllWordTypesOfCurrentSentence();
 	signed char deleteWordType( WordTypeItem *deleteWordTypeItem );

@@ -959,9 +959,9 @@ class SpecificationList : private List
 			if( searchSpecificationItem->isSelfGeneratedSpecification() )
 				{
 				if( searchSpecificationItem->isSelfGeneratedAssumption() &&
+				// Don't calculate hidden Spanish assumptions
 				!searchSpecificationItem->isHiddenSpanishSpecification() )
 					{
-					// Don't calculate hidden Spanish assumptions
 					// Recalculate assumption level
 					if( searchSpecificationItem->recalculateAssumptionLevel( true ) != RESULT_OK )
 						return addError( functionNameString, "I failed to recalculate the assumption level of a specification" );
@@ -1406,9 +1406,9 @@ class SpecificationList : private List
 				firstSpecificationItem->specificationItem( isIncludingAnsweredQuestions, true, questionParameter ) : NULL );
 		}
 
-	SpecificationItem *firstAdjectiveSpecificationItem( bool isNegative )
+	SpecificationItem *firstAdjectiveSpecificationItem( bool isNegative, bool isQuestion )
 		{
-		SpecificationItem *searchSpecificationItem = firstActiveSpecificationItem( false, false );
+		SpecificationItem *searchSpecificationItem = firstActiveSpecificationItem( false, isQuestion );
 
 		while( searchSpecificationItem != NULL )
 			{
@@ -1882,7 +1882,6 @@ class SpecificationList : private List
 			{
 			if( searchSpecificationItem->isExclusiveSpecification() &&
 			( specificationWordItem = searchSpecificationItem->specificationWordItem() ) != NULL &&
-			specificationWordItem->isFeminineOrMasculineWord() &&
 			( commonWordItem = specificationWordItem->commonWordItem( searchSpecificationItem->specificationCollectionNr() ) ) != NULL )
 				{
 				if( commonWordItem == _myWordItem )

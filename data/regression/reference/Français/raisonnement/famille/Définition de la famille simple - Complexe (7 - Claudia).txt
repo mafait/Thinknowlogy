@@ -48,8 +48,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque père n'est pas une mère.
 < Chaque mère n'est pas un père.
+< Chaque père n'est pas une mère.
 * 
 * Mes conclusions:
 < Chaque mère est féminin.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -563,11 +563,11 @@
 <	- Pascal a une mère, appelée Amélie.
 <	- Une mère est probablement un parent.
 < Pascal est probablement une personne. En raison:
-<	- Pascal est un fils.
-<	- Un fils est probablement une personne.
-* 	et:
 <	- Pascal est un homme.
 <	- Un homme est probablement une personne.
+* 	et:
+<	- Pascal est un fils.
+<	- Un fils est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -1100,11 +1100,11 @@
 <	- Pascal a une mère, appelée Amélie.
 <	- Une mère est probablement un parent.
 < Pascal est probablement une personne. En raison:
-<	- Pascal est un fils.
-<	- Un fils est probablement une personne.
-* 	et:
 <	- Pascal est un homme.
 <	- Un homme est probablement une personne.
+* 	et:
+<	- Pascal est un fils.
+<	- Un fils est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -1264,11 +1264,7 @@
 * 	et:
 <	- Pierre est peut-être une personne.
 <	- Chaque personne est masculin ou féminin.
-< Est Pierre un homme ou une femme? En raison:
-<	- Pierre a un père, appelé Olivier.
-<	- Chaque famille a parents et enfants.
-<	- Chaque enfant est une femme ou un homme.
-* 	et:
+< Est Pierre une femme ou un homme? En raison:
 <	- Pierre est possible un enfant de Olivier.
 <	- Chaque enfant est une femme ou un homme.
 * 	et:
@@ -1359,6 +1355,7 @@
 < Claudia est peut-être une fille de Amélie.
 * 
 * Mes hypothèses qui ont été ajustées:
+< Claudia est probablement une personne.
 < Claudia est probablement un enfant de Amélie.
 < Amélie a possible 2 fille [pluriel de «fille» est inconnue], appelés Lorraine et Claudia.
 * 
@@ -1371,7 +1368,6 @@
 < Claudia est féminin.
 * 
 * Mes hypothèses qui ont été ajustées:
-< Claudia est probablement une personne.
 < Claudia est probablement partie d'une famille.
 < 
 * 

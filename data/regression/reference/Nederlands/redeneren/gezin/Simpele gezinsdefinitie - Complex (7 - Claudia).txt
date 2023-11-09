@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -79,8 +79,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -563,11 +563,11 @@
 <	- Paul heeft een moeder, genaamd Anna.
 <	- Een moeder is waarschijnlijk een ouder.
 < Paul is waarschijnlijk een persoon. Omdat:
-<	- Paul is een zoon.
-<	- Een zoon is waarschijnlijk een persoon.
-* 	en:
 <	- Paul is een man.
 <	- Een man is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is een zoon.
+<	- Een zoon is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -1100,11 +1100,11 @@
 <	- Paul heeft een moeder, genaamd Anna.
 <	- Een moeder is waarschijnlijk een ouder.
 < Paul is waarschijnlijk een persoon. Omdat:
-<	- Paul is een zoon.
-<	- Een zoon is waarschijnlijk een persoon.
-* 	en:
 <	- Paul is een man.
 <	- Een man is waarschijnlijk een persoon.
+* 	en:
+<	- Paul is een zoon.
+<	- Een zoon is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -1264,11 +1264,7 @@
 * 	en:
 <	- Peter is misschien een persoon.
 <	- Iedere persoon is mannelijk of vrouwelijk.
-< Is Peter een man of een vrouw? Omdat:
-<	- Peter heeft een vader, genaamd Jan.
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Ieder kind is een vrouw of een man.
-* 	en:
+< Is Peter een vrouw of een man? Omdat:
 <	- Peter is mogelijk een kind van Jan.
 <	- Ieder kind is een vrouw of een man.
 * 	en:
@@ -1359,6 +1355,7 @@
 < Claudia is misschien een dochter van Anna.
 * 
 * Mijn veronderstellingen die aangepast zijn:
+< Claudia is waarschijnlijk een persoon.
 < Claudia is waarschijnlijk een kind van Anna.
 < Anna heeft mogelijk 2 dochter [meervoud van 'dochter' is onbekend], genaamd Laura en Claudia.
 * 
@@ -1371,7 +1368,6 @@
 < Claudia is vrouwelijk.
 * 
 * Mijn veronderstellingen die aangepast zijn:
-< Claudia is waarschijnlijk een persoon.
 < Claudia is waarschijnlijk deel van een gezin.
 < 
 * 

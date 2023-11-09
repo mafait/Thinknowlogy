@@ -48,8 +48,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every father is not a mother.
 < Every mother is not a father.
+< Every father is not a mother.
 * 
 * My conclusions:
 < Every mother is feminine.
@@ -79,8 +79,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -563,11 +563,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a parent.
 < Paul is probably a person. Because:
-<	- Paul is a son.
-<	- A son is probably a person.
-* 	and:
 <	- Paul is a man.
 <	- A man is probably a person.
+* 	and:
+<	- Paul is a son.
+<	- A son is probably a person.
 < 
 * 
 * My conclusions:
@@ -1100,11 +1100,11 @@
 <	- Paul has a mother, called Anna.
 <	- A mother is probably a parent.
 < Paul is probably a person. Because:
-<	- Paul is a son.
-<	- A son is probably a person.
-* 	and:
 <	- Paul is a man.
 <	- A man is probably a person.
+* 	and:
+<	- Paul is a son.
+<	- A son is probably a person.
 < 
 * 
 * My conclusions:
@@ -1264,11 +1264,7 @@
 * 	and:
 <	- Peter is maybe a person.
 <	- Every person is masculine or feminine.
-< Is Peter a man or a woman? Because:
-<	- Peter has a father, called John.
-<	- Every family has parents and children.
-<	- Every child is a woman or a man.
-* 	and:
+< Is Peter a woman or a man? Because:
 <	- Peter is possibly a child of John.
 <	- Every child is a woman or a man.
 * 	and:

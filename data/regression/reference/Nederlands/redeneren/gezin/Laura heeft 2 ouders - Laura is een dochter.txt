@@ -48,8 +48,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere vader is geen moeder.
 < Iedere moeder is geen vader.
+< Iedere vader is geen moeder.
 * 
 * Mijn conclusies:
 < Iedere moeder is vrouwelijk.
@@ -85,6 +85,12 @@
 * Mijn conclusies:
 < Iedere zoon is mannelijk.
 < Iedere zoon is niet vrouwelijk.
+< Iedere zoon is geen meisje.
+< Iedere zoon is geen moeder.
+< Iedere zoon is geen vrouw.
+< Ieder meisje is geen zoon.
+< Iedere moeder is geen zoon.
+< Iedere vrouw is geen zoon.
 * 
 * Mijn veronderstellingen:
 < Een zoon is waarschijnlijk een kind.
@@ -96,12 +102,18 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere dochter is geen zoon.
 < Iedere zoon is geen dochter.
+< Iedere dochter is geen zoon.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
 < Iedere dochter is niet mannelijk.
+< Iedere dochter is geen jongen.
+< Iedere dochter is geen vader.
+< Iedere dochter is geen man.
+< Iedere jongen is geen dochter.
+< Iedere vader is geen dochter.
+< Iedere man is geen dochter.
 < Ieder kind is vrouwelijk of mannelijk.
 < Ieder kind is een meisje, een vrouw, een jongen of een man.
 * 
@@ -139,12 +151,12 @@
 < Anna heeft waarschijnlijk een kind, genaamd Laura.
 < Anna is mogelijk een vrouw.
 < Anna is misschien geen meisje.
+< Anna is mogelijk geen zoon.
 < Anna is mogelijk geen jongen.
 < Anna is mogelijk geen vader.
 < Anna is mogelijk niet mannelijk.
 < Anna is mogelijk geen man.
 < Anna is mogelijk vrouwelijk.
-< Anna is mogelijk geen zoon.
 < Anna heeft misschien een dochter, genaamd Laura.
 * 
 * Mijn vragen:
@@ -157,6 +169,9 @@
 * U hebt de specificatie bevestigd - maar geen enkele relatie - van mijn eerdere veronderstellingen:
 < Laura is misschien een dochter van Jan en Anna.
 * 
+* Mijn veronderstellingen die aangepast zijn:
+< Laura is waarschijnlijk een persoon.
+* 
 * Mijn veronderstellingen die geconcludeerd zijn:
 < Laura is vrouwelijk.
 < Laura is geen zoon.
@@ -164,9 +179,6 @@
 < Laura is geen vader.
 < Laura is geen man.
 < Laura is niet mannelijk.
-* 
-* Mijn veronderstellingen die aangepast zijn:
-< Laura is waarschijnlijk een persoon.
 < 
 * 
 * Mijn conclusies:
@@ -182,12 +194,21 @@
 < Laura is geen jongen. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere jongen is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter.
+<	- Iedere dochter is geen jongen.
 < Laura is geen vader. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere vader is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter.
+<	- Iedere dochter is geen vader.
 < Laura is geen man. Omdat:
 <	- Laura is vrouwelijk.
 <	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Laura is een dochter.
+<	- Iedere dochter is geen man.
 < Laura is niet mannelijk. Omdat:
 <	- Laura is een dochter.
 <	- Iedere dochter is niet mannelijk.

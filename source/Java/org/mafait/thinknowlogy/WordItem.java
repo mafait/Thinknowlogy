@@ -626,14 +626,6 @@ class WordItem extends Item
 		}
 
 
-	// Private word type methods
-
-	private boolean isSingularNounWord()
-		{
-		return hasWordType( false, Constants.WORD_TYPE_NOUN_SINGULAR );
-		}
-
-
 	// Protected constructed variables
 
 	protected boolean hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore = false;
@@ -2370,10 +2362,10 @@ class WordItem extends Item
 				justificationList_.primarySpecificationJustificationItem( justificationTypeNr, primarySpecificationItem ) : null );
 		}
 
-	protected JustificationItem primaryAndSecondarySpecificationJustificationItem( boolean isSelectingOlderItemOnly, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem secondarySpecificationItem )
+	protected JustificationItem primaryAndSecondarySpecificationJustificationItem( short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem secondarySpecificationItem )
 		{
 		return ( justificationList_ != null ?
-				justificationList_.primaryAndSecondarySpecificationJustificationItem( isSelectingOlderItemOnly, justificationTypeNr, primarySpecificationItem, secondarySpecificationItem ) : null );
+				justificationList_.primaryAndSecondarySpecificationJustificationItem( justificationTypeNr, primarySpecificationItem, secondarySpecificationItem ) : null );
 		}
 
 	protected JustificationItem secondarySpecificationJustificationItem( boolean isSelectingOlderItemOnly, short justificationTypeNr, SpecificationItem secondarySpecificationItem )
@@ -3029,9 +3021,9 @@ class WordItem extends Item
 		return ( specificationList_ == null ? null : specificationList_.firstActiveSpecificationItem( false, true ) );
 		}
 
-	protected SpecificationItem firstAdjectiveSpecificationItem( boolean isNegative )
+	protected SpecificationItem firstAdjectiveSpecificationItem( boolean isNegative, boolean isQuestion )
 		{
-		return ( specificationList_ == null ? null : specificationList_.firstAdjectiveSpecificationItem( isNegative ) );
+		return ( specificationList_ == null ? null : specificationList_.firstAdjectiveSpecificationItem( isNegative, isQuestion ) );
 		}
 
 	protected SpecificationItem firstAssignmentOrSpecificationItem( boolean isNegative, boolean isPossessive, int relationContextNr, WordItem specificationWordItem )
@@ -3635,6 +3627,11 @@ class WordItem extends Item
 	protected boolean isProperNounWord()
 		{
 		return hasWordType( false, Constants.WORD_TYPE_PROPER_NOUN );
+		}
+
+	protected boolean isSingularNounWord()
+		{
+		return hasWordType( false, Constants.WORD_TYPE_NOUN_SINGULAR );
 		}
 
 	protected int bestMatchingChineseWordLength( String wordString )
