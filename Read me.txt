@@ -4,10 +4,13 @@
 How to start:
 ----------------------------------------------------------------------------
 • Unpack the compressed file in a folder of your choice;
+• Start Explorer (for files) and go to the extracted folder, called Thinknowlogy2024;
 • The application comes in two interface types: Java GUI and textual console interface (C++);
 • The source code of both versions (Java as well as C++) is included;
 • Both applications have the same functionality, but the Java GUI comes with handy demo buttons;
 • The example files can be found in the "data/examples" subfolder.
+• The documentation and the source code of the program (in Java as well as C++) are included;
+• This program applies software license GPLv2.
 
 ----------------------------------------------------------------------------
 Thinknowlogy2024 - Java (GUI).jar:
