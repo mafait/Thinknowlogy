@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -122,12 +122,12 @@
 * Mis conclusiones:
 < Hernando era parte de una familia.
 < Hernando era un hombre.
-< Hernando no era una hija.
-< Hernando no era una madre.
-< Hernando no era una niña.
-< Hernando no era femenina.
-< Hernando no era una mujer.
 < Hernando era masculino.
+< Hernando no era una hija.
+< Hernando no era una niña.
+< Hernando no era una madre.
+< Hernando no era una mujer.
+< Hernando no era femenina.
 < Rafael no tiene un padre nunca-más.
 < Rafael tenido un padre, llamado Hernando.
 * 
@@ -147,57 +147,60 @@
 < Hernando era parte de una familia. Porque:
 <	- Hernando era el padre de Rafael.
 <	- Padres son parte de cada familia.
+* 	y:
+<	- Rafael tenido un padre, llamado Hernando.
+<	- Padres son parte de cada familia.
 < Hernando era un hombre. Porque:
 <	- Hernando era el padre de Rafael.
 <	- Cada padre es un hombre.
-< Hernando no era una hija. Porque:
-<	- Hernando era un hombre.
-<	- Cada hombre no es una hija.
-* 	y:
-<	- Hernando era masculino.
-<	- Cada hija no es masculino.
-* 	y:
-<	- Hernando era el padre de Rafael.
-<	- Cada padre no es una hija.
-< Hernando no era una madre. Porque:
-<	- Hernando era el padre de Rafael.
-<	- Cada padre no es una madre.
-* 	y:
-<	- Hernando era un hombre.
-<	- Cada hombre no es una madre.
-* 	y:
-<	- Hernando era masculino.
-<	- Cada madre no es masculino.
-< Hernando no era una niña. Porque:
-<	- Hernando era un hombre.
-<	- Cada hombre no es una niña.
-* 	y:
-<	- Hernando era masculino.
-<	- Cada niña no es masculino.
-* 	y:
-<	- Hernando era el padre de Rafael.
-<	- Cada padre no es una niña.
-< Hernando no era femenina. Porque:
-<	- Hernando era el padre de Rafael.
-<	- Cada padre no es femenina.
-* 	y:
-<	- Hernando era un hombre.
-<	- Cada hombre no es femenina.
-< Hernando no era una mujer. Porque:
-<	- Hernando era un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
-<	- Hernando era masculino.
-<	- Cada mujer no es masculino.
-* 	y:
-<	- Hernando era el padre de Rafael.
-<	- Cada padre no es una mujer.
 < Hernando era masculino. Porque:
 <	- Hernando era un hombre.
 <	- Cada hombre es masculino.
 * 	y:
 <	- Hernando era el padre de Rafael.
 <	- Cada padre es masculino.
+< Hernando no era una hija. Porque:
+<	- Hernando era masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una hija.
+< Hernando no era una niña. Porque:
+<	- Hernando era masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una niña.
+< Hernando no era una madre. Porque:
+<	- Hernando era masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una madre.
+< Hernando no era una mujer. Porque:
+<	- Hernando era masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es una mujer.
+< Hernando no era femenina. Porque:
+<	- Hernando era el padre de Rafael.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Hernando era un hombre.
+<	- Cada hombre no es femenina.
 * 
 * Mis suposiciones:
 < Hernando era probablemente una persona. Porque:
@@ -237,9 +240,9 @@
 * 	y:
 <	- ¿Es Rafael una niña, una mujer, un niño o un hombre?
 <	- Cada niño es masculino.
+<	- Cada hombre es masculino.
 <	- Cada niña es femenina.
 <	- Cada mujer es femenina.
-<	- Cada hombre es masculino.
 < ¿Es Rafael una niña, una mujer, un niño o un hombre? Porque:
 <	- Rafael tenido un padre, llamado Hernando.
 <	- Cada familia tiene padres y hijos.

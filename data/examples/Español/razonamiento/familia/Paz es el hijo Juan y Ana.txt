@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Paz es el hijo de Juan y Ana.
-José es hijo de Juan y Ana.
+José es un hijo de Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre Paz.

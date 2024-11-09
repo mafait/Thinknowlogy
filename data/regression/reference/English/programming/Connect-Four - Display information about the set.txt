@@ -34,6 +34,7 @@ It's your turn.
 * Your information:
 < A set can-be G, F, E, D, C, B or A.
 < A set can-be invalid.
+< A set can-be invalid.
 < My set was D.
 < The set was C.
 < 
@@ -145,6 +146,7 @@ It's your turn.
 * 
 * Your information:
 < A set can-be G, F, E, D, C, B or A.
+< A set can-be invalid.
 < A set can-be invalid.
 < My set was A, C and D.
 < The set was G, C and D.

@@ -5,7 +5,7 @@
 #-----------------------------------------------------------------
 # Bloque 1: Conversiones directas
 #-----------------------------------------------------------------
-Paz es hijo de Pablo.
+Paz es un hijo de Pablo.
 Ana tiene una hija, llamada Luisa.
 Cada coche tiene un motor.
 Una vela es parte de cada velero.
@@ -19,38 +19,44 @@ Cada hijo es un hijo o una hija.
 Cada familia tiene padres y hijos.
 Jorge es un padre.
 Alfonso es un hijo.
-Ronaldo tiene un padre.
+Pedro tiene un padre.
 Santiago tiene un hijo.
 #-----------------------------------------------------------------
-# Bloque 3: Agrupación de los conocimientos
+# Bloque 3: Agrupación de conocimientos (especificaciones)
+# Se publicará en el segundo semestre de 2025.
+#-----------------------------------------------------------------
+#Juan tiene 3 manzanas.
+#Pedro tiene 4 manzanas.
+#-----------------------------------------------------------------
+# Bloque 4: Agrupación de conocimientos (relaciones)
 #-----------------------------------------------------------------
 Pablo tiene un hijo, llamado Paz.
 Ana tiene un hijo, llamado Paz.
-Paz es hijo de Pablo y Ana.
+Paz es un hijo de Pablo y Ana.
 #-----------------------------------------------------------------
-# Bloque 4: Pasado el razonamiento tensa
+# Bloque 5: Pasado el razonamiento tensa
 #-----------------------------------------------------------------
 Hernando era el padre de Antonio.
 Cada padre es un hombre.
 #-----------------------------------------------------------------
-# Natural reasoning construct described by Aristotle; in past tense
+# Constructo de razonamiento natural descrito por Aristóteles en tiempo pasado
 #-----------------------------------------------------------------
 Cada filósofo es mortal.
 Sócrates era un filósofo.
 #-----------------------------------------------------------------
-# Bloque 5: La detección de un conflicto y la generación de una pregunta
+# Bloque 6: La detección de un conflicto y la generación de una pregunta
 #-----------------------------------------------------------------
 Cada persona es un hombre o una mujer.
 Angel es un hombre y una mujer.
 Angel es una persona.
 Angel no es una mujer.
 #-----------------------------------------------------------------
-# Bloque 6: Archivo de los conocimientos
+# Bloque 7: Archivo de los conocimientos
 #-----------------------------------------------------------------
 Barack Obama es el presidente de los Estados Unidos.
 Donald Trump es el presidente de los Estados Unidos.
 #-----------------------------------------------------------------
-# Bloque 7: Razonamiento avanzado
+# Bloque 8: Razonamiento avanzado
 #-----------------------------------------------------------------
 Cada mujer es femenina.
 Cada hombre es masculino.
@@ -61,7 +67,7 @@ Cada niño es masculino.
 Cada hijo es un niño o un hombre.
 Cada hija es una niña o una mujer.
 #-----------------------------------------------------------------
-# Bloque 8: Informes de justificación
+# Bloque 9: Informes de justificación
 #-----------------------------------------------------------------
 Mostrar el informe de justificación sobre los padres.
 Mostrar el informe de justificación sobre personas.
@@ -73,7 +79,7 @@ Mostrar el informe de justificación sobre Ana.
 Mostrar el informe de justificación sobre Luisa.
 Mostrar el informe de justificación sobre Jorge.
 Mostrar el informe de justificación sobre Alfonso.
-Mostrar el informe de justificación sobre Ronaldo.
+Mostrar el informe de justificación sobre Pedro.
 Mostrar el informe de justificación sobre Santiago.
 Mostrar el informe de justificación sobre Hernando.
 Mostrar el informe de justificación sobre Antonio.

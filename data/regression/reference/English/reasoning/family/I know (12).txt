@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -177,18 +177,16 @@
 * My questions that have been answered:
 < Is Laura a girl or a woman?
 * 
-* My assumptions that have been concluded:
-< Laura is not a son.
-< Laura is not a boy.
-< Laura is not masculine.
-< Laura is not a father.
-< Laura is not a man.
-* 
 * My assumptions that have been adjusted:
 < Laura is probably a person.
 * 
 * My assumptions that have been concluded:
 < Laura is feminine.
+< Laura is not a son.
+< Laura is not a boy.
+< Laura is not masculine.
+< Laura is not a father.
+< Laura is not a man.
 * 
 * My assumptions:
 < Laura is probably not a woman.
@@ -198,17 +196,17 @@
 < Laura has possibly a mother, called Anna.
 * 
 * My assumptions that have been concluded:
-< Anna is not a son.
-< Anna is not a boy.
-< Anna is not a father.
-< Anna is not masculine.
-< Anna is not a man.
 < Anna is a woman.
 * 
 * My assumptions that have been adjusted:
 < Anna is probably not a girl.
 * 
 * My assumptions that have been concluded:
+< Anna is not a son.
+< Anna is not a boy.
+< Anna is not a father.
+< Anna is not masculine.
+< Anna is not a man.
 < Anna is feminine.
 * 
 * My conclusions:
@@ -293,6 +291,11 @@
 <	- Anna is a mother of Laura.
 <	- Every mother is feminine.
 < Anna is part of a family. Because:
+<	- Paul has a parent, called Anna.
+<	- Joe has a parent, called Anna.
+<	- Laura has a parent, called Anna.
+<	- Parents are part of every family.
+* 	and:
 <	- Anna is a parent of Paul, Joe and Laura.
 <	- Parents are part of every family.
 * 
@@ -327,6 +330,7 @@
 <	- Laura is probably a child of Anna.
 * 	and:
 <	- Every family has parents and children.
+<	- Paul has a parent, called Anna.
 <	- Joe has a parent, called Anna.
 <	- Laura has a parent, called Anna.
 < Anna has maybe a daughter, called Laura. Because:
@@ -379,6 +383,9 @@
 <	- Anna is a parent of Paul, Joe and Laura.
 * 	and:
 <	- Anna has probably 3 children, called Paul, Joe and Laura.
+* 	and:
+<	- Every family has parents and children.
+<	- Laura has a parent, called Anna.
 < Laura is probably part of a family. Because:
 <	- Laura is probably a child of Anna.
 <	- Children are part of every family.

@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the Spanish language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@
 #Java#:213		"<cambiar la idioma>"
 #Java#:214		"<cambiar fuente>"
 
-# Consola de Java (programación/submenú de Cuatro en una fila)
+	# Consola de Java (programación/submenú de Cuatro en una fila)
 #Java#:300		"Mi movimiento es A."
 #Java#:301		"Mi movimiento es B."
 #Java#:302		"Mi movimiento es C."
@@ -54,21 +54,21 @@
 #Java#:311		"Añadir E, D, C, B y A para el polo de inicio."
 
 # Consola de Java (razonamiento/submenú de las definiciones de la familia)
-#Java#:400		"Juan es el padre y Ana es la madre de Pablo, José y Luisa."
-#Java#:401		"Juan es padre de Pablo, José y Luisa."
-#Java#:402		"Ana es madre de Pablo, José y Luisa."
-#Java#:403		"Pablo es hijo de Juan y Ana."
-#Java#:404		"José es hijo de Juan y Ana."
-#Java#:405		"Luisa es hija de Juan y Ana."
+#Java#:400		"Juan es el padre y Ana es la madre de Paz, José y Luisa."
+#Java#:401		"Juan es el padre de Paz, José y Luisa."
+#Java#:402		"Ana es la madre de Paz, José y Luisa."
+#Java#:403		"Paz es un hijo de Juan y Ana."
+#Java#:404		"José es un hijo de Juan y Ana."
+#Java#:405		"Luisa es una hija de Juan y Ana."
 
 #Java#:406		"Juan es un padre."
 #Java#:407		"Ana es una madre."
-#Java#:408		"Pablo es un hijo."
+#Java#:408		"Paz es un hijo."
 #Java#:409		"José es un hijo."
 #Java#:410		"Luisa es una hija."
 
-#Java#:411		"Pablo tiene un padre, llamado Juan."
-#Java#:412		"Pablo tiene una madre, llamada Ana."
+#Java#:411		"Paz tiene un padre, llamado Juan."
+#Java#:412		"Paz tiene una madre, llamada Ana."
 #Java#:413		"José tiene un padre, llamado Juan."
 #Java#:414		"José tiene una madre, llamada Ana."
 #Java#:415		"Luisa tiene un padre, llamado Juan."
@@ -78,30 +78,30 @@
 ##Java#:418		"Anna is a parent."
 ##Java#:419		"John is a parent of Paul, Joe and Laura."
 ##Java#:420		"Anna is a parent of Paul, Joe and Laura."
-#Java#:421		"Pablo tiene 2 padres, llamados Juan y Ana."
+#Java#:421		"Paz tiene 2 padres, llamados Juan y Ana."
 #Java#:422		"José tiene 2 padres, llamados Juan y Ana."
 #Java#:423		"Luisa tiene 2 padres, llamados Juan y Ana."
-#Java#:424		"Pablo es hijo de Juan y Ana."
-#Java#:425		"José es hijo de Juan y Ana."
-#Java#:426		"Luisa es hija de Juan y Ana."
+##Java#:424		"Paul is a child of John and Anna."
+##Java#:425		"Joe is a child of John and Anna."
+##Java#:426		"Laura is a child of John and Anna."
 
 #Java#:427		"Juan es un hombre."
 #Java#:428		"Ana es una mujer."
-#Java#:429		"Pablo es un hombre."
+#Java#:429		"Paz es un hombre."
 #Java#:430		"José es un hombre."
 #Java#:431		"Luisa es una mujer."
-#Java#:432		"Pablo es un hijo."
-#Java#:433		"José es un hijo."
+##Java#:432		"Paul is a child."
+##Java#:433		"Joe is a child."
 #Java#:434		"Luisa es una hija."
-#Java#:435		"Pablo es un niño."
+#Java#:435		"Paz es un niño."
 #Java#:436		"José es un niño."
 #Java#:437		"Luisa es una niña."
 
 # Consola de Java (razonamiento/submenú de conflictos en la familia)
 #Java#:440		"Juan es una mujer."
-#Java#:441		"Juan es madre de Peyo."
+#Java#:441		"Juan es una madre de Peyo."
 #Java#:442		"Ana es un hijo."
-#Java#:443		"Pablo es una hija."
+#Java#:443		"Paz es una hija."
 #Java#:444		"José es una madre."
 
 # Consola de Java (razonamiento/submenú del informe de justificación de la familia)
@@ -117,21 +117,21 @@
 #Java#:461		"Mostrar el informe de justificación sobre personas."
 #Java#:462		"Mostrar el informe de justificación sobre Juan."
 #Java#:463		"Mostrar el informe de justificación sobre Ana."
-#Java#:464		"Mostrar el informe de justificación sobre Pablo."
+#Java#:464		"Mostrar el informe de justificación sobre Paz."
 #Java#:465		"Mostrar el informe de justificación sobre José."
 #Java#:466		"Mostrar el informe de justificación sobre Luisa."
 
 # Consola de Java (razonamiento/submenú de preguntas de la familia)
 #Java#:470		"¿Es Juan un padre?"
 #Java#:471		"¿Es Juan una madre?"
-#Java#:472		"¿Es Juan el padre de Pablo?"
-#Java#:473		"¿Es Juan la madre de Pablo?"
-#Java#:474		"¿Es Pablo un hombre?"
-#Java#:475		"¿Es Pablo una mujer?"
-#Java#:476		"¿Es Pablo un hombre o una mujer?"
-#Java#:477		"¿Es Pablo un hijo?"
-#Java#:478		"¿Es Pablo una hija?"
-#Java#:479		"¿Es Pablo un hijo o una hija?"
+#Java#:472		"¿Es Juan el padre de Paz?"
+#Java#:473		"¿Es Juan la madre de Paz?"
+#Java#:474		"¿Es Paz un hombre?"
+#Java#:475		"¿Es Paz una mujer?"
+#Java#:476		"¿Es Paz un hombre o una mujer?"
+#Java#:477		"¿Es Paz un hijo?"
+#Java#:478		"¿Es Paz una hija?"
+#Java#:479		"¿Es Paz un hijo o una hija?"
 
 # Consola de Java (razonamiento/submenú de la familia muestra la información)
 #Java#:480		"Mostrar información sobre la familia."
@@ -146,7 +146,7 @@
 #Java#:491		"Mostrar información sobre personas."
 #Java#:492		"Mostrar información sobre Juan."
 #Java#:493		"Mostrar información sobre Ana."
-#Java#:494		"Mostrar información sobre Pablo."
+#Java#:494		"Mostrar información sobre Paz."
 #Java#:495		"Mostrar información sobre José."
 #Java#:496		"Mostrar información sobre Luisa."
 
@@ -166,7 +166,7 @@
 
 # Consola (común)
 #C++#:1000		"Introduce una sentencia conforme la gramática implementado:"
-#Java#:1000		"Permí­teme guiarte por los botones de menú, y por los botones con una sentencia predefinida."
+#Java#:1000		"Permíteme guiarte por medio de botones de menú y por botones con una frase predefinida."
 #Java#:1001		"Y se le invita a entrar en una sentencia se ajusta a las reglas gramaticales implementadas."
 #Java#:1002		"A la espera de la entrada"
 #Java#:1003		"A la espera de la entrada seguro"
@@ -337,10 +337,7 @@
 
 # Frase (errores)
 :1640			"\nError de integridad! Mi aplicación es suficiente para guardar o recuperar "
-:1641			"esta frase."
-:1642			"esta frase, debido a las palabras:"
-:1643			"frase \""
+:1641			"frase \""
+:1642			"\", debido a las palabras:"
+:1643			"\nSaqué de mi sistema: \""
 :1644			"\"."
-:1645			"\", debido a las palabras:"
-:1646			"\nSaqué de mi sistema: \""
-:1647			"\"."

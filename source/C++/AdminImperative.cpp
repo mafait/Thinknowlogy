@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		Executing imperative words
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -50,6 +50,7 @@ class AdminImperative
 
 	char closedTestFileNameString_[SENTENCE_STRING_LENGTH] = EMPTY_STRING;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminImperative";
 
 	// Private initialized variables
@@ -86,17 +87,17 @@ class AdminImperative
 		return false;
 		}
 
-	signed char addWordToVirtualList( bool isSelection, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
+	signed char addWordToVirtualList( unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, WordItem *generalizationWordItem, WordItem *specificationWordItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addWordToVirtualList";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( generalizationWordItem->addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result != RESULT_OK )
+		if( generalizationWordItem->addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a virtual list specification" );
 
-		if( generalizationWordItem->assignSpecification( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL ).result != RESULT_OK )
+		if( generalizationWordItem->assignSpecification( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, specificationWordItem, NULL, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a virtual list word" );
 
 		return RESULT_OK;
@@ -222,7 +223,7 @@ class AdminImperative
 				if( !specificationWordItem->isNounHead() &&
 				!specificationWordItem->isNounTail() )
 					{
-					if( addWordToVirtualList( false, relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != RESULT_OK )
+					if( addWordToVirtualList( relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != RESULT_OK )
 						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
 					}
 				else
@@ -296,7 +297,7 @@ class AdminImperative
 							}
 						else
 							{
-							if( addWordToVirtualList( false, virtualListAssignmentItem_->generalizationWordTypeNr(), virtualListAssignmentItem_->specificationWordTypeNr(), relationWordItem, virtualListAssignmentItem_->specificationWordItem() ) != RESULT_OK )
+							if( addWordToVirtualList( virtualListAssignmentItem_->generalizationWordTypeNr(), virtualListAssignmentItem_->specificationWordTypeNr(), relationWordItem, virtualListAssignmentItem_->specificationWordItem() ) != RESULT_OK )
 								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a word to a virtual list" );
 							}
 
@@ -444,7 +445,7 @@ class AdminImperative
 						globalVariables_->currentAssignmentLevel++;
 
 						if( adminItem_->assignSelectionSpecification( possibilityScoreItem->referenceSelectionItem ) != RESULT_OK )
-							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specifcation at assignment level: ", globalVariables_->currentAssignmentLevel );
+							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign a selection specification at assignment level: ", globalVariables_->currentAssignmentLevel );
 
 						nextSolveProgressLevel = currentSolveProgressLevel + solveProgressStep;
 

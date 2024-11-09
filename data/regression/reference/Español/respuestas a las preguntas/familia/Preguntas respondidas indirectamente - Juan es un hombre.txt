@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -143,7 +143,7 @@
 * 
 * Mis conclusiones:
 < Juan tiene un hijo, llamado Paz. Porque:
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 * 
 * Mis suposiciones:
 < Juan es posiblemente una persona. Porque:
@@ -187,7 +187,7 @@
 < ¿Es Juan una mujer o un hombre?
 * 
 * Mis suposiciones que ya no se han ocultado:
-< Juan es probablemente padre de Paz.
+< Juan es probablemente un padre de Paz.
 < Paz tiene probablemente un padre, llamado Juan.
 * 
 * Mis preguntas que han sido respondidas:
@@ -241,22 +241,25 @@
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
 < Juan tiene un hijo, llamado Paz. Porque:
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 * 
 * Mis suposiciones:
 < Juan no es probablemente un niño. Porque:
 <	- Juan es un hombre.
 <	- Un hombre no es probablemente un niño.
 < Juan es probablemente parte de una familia. Porque:
-<	- Juan es probablemente padre de Paz.
+<	- Juan es probablemente un padre de Paz.
+<	- Padres son parte de cada familia.
+* 	y:
+<	- Paz tiene probablemente un padre, llamado Juan.
 <	- Padres son parte de cada familia.
 < Juan es probablemente una persona. Porque:
 <	- Juan es un hombre.
 <	- Un hombre es probablemente una persona.
-< Juan es probablemente padre de Paz. Porque:
+< Juan es probablemente un padre de Paz. Porque:
 <	- Cada familia tiene padres y hijos.
 <	- Juan tiene un hijo, llamado Paz.
 * 	y:
 <	- Cada familia tiene padres y hijos.
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 < 

@@ -1,13 +1,14 @@
 ﻿Toon "------------------------------------------------------------------------------".
-Toon " Thinknowlogy is 's werelds enige zelforganiserende kennistechnologie.".
+Toon " Thinknowlogy is 's werelds enige natuurlijk-intelligente kennistechnologie.".
 Toon "------------------------------------------------------------------------------".
-Toon " Ik geloof dat het leven en het universum intelligent ontworpen zijn. En ik geloof dat elk".
-Toon " intelligent ontwerp ontrafeld kan worden via reverse-engineering. Ik heb de menselijke taal".
-Toon " geïdentificeerd als één van de bronnen van natuurlijke intelligentie. Ik benut het intelligente".
-Toon " ontwerp van de menselijke taal om menselijke intelligentie te repliceren in software.".
+Toon " Natuurlijke intelligentie is het benutten van natuurlijk-voorkomende logica.".
 Toon "------------------------------------------------------------------------------".
-Toon " De natuurlijke logica van taal wordt aangetoond door:".
-Toon " * Redeneren (in zinnen met beperkte grammatica):".
+Toon " Deze natuurlijk-voorkomende logica biedt aanwijzingen voor het organiseren van natuurlijke".
+Toon " objecten, zoals het groeperen van objecten die bij elkaar horen, het scheiden van objecten".
+Toon " die niet bij elkaar horen en het archiveren van objecten die minder belangrijk zijn geworden.".
+Toon "------------------------------------------------------------------------------".
+Toon " De natuurlijk-voorkomende logica van taal wordt aangetoond door:".
+Toon " * Redeneren (in leesbare zinnen met een beperkte grammatica):".
 Toon "   - het trekken van conclusies (geavanceerder dan wetenschappelijke oplossingen),".
 Toon "   - het doen van aannames (met zelfregulerend onzekerheidsniveau),".
 Toon "   - het stellen van vragen over hiaten in de kennis,".

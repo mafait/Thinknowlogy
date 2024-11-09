@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		Processing queries
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ class AdminQuery
 	unsigned int queryItemNr_ = NO_ITEM_NR;
 	unsigned int querySentenceNr_ = NO_SENTENCE_NR;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminQuery";
 
 	// Private initialized variables

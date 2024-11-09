@@ -1,9 +1,9 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		Storing the selection structure
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -55,11 +55,13 @@ class SelectionItem : private Item
 	unsigned short specificationWordTypeNr_ = NO_WORD_TYPE_NR;
 	unsigned short relationWordTypeNr_ = NO_WORD_TYPE_NR;
 
+	unsigned int relationCollectionNr_ = NO_COLLECTION_NR;
+
 	unsigned int generalizationContextNr_ = NO_CONTEXT_NR;
 	unsigned int specificationContextNr_ = NO_CONTEXT_NR;
 	unsigned int relationContextNr_ = NO_CONTEXT_NR;
 
-	unsigned int nContextRelations_ = 0;
+	unsigned int nEnteredRelationWords_ = 0;
 
 	WordItem *generalizationWordItem_ = NULL;
 	WordItem *specificationWordItem_ = NULL;
@@ -98,7 +100,7 @@ class SelectionItem : private Item
 
 	// Constructor
 
-	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	SelectionItem( bool isAction, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isFirstComparisonPart, bool isNewStart, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short selectionLevel, unsigned short imperativeVerbParameter, unsigned short prepositionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nEnteredRelationWords, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		size_t specificationStringLength;
 
@@ -131,11 +133,13 @@ class SelectionItem : private Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 		relationWordTypeNr_ = relationWordTypeNr;
 
+		relationCollectionNr_ = relationCollectionNr;
+
 		generalizationContextNr_ = generalizationContextNr;
 		specificationContextNr_ = specificationContextNr;
 		relationContextNr_ = relationContextNr;
 
-		nContextRelations_ = nContextRelations;
+		nEnteredRelationWords_ = nEnteredRelationWords;
 
 		generalizationWordItem_ = generalizationWordItem;
 		specificationWordItem_ = specificationWordItem;
@@ -244,17 +248,17 @@ class SelectionItem : private Item
 				generalizationContextNr_ == queryParameter ||
 				specificationContextNr_ == queryParameter ||
 				relationContextNr_ == queryParameter ||
-				nContextRelations_ == queryParameter ||
+				nEnteredRelationWords_ == queryParameter ||
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
 
-				( selectionLevel_ > NO_SELECTION_LEVEL ||
-				imperativeVerbParameter_ > NO_IMPERATIVE_PARAMETER ||
-				prepositionParameter_ > NO_PREPOSITION_PARAMETER ||
-				generalizationContextNr_ > NO_CONTEXT_NR ||
-				specificationContextNr_ > NO_CONTEXT_NR ||
-				relationContextNr_ > NO_CONTEXT_NR ||
-				nContextRelations_ > 0 ) ) );
+					( selectionLevel_ > NO_SELECTION_LEVEL ||
+					imperativeVerbParameter_ > NO_IMPERATIVE_PARAMETER ||
+					prepositionParameter_ > NO_PREPOSITION_PARAMETER ||
+					generalizationContextNr_ > NO_CONTEXT_NR ||
+					specificationContextNr_ > NO_CONTEXT_NR ||
+					relationContextNr_ > NO_CONTEXT_NR ||
+					nEnteredRelationWords_ > 0 ) ) );
 		}
 
 	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
@@ -443,6 +447,12 @@ class SelectionItem : private Item
 				}
 			}
 
+		if( relationCollectionNr_ > NO_COLLECTION_NR )
+			{
+			sprintf( tempString, "%crelationCollectionNr:%u", QUERY_SEPARATOR_CHAR, relationCollectionNr_ );
+			strcat( queryString, tempString );
+			}
+
 		if( relationContextNr_ > NO_CONTEXT_NR )
 			{
 			sprintf( tempString, "%crelationContextNr:%u", QUERY_SEPARATOR_CHAR, relationContextNr_ );
@@ -468,9 +478,9 @@ class SelectionItem : private Item
 				}
 			}
 
-		if( nContextRelations_ > NO_CONTEXT_NR )
+		if( nEnteredRelationWords_ > NO_CONTEXT_NR )
 			{
-			sprintf( tempString, "%cnContextRelations:%u", QUERY_SEPARATOR_CHAR, nContextRelations_ );
+			sprintf( tempString, "%cnEnteredRelationWords:%u", QUERY_SEPARATOR_CHAR, nEnteredRelationWords_ );
 			strcat( queryString, tempString );
 			}
 
@@ -600,6 +610,11 @@ class SelectionItem : private Item
 		return relationWordTypeNr_;
 		}
 
+	unsigned int relationCollectionNr()
+		{
+		return relationCollectionNr_;
+		}
+
 	unsigned int generalizationContextNr()
 		{
 		return generalizationContextNr_;
@@ -615,9 +630,9 @@ class SelectionItem : private Item
 		return relationContextNr_;
 		}
 
-	unsigned int nContextRelations()
+	unsigned int nEnteredRelationWords()
 		{
-		return nContextRelations_;
+		return nEnteredRelationWords_;
 		}
 
 	signed char checkWordItemForUsage( WordItem *unusedWordItem )

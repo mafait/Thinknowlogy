@@ -1,0 +1,10 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Olivier est le père de Pascal, Julien et Lorraine.
+Pierre a 2 parents, appelés Olivier et Amélie.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Pierre.
+Amélie est la mère de Pascal, Julien et Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pierre.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

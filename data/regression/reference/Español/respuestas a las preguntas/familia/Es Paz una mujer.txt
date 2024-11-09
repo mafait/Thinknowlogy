@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -135,7 +135,7 @@
 < Paz tiene puede-ser una madre, llamada Ana.
 < Juan es posiblemente una persona.
 < Juan es probablemente parte de una familia.
-< Ana es puede-ser madre de Paz.
+< Ana es puede-ser una madre de Paz.
 < Ana es puede-ser parte de una familia.
 < Ana es puede-ser una mujer.
 < Ana no es puede-ser una niña.

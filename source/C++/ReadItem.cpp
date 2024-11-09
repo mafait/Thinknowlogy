@@ -1,9 +1,9 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		Temporarily storing info about read words of a sentence
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -151,9 +151,9 @@ class ReadItem : private Item
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
 
-				( grammarParameter > NO_GRAMMAR_PARAMETER ||
-				wordOrderNr_ > NO_ORDER_NR ||
-				wordParameter_ > NO_WORD_PARAMETER ) ) );
+					( grammarParameter > NO_GRAMMAR_PARAMETER ||
+					wordOrderNr_ > NO_ORDER_NR ||
+					wordParameter_ > NO_WORD_PARAMETER ) ) );
 		}
 
 	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
@@ -278,25 +278,6 @@ class ReadItem : private Item
 
 
 	// Protected functions
-
-	bool hasFoundRelationWordInThisList( WordItem *relationWordItem )
-		{
-		ReadItem *searchReadItem = this;
-
-		if( relationWordItem != NULL )
-			{
-			while( searchReadItem != NULL )
-				{
-				if( searchReadItem->isRelationWord() &&
-				searchReadItem->readWordItem() == relationWordItem )
-					return true;
-
-				searchReadItem = searchReadItem->nextReadItem();
-				}
-			}
-
-		return false;
-		}
 
 	bool isAdjectiveAssigned()
 		{

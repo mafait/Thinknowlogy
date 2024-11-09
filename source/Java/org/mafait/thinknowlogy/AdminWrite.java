@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminWrite
  *	Supports class:	AdminItem
  *	Purpose:		Writing selected specifications as sentences
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -35,7 +35,7 @@ class AdminWrite
 
 	private JustificationItem lastWrittenJustificationItem_ = null;
 
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
@@ -52,7 +52,7 @@ class AdminWrite
 		do	{
 			if( !currentReadItem.hasWordPassedIntegrityCheckOfStoredUserSentence &&
 			( readWordTypeString = currentReadItem.readWordTypeString() ) != null &&
-			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INDENTED, ( readWordTypeString + " (position: " + currentReadItem.wordOrderNr() + ", word type: " + adminItem_.wordTypeNameString( currentReadItem.wordTypeNr() ) + ", word parameter: " + currentReadItem.wordParameter() + ", grammar parameter: " + currentReadItem.grammarParameter + ")" ) ) != Constants.RESULT_OK )
+			InputOutput.writeDiacriticalText( Constants.INPUT_OUTPUT_PROMPT_WARNING_INDENTED, ( readWordTypeString + " (position: " + currentReadItem.wordOrderNr() + ", word type: " + WordItem.wordTypeNameString( currentReadItem.wordTypeNr() ) + ", word parameter: " + currentReadItem.wordParameter() + ", grammar parameter: " + currentReadItem.grammarParameter + ")" ) ) != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to write a justification sentence" );
 			}
 		while( ( currentReadItem = currentReadItem.nextReadItem() ) != null );
@@ -94,7 +94,8 @@ class AdminWrite
 
 	private byte writeJustificationSpecifications( boolean isWritingPrimarySpecification, boolean isWritingSeparator, JustificationItem startJustificationItem, SpecificationItem selfGeneratedSpecificationItem )
 		{
-		boolean hasPrimarySpecificationRelationContext;
+		boolean hasPrimarySpecificationCompoundCollection;
+		boolean hasPrimarySpecificationRelationWord;
 		boolean isExclusiveSecondarySpecification;
 		boolean isFirstTime = true;
 		boolean isForcingSeparator = false;
@@ -109,7 +110,6 @@ class AdminWrite
 		SpecificationItem previousSecondarySpecificationItem = null;
 		SpecificationItem primarySpecificationItem;
 		SpecificationItem secondarySpecificationItem;
-		WordItem generalizationWordItem;
 
 		if( startJustificationItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given start justification item is undefined" );
@@ -122,37 +122,58 @@ class AdminWrite
 			isOnlyWritingPrimarySpecification = false;
 			isQuestionJustification = currentJustificationItem.isQuestionJustification();
 
-			if( ( secondarySpecificationItem = currentJustificationItem.secondarySpecificationItem() ) != null &&
-			secondarySpecificationItem.isExclusiveSpecification() )
-				isExclusiveSecondarySpecification = true;
-
-			if( !isWritingPrimarySpecification &&
-			secondarySpecificationItem == null )
-				isForcingSeparator = true;
-
 			if( ( primarySpecificationItem = currentJustificationItem.primarySpecificationItem() ) == null )
 				return adminItem_.startError( 1, moduleNameString_, "The primary specification of the current justification is undefined" );
 
-			hasPrimarySpecificationRelationContext = primarySpecificationItem.hasRelationContext();
+			hasPrimarySpecificationCompoundCollection = primarySpecificationItem.hasCompoundSpecificationCollection();
+			hasPrimarySpecificationRelationWord = primarySpecificationItem.hasRelationWord();
 			isPrimarySpecificationWordSpanishAmbiguous = primarySpecificationItem.isSpecificationWordSpanishAmbiguous();
 			isPossessivePrimarySpecification = primarySpecificationItem.isPossessive();
 
+			// No secondary specification
+			if( ( secondarySpecificationItem = currentJustificationItem.secondarySpecificationItem() ) == null )
+				{
+				if( !isWritingPrimarySpecification )
+					// Test files: "reasoning\Collect afterwards - Past tense",
+					//				"reasoning\Collect afterwards - Uncertainty"
+					{
+					isForcingSeparator = true;
+					isWritingPrimarySpecification = true;
+					}
+				}
+			else	// Secondary specification
+				{
+				if( secondarySpecificationItem.isExclusiveSpecification() &&
+
+					// Question
+					( ( isQuestionJustification &&
+					!isWritingPrimarySpecification ) ||
+
+					// Test file: "reasoning\family\Justification report"
+					( hasPrimarySpecificationCompoundCollection &&
+					currentJustificationItem.isSpecificationSubstitutionAssumptionOrConclusion() ) ) )
+					isExclusiveSecondarySpecification = true;
+				}
+
+			// No question
 			if( ( !isQuestionJustification &&
 
-			( hasPrimarySpecificationRelationContext ||
-			isForcingSeparator ) ) ||
+				( hasPrimarySpecificationRelationWord ||
+				isForcingSeparator ) ) ||
 
+			// Question
 			( isQuestionJustification &&
 			isPossessivePrimarySpecification ) )
 				{
-				isWritingPrimarySpecification = true;
+				if( currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null )
+					isOnlyWritingPrimarySpecification = true;
 
-				isOnlyWritingPrimarySpecification = ( currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null );
-
+				// Typical for Spanish
 				if( isPrimarySpecificationWordSpanishAmbiguous &&
+				!hasPrimarySpecificationCompoundCollection &&
 				isPossessivePrimarySpecification &&
-				!primarySpecificationItem.hasCompoundSpecificationCollection() &&
 				primarySpecificationItem.hasOnlyOneRelationWord() &&
+				// Spanish test file: "Reto científico"
 				!primarySpecificationItem.isArchivedAssignment() &&
 				primarySpecificationItem.isSelfGeneratedConclusion() &&
 				!currentJustificationItem.isSpecificationSubstitutionPartOfAssumptionOrConclusion() )
@@ -161,25 +182,28 @@ class AdminWrite
 
 			if( isWritingPrimarySpecification ||
 
-			( ( isFirstTime &&
-			!isQuestionJustification &&
-			primarySpecificationItem != previousPrimarySpecificationItem ) ||
-
 			( !isExclusiveSecondarySpecification &&
 			previousPrimarySpecificationItem != null &&
-			secondarySpecificationItem != previousSecondarySpecificationItem ) ) )
+			secondarySpecificationItem != previousSecondarySpecificationItem ) ||
+
+			// Test file: "reasoning\family\Justification report"
+			( isFirstTime &&
+			!isQuestionJustification &&
+			primarySpecificationItem != previousPrimarySpecificationItem ) )
 				{
 				if( isFirstTime &&
 
-				( isWritingSeparator ||
-				isForcingSeparator ) &&
+					( isForcingSeparator ||
+					isWritingSeparator ) &&
 
+				// Write word to screen / output file
 				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_JUSTIFICATION_AND ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to write an extra justification string" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write a word to the screen / output file" );
 
+				// Spanish test file: "razonamiento\familia\Que haya confirmado al menos una palabra de relación"
 				if( isQuestionJustification &&
-				hasPrimarySpecificationRelationContext &&
-				!isPossessivePrimarySpecification &&
+				hasPrimarySpecificationRelationWord &&
+				!isOnlyWritingPrimarySpecification &&
 				!isPrimarySpecificationWordSpanishAmbiguous &&
 				// Next justification with same type and order number exists
 				currentJustificationItem.nextJustificationItemWithSameTypeAndOrderNr() != null )
@@ -194,25 +218,10 @@ class AdminWrite
 					isWritingPrimarySpecification = false;
 
 				currentJustificationItem.hasJustificationBeenWritten = true;
-
 				lastWrittenJustificationItem_ = currentJustificationItem;
+
 				previousPrimarySpecificationItem = primarySpecificationItem;
 				previousSecondarySpecificationItem = secondarySpecificationItem;
-
-				if( primarySpecificationItem.isSelfGeneratedQuestion() &&
-
-				( currentJustificationItem.isQuestionJustification() ||
-				// Correct invalid suggestive assumption by opposite suggestive question
-				primarySpecificationItem.isCorrectedSpecification() ) &&
-
-				( generalizationWordItem = primarySpecificationItem.generalizationWordItem() ) != null )
-					{
-					if( generalizationWordItem.writeRelatedJustificationSpecifications( currentJustificationItem.justificationTypeNr(), currentJustificationItem.justificationOrderNr, currentJustificationItem.secondarySpecificationCollectionNr() ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to write the related justification specifications" );
-
-					previousPrimarySpecificationItem = null;
-					lastWrittenJustificationItem_ = null;
-					}
 				}
 			else
 				isStop = true;
@@ -228,7 +237,6 @@ class AdminWrite
 		boolean isExclusiveSpecification;
 		boolean isNegative;
 		boolean isPossessive;
-		boolean isQuestion;
 		boolean isSelfGeneratedQuestion;
 		boolean isSpecificationGeneralization;
 		boolean isWritingPrimarySpecificationOrSeparator;
@@ -236,13 +244,14 @@ class AdminWrite
 		short selectedJustificationTypeNr;
 		short specificationWordTypeNr;
 		int generalizationContextNr;
-		int relationContextNr;
+		int relationCollectionNr;
 		int specificationCollectionNr;
 		JustificationItem currentJustificationItem;
 		SpecificationItem currentSpecificationItem;
 		SpecificationItem currentPrimarySpecificationItem;
 		SpecificationItem currentSecondarySpecificationItem;
 		WordItem generalizationWordItem;
+		WordItem relationWordItem;
 
 		if( writeJustificationItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given write justification is undefined" );
@@ -258,8 +267,9 @@ class AdminWrite
 			if( InputOutput.writeText( Constants.INPUT_OUTPUT_PROMPT_WRITE, GlobalVariables.writtenSentenceStringBuffer, GlobalVariables.learnedFromUserStringBuffer ) != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence" );
 
+			// Write text to screen / output file
 			if( InputOutput.writeInterfaceText( false, false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_JUSTIFICATION_BECAUSE ) != Constants.RESULT_OK )
-				return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification start string" );
+				return adminItem_.addError( 1, moduleNameString_, "I failed to write a text to the screen / output file" );
 			}
 
 		// Write justifications of this specification
@@ -275,62 +285,57 @@ class AdminWrite
 			isExclusiveSpecification = selfGeneratedSpecificationItem.isExclusiveSpecification();
 			isNegative = selfGeneratedSpecificationItem.isNegative();
 			isPossessive = selfGeneratedSpecificationItem.isPossessive();
-			isQuestion = selfGeneratedSpecificationItem.isQuestion();
 			isSpecificationGeneralization = selfGeneratedSpecificationItem.isSpecificationGeneralization();
 			assumptionLevel = selfGeneratedSpecificationItem.assumptionLevel();
+			relationCollectionNr = selfGeneratedSpecificationItem.relationCollectionNr();
 			specificationCollectionNr = selfGeneratedSpecificationItem.specificationCollectionNr();
 			specificationWordTypeNr = selfGeneratedSpecificationItem.specificationWordTypeNr();
 			generalizationContextNr = selfGeneratedSpecificationItem.generalizationContextNr();
-			relationContextNr = selfGeneratedSpecificationItem.relationContextNr();
+			relationWordItem = selfGeneratedSpecificationItem.relationWordItem();
 
 			do	{
-				if( lastWrittenJustificationItem_ != null &&
-				currentSpecificationItem != selfGeneratedSpecificationItem &&
-				currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr ) != null )
+				if( currentSpecificationItem != selfGeneratedSpecificationItem &&
+				currentSpecificationItem.relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, relationCollectionNr, generalizationContextNr, relationWordItem ) != null &&
+				( currentPrimarySpecificationItem = writeJustificationItem.primarySpecificationItem() ) != null )
 					{
-					currentPrimarySpecificationItem = writeJustificationItem.primarySpecificationItem();
-
 					isSelfGeneratedQuestion = ( ( currentSecondarySpecificationItem = writeJustificationItem.secondarySpecificationItem() ) != null &&
 												selfGeneratedSpecificationItem.isQuestion() );
 
-													// Test file: "No conflict on multiple related specifications"
+													// Test file: "conflict\family\No conflict on multiple related specifications"
 					selectedJustificationTypeNr = ( isPossessive ? Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION :
 
-													// Test files: "Collect afterwards - Past tense" and "Collect afterwards - Uncertainty"
+													// Test files: "reasoning\Collect afterwards - Past tense",
+													//				"reasoning\Collect afterwards - Uncertainty"
 													( isSpecificationGeneralization ? Constants.JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION :
 
-													// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
+													// Test file: "reasoning\family\Correcting invalidated assumption (by opposite suggestive question)"
 													( currentSecondarySpecificationItem == null &&
-													currentSpecificationItem.isCorrectedSpecification() ? lastWrittenJustificationItem_.justificationTypeNr() :
+													currentSpecificationItem.isCorrectedSpecification() ? Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION :
 
-													// Test file: "This information is more specific (non-exclusive)"
 													( isSelfGeneratedQuestion &&
-													currentPrimarySpecificationItem != null &&
 													!currentPrimarySpecificationItem.isPossessive() ? Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION :
+
+													// Test files: "conflict\family\No conflict on multiple related specifications",
+													//				"reasoning\Basic reasoning",
+													//				"reasoning\Scientific challenge",
+													//				"reasoning\family\Justification report",
+													//				"reasoning\family\Simple family definition - Justification report",
+													//				"reasoning\family\This information is more specific (non-exclusive)"
 																										Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION ) ) ) );
 
+					if( lastWrittenJustificationItem_ != null &&
 					// Find related justification in current specification
-					currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem.firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_.justificationOrderNr ) :
-																			currentSpecificationItem.firstJustificationItem( selectedJustificationTypeNr ) );
+					( currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem.firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_.justificationOrderNr ) :
+																				// Test file: "conflict\family\No conflict on multiple related specifications"
+																				currentSpecificationItem.firstJustificationItem( selectedJustificationTypeNr ) ) ) != null &&
 
-					if( currentJustificationItem != null &&
-
-					// Exclude question justification with primary specification that has relation context
-					( !isQuestion ||
-					// Suggestive question assumption
-					currentSecondarySpecificationItem == null ||
-					!currentJustificationItem.hasPrimarySpecificationRelationContext() ) )
+						( !currentJustificationItem.hasPrimarySpecificationRelationWord() ||
+						// Test file: "reasoning\family\Correcting invalidated assumption (by opposite suggestive question)"
+						currentSecondarySpecificationItem == null ) )
 						{
-						isWritingPrimarySpecificationOrSeparator = ( ( currentSecondarySpecificationItem == null &&
-																	currentJustificationItem.isSuggestiveQuestionAssumption() ) ||
-
-																	( currentSecondarySpecificationItem != null &&
-
-																	( currentSecondarySpecificationItem.isGeneralizationProperNoun() ||
-
-																	( !isSelfGeneratedQuestion &&
-																	currentPrimarySpecificationItem != null &&
-																	currentPrimarySpecificationItem.isGeneralizationProperNoun() ) ) ) );
+						// Test file: "conflict\family\No conflict on multiple related specifications"
+						isWritingPrimarySpecificationOrSeparator = ( !isExclusiveSpecification &&
+																	currentSecondarySpecificationItem != null );
 
 						// Write related justification specifications
 						if( writeJustificationSpecifications( isWritingPrimarySpecificationOrSeparator, isWritingPrimarySpecificationOrSeparator, currentJustificationItem, null ) != Constants.RESULT_OK )
@@ -368,7 +373,7 @@ class AdminWrite
 	private byte writeSpecification( boolean isAssignment, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isWritingCurrentSentenceOnly, boolean isWritingJustification, boolean isWritingUserSpecifications, boolean isWritingSelfGeneratedConclusions, boolean isWritingSelfGeneratedAssumptions, boolean isWritingUserQuestions, boolean isWritingSelfGeneratedQuestions, WordItem writeWordItem )
 		{
 		boolean hasCurrentSpecificationAssumptionLevel;
-		boolean hasCurrentSpecificationRelationContext;
+		boolean hasCurrentSpecificationRelationWord;
 		boolean hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore;
 		boolean hasHeaderBeenWritten = false;
 		boolean isCurrentSpecificationSelfGenerated;
@@ -388,65 +393,67 @@ class AdminWrite
 			{
 			do	{
 				hasCurrentSpecificationAssumptionLevel = currentSpecificationItem.hasAssumptionLevel();
-				hasCurrentSpecificationRelationContext = currentSpecificationItem.hasRelationContext();
+				hasCurrentSpecificationRelationWord = currentSpecificationItem.hasRelationWord();
 				isCurrentSpecificationSelfGenerated = currentSpecificationItem.isSelfGeneratedSpecification();
 				isCurrentSpecificationWordSpanishAmbiguous = currentSpecificationItem.isSpecificationWordSpanishAmbiguous();
 				isHiddenSpanishSpecification = false;
 
+				// Typical for Spanish
 				if( isCurrentSpecificationWordSpanishAmbiguous &&
-				hasCurrentSpecificationRelationContext &&
+				hasCurrentSpecificationRelationWord &&
+				isCurrentSpecificationSelfGenerated &&
+				currentSpecificationItem.isPossessive() &&
 				currentSpecificationItem.isFirstJustificationReversibleAssumptionOrConclusion() )
 					{
-					if( ( currentSpecificationItem.isOlderItem() &&
-					currentSpecificationItem.isSelfGeneratedAssumption() &&
-					writeWordItem.hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore ) ||
-
-					( currentSpecificationItem.isPossessive() &&
+					// Self-generated conclusion
+					if( ( ( singleRelationWordItem = currentSpecificationItem.singleRelationWordItem() ) != null &&
+					!hasCurrentSpecificationAssumptionLevel &&
 					currentSpecificationItem.hasNonCompoundSpecificationCollection() &&
-					( singleRelationWordItem = currentSpecificationItem.singleRelationWordItem() ) != null &&
-					singleRelationWordItem.isMasculineWord() ) )
+					singleRelationWordItem.isMasculineWord() ) ||
+
+					// Spanish test file: "razonamiento\familia\Complejo (16)"
+					( singleRelationWordItem == null &&
+					hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore &&
+					hasCurrentSpecificationAssumptionLevel ) )
 						isHiddenSpanishSpecification = true;
 					}
 
 				if( !isHiddenSpanishSpecification &&
 
-				// Conclusions
-				( ( isWritingSelfGeneratedConclusions &&
+				// User specifications
+				( ( isWritingUserSpecifications &&
+				currentSpecificationItem.isUserSpecification() ) ||
+
+				// User questions
+				( isWritingUserQuestions &&
+				currentSpecificationItem.isUserQuestion() ) ||
+
+				// Self-generated conclusions
+				( ( ( isWritingSelfGeneratedConclusions &&
 				!hasCurrentSpecificationAssumptionLevel &&
-				isCurrentSpecificationSelfGenerated &&
+				isCurrentSpecificationSelfGenerated ) ||
 
-				( !hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore ||
-				// Typical for Spanish
-				!hasCurrentSpecificationRelationContext ||
-				currentSpecificationItem.hasOnlyOneRelationWord() ) ) ||
-
-				// Assumptions
+				// Self-generated assumptions
 				( isWritingSelfGeneratedAssumptions &&
 				hasCurrentSpecificationAssumptionLevel &&
 				isCurrentSpecificationSelfGenerated ) ||
 
-				// Questions
+				// Self-generated questions
 				( isWritingSelfGeneratedQuestions &&
-				currentSpecificationItem.isSelfGeneratedQuestion() ) ||
+				currentSpecificationItem.isSelfGeneratedQuestion() ) ) &&
 
-				( isWritingUserSpecifications &&
-				currentSpecificationItem.isUserSpecification() ) ||
+						// Filter on current or updated sentences
+						( ( ( !isWritingCurrentSentenceOnly ||
+						currentSpecificationItem.hasUpdatedWriteInformation() ) &&
 
-				( isWritingUserQuestions &&
-				currentSpecificationItem.isUserQuestion() ) ) &&
+							( !isCurrentSpecificationWordSpanishAmbiguous ||
+							// Typical for Spanish: Don't write hidden specifications
+							!currentSpecificationItem.isHiddenSpanishSpecification() ) ) ||
 
-				( !isCurrentSpecificationWordSpanishAmbiguous ||
-				// Typical for Spanish
-				!currentSpecificationItem.isHiddenSpanishSpecification() ) &&
-
-				// Filter on current or updated sentences
-				( !isWritingCurrentSentenceOnly ||
-				currentSpecificationItem.hasNewInformation() ||
-
-				// Typical for Spanish
-				// Spanish test filea: "Complejo (15)", "Complejo (17)" and "Preguntas respondidas indirectamente - Juan es masculino"
-				( isCurrentSpecificationWordSpanishAmbiguous &&
-				currentSpecificationItem.wasHiddenSpanishSpecification() ) ) )
+						// Typical for Spanish
+						// Spanish test file: "respuestas a las preguntas\familia\Preguntas respondidas indirectamente - Juan es masculino"
+						( isCurrentSpecificationWordSpanishAmbiguous &&
+						currentSpecificationItem.wasHiddenSpanishSpecification() ) ) ) ) )
 					{
 					isOnlyOptionLeftAssignment = ( isAssignment &&
 													isCurrentSpecificationSelfGenerated &&
@@ -504,8 +511,9 @@ class AdminWrite
 
 						if( hasHeaderBeenWritten )
 							{
+							// Write header to screen / output file
 							if( InputOutput.writeInterfaceText( true, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, ( isCurrentSpecificationSelfGenerated ? ( isWritingSelfGeneratedConclusions ? Constants.INTERFACE_LISTING_MY_CONCLUSIONS : ( isWritingSelfGeneratedAssumptions ? Constants.INTERFACE_LISTING_MY_ASSUMPTIONS : Constants.INTERFACE_LISTING_MY_QUESTIONS ) ) : ( isWritingUserSpecifications ? ( isCurrentSpecificationSelfGenerated ? Constants.INTERFACE_LISTING_MY_INFORMATION : Constants.INTERFACE_LISTING_YOUR_INFORMATION ) : Constants.INTERFACE_LISTING_YOUR_QUESTIONS ) ) ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write my conclusions header" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write a header to the screen / output file" );
 
 							hasHeaderBeenWritten = false;
 							}
@@ -600,10 +608,13 @@ class AdminWrite
 					}
 				else
 					{
-					isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem.isPartOf() ||
+					isWritingCurrentSpecificationWordOnly = ( writeJustificationItem.isSpecificationSubstitutionPartOfAssumptionOrConclusion() ||
 
-															( !secondarySpecificationItem.isExclusiveSpecification() &&
-															secondarySpecificationItem.isGeneralizationProperNoun() &&
+															// Test file: "conflict\family\No conflict on multiple related specifications"
+															( isWritingPrimarySpecification &&
+															writeJustificationItem.isOppositePossessiveSpecificationAssumption() &&
+															!secondarySpecificationItem.hasRelationWord() &&
+															!secondarySpecificationItem.isExclusiveSpecification() &&
 															!secondarySpecificationItem.isPossessive() ) );
 
 					if( generalizationWordItem.writeJustificationSpecificationInWord( isWritingCurrentSpecificationWordOnly, secondarySpecificationItem ) != Constants.RESULT_OK )
@@ -648,8 +659,9 @@ class AdminWrite
 
 						if( feminineOrMasculineProperNounEndingWordItem != lastWrittenFeminineOrMasculineProperNounEndingWordItem )
 							{
+							// Write justification sentence start string to screen / output file
 							if( InputOutput.writeInterfaceText( Constants.INPUT_OUTPUT_PROMPT_WRITE_INDENTED, Constants.INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NOUN_ENDING, feminineOrMasculineProperNounEndingWordItem.anyWordTypeString(), ( feminineOrMasculineProperNounEndingWordItem.hasFeminineProperNounEnding() ? Constants.INTERFACE_JUSTIFICATION_FEMININE_PROPER_NOUN_ENDING : Constants.INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NOUN_ENDING ) ) != Constants.RESULT_OK )
-								return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence start string" );
+								return adminItem_.addError( 1, moduleNameString_, "I failed to write the justification sentence start string to the screen / output file" );
 
 							lastWrittenFeminineOrMasculineProperNounEndingWordItem = feminineOrMasculineProperNounEndingWordItem;
 							}
@@ -689,17 +701,17 @@ class AdminWrite
 		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered specifications" );
 
-		// Active assignments
-		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered current-tense assignments" );
+		// Archived assignments
+		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered archived assignments" );
 
 		// Inactive assignments
 		if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered past-tense assignments" );
 
-		// Archived assignments
-		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered archived assignments" );
+		// Active assignments
+		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != Constants.RESULT_OK )
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write user-entered current-tense assignments" );
 
 		return Constants.RESULT_OK;
 		}
@@ -818,23 +830,27 @@ class AdminWrite
 		{
 		WordItem currentTouchedWordItem;
 
+		// Write 'question is already answered' interface notification to screen / output file
 		if( GlobalVariables.isQuestionAlreadyAnswered &&
 		InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_IS_ALREADY_ANSWERED ) != Constants.RESULT_OK )
-			return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'question is already answered' interface notification" );
+			return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'question is already answered' interface notification to the screen / output file" );
 
 		if( ( currentTouchedWordItem = GlobalVariables.firstTouchedWordItem ) != null )
 			{
 			// Do for all words touched during current sentence
 			do	{
+				// Find answer to new user questions
 				if( currentTouchedWordItem.findAnswerToNewUserQuestion() != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to find an answer to new user questions of word \"" + currentTouchedWordItem.anyWordTypeString() + "\"" );
 				}
 			while( ( currentTouchedWordItem = currentTouchedWordItem.nextTouchedWordItem ) != null );
 			}
 
+		// Didn't find any answer
 		if( !GlobalVariables.hasFoundAnswerToQuestion &&
 		!GlobalVariables.isConflictingQuestion &&
-		InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != Constants.RESULT_OK )
+			// Write text to screen / output file
+			InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write the 'I don't know the answer to this question' interface notification" );
 
 		return Constants.RESULT_OK;
@@ -858,29 +874,21 @@ class AdminWrite
 
 		if( !haveAllWordsPassed )
 			{
-			if( readUserSentenceString != null &&
+			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ &&
+			readUserSentenceString != null )
+				{
+				// Write interface warning to screen / output file
+				if( InputOutput.writeInterfaceText( Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS ) != Constants.RESULT_OK )
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning to the screen / output file" );
 
-			( adminItem_.isCurrentlyTesting() ||
-			adminItem_.isSystemStartingUp() ) )
-				{
-				if( InputOutput.writeInterfaceText( Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
-				}
-			else
-				{
-				if( InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, Constants.EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
-				}
-
-			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
-				{
 				if( displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence() != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to display the words that didn't pass the integrity check" );
 
 				if( ( writtenSentenceStringBuffer = GlobalVariables.writtenSentenceStringBuffer ) != null &&
 				writtenSentenceStringBuffer.length() > 0 &&
+				// Write interface warning to screen / output file
 				InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_WARNING, Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, writtenSentenceStringBuffer.toString(), Constants.INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != Constants.RESULT_OK )
-					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning" );
+					return adminItem_.addError( 1, moduleNameString_, "I failed to write an interface warning to the screen / output file" );
 				}
 
 			if( adminItem_.isSystemStartingUp() )
@@ -926,10 +934,8 @@ class AdminWrite
 
 											( readUserSentenceString.charAt( 0 ) == writtenUserSentenceStringBuffer.charAt( 0 ) ||
 											Character.toLowerCase( readUserSentenceString.charAt( 0 ) ) == writtenUserSentenceStringBuffer.charAt( 0 ) ) &&
-
-											( readUserSentenceStringLength == 1 ||
 											// The read user string and written user string are equal
-											readUserSentenceString.substring( 1 ).compareTo( writtenUserSentenceStringBuffer.toString().substring( 1 ) ) == 0 ) );
+											readUserSentenceString.substring( 1 ).compareTo( writtenUserSentenceStringBuffer.toString().substring( 1 ) ) == 0 );
 
 			do	{
 				do	{
@@ -1035,10 +1041,12 @@ class AdminWrite
 	protected byte writeInfoAboutWord( boolean isWritingCurrentSentenceOnly, boolean isWritingUserSpecifications, boolean isWritingSelfGeneratedConclusions, boolean isWritingSelfGeneratedAssumptions, boolean isWritingUserQuestions, boolean isWritingSelfGeneratedQuestions, boolean isWritingSpecificationInfo, boolean isWritingRelatedInfo, WordItem writeWordItem )
 		{
 		if( isWritingUserSpecifications &&
+		// Write user specifications
 		writeUserSpecifications( isWritingCurrentSentenceOnly, writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write user specifications" );
 
 		if( isWritingUserQuestions &&
+		// Write user questions
 		writeUserQuestions( isWritingCurrentSentenceOnly, writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write user questions" );
 
@@ -1046,15 +1054,18 @@ class AdminWrite
 		isWritingSelfGeneratedAssumptions ||
 		isWritingSelfGeneratedQuestions ) &&
 
+		// Write self-generated info
 		writeSelfGeneratedInfo( isWritingCurrentSentenceOnly, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, isWritingSelfGeneratedQuestions, writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write the self-generated info" );
 
 		if( isWritingSpecificationInfo &&
 		!writeWordItem.isNounWordSpanishAmbiguous() &&
+		// Write selected specification info
 		writeSelectedSpecificationInfo( writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write selected specification info" );
 
 		if( isWritingRelatedInfo &&
+		// Write selected relation info
 		writeSelectedRelationInfo( writeWordItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to write selected related info" );
 

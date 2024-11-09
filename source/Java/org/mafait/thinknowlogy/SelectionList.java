@@ -1,9 +1,9 @@
 ﻿/*	Class:			SelectionList
  *	Parent class:	List
  *	Purpose:		Storing selection items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -49,7 +49,7 @@ class SelectionList extends List
 
 	protected SelectionList( char _listChar, WordItem myWordItem )
 		{
-		initializeListVariables( _listChar, "SelectionList", myWordItem );
+		initializeListVariables( _listChar, myWordItem );
 		}
 
 
@@ -83,7 +83,7 @@ class SelectionList extends List
 		return GlobalVariables.result;
 		}
 
-	protected byte createSelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
+	protected byte createSelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int relationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nEnteredRelationWords, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString )
 		{
 		if( generalizationWordTypeNr <= Constants.NO_WORD_TYPE_NR ||
 		generalizationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
@@ -93,7 +93,7 @@ class SelectionList extends List
 		specificationWordTypeNr >= Constants.NUMBER_OF_WORD_TYPES )
 			return startError( 1, "The given specification word type number is undefined or out of bounds" );
 
-		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, this, myWordItem() ) ) != Constants.RESULT_OK )
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, new SelectionItem( isAction, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isFirstComparisonPart, isNewStart, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, isValueSpecification, assumptionLevel, selectionLevel, imperativeVerbParameter, prepositionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, relationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nEnteredRelationWords, generalizationWordItem, specificationWordItem, relationWordItem, specificationString, this, myWordItem() ) ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to add a selection item" );
 
 		return Constants.RESULT_OK;

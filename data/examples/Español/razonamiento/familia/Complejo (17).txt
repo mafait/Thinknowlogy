@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Ana es una madre.
-Luisa es hija de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 Ana es una mujer.
 Luisa tiene una madre, llamada Ana.
 Luisa tiene un padre, llamado Juan.

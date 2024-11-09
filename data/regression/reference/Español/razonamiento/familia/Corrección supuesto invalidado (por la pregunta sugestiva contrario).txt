@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -206,7 +206,6 @@
 < ¿Es Juan la madre de Paz?
 * 
 * Mis suposiciones anteriores que han sido corregidas por una sugerente pregunta opuesta:
-< Juan es probablemente femenina.
 < Juan no es probablemente un hijo.
 < Juan no es probablemente un niño.
 < Juan no es probablemente un padre.
@@ -214,11 +213,12 @@
 < Juan no es probablemente un hombre.
 < Juan es probablemente una mujer.
 < Juan no es posiblemente una niña.
+< Juan es probablemente femenina.
 * 
 * Mis preguntas:
 < ¿Es Juan una madre o un padre?
 < ¿Es Juan femenina o masculino?
-< ¿Es Juan un hombre o una mujer?
+< ¿Es Juan una mujer o un hombre?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
@@ -242,14 +242,14 @@
 <	- Juan es posiblemente una persona.
 <	- Cada persona es masculino o femenina.
 * 	y:
-<	- ¿Es Juan un hombre o una mujer?
+<	- ¿Es Juan una mujer o un hombre?
 <	- Cada hombre es masculino.
 <	- Cada mujer es femenina.
-< ¿Es Juan un hombre o una mujer? Porque:
+< ¿Es Juan una mujer o un hombre? Porque:
+<	- ¿Es Juan una madre o un padre?
+<	- Cada padre es un hombre.
+<	- Cada madre es una mujer.
+* 	y:
 <	- Juan es posiblemente una persona.
 <	- Cada persona es un hombre o una mujer.
-* 	y:
-<	- ¿Es Juan una madre o un padre?
-<	- Cada madre es una mujer.
-<	- Cada padre es un hombre.
 < 

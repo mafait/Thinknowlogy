@@ -20,10 +20,10 @@
  Toon de garantie.
 ------------------------------------------------------------------------------
  Voorbeeldbestanden: * Gebruik knop <meer voorbeelden>
-	    of zie map: Thinknowlogy2023/data/examples/Nederlands/
- Fundamenteel:          * map: Thinknowlogy2023/documents/
- Ontwerp:	          * map: Thinknowlogy2023/documents/design/
- Schermafdrukken:     * map: Thinknowlogy2023/screenshots/Nederlands/
+	    of zie map: Thinknowlogy2024/data/examples/Nederlands/
+ Fundamenteel:          * map: Thinknowlogy2024/documents/
+ Ontwerp:	          * map: Thinknowlogy2024/documents/design/
+ Schermafdrukken:     * map: Thinknowlogy2024/screenshots/Nederlands/
 ------------------------------------------------------------------------------
 < 
 < Specificaties:
@@ -34,7 +34,7 @@
 < English is een taal. {geleerd van gebruiker Admin}
 < 
 ------------------------------------------------------------------------------
- Totaal aantal items: 8686.
+ Totaal aantal items: 8658.
 ------------------------------------------------------------------------------
  Items in administrator:	422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Acties:			15.
     <Z> Alternatieven:		0.
 ------------------------------------------------------------------------------
- Items in woorden:	8264.
+ Items in woorden:	8236.
 ------------------------------------------------------------------------------
- * Actieve items:	       8211.
+ * Actieve items:	       8183.
     <a> toewijzingen:		7.
     <c> collecties:		272.
     <g> generalisaties:		348.
-    <i> interface:		1301.
+    <i> interface:		1284.
     <j> verantwoordingen:		8.
-    <l> grammatica:		4819.
+    <l> grammatica:		4808.
     <m> multiple woord:		69.
     <s> specificaties:		384.
     <r> schrijfwoorden (tijdelijk):	0.
@@ -146,7 +146,7 @@
 ------------------------------------------------------------------------------
  In bestanden markeert '~' het einde van de opvraag-opdracht		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2023, Menno Mafait
+ Copyright (C) 2024, Menno Mafait
  Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details klik "Help." en
  "Toon de garantie.". Dit is vrije software en het is u toegestaan deze te verspreiden
  onder bepaalde voorwaarden; klik "Help." en "Toon de GPLv2-licentie." voor meer details.

@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -126,12 +126,12 @@
 < 
 * 
 * My conclusions:
-< Paul is not a daughter.
-< Paul is not a girl.
-< Paul is not a mother.
 < Paul is not feminine.
 < Paul is not a woman.
 < Paul is masculine.
+< Paul is not a daughter.
+< Paul is not a girl.
+< Paul is not a mother.
 * 
 * My assumptions:
 < Paul is probably not a boy.
@@ -149,11 +149,11 @@
 <	- Paul is a son.
 <	- Every son is not a daughter.
 * 	and:
-<	- Paul is a man.
-<	- Every man is not a daughter.
-* 	and:
 <	- Paul is masculine.
 <	- Every daughter is not masculine.
+* 	and:
+<	- Paul is a man.
+<	- Every man is not a daughter.
 < Paul is not feminine. Because:
 <	- Paul is a son.
 <	- Every son is not feminine.
@@ -164,20 +164,20 @@
 <	- Paul is a son.
 <	- Every son is not a girl.
 * 	and:
-<	- Paul is a man.
-<	- Every man is not a girl.
-* 	and:
 <	- Paul is masculine.
 <	- Every girl is not masculine.
+* 	and:
+<	- Paul is a man.
+<	- Every man is not a girl.
 < Paul is not a mother. Because:
 <	- Paul is a son.
 <	- Every son is not a mother.
 * 	and:
-<	- Paul is a man.
-<	- Every man is not a mother.
-* 	and:
 <	- Paul is masculine.
 <	- Every mother is not masculine.
+* 	and:
+<	- Paul is a man.
+<	- Every man is not a mother.
 < Paul is not a woman. Because:
 <	- Paul is a son.
 <	- Every son is not a woman.

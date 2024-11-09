@@ -1,9 +1,9 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		Storing the context info of a word
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -31,14 +31,13 @@ class ContextItem extends Item
 	private short specificationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
 	private int contextNr_ = Constants.NO_CONTEXT_NR;
-	private int spanishAmbiguousCollectionNr_ = Constants.NO_COLLECTION_NR;
 
 	private WordItem specificationWordItem_ = null;
 
 
 	// Constructor
 
-	protected ContextItem( short contextWordTypeNr, short specificationWordTypeNr, int contextNr, int spanishAmbiguousCollectionNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
+	protected ContextItem( short contextWordTypeNr, short specificationWordTypeNr, int contextNr, WordItem specificationWordItem, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -48,7 +47,6 @@ class ContextItem extends Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 
 		contextNr_ = contextNr;
-		spanishAmbiguousCollectionNr_ = spanishAmbiguousCollectionNr;
 
 		specificationWordItem_ = specificationWordItem;
 		}
@@ -106,11 +104,10 @@ class ContextItem extends Item
 	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem _myWordItem = myWordItem();
 		String wordString;
 		StringBuffer queryStringBuffer;
-		String contextWordTypeString = _myWordItem.wordTypeNameString( contextWordTypeNr_ );
-		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String contextWordTypeString = WordItem.wordTypeNameString( contextWordTypeNr_ );
+		String specificationWordTypeString = WordItem.wordTypeNameString( specificationWordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -123,9 +120,6 @@ class ContextItem extends Item
 
 		if( contextNr_ > Constants.NO_CONTEXT_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "contextNr:" + contextNr_ );
-
-		if( spanishAmbiguousCollectionNr_ > Constants.NO_COLLECTION_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "spanishAmbiguousCollectionNr:" + spanishAmbiguousCollectionNr_ );
 
 		if( specificationWordTypeNr_ > Constants.NO_WORD_TYPE_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationWordType:" + ( specificationWordTypeString == null ? Constants.EMPTY_STRING : specificationWordTypeString ) + Constants.QUERY_WORD_TYPE_STRING + specificationWordTypeNr_ );
@@ -158,19 +152,9 @@ class ContextItem extends Item
 		return contextWordTypeNr_;
 		}
 
-	protected short specificationWordTypeNr()
-		{
-		return specificationWordTypeNr_;
-		}
-
 	protected int contextNr()
 		{
 		return contextNr_;
-		}
-
-	protected int spanishAmbiguousCollectionNr()
-		{
-		return spanishAmbiguousCollectionNr_;
 		}
 
 	protected ContextItem nextContextItem()

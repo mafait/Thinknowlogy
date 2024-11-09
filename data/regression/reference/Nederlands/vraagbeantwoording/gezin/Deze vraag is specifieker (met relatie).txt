@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -164,11 +164,11 @@
 * Mijn conclusies:
 < Anna is niet mannelijk.
 < Anna is een vrouw.
-< Anna is geen vader.
+< Anna is vrouwelijk.
 < Anna is geen zoon.
 < Anna is geen jongen.
+< Anna is geen vader.
 < Anna is geen man.
-< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk geen meisje.
@@ -268,48 +268,48 @@
 < Anna is een vrouw. Omdat:
 <	- Anna is een moeder.
 <	- Iedere moeder is een vrouw.
-< Anna is geen vader. Omdat:
-<	- Anna is een moeder.
-<	- Iedere moeder is geen vader.
-* 	en:
-<	- Anna is een vrouw.
-<	- Iedere vrouw is geen vader.
-* 	en:
-<	- Anna is vrouwelijk.
-<	- Iedere vader is niet vrouwelijk.
-< Anna is geen zoon. Omdat:
-<	- Anna is een vrouw.
-<	- Iedere vrouw is geen zoon.
-* 	en:
-<	- Anna is vrouwelijk.
-<	- Iedere zoon is niet vrouwelijk.
-* 	en:
-<	- Anna is een moeder.
-<	- Iedere moeder is geen zoon.
-< Anna is geen jongen. Omdat:
-<	- Anna is een vrouw.
-<	- Iedere vrouw is geen jongen.
-* 	en:
-<	- Anna is vrouwelijk.
-<	- Iedere jongen is niet vrouwelijk.
-* 	en:
-<	- Anna is een moeder.
-<	- Iedere moeder is geen jongen.
-< Anna is geen man. Omdat:
-<	- Anna is een vrouw.
-<	- Iedere vrouw is geen man.
-* 	en:
-<	- Anna is vrouwelijk.
-<	- Iedere man is niet vrouwelijk.
-* 	en:
-<	- Anna is een moeder.
-<	- Iedere moeder is geen man.
 < Anna is vrouwelijk. Omdat:
 <	- Anna is een vrouw.
 <	- Iedere vrouw is vrouwelijk.
 * 	en:
 <	- Anna is een moeder.
 <	- Iedere moeder is vrouwelijk.
+< Anna is geen zoon. Omdat:
+<	- Anna is vrouwelijk.
+<	- Iedere zoon is niet vrouwelijk.
+* 	en:
+<	- Anna is een vrouw.
+<	- Iedere vrouw is geen zoon.
+* 	en:
+<	- Anna is een moeder.
+<	- Iedere moeder is geen zoon.
+< Anna is geen jongen. Omdat:
+<	- Anna is vrouwelijk.
+<	- Iedere jongen is niet vrouwelijk.
+* 	en:
+<	- Anna is een vrouw.
+<	- Iedere vrouw is geen jongen.
+* 	en:
+<	- Anna is een moeder.
+<	- Iedere moeder is geen jongen.
+< Anna is geen vader. Omdat:
+<	- Anna is vrouwelijk.
+<	- Iedere vader is niet vrouwelijk.
+* 	en:
+<	- Anna is een vrouw.
+<	- Iedere vrouw is geen vader.
+* 	en:
+<	- Anna is een moeder.
+<	- Iedere moeder is geen vader.
+< Anna is geen man. Omdat:
+<	- Anna is vrouwelijk.
+<	- Iedere man is niet vrouwelijk.
+* 	en:
+<	- Anna is een vrouw.
+<	- Iedere vrouw is geen man.
+* 	en:
+<	- Anna is een moeder.
+<	- Iedere moeder is geen man.
 * 
 * Mijn veronderstellingen:
 < Anna is waarschijnlijk geen meisje. Omdat:

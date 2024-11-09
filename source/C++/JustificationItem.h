@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		Storing info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@ class JustificationItem : private Item
 	friend class SpecificationItem;
 	friend class SpecificationList;
 	friend class WordItem;
+	friend class WordWrite;
 	friend class WordSpecification;
 
 	// Private initialized variables
@@ -55,7 +56,7 @@ class JustificationItem : private Item
 	// Private functions
 
 	bool hasJustification( JustificationItem *checkJustificationItem );
-	bool isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr );
+	bool hasSimilarRelationCollection( unsigned int firstCollectionNr, unsigned int secondCollectionNr, WordItem *firstRelationWordItem, WordItem *secondRelationWordItem );
 	bool isSameJustificationType( JustificationItem *referenceJustificationItem );
 
 
@@ -92,39 +93,41 @@ class JustificationItem : private Item
 	bool hasFeminineOrMasculineProperNounEnding();
 	bool hasJustification( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 
-	bool hasPrimarySpecificationCurrentCreationSentenceNr();
-	bool hasPrimarySpecificationRelationContext();
+	bool hasPrimarySpecificationRelationCollection();
+	bool hasPrimarySpecificationRelationWord();
+	bool hasPrimaryUserSpecification();
+	bool hasSecondaryCompoundCollectionSpecification();
+	bool hasSecondaryUserSpecification();
+
 	bool isExclusivePrimarySpecification();
 	bool isOlderPrimarySpecification();
 	bool isPossessivePrimarySpecification();
-	bool isPrimaryAssignmentSpecification();
+	bool isPossessiveSecondarySpecification();
+	bool isPrimaryActiveAssignmentSpecification();
 	bool isPrimaryNounSpecification();
 	bool isPrimaryQuestionSpecification();
 	bool isPrimarySpecificationWordSpanishAmbiguous();
 	bool isReplacedPrimarySpecification();
 	bool isReplacedSecondarySpecification();
 
-	bool hasCompoundCollectionSecondarySpecification();
-	bool isPossessiveSecondarySpecification();
-
 	bool isExclusiveSpecificationSubstitutionAssumption();
 	bool isNegativeAssumptionOrConclusion();
-	bool isObsoleteAssumptionJustification( bool hasOnlyOneRelationWord, bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel );
+	bool isObsoleteAssumptionJustification( bool isIncludingOppositePossessiveSpecificationAssumption, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionPartOfAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel );
 	bool isOppositePossessiveSpecificationAssumption();
 	bool isQuestionJustification();
 	bool isReversibleAssumptionOrConclusion();
-	bool isReversibleConclusion();
 	bool isSpecificationSubstitutionAssumptionOrConclusion();
 	bool isSpecificationSubstitutionPartOfAssumptionOrConclusion();
 	bool isSuggestiveQuestionAssumption();
 
+	bool isSecondaryAssignmentSpecification();
+
+	unsigned short justificationAssumptionLevel();
 	unsigned short justificationTypeNr();
 	unsigned short primarySpecificationWordTypeNr();
 
-	unsigned int justificationAssumptionLevel();
-	unsigned int nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords );
+	unsigned int nJustificationRelationWords( unsigned int relationCollectionNr, unsigned int nRelationWords, WordItem *relationWordItem );
 	unsigned int primarySpecificationCollectionNr();
-	unsigned int secondarySpecificationCollectionNr();
 
 	signed char attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *mySpecificationItem );
 	signed char changeAttachedJustification( JustificationItem *newAttachedJustificationItem );
@@ -141,11 +144,13 @@ class JustificationItem : private Item
 	JustificationItem *obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem );
 
-	SpecificationItem *additionalDefinitionSpecificationItem();
-	SpecificationItem *additionalProperNounSpecificationItem();
 	SpecificationItem *primarySelfGeneratedSpecification();
+
 	SpecificationItem *primarySpecificationItem();
+	SpecificationItem *additionalDefinitionSpecificationItem();
 	SpecificationItem *secondarySpecificationItem();
+	SpecificationItem *additionalProperNounSpecificationItem();
+
 	SpecificationItem *updatedPrimarySpecificationItem();
 	SpecificationItem *updatedSecondarySpecificationItem();
 

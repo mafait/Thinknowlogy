@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,12 +127,12 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
-< Jan is geen dochter.
-< Jan is geen moeder.
-< Jan is geen meisje.
 < Jan is niet vrouwelijk.
-< Jan is geen vrouw.
 < Jan is mannelijk.
+< Jan is geen dochter.
+< Jan is geen meisje.
+< Jan is geen moeder.
+< Jan is geen vrouw.
 < Paul heeft een vader, genaamd Jan.
 < Johan heeft een vader, genaamd Jan.
 < Laura heeft een vader, genaamd Jan.
@@ -175,6 +175,6 @@
 < 
 ! 
 ! Deze zin is niet geaccepteerd, omdat het in conflict is met:
-< Jan is een vader.
+< Jan is de vader van Paul, Johan en Laura.
 < Jan is geen moeder.
 < 

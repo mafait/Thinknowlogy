@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,12 +127,12 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
-< Jan is geen dochter.
-< Jan is geen moeder.
-< Jan is geen meisje.
 < Jan is niet vrouwelijk.
-< Jan is geen vrouw.
 < Jan is mannelijk.
+< Jan is geen dochter.
+< Jan is geen meisje.
+< Jan is geen moeder.
+< Jan is geen vrouw.
 < Paul heeft een vader, genaamd Jan.
 < Paul heeft een moeder, genaamd Anna.
 < Johan heeft een vader, genaamd Jan.
@@ -140,12 +140,12 @@
 < Laura heeft een vader, genaamd Jan.
 < Laura heeft een moeder, genaamd Anna.
 < Anna is een vrouw.
-< Anna is geen vader.
+< Anna is niet mannelijk.
+< Anna is vrouwelijk.
 < Anna is geen zoon.
 < Anna is geen jongen.
-< Anna is niet mannelijk.
+< Anna is geen vader.
 < Anna is geen man.
-< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk geen jongen.
@@ -192,24 +192,24 @@
 * 
 * Mijn conclusies:
 < Sjors is een man.
-< Sjors is geen dochter.
-< Sjors is geen moeder.
-< Sjors is geen meisje.
 < Sjors is niet vrouwelijk.
-< Sjors is geen vrouw.
 < Sjors is mannelijk.
+< Sjors is geen dochter.
+< Sjors is geen meisje.
+< Sjors is geen moeder.
+< Sjors is geen vrouw.
 < André heeft een vader, genaamd Sjors.
 * 
 * Mijn veronderstellingen:
 < Sjors is waarschijnlijk geen jongen.
 < Sjors is waarschijnlijk een persoon.
-< Sjors heeft mogelijk een kind, genaamd André.
 < Sjors is waarschijnlijk een ouder van André.
 < Sjors is waarschijnlijk deel van een gezin.
+< Sjors heeft mogelijk een kind, genaamd André.
+< André heeft waarschijnlijk een ouder, genaamd Sjors.
 < André is mogelijk een kind van Sjors.
 < André is mogelijk deel van een gezin.
 < André is misschien een persoon.
-< André heeft waarschijnlijk een ouder, genaamd Sjors.
 * 
 * Mijn vragen:
 < Is André een meisje, een vrouw, een jongen of een man?

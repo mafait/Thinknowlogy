@@ -1,13 +1,14 @@
 ﻿Affichez "------------------------------------------------------------------------------".
-Affichez " Thinknowlogy est la seule technologie de connaissance auto-organisée au monde.".
+Affichez " Thinknowlogy est la seule technologie de connaissance naturellement intelligente au monde.".
 Affichez "------------------------------------------------------------------------------".
-Affichez " Je crois que la vie et l'univers sont intelligemment conçus. Et je crois que toute conception".
-Affichez " intelligente peut être démêlée grâce à la rétro-ingénierie. J'ai identifié le langage humain".
-Affichez " comme une source d'intelligence naturelle. J'utilise la conception intelligente du langage".
-Affichez " humain afin de reproduire l'intelligence humaine dans un logiciel.".
+Affichez " L’intelligence naturelle est l’utilisation de la logique naturelle.".
+Affichez "------------------------------------------------------------------------------".
+Affichez " Cette logique naturelle fournit des indices pour organiser les objets naturels, comme".
+Affichez " regrouper les objets qui appartiennent ensemble, séparer les objets qui n'appartiennent".
+Affichez " pas ensemble et archiver les objets qui sont devenus moins importants.".
 Affichez "------------------------------------------------------------------------------".
 Affichez " La logique naturelle du langage est démontrée par:".
-Affichez " * Raisonnement (dans des phrases à grammaire restreinte):".
+Affichez " * Raisonnement (en phrases lisibles avec une grammaire restreinte):".
 Affichez "   - en tirant des conclusions (plus avancées que les solutions scientifiques),".
 Affichez "   - en faisant des hypothèses (avec un niveau d'incertitude auto-ajustable),".
 Affichez "   - en posant des questions sur les lacunes dans les connaissances,".

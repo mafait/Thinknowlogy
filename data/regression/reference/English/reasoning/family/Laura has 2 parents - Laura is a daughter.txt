@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -229,6 +229,10 @@
 <	- Anna is a parent of Laura.
 < Laura is probably part of a family. Because:
 <	- Laura is probably a child of John and Anna.
+<	- Children are part of every family.
+* 	and:
+<	- John has probably a child, called Laura.
+<	- Anna has probably a child, called Laura.
 <	- Children are part of every family.
 < Laura is maybe a daughter of John and Anna. Because:
 <	- Laura is probably a child of John and Anna.

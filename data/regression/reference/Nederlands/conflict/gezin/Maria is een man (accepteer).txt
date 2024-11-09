@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,12 +127,12 @@
 * Ik had verwacht dat eigennaam "Maria" vrouwelijk zou zijn.
 * 
 * Mijn conclusies:
-< Maria is geen dochter.
-< Maria is geen meisje.
-< Maria is geen moeder.
 < Maria is niet vrouwelijk.
 < Maria is geen vrouw.
 < Maria is mannelijk.
+< Maria is geen dochter.
+< Maria is geen meisje.
+< Maria is geen moeder.
 * 
 * Mijn veronderstellingen:
 < Maria is waarschijnlijk geen jongen.

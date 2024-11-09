@@ -1,9 +1,9 @@
 ﻿/*	Class:			GeneralizationList
  *	Parent class:	List
  *	Purpose:		Storing generalization items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ class GeneralizationList extends List
 
 	protected GeneralizationList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_GENERALIZATION_LIST_SYMBOL, "GeneralizationList", myWordItem );
+		initializeListVariables( Constants.WORD_GENERALIZATION_LIST_SYMBOL, myWordItem );
 		}
 
 

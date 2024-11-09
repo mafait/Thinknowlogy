@@ -10,16 +10,16 @@ How to start:
 • The example files can be found in the "data/examples" subfolder.
 
 ----------------------------------------------------------------------------
-Thinknowlogy2023 - Java GUI.jar:
+Thinknowlogy2024 - Java (GUI).jar:
 ----------------------------------------------------------------------------
 • This is a Java application. It can be started by double-clicking on the file;
 • The GUI (Graphical User Interface) has handy demo buttons to guide you;
-• This software uses Java. In order to install or upgrade the Java Runtime
-	Environment, go to http://java.com/ and follow the instructions;
+• This software is using Java. Install or upgrade the Java Runtime Environment
+	first: http://java.com/;
 • See the included screenshots for extra guidance about the implemented grammar.
 
 ----------------------------------------------------------------------------
-Thinknowlogy2023 - Text console - C++.exe:
+Thinknowlogy2024 - Text console (C++).exe:
 ----------------------------------------------------------------------------
 • First of all, the C++ version is just a bonus. It has a textual console interface.
 	So, you'll have to type the sentences by yourself. See the included screenshots
@@ -43,15 +43,17 @@ In subfolder "source", you will find a text file that describes how a Linux Nati
 C++ executable can be compiled under Linux from the C++ sources.
 
 ----------------------------------------------------------------------------
-Known issue:
+Known issues:
 ----------------------------------------------------------------------------
 I don't speak Spanish, nor French, nor Chinese. I've tried to implement these
 languages the best I could. But I am aware that the implementation will contain
 mistranslations and misinterpretations. Please contact me if you find any problem
 with these languages.
 
-Enjoy playing around with this application. Be brave enough to read the design paper
-and the fundamental paper. Have a peek at the source code. And above all: Have fun.
+Enjoy playing around with this application. Be brave enough to read the challenge
+document and the fundamental paper. Have a peek at the source code. And above all:
+
+Have fun.
 
 Menno Mafait.
 https://mafait.org/contact

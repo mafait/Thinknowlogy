@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the Dutch language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -341,10 +341,7 @@
 
 # Zin (fouten)
 :1640			"\nIntegriteitsfout! Mijn implementatie is ontoereikend voor het opslaan of teruglezen van "
-:1641			"deze zin."
-:1642			"deze zin, te wijten aan de woorden:"
-:1643			"zin \""
+:1641			"zin \""
+:1642			"\", te wijten aan de woorden:"
+:1643			"\nIk ontvang terug van mijn systeem: \""
 :1644			"\"."
-:1645			"\", te wijten aan de woorden:"
-:1646			"\nIk ontvang terug van mijn systeem: \""
-:1647			"\"."

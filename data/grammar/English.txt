@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the English language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -463,12 +463,11 @@
 		$structure_specification_noun													{ singular_structure_specification_noun_with_mandatory_article | plural_structure_specification_noun }
 		$comma_separated_structure_specification_nouns									symbol_comma structure_specification_noun [ comma_separated_structure_specification_nouns ]
 		$more_collective_structure_specification_nouns									[ comma_separated_structure_specification_nouns ] conjunction_collective structure_specification_noun
-		$collective_structure_specification_nouns										structure_specification_noun [ more_collective_structure_specification_nouns ]
 		$more_exclusive_structure_specification_nouns									[ comma_separated_structure_specification_nouns ] exclusive_specification_conjunction structure_specification_noun
 		$structure_specification_nouns													structure_specification_noun [ more_collective_structure_specification_nouns | more_exclusive_structure_specification_nouns ]
 
 		$possessive_singular_structure_specification_noun_with_mandatory_article		{ adjective_No | article_indefinite } [ adjective_Specific ] singular_structure_specification_noun
-		$possessive_structure_specification_noun										{ possessive_singular_structure_specification_noun_with_mandatory_article | plural_structure_specification_noun }
+		$possessive_structure_specification_noun										{ plural_structure_specification_noun | possessive_singular_structure_specification_noun_with_mandatory_article }
 		$comma_separated_possessive_structure_specification_nouns						symbol_comma possessive_structure_specification_noun [ comma_separated_possessive_structure_specification_nouns ]
 		$more_collective_possessive_structure_specification_nouns						[ comma_separated_possessive_structure_specification_nouns ] conjunction_collective possessive_structure_specification_noun
 		$possessive_structure_specification_nouns										possessive_structure_specification_noun [ more_collective_possessive_structure_specification_nouns ]
@@ -496,6 +495,8 @@
 :5021	$plural_assignment_specification												{ plural_assignment_specification_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }
 :5021	$noun_assignment_specification													{ singular_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives }
 :5021	$proper_noun_assignment_specification											{ singular_proper_noun_assignment_specification_nouns | plural_assignment_specification_nouns | collective_specification_adjectives }
+
+		$collective_structure_specification_nouns										structure_specification_noun [ more_collective_structure_specification_nouns ]
 
 :5020	$singular_structure_specification												{ singular_exclusive_structure_specification_nouns | exclusive_specification_proper_nouns | exclusive_specification_numerals | exclusive_specification_small_letters | exclusive_specification_capital_letters | exclusive_specification_adjectives | exclusive_specification_pronouns | exclusive_specification_texts }
 :5020	$plural_structure_specification													{ collective_structure_specification_nouns | collective_specification_proper_nouns | collective_specification_numerals | collective_specification_small_letters | collective_specification_capital_letters | collective_specification_adjectives | collective_specification_pronouns }

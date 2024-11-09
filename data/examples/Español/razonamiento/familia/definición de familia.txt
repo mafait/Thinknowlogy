@@ -1,5 +1,5 @@
 ﻿#----------------------------------------------------------------------------
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
 # La lógica natural del lenguaje se demuestra por:
 # * Razonamiento (en oraciones con gramática restringida):
@@ -10,7 +10,7 @@
 #   - detectando confirmaciones y conflictos; utilizando capacidades de autoorganización;
 # * Multilingüismo, asumiendo que las lenguas tienen un origen común y lógico.
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -41,9 +41,9 @@ Cada hija es una niña o una mujer.
 #C++## Mostrar información sobre Paz.
 #C++## Mostrar información sobre José.
 #C++## Mostrar información sobre Luisa.
-#C++## Paz es hijo de Juan y Ana.
-#C++## José es hijo de Juan y Ana.
-#C++## Luisa es hija de Juan y Ana.
+#C++## Paz es un hijo de Juan y Ana.
+#C++## José es un hijo de Juan y Ana.
+#C++## Luisa es una hija de Juan y Ana.
 #C++##
 #C++## Véase el texto en los botones de las capturas de pantalla de la familia
 #C++## (a subcarpeta screenshots\) para más ejemplos.

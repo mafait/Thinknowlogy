@@ -20,10 +20,10 @@
  Mostrar la garantía.
 ------------------------------------------------------------------------------
  Archivos de ejemplo: * Utilice botón <más ejemplos>
-	    o ver carpeta: Thinknowlogy2023/data/examples/Español/
- Fundamental:	          * carpeta: Thinknowlogy2023/documents/
- Proyecto:	          * carpeta: Thinknowlogy2023/documents/design/
- Imágenes:	          * carpeta: Thinknowlogy2023/screenshots/Español/
+	    o ver carpeta: Thinknowlogy2024/data/examples/Español/
+ Fundamental:	          * carpeta: Thinknowlogy2024/documents/
+ Proyecto:	          * carpeta: Thinknowlogy2024/documents/design/
+ Imágenes:	          * carpeta: Thinknowlogy2024/screenshots/Español/
 ------------------------------------------------------------------------------
 < 
 < Especificaciones:
@@ -34,7 +34,7 @@
 < English es una idioma. {aprendido de usuario Admin}
 < 
 ------------------------------------------------------------------------------
- Número total de elementos:	8686.
+ Número total de elementos:	8658.
 ------------------------------------------------------------------------------
  Elementos de administrador:	        422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Acciones:			15.
     <Z> Alternativas:			0.
 ------------------------------------------------------------------------------
- Elementos de las palabras:	        8264.
+ Elementos de las palabras:	        8236.
 ------------------------------------------------------------------------------
- * Elementos activos:		8211.
+ * Elementos activos:		8183.
     <a> asignaciones:			7.
     <c> colecciones:			272.
     <g> generalizaciones:			348.
-    <i> interfaz:				1301.
+    <i> interfaz:				1284.
     <j> justificación:			8.
-    <l> gramática:			4819.
+    <l> gramática:			4808.
     <m> varias palabras:			69.
     <s> especificaciones:			384.
     <r> escribir palabras (temporal):		0.
@@ -146,7 +146,7 @@
 ------------------------------------------------------------------------------
  En los archivos de '~' marcará el fin de una consulta		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2023, Menno Mafait
+ Copyright (C) 2024, Menno Mafait
  Thinknowlogy no ofrece ABSOLUTAMENTE NINGUNA GARANTÍA. Para más detalles haga clic
  en "Ayudar." y "Mostrar la garantía.". Este software es libre, y se le permite redistribuirlo bajo
  ciertas condiciones; Haga clic en "Ayudar." y "Mostrar la licencia-GPLv2." para más detalles.

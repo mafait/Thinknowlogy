@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -181,6 +181,9 @@
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 * 	en:
 <	- Paul heeft mogelijk 2 ouders, genaamd Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
@@ -264,6 +267,10 @@
 <	- Jan heeft waarschijnlijk een kind, genaamd Paul.
 <	- Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+<	- Anna heeft waarschijnlijk een kind, genaamd Paul.
+<	- Kinderen zijn deel van ieder gezin.
+* 	en:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
 < Paul heeft mogelijk 2 ouders, genaamd Jan en Anna. Omdat:
@@ -274,6 +281,7 @@
 <	- Anna is mogelijk een ouder van Paul.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
 <	- Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Paul heeft misschien een moeder, genaamd Anna. Omdat:
 <	- Anna is misschien een moeder van Paul.
@@ -388,6 +396,9 @@
 <	- Paul heeft mogelijk 2 ouders, genaamd Jan en Anna.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
 <	- Ieder kind is een zoon of een dochter.
 <	- Jan heeft een zoon, genaamd Paul.
 < Jan is mogelijk deel van een gezin. Omdat:
@@ -441,6 +452,10 @@
 <	- Jan heeft waarschijnlijk een kind, genaamd Paul.
 <	- Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Paul is waarschijnlijk deel van een gezin. Omdat:
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+<	- Anna heeft waarschijnlijk een kind, genaamd Paul.
+<	- Kinderen zijn deel van ieder gezin.
+* 	en:
 <	- Paul is waarschijnlijk een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
 < Paul heeft mogelijk 2 ouders, genaamd Jan en Anna. Omdat:
@@ -451,6 +466,7 @@
 <	- Anna is mogelijk een ouder van Paul.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
 <	- Anna heeft waarschijnlijk een kind, genaamd Paul.
 < Paul heeft misschien een moeder, genaamd Anna. Omdat:
 <	- Anna is misschien een moeder van Paul.

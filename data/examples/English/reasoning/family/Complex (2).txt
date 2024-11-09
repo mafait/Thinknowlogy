@@ -4,6 +4,7 @@ Paul has a father, called John.
 #Dev#Display the justification report about John.
 #Dev#Display the justification report about Anna.
 #Dev#Display the justification report about Paul.
+#Dev#Display the justification report about Joe.
 John is the father and Anna is the mother of Paul, Joe and Laura.
 #Dev#Display the justification report about John.
 #Dev#Display the justification report about Anna.

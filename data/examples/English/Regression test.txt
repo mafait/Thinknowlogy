@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the regression test for the English language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -189,6 +189,7 @@
 #Dev#Read the test file "English/reasoning/family/I know (11)".
 #Dev#Read the test file "English/reasoning/family/I know (12)".
 #Dev#Read the test file "English/reasoning/family/James was the father of Peter (before family definition)".
+#Dev#Read the test file "English/reasoning/family/Joe has 2 parents - Anna - Paul".
 #Dev#Read the test file "English/reasoning/family/Joe has 2 parents - Joe is a child".
 #Dev#Read the test file "English/reasoning/family/Joe has 2 parents - Joe is a son".
 #Dev#Read the test file "English/reasoning/family/Joe is a child - Joe has 2 parents".
@@ -199,6 +200,8 @@
 #Dev#Read the test file "English/reasoning/family/John - Anna - Paul, Joe and Laura".
 #Dev#Read the test file "English/reasoning/family/John - John and Anna".
 #Dev#Read the test file "English/reasoning/family/John - Laura - John and Anna".
+#Dev#Read the test file "English/reasoning/family/John - Paul - Anna".
+#Dev#Read the test file "English/reasoning/family/John - Peter - Anna".
 #Dev#Read the test file "English/reasoning/family/John and Anna - Paul, Joe and Laura".
 #Dev#Read the test file "English/reasoning/family/John has 2 sons and a daughter".
 #Dev#Read the test file "English/reasoning/family/John has 2 sons and a daughter (before family definition)".
@@ -234,7 +237,6 @@
 #Dev#Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - Joe - John - Paul".
 #Dev#Read the test file "English/reasoning/family/Paul - Anna - Joe - Laura - John".
 #Dev#Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (parents)".
-#Dev#Read the test file "English/reasoning/family/Paul - Joe - Laura - John and Anna (son - daughter)".
 #Dev#Read the test file "English/reasoning/family/Paul - John and Anna - Joe - Laura".
 #Dev#Read the test file "English/reasoning/family/Paul has a father - Paul has 2 parents".
 #Dev#Read the test file "English/reasoning/family/Paul is a boy - Laura is a girl".

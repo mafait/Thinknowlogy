@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the regression test for the Dutch language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -187,6 +187,7 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (11)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Dat weet ik (12)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Cor was de vader van Kees (voor gezinsdefinitie)".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan heeft 2 ouders - Anna - Paul".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan heeft 2 ouders - Johan is een kind".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan heeft 2 ouders - Johan is een zoon".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Johan is een kind - Johan heeft 2 ouders".
@@ -197,6 +198,8 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan - Anna - Paul, Johan en Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan - Jan en Anna".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan - Laura - Jan en Anna".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan - Paul - Anna".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan - Peter - Anna".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan en Anna - Paul, Johan en Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan heeft 2 zoons en een dochter".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Jan heeft 2 zoons en een dochter (voor gezinsdefinitie)".
@@ -231,8 +234,8 @@
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Mijn conclusies die bevestigd zijn (zonder relatie)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Anna - Johan - Laura - Johan - Jan - Paul".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Anna - Johan - Laura - Jan".
+#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Jan en Anna".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (ouders)".
-#Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Johan - Laura - Jan en Anna (zoon - dochter)".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul - Jan en Anna - Johan - Laura".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul heeft een vader - Paul heeft 2 ouders".
 #Dev#Lees het testbestand "Nederlands/redeneren/gezin/Paul is een jongen - Laura is een meisje".

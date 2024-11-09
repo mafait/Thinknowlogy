@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		Storing info need to write the justification reports
  *					for the self-generated knowledge
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -41,21 +41,24 @@
 		return false;
 		}
 
-	bool JustificationItem::isContextSimilarInContextWords( unsigned int firstContextNr, unsigned int secondContextNr )
+	bool JustificationItem::hasSimilarRelationCollection( unsigned int firstCollectionNr, unsigned int secondCollectionNr, WordItem *firstRelationWordItem, WordItem *secondRelationWordItem )
 		{
-		WordItem *currentContextWordItem;
+		WordItem *currentCollectionWordItem;
 
-		if( firstContextNr > NO_CONTEXT_NR &&
-		secondContextNr > NO_CONTEXT_NR &&
-		firstContextNr != secondContextNr &&
-		( currentContextWordItem = globalVariables()->firstContextWordItem ) != NULL )
+		if( firstRelationWordItem != NULL &&
+		secondRelationWordItem != NULL &&
+
+		( firstCollectionNr != secondCollectionNr ||
+		firstRelationWordItem != secondRelationWordItem ) &&
+
+		( currentCollectionWordItem = globalVariables()->firstCollectionWordItem ) != NULL )
 			{
-			// Do for all context words
+			// Do for all collection words
 			do	{
-				if( !currentContextWordItem->isContextSimilarInWord( firstContextNr, secondContextNr ) )
+				if( !currentCollectionWordItem->hasSimilarRelationCollection( firstCollectionNr, secondCollectionNr ) )
 					return false;
 				}
-			while( ( currentContextWordItem = currentContextWordItem->nextContextWordItem ) != NULL );
+			while( ( currentCollectionWordItem = currentCollectionWordItem->nextCollectionWordItem ) != NULL );
 			}
 
 		return true;
@@ -173,11 +176,6 @@
 			case JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				strcat( queryString, QUERY_SEPARATOR_STRING );
 				strcat( queryString, "isExclusiveSpecificationSubstitutionAssumption" );
-				break;
-
-			case JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
-				strcat( queryString, QUERY_SEPARATOR_STRING );
-				strcat( queryString, "isIndirectlyAnsweredQuestionAssumption" );
 				break;
 
 			case JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
@@ -308,16 +306,34 @@
 //				additionalProperNounSpecificationItem_ == additionalProperNounSpecificationItem );
 		}
 
-	bool JustificationItem::hasPrimarySpecificationCurrentCreationSentenceNr()
+	bool JustificationItem::hasPrimarySpecificationRelationCollection()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->hasCurrentCreationSentenceNr() );
+				primarySpecificationItem_->hasRelationCollection() );
 		}
 
-	bool JustificationItem::hasPrimarySpecificationRelationContext()
+	bool JustificationItem::hasPrimarySpecificationRelationWord()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->hasRelationContext() );
+				primarySpecificationItem_->hasRelationWord() );
+		}
+
+	bool JustificationItem::hasPrimaryUserSpecification()
+		{
+		return ( primarySpecificationItem_ != NULL &&
+				primarySpecificationItem_->isUserSpecification() );
+		}
+
+	bool JustificationItem::hasSecondaryCompoundCollectionSpecification()
+		{
+		return ( secondarySpecificationItem_ != NULL &&
+				secondarySpecificationItem_->hasCompoundSpecificationCollection() );
+		}
+
+	bool JustificationItem::hasSecondaryUserSpecification()
+		{
+		return ( secondarySpecificationItem_ != NULL &&
+				secondarySpecificationItem_->isUserSpecification() );
 		}
 
 	bool JustificationItem::isExclusivePrimarySpecification()
@@ -338,16 +354,22 @@
 				primarySpecificationItem_->isPossessive() );
 		}
 
-	bool JustificationItem::isPrimaryAssignmentSpecification()
+	bool JustificationItem::isPossessiveSecondarySpecification()
+		{
+		return ( secondarySpecificationItem_ != NULL &&
+				secondarySpecificationItem_->isPossessive() );
+		}
+
+	bool JustificationItem::isPrimaryActiveAssignmentSpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isAssignment() );
+				primarySpecificationItem_->isActiveAssignment() );
 		}
 
 	bool JustificationItem::isPrimaryNounSpecification()
 		{
 		return ( primarySpecificationItem_ != NULL &&
-				primarySpecificationItem_->isSpecificationNoun() );
+				primarySpecificationItem_->isNounSpecification() );
 		}
 
 	bool JustificationItem::isPrimaryQuestionSpecification()
@@ -374,18 +396,6 @@
 				secondarySpecificationItem_->isReplacedItem() );
 		}
 
-	bool JustificationItem::hasCompoundCollectionSecondarySpecification()
-		{
-		return ( secondarySpecificationItem_ != NULL &&
-				secondarySpecificationItem_->hasCompoundSpecificationCollection() );
-		}
-
-	bool JustificationItem::isPossessiveSecondarySpecification()
-		{
-		return ( secondarySpecificationItem_ != NULL &&
-				secondarySpecificationItem_->isPossessive() );
-		}
-
 	bool JustificationItem::isExclusiveSpecificationSubstitutionAssumption()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION );
@@ -396,35 +406,28 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION );
 		}
 
-	bool JustificationItem::isObsoleteAssumptionJustification( bool hasOnlyOneRelationWord, bool isIncludingNegativeAssumptionOrConclusion, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel )
+	bool JustificationItem::isObsoleteAssumptionJustification( bool isIncludingOppositePossessiveSpecificationAssumption, bool isIncludingReversibleAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionAssumptionOrConclusion, bool isIncludingSpecificationSubstitutionPartOfAssumptionOrConclusion, bool isOnlySelectingOlderJustifications, unsigned short assumptionLevel )
 		{
 		return 	( primarySpecificationItem_ != NULL &&
 
 				( !isOnlySelectingOlderJustifications ||
 				isOlderItem() ) &&
 
-				( justificationAssumptionLevel() > assumptionLevel &&
+					( justificationAssumptionLevel() > assumptionLevel &&
 
-				( justificationTypeNr_ == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION ||
-				justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
+					( ( justificationTypeNr_ == JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION &&
+					isIncludingOppositePossessiveSpecificationAssumption ) ||
 
-				( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION &&
-				isIncludingReversibleAssumptionOrConclusion &&
+					justificationTypeNr_ == JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION ||
 
-				( !hasOnlyOneRelationWord ||
-				isOnlySelectingOlderJustifications ||
-				primarySpecificationItem_->isOlderItem() ) ) ||
+					( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION &&
+					isIncludingReversibleAssumptionOrConclusion ) ||
 
-				( justificationTypeNr_ == JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION &&
-				isIncludingNegativeAssumptionOrConclusion &&
+					( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION &&
+					isIncludingSpecificationSubstitutionAssumptionOrConclusion ) ||
 
-				( !primarySpecificationItem_->isSpecificationAdjective() ||
-				primarySpecificationItem_->isExclusiveSpecification() ) ) ||
-
-				( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION &&
-				isIncludingSpecificationSubstitutionAssumptionOrConclusion ) ||
-
-				justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION ) ) );
+					( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION &&
+					isIncludingSpecificationSubstitutionPartOfAssumptionOrConclusion ) ) ) );
 		}
 
 	bool JustificationItem::isOppositePossessiveSpecificationAssumption()
@@ -442,12 +445,6 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION );
 		}
 
-	bool JustificationItem::isReversibleConclusion()
-		{
-		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION &&
-				!hasAssumptionLevel() );
-		}
-
 	bool JustificationItem::isSpecificationSubstitutionAssumptionOrConclusion()
 		{
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION );
@@ -463,6 +460,17 @@
 		return ( justificationTypeNr_ == JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION );
 		}
 
+	bool JustificationItem::isSecondaryAssignmentSpecification()
+		{
+		return ( secondarySpecificationItem_ != NULL &&
+				secondarySpecificationItem_->isAssignment() );
+		}
+
+	unsigned short JustificationItem::justificationAssumptionLevel()
+		{
+		return Item::justificationAssumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
+		}
+
 	unsigned short JustificationItem::justificationTypeNr()
 		{
 		return justificationTypeNr_;
@@ -473,34 +481,29 @@
 		return ( primarySpecificationItem_ == NULL ? NO_WORD_TYPE_NR : primarySpecificationItem_->specificationWordTypeNr() );
 		}
 
-	unsigned int JustificationItem::justificationAssumptionLevel()
+	unsigned int JustificationItem::nJustificationRelationWords( unsigned int relationCollectionNr, unsigned int nRelationWords, WordItem *relationWordItem )
 		{
-		return Item::justificationAssumptionLevel( hasFeminineOrMasculineProperNounEnding_, justificationTypeNr_, primarySpecificationItem_, additionalDefinitionSpecificationItem_, secondarySpecificationItem_, additionalProperNounSpecificationItem_ );
-		}
+		WordItem *justificationRelationWordItem;
 
-	unsigned int JustificationItem::nJustificationContextRelations( unsigned int relationContextNr, unsigned int nRelationWords )
-		{
-		unsigned int primaryRelationContextNr;
-		unsigned int secondaryRelationContextNr;
-
-		if( relationContextNr > NO_CONTEXT_NR )
+		if( relationWordItem != NULL )
 			{
-			if( primarySpecificationItem_ != NULL &&
-			( primaryRelationContextNr = primarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
+			// Only one relation word
+			if( relationCollectionNr == NO_COLLECTION_NR )
+				return 1;
 
-				return ( isReversibleAssumptionOrConclusion() ? 1 : myWordItem()->nContextWords( primaryRelationContextNr ) );
+			if( primarySpecificationItem_ != NULL &&
+			( justificationRelationWordItem = primarySpecificationItem_->relationWordItem() ) != NULL )
+
+				return ( isReversibleAssumptionOrConclusion() ? 1 : myWordItem()->nRelationWords( primarySpecificationItem_->relationCollectionNr(), justificationRelationWordItem ) );
 
 			if( secondarySpecificationItem_ != NULL &&
-			( secondaryRelationContextNr = secondarySpecificationItem_->relationContextNr() ) > NO_CONTEXT_NR )
+			( justificationRelationWordItem = secondarySpecificationItem_->relationWordItem() ) != NULL )
 				{
 				if( additionalDefinitionSpecificationItem_ != NULL )
-					return myWordItem()->nContextWords( secondaryRelationContextNr );
+					return myWordItem()->nRelationWords( secondarySpecificationItem_->relationCollectionNr(), justificationRelationWordItem );
 
-				if( isContextSimilarInContextWords( secondaryRelationContextNr, relationContextNr ) )
-					return nRelationWords;
+				return ( hasSimilarRelationCollection( secondarySpecificationItem_->relationCollectionNr(), relationCollectionNr, justificationRelationWordItem, relationWordItem ) ? nRelationWords : 1 );
 				}
-
-			return 1;
 			}
 
 		return 0;
@@ -509,11 +512,6 @@
 	unsigned int JustificationItem::primarySpecificationCollectionNr()
 		{
 		return ( primarySpecificationItem_ == NULL ? NO_COLLECTION_NR : primarySpecificationItem_->specificationCollectionNr() );
-		}
-
-	unsigned int JustificationItem::secondarySpecificationCollectionNr()
-		{
-		return ( secondarySpecificationItem_ == NULL ? NO_COLLECTION_NR : secondarySpecificationItem_->specificationCollectionNr() );
 		}
 
 	signed char JustificationItem::attachJustification( JustificationItem *attachedJustificationItem, SpecificationItem *involvedSpecificationItem )
@@ -551,6 +549,9 @@
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "changeAttachedJustification";
 
+		if( !hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
 		attachedJustificationItem_ = NULL;
 
 		if( newAttachedJustificationItem == this )
@@ -565,9 +566,6 @@
 				return startError( functionNameString, NULL, "I am already linked to the given new attached justification item" );
 			}
 
-		if( !hasCurrentCreationSentenceNr() )
-			return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
-
 		attachedJustificationItem_ = newAttachedJustificationItem;
 		return RESULT_OK;
 		}
@@ -576,13 +574,14 @@
 		{
 		char errorString[ERROR_STRING_LENGTH];
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "checkSpecifications";
+		WordItem *_myWordItem = myWordItem();
 
 		if( primarySpecificationItem_ != NULL )
 			{
 			if( primarySpecificationItem_->isReplacedItem() )
 				{
 				if( isIncludingReplacedSpecifications &&
-				myWordItem()->replaceOrDeleteJustification( this ) != RESULT_OK )
+				_myWordItem->replaceOrDeleteJustification( this ) != RESULT_OK )
 					return startError( functionNameString, NULL, "I failed to replace or delete an unreferenced justification item with a replaced primary specification" );
 				}
 			else
@@ -604,10 +603,10 @@
 
 		if( additionalDefinitionSpecificationItem_ != NULL &&
 
-		( additionalDefinitionSpecificationItem_->isDeletedItem() ||
+			( additionalDefinitionSpecificationItem_->isDeletedItem() ||
 
-		( isIncludingReplacedSpecifications &&
-		additionalDefinitionSpecificationItem_->isReplacedItem() ) ) )
+			( isIncludingReplacedSpecifications &&
+			additionalDefinitionSpecificationItem_->isReplacedItem() ) ) )
 			{
 			// The result of this call is stored in a shared string. Hence, one call at the time.
 			strcpy( errorString, "\nI found a replaced or deleted additional definition specification item:\n\tSpecificationItem: " );
@@ -625,8 +624,9 @@
 			if( secondarySpecificationItem_->isReplacedItem() )
 				{
 				if( isIncludingReplacedSpecifications &&
-				myWordItem()->replaceOrDeleteJustification( this ) != RESULT_OK )
-					return startError( functionNameString, NULL, "I failed to replace or delete an unreferenced justification item with a replaced secondary specification" );
+				// Replace or delete unreferenced justification from my word
+				_myWordItem->replaceOrDeleteJustification( this ) != RESULT_OK )
+					return startError( functionNameString, NULL, "I failed to replace or delete an unreferenced justification from my word" );
 				}
 			else
 				{
@@ -639,6 +639,7 @@
 					strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
 					strcat( errorString, ".\n" );
 
+					// Write interface warning
 					if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 						return startError( functionNameString, NULL, "I failed to write an interface warning" );
 					}
@@ -647,10 +648,10 @@
 
 		if( additionalProperNounSpecificationItem_ != NULL &&
 
-		( additionalProperNounSpecificationItem_->isDeletedItem() ||
+			( additionalProperNounSpecificationItem_->isDeletedItem() ||
 
-		( isIncludingReplacedSpecifications &&
-		additionalProperNounSpecificationItem_->isReplacedItem() ) ) )
+			( isIncludingReplacedSpecifications &&
+			additionalProperNounSpecificationItem_->isReplacedItem() ) ) )
 			{
 			// The result of this call is stored in a shared string. Hence, one call at the time.
 			strcpy( errorString, "\nI found a replaced or deleted additional proper noun specification item:\n\tSpecificationItem: " );
@@ -659,6 +660,7 @@
 			strcat( errorString, itemToString( NO_WORD_TYPE_NR ) );
 			strcat( errorString, ".\n" );
 
+			// Write interface warning
 			if( inputOutput()->writeDiacriticalText( INPUT_OUTPUT_PROMPT_WARNING_INTEGRITY, errorString ) != RESULT_OK )
 				return startError( functionNameString, NULL, "I failed to write an interface warning" );
 			}
@@ -769,14 +771,11 @@
 
 	JustificationItem *JustificationItem::obsoleteSpanishJustificationItem( SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem )
 		{
-		if( ( primarySpecificationItem_ != NULL &&
-		primarySpecificationItem_->isSelfGeneratedQuestion() ) ||
-
-		( primarySpecificationItem_ == primarySpecificationItem &&
+		if( primarySpecificationItem_ == primarySpecificationItem &&
 		secondarySpecificationItem != NULL &&
 		secondarySpecificationItem_ != NULL &&
 		secondarySpecificationItem_->isSelfGeneratedSpecification() &&
-		secondarySpecificationItem_->generalizationWordItem() == secondarySpecificationItem->generalizationWordItem() ) )
+		secondarySpecificationItem_->generalizationWordItem() == secondarySpecificationItem->generalizationWordItem() )
 			return this;
 
 		// Recursive, do for all attached justification items
@@ -788,14 +787,13 @@
 
 	JustificationItem *JustificationItem::primarySpecificationWithoutRelationContextJustificationItem( WordItem *primarySpecificationWordItem )
 		{
-		if( primarySpecificationWordItem != NULL )
+		if( primarySpecificationWordItem != NULL &&
+		primarySpecificationItem_ != NULL )
 			{
-			if( primarySpecificationItem_ != NULL &&
+			if( primarySpecificationItem_->isReplacedOrDeletedItem() ||
 
-			( primarySpecificationItem_->isReplacedOrDeletedItem() ||
-
-			( !primarySpecificationItem_->hasRelationContext() &&
-			primarySpecificationItem_->specificationWordItem() == primarySpecificationWordItem ) ) )
+			( !primarySpecificationItem_->hasRelationWord() &&
+			primarySpecificationItem_->specificationWordItem() == primarySpecificationWordItem ) )
 				return this;
 
 			// Recursive, do for all attached justification items
@@ -805,16 +803,6 @@
 
 		return NULL;
 		}
-
-	SpecificationItem *JustificationItem::additionalDefinitionSpecificationItem()
-		{
-		return additionalDefinitionSpecificationItem_;
-		}
-
-		SpecificationItem *JustificationItem::additionalProperNounSpecificationItem()
-	{
-		return additionalProperNounSpecificationItem_;
-	}
 
 	SpecificationItem *JustificationItem::primarySelfGeneratedSpecification()
 		{
@@ -827,10 +815,20 @@
 		return primarySpecificationItem_;
 		}
 
+	SpecificationItem *JustificationItem::additionalDefinitionSpecificationItem()
+		{
+		return additionalDefinitionSpecificationItem_;
+		}
+
 	SpecificationItem *JustificationItem::secondarySpecificationItem()
 		{
 		return secondarySpecificationItem_;
 		}
+
+	SpecificationItem *JustificationItem::additionalProperNounSpecificationItem()
+	{
+		return additionalProperNounSpecificationItem_;
+	}
 
 	SpecificationItem *JustificationItem::updatedPrimarySpecificationItem()
 		{

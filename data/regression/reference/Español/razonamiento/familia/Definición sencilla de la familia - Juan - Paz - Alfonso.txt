@@ -9,7 +9,7 @@
 * 
 * Mis suposiciones:
 < Juan tiene probablemente un hijo, llamado Paz.
-< Paz es probablemente hijo de Juan.
+< Paz es probablemente un hijo de Juan.
 < Paz es probablemente parte de una familia.
 < 
 * 
@@ -21,12 +21,12 @@
 * 
 * Mis suposiciones:
 < Paz tiene probablemente un hijo, llamado Alfonso.
-< Alfonso es probablemente hijo de Paz.
+< Alfonso es probablemente un hijo de Paz.
 < Alfonso es probablemente parte de una familia.
 < 
 * 
 * Mis suposiciones que han sido confirmadas:
-< Alfonso es probablemente hijo de Paz.
+< Alfonso es probablemente un hijo de Paz.
 * 
 * Mis suposiciones que se han concluido:
 < Paz tiene un hijo, llamado Alfonso.

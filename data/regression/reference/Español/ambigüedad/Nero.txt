@@ -1,10 +1,10 @@
 ﻿* 
 * Mis conclusiones:
-< Nero es perro de Juan.
+< Nero es un perro de Juan.
 < 
 * 
 * Mis conclusiones:
 < Rome tenido un emperador, llamado Nero.
 < 
-< Sí, Nero era emperador de Rome.
+< Sí, Nero era un emperador de Rome.
 < 

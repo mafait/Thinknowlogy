@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -123,11 +123,11 @@
 < Juan no es femenina.
 < Juan es parte de una familia.
 < Juan es un hombre.
-< Juan no es una hija.
-< Juan no es una madre.
-< Juan no es una niña.
-< Juan no es una mujer.
 < Juan es masculino.
+< Juan no es una hija.
+< Juan no es una niña.
+< Juan no es una madre.
+< Juan no es una mujer.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
@@ -139,11 +139,11 @@
 < Ana no es masculino.
 < Ana es parte de una familia.
 < Ana es una mujer.
-< Ana no es un padre.
+< Ana es femenina.
 < Ana no es un hijo.
 < Ana no es un niño.
+< Ana no es un padre.
 < Ana no es un hombre.
-< Ana es femenina.
 * 
 * Mis suposiciones:
 < Ana no es probablemente una niña.
@@ -160,54 +160,54 @@
 < 
 * 
 * Mis conclusiones:
-< Juan no es una hija. Porque:
-<	- Juan es un hombre.
-<	- Cada hombre no es una hija.
-* 	y:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una hija.
-< Juan no es una niña. Porque:
-<	- Juan es un hombre.
-<	- Cada hombre no es una niña.
-* 	y:
-<	- Juan es masculino.
-<	- Cada niña no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una niña.
-< Juan no es una madre. Porque:
-<	- Juan es un padre.
-<	- Cada padre no es una madre.
-* 	y:
-<	- Juan es un hombre.
-<	- Cada hombre no es una madre.
-* 	y:
-<	- Juan es masculino.
-<	- Cada madre no es masculino.
 < Juan no es femenina. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es femenina.
 * 	y:
 <	- Juan es un hombre.
 <	- Cada hombre no es femenina.
-< Juan no es una mujer. Porque:
-<	- Juan es un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
-<	- Juan es masculino.
-<	- Cada mujer no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una mujer.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+< Juan no es una niña. Porque:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es una madre. Porque:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+< Juan no es una mujer. Porque:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
 < Juan es parte de una familia. Porque:
 <	- Juan es un padre.
 <	- Padres son parte de cada familia.
@@ -228,54 +228,54 @@
 < 
 * 
 * Mis conclusiones:
-< Ana no es un hijo. Porque:
-<	- Ana es una mujer.
-<	- Cada mujer no es un hijo.
-* 	y:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un hijo.
-< Ana no es un niño. Porque:
-<	- Ana es una mujer.
-<	- Cada mujer no es un niño.
-* 	y:
-<	- Ana es femenina.
-<	- Cada niño no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un niño.
-< Ana no es un padre. Porque:
-<	- Ana es una madre.
-<	- Cada madre no es un padre.
-* 	y:
-<	- Ana es una mujer.
-<	- Cada mujer no es un padre.
-* 	y:
-<	- Ana es femenina.
-<	- Cada padre no es femenina.
 < Ana no es masculino. Porque:
 <	- Ana es una madre.
 <	- Cada madre no es masculino.
 * 	y:
 <	- Ana es una mujer.
 <	- Cada mujer no es masculino.
-< Ana no es un hombre. Porque:
-<	- Ana es una mujer.
-<	- Cada mujer no es un hombre.
-* 	y:
-<	- Ana es femenina.
-<	- Cada hombre no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un hombre.
 < Ana es femenina. Porque:
 <	- Ana es una mujer.
 <	- Cada mujer es femenina.
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
+< Ana no es un niño. Porque:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un niño.
+< Ana no es un padre. Porque:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+< Ana no es un hombre. Porque:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
 < Ana es parte de una familia. Porque:
 <	- Ana es una madre.
 <	- Padres son parte de cada familia.
@@ -324,7 +324,7 @@
 < Paz es probablemente parte de una familia.
 < José es probablemente parte de una familia.
 < José es posiblemente una persona.
-< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser una hija de Juan y Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
 < Luisa no es puede-ser un hijo.

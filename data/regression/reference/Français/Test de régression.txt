@@ -20,10 +20,10 @@
  Affichez la garantie.
 ------------------------------------------------------------------------------
  Exemples fichiers: * Utilisez le bouton <exemples>
-                 ou voir le dossier: Thinknowlogy2023/data/examples/Français/
- Fondamental:        * dossier: Thinknowlogy2023/documents/
- Projet:	       * dossier: Thinknowlogy2023/documents/design/
- Captures d'écran:   * dossier: Thinknowlogy2023/screenshots/Français/
+                 ou voir le dossier: Thinknowlogy2024/data/examples/Français/
+ Fondamental:        * dossier: Thinknowlogy2024/documents/
+ Projet:	       * dossier: Thinknowlogy2024/documents/design/
+ Captures d'écran:   * dossier: Thinknowlogy2024/screenshots/Français/
 ------------------------------------------------------------------------------
 < 
 < Spécifications:
@@ -34,7 +34,7 @@
 < English est une langue. {appris de l'utilisateur Admin}
 < 
 ------------------------------------------------------------------------------
- Nombre total d'éléments: 8686.
+ Nombre total d'éléments: 8658.
 ------------------------------------------------------------------------------
  Éléments dans l'administrateur: 422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Actes:				15.
     <Z> Alternatives:			0.
 ------------------------------------------------------------------------------
- Éléments dans mots:	    8264.
+ Éléments dans mots:	    8236.
 ------------------------------------------------------------------------------
- * Éléments actifs:		8211.
+ * Éléments actifs:		8183.
     <a> assignations:			7.
     <c> collections:			272.
     <g> généralisations:			348.
-    <i> interface:			1301.
+    <i> interface:			1284.
     <j> justification:			8.
-    <l> grammaire:			4819.
+    <l> grammaire:			4808.
     <m> mot multiples:			69.
     <s> specifications:			384.
     <r> Écrire des mots (temporaire):		0.
@@ -146,7 +146,7 @@
 ------------------------------------------------------------------------------
  Dans les fichiers '~' marquera la fin d'une requête		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2023, Menno Mafait
+ Copyright (C) 2024, Menno Mafait
  Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ; pour plus de détails cliquez sur
  "Aide." et "Affichez le droit d'auteur.". Ceci est un logiciel libre et vous êtes invité à le redistribuer en
  respectant certaines obligations; pour plus de détails cliquez sur "Aide." et "Affichez la licence-GPLv2.".

@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -127,12 +127,12 @@
 * 
 * My conclusions:
 < John was a man.
-< John was not a daughter.
-< John was not a mother.
-< John was not a girl.
-< John was not feminine.
-< John was not a woman.
 < John was masculine.
+< John was not a daughter.
+< John was not a girl.
+< John was not a mother.
+< John was not a woman.
+< John was not feminine.
 < Paul has no father anymore.
 < Paul had a father, called John.
 * 

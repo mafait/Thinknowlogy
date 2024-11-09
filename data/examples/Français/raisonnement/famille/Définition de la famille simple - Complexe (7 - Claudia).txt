@@ -21,6 +21,9 @@ Claudia a une mère, appelée Amélie.
 #Dev#Affichez le rapport de justification sur Lorraine.
 #Dev#Affichez le rapport de justification sur Pierre.
 #Dev#Affichez le rapport de justification sur Claudia.
+Claudia est un enfant de Amélie.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Claudia.
 Claudia est une fille de Amélie.
 #Dev#Affichez le rapport de justification sur Amélie.
 #Dev#Affichez le rapport de justification sur Claudia.

@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminReadFile
  *	Supports class:	AdminItem
  *	Purpose:		Reading the grammar, user-interface and example files
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -59,6 +59,7 @@ class AdminReadFile
 	WordItem *predefinedNounUserWordItem_ = NULL;
 	WordItem *predefinedVerbLoginWordItem_ = NULL;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadFile";
 
 	// Private initialized variables
@@ -109,7 +110,7 @@ class AdminReadFile
 			// Previous deleted sentence might be empty
 			startRemoveSentenceNr != globalVariables_->removeSentenceNr &&
 			// All items of this sentence are deleted
-			adminItem_->highestFoundSentenceNr( false, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
+			adminItem_->highestFoundSentenceNr( false, true, true, startRemoveSentenceNr ) < startRemoveSentenceNr )
 				{
 				// So, decrement all higher sentence numbers
 				adminItem_->decrementSentenceNrs( startRemoveSentenceNr );
@@ -117,7 +118,7 @@ class AdminReadFile
 
 				if( startRemoveSentenceNr >= currentSentenceNr )
 					{
-					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
+					globalVariables_->currentSentenceNr = adminItem_->highestFoundSentenceNr( false, false, true, currentSentenceNr );
 					// Necessary after changing current sentence number
 					globalVariables_->currentSentenceItemNr = adminItem_->highestCurrentSentenceItemNr();
 					}
@@ -724,7 +725,7 @@ class AdminReadFile
 		if( languageNounWordItem == NULL )
 			return adminItem_->startError( functionNameString, moduleNameString_, "The given language noun word item is undefined" );
 
-		if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, globalVariables_->currentLanguageWordItem, languageNounWordItem, NULL, NULL ).result != RESULT_OK )
+		if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_PROPER_NOUN, WORD_TYPE_NOUN_SINGULAR, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, globalVariables_->currentLanguageWordItem, languageNounWordItem, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a new language specification" );
 
 		return RESULT_OK;
@@ -856,12 +857,13 @@ class AdminReadFile
 						{
 						if( !hasSwitchedLanguage &&
 
-						( wasUndoOrRedoCommand ||
+							( wasUndoOrRedoCommand ||
 
-						( !globalVariables_->hasDisplayedMessage &&
-						( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL &&
-						userSpecificationItem->isTriggeringExecutionOfSelections() ) ) )
+							( !globalVariables_->hasDisplayedMessage &&
+							( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL &&
+							userSpecificationItem->isTriggeringExecutionOfSelections() ) ) )
 							{
+							// Execute selections
 							if( adminItem_->executeSelections() != RESULT_OK )
 								adminItem_->addError( functionNameString, moduleNameString_, "I failed to execute selections after reading the sentence" );
 							}
@@ -871,7 +873,7 @@ class AdminReadFile
 						if( !hasSwitchedLanguage &&
 						!wasLoginCommand_ &&
 						!globalVariables_->hasDisplayedMessage &&
-
+						// Write 'I know' interface notification
 						inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_I_KNOW ) != RESULT_OK )
 							adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I know' interface notification" );
 						}
@@ -983,11 +985,11 @@ class AdminReadFile
 		strcmp( startupLanguageNameString, adminItem_->currentLanguageNameString() ) == 0 )
 			{
 			// Create language specification for the startup language word
-			if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
+			if( addSpecificationWithAuthorization( false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, WORD_TYPE_NOUN_SINGULAR, WORD_TYPE_PROPER_NOUN, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add a predefined noun startup language specification" );
 
 			// Assign the created startup language word to the current language
-			if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL ).result != RESULT_OK )
+			if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, predefinedNounStartupLanguageWordItem_, currentLanguageWordItem, NULL, NULL ).result != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the predefined noun startup language word" );
 			}
 
@@ -1260,12 +1262,12 @@ class AdminReadFile
 			{
 			hasFoundLanguage = true;
 
-			if( ( languageSpecificationItem = foundLanguageWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, NO_QUESTION_PARAMETER, NO_COLLECTION_NR, predefinedNounLanguageWordItem_ ) ) != NULL )
+			if( ( languageSpecificationItem = foundLanguageWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, (unsigned short)NO_QUESTION_PARAMETER, NO_COLLECTION_NR, predefinedNounLanguageWordItem_ ) ) != NULL )
 				globalVariables_->currentLanguageNr = languageSpecificationItem->languageNr();
 
 			if( globalVariables_->currentLanguageWordItem != foundLanguageWordItem )
 				{
-				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundLanguageWordItem, predefinedNounLanguageWordItem_, NULL ).result != RESULT_OK )
+				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundLanguageWordItem, predefinedNounLanguageWordItem_, NULL, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language" );
 
 				globalVariables_->currentLanguageWordItem = foundLanguageWordItem;
@@ -1441,7 +1443,7 @@ class AdminReadFile
 				{
 				// No password assignment found
 				// Now, check explicitly if no password is required
-				if( foundUserWordItem->bestMatchingSpecificationWordSpecificationItem( false, false, false, false, true, true, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, predefinedNounPasswordWordItem_ ) != NULL )
+				if( foundUserWordItem->bestMatchingSpecificationWordSpecificationItem( false, true, true, (unsigned short)NO_QUESTION_PARAMETER, NO_COLLECTION_NR, predefinedNounPasswordWordItem_ ) != NULL )
 					isNoPasswordRequired = true;
 				}
 			else
@@ -1465,12 +1467,12 @@ class AdminReadFile
 
 			foundUserWordItem != NULL )
 				{
-				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundUserWordItem, predefinedNounUserWordItem_, NULL ).result != RESULT_OK )
+				if( assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, foundUserWordItem, predefinedNounUserWordItem_, NULL, NULL ).result != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the user" );
 
 				firstSentenceNrOfCurrentUser_ = globalVariables_->currentSentenceNr;
 				currentUserWordItem_ = foundUserWordItem;
-				globalVariables_->currentUserNr = predefinedNounUserWordItem_->userNr( foundUserWordItem );
+				globalVariables_->currentUserNr = adminItem_->userNr( foundUserWordItem );
 
 				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_CONSOLE_WELCOME_MESSAGE_EXPERT ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the welcome message for experts" );
@@ -1518,10 +1520,7 @@ class AdminReadFile
 		while( isLineExecuted &&
 		!hasFoundDifferentTestResult_ &&
 		!adminItem_->hasRequestedRestart() &&
-
-		// Ignore warnings during testing
-		( adminItem_->isCurrentlyTesting() ||
-		!globalVariables_->hasDisplayedWarning ) );
+		!globalVariables_->hasDisplayedWarning );
 
 		if( adminItem_->isSystemStartingUp() &&
 		globalVariables_->hasDisplayedWarning )
@@ -1614,7 +1613,10 @@ class AdminReadFile
 			{
 			testFileNr_ = 0;
 			startTime_ = clock();
-		}
+
+			// Used for developer statistics
+			globalVariables_->nTotalCreatedItems = 0;
+			}
 		else
 			testFileNr_++;
 
@@ -1687,7 +1689,7 @@ class AdminReadFile
 		return predefinedNounSolveStrategyWordItem_;
 		}
 
-	CreateAndAssignResultType addSpecificationWithAuthorization( bool isAssignment, bool isCharacteristicFor, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
+	CreateAndAssignResultType addSpecificationWithAuthorization( bool isAssignment, bool isCharacteristicFor, bool isConditional, bool isInactiveAssignment, bool isArchivedAssignment, bool isEveryGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "addSpecificationWithAuthorization";
@@ -1703,24 +1705,24 @@ class AdminReadFile
 		specificationWordItem->hideWordType( specificationWordTypeNr, moduleNameString_ ) != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to hide a password" );
 
-		if( ( createAndAssignResult = generalizationWordItem->addSpecificationInWord( isAssignment, isInactiveAssignment, isArchivedAssignment, isCharacteristicFor, isConditional, isEveryGeneralization, true, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSelection, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, copiedRelationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, moduleNameString_ ) ).result != RESULT_OK )
+		if( ( createAndAssignResult = generalizationWordItem->addSpecificationInWord( isAssignment, isInactiveAssignment, isArchivedAssignment, isCharacteristicFor, isConditional, isEveryGeneralization, true, isExclusiveSpecification, isNegative, isPartOf, isPossessive, isSpecific, isSpecificationGeneralization, isUncountableGeneralizationNoun, isUniqueUserRelation, isValueSpecification, assumptionLevel, prepositionParameter, questionParameter, generalizationWordTypeNr, specificationWordTypeNr, relationWordTypeNr, specificationCollectionNr, relationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nEnteredRelationWords, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, moduleNameString_ ) ).result != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to add a specification with authorization" );
 
 		// Collect current language with previous languages
-		if( adminItem_->collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationContextNr, generalizationWordItem, specificationWordItem ) != RESULT_OK )
+		if( adminItem_->collectGeneralizationWordWithPreviousOne( isAssignment, isPossessive, generalizationWordTypeNr, specificationWordTypeNr, relationCollectionNr, generalizationWordItem, specificationWordItem, relationWordItem ) != RESULT_OK )
 			return adminItem_->addCreateAndAssignResultError( functionNameString, moduleNameString_, "I failed to collect a generalization word with a previous one" );
 
 		return createAndAssignResult;
 		}
 
-	CreateAndAssignResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, char *specificationString )
+	CreateAndAssignResultType assignSpecificationWithAuthorization( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *generalizationWordItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "assignSpecificationWithAuthorization";
 
 		if( generalizationWordItem == NULL )
 			return adminItem_->startCreateAndAssignResultError( functionNameString, moduleNameString_, "The given generalization word item is undefined" );
 
-		return generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, generalizationContextNr, specificationContextNr, relationContextNr, nContextRelations, firstJustificationItem, specificationWordItem, specificationString, moduleNameString_ );
+		return generalizationWordItem->assignSpecification( isAmbiguousRelationContext, isAssignedOrClear, isInactiveAssignment, isArchivedAssignment, isNegative, isPossessive, isSpecificationGeneralization, isUniqueUserRelation, assumptionLevel, prepositionParameter, questionParameter, relationWordTypeNr, relationCollectionNr, generalizationContextNr, specificationContextNr, relationContextNr, nEnteredRelationWords, firstJustificationItem, specificationWordItem, relationWordItem, specificationString, moduleNameString_ );
 		}
 
 	FileResultType readInfoFile( bool isReportingErrorIfFileDoesNotExist, char *infoFileNameString )

@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		Reading and analyzing sentences
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -70,6 +70,7 @@ class AdminReadSentence
 	ReadItem *startRelationReadItem_ = NULL;
 	ReadItem *endRelationReadItem_ = NULL;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadSentence";
 
 	// Private initialized variables
@@ -84,7 +85,7 @@ class AdminReadSentence
 	void checkForChangesMadeByThisSentence()
 		{
 		unsigned int currentSentenceNr = globalVariables_->currentSentenceNr;
-		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, false, currentSentenceNr );
+		unsigned int highestFoundSentenceNr = adminItem_->highestFoundSentenceNr( false, false, false, currentSentenceNr );
 
 		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
@@ -182,7 +183,7 @@ class AdminReadSentence
 		globalVariables_->currentLanguageNr = newLanguageNr;
 		globalVariables_->currentLanguageWordItem = languageWordItem;
 
-		if( adminItem_->assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, languageWordItem, globalVariables_->predefinedNounLanguageWordItem, NULL ).result != RESULT_OK )
+		if( adminItem_->assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, NO_ASSUMPTION_LEVEL, NO_PREPOSITION_PARAMETER, NO_QUESTION_PARAMETER, NO_WORD_TYPE_NR, NO_COLLECTION_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, NO_CONTEXT_NR, 0, NULL, languageWordItem, globalVariables_->predefinedNounLanguageWordItem, NULL, NULL ).result != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to assign the language with authorization" );
 
 		return RESULT_OK;
@@ -209,7 +210,6 @@ class AdminReadSentence
 		WordTypeItem *currentWordTypeItem;
 		WordTypeItem *differentWordTypeItem;
 		WordTypeItem *firstWordTypeItem;
-		WordTypeItem *foundWordTypeItem;
 		char existingMultipleWordString[SENTENCE_STRING_LENGTH];
 		char multipleWordString[SENTENCE_STRING_LENGTH];
 		WordResultType wordResult;
@@ -325,30 +325,10 @@ class AdminReadSentence
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the multiple word" );
 
 				createdMultipleWordItem = wordResult.createdWordItem;
-				multipleWordItem = ( createdMultipleWordItem == NULL ? wordResult.foundWordItem :
-																		createdMultipleWordItem );
-				foundWordTypeItem = wordResult.foundWordTypeItem;
 
-				if( foundWordTypeItem != NULL )
-					{
-					if( adjectiveParameter > NO_ADJECTIVE_PARAMETER &&
-					!foundWordTypeItem->hasAdjectiveParameter() &&
-					// Set adjective parameter
-					foundWordTypeItem->setAdjectiveParameter( adjectiveParameter ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the adjective parameter of a singular noun" );
-
-					if( definiteArticleParameter > NO_DEFINITE_ARTICLE_PARAMETER &&
-					!foundWordTypeItem->hasDefiniteArticleParameter() &&
-					// Set definite article parameter
-					foundWordTypeItem->setDefiniteArticleParameter( definiteArticleParameter ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
-
-					if( indefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
-					!foundWordTypeItem->hasIndefiniteArticleParameter() &&
-					// Set indefinite article parameter
-					foundWordTypeItem->setIndefiniteArticleParameter( indefiniteArticleParameter ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the indefinite article parameter of a singular noun" );
-					}
+				if( ( multipleWordItem = ( createdMultipleWordItem == NULL ? wordResult.foundWordItem :
+																			createdMultipleWordItem ) ) == NULL )
+					return adminItem_->startError( functionNameString, moduleNameString_, "The multiple word is undefined" );
 				}
 
 			if( createdMultipleWordItem != NULL )
@@ -363,9 +343,6 @@ class AdminReadSentence
 				if( currentWordItem->addMultipleWord( nWordParts, firstWordTypeNr, createdMultipleWordItem ) != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to add the second multiple word" );
 				}
-
-			if( multipleWordItem == NULL )
-				return adminItem_->startError( functionNameString, moduleNameString_, "The multiple word is undefined" );
 
 			if( firstReadItem->changeReadWord( ( isFirstWordTypeNumeral ? firstWordTypeNr : currentWordTypeNr ), multipleWordItem ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to delete an active read item" );
@@ -438,6 +415,7 @@ class AdminReadSentence
 
 						if( !isSelection &&
 						( userSpecificationItem = adminItem_->userSpecificationItem() ) != NULL &&
+						// Prepare integrity check of stored user sentence
 						adminItem_->prepareIntegrityCheckOfStoredUserSentence( isChineseCurrentLanguage_, userSpecificationItem, readUserSentenceString ) != RESULT_OK )
 							return adminItem_->addErrorWithAdminListNr( selectionListNr_, functionNameString, moduleNameString_, "I failed to prepare the integrity check of the stored user sentence" );
 					}
@@ -694,11 +672,11 @@ class AdminReadSentence
 						if( ( boolResult = adminItem_->selectMatchingWordType( currentParseWordOrderNr_, definitionParseGrammarItem->grammarParameter(), definitionParseGrammarItem->grammarWordTypeNr() ) ).result != RESULT_OK )
 							return adminItem_->addError( functionNameString, moduleNameString_, "I failed to select a matching word type" );
 
-						// Has found matching word type
+						// Found matching word type
 						if( boolResult.booleanValue )
 							currentParseWordOrderNr_++;
 						}
-					else
+					else	// No definition start
 						{
 						if( grammarLevel + 1 >= MAX_GRAMMAR_LEVEL )
 							return adminItem_->startError( functionNameString, moduleNameString_, "There is probably an endless loop in the grammar definitions, because I reached the grammar level: #", grammarLevel );
@@ -770,7 +748,6 @@ class AdminReadSentence
 
 		definitionParseGrammarItem != NULL &&
 		definitionParseGrammarItem->isGrammarDefinition() &&
-
 		// Set grammar parameter
 		adminItem_->setGrammarParameter( ( currentParseWordOrderNr_ > startWordOrderNr ), startWordOrderNr, ( currentParseWordOrderNr_ > startWordOrderNr ? currentParseWordOrderNr_ : previousWordOrderNr ), definitionParseGrammarItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to set the grammar parameter of the read words between the positions ", startWordOrderNr, " and ", currentParseWordOrderNr_ );
@@ -1318,7 +1295,7 @@ class AdminReadSentence
 						case WORD_TYPE_ARTICLE:
 							hasGeneralizationArticle = true;
 
-							if( currentReadItem_->isDefiniteArticleParameter( currentReadItem_->wordParameter() ) )
+							if( adminItem_->isDefiniteArticleParameter( currentReadItem_->wordParameter() ) )
 								generalizationDefiniteArticleParameter = currentReadItem_->wordParameter();
 							else
 								generalizationIndefiniteArticleParameter = currentReadItem_->wordParameter();
@@ -1592,7 +1569,7 @@ class AdminReadSentence
 			}
 
 		// Add pronoun context
-		if( contextWordItem->addContext( contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NO_COLLECTION_NR, NULL ) != RESULT_OK )
+		if( contextWordItem->addContext( contextWordTypeNr, NO_WORD_TYPE_NR, contextResult.contextNr, NULL ) != RESULT_OK )
 			return adminItem_->addContextResultError( functionNameString, moduleNameString_, "I failed to add a pronoun context to word \"", contextWordItem->anyWordTypeString(), "\"" );
 
 		return contextResult;
@@ -1641,11 +1618,6 @@ class AdminReadSentence
 		return isUniqueUserRelation_;
 		}
 
-	bool isUserQuestion()
-		{
-		return ( questionParameter_ > NO_QUESTION_PARAMETER );
-		}
-
 	bool wasPreviousCommandUndoOrRedo()
 		{
 		return wasPreviousCommandUndoOrRedo_;
@@ -1655,6 +1627,8 @@ class AdminReadSentence
 		{
 		unsigned int startSentenceNr = globalVariables_->currentSentenceNr;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "processReadSentence";
+
+		isChineseCurrentLanguage_ = false;
 
 		globalVariables_->hasFoundAnswerToQuestion = false;
 		globalVariables_->isFirstAnswerToQuestion = true;

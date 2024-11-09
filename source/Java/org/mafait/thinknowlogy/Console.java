@@ -1,8 +1,8 @@
 /*	Class:		Console
  *	Purpose:	To create the GUI and to process the events
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -61,6 +61,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static boolean hasSelectedReasoningFamilyDefinition_;
 
 	private static boolean isConsoleReady_ = false;
+	private static boolean isInputQuestion_ = false;
 	private static boolean isStopResizing_;
 	private static boolean isSubMenuChanged_;
 	private static boolean isTesting_;
@@ -87,61 +88,61 @@ class Console extends JPanel implements ActionListener, ComponentListener
 	private static WordItem currentLanguageWordItem_;
 
 	// Private components - Output area
-	private static JTextArea outputArea_ = new JTextArea();
-	private static JScrollPane outputScrollPane_ = new JScrollPane( outputArea_ );
+	private static final JTextArea outputArea_ = new JTextArea();
+	private static final JScrollPane outputScrollPane_ = new JScrollPane( outputArea_ );
 
 	// Private components - Panels
-	private static JPanel upperMenuPanel_ = new JPanel();
-	private static JPanel mainMenuPanel_ = new JPanel();
-	private static JPanel subMenuPanel_ = new JPanel();
-	private static JPanel inputPanel_ = new JPanel();
+	private static final JPanel upperMenuPanel_ = new JPanel();
+	private static final JPanel mainMenuPanel_ = new JPanel();
+	private static final JPanel subMenuPanel_ = new JPanel();
+	private static final JPanel inputPanel_ = new JPanel();
 
 	// Private components - Upper menu
-	private static JButton upperMenuClearYourMindButton_ = new JButton();
-	private static JButton upperMenuRestartButton_ = new JButton();
-	private static JButton upperMenuUndoButton_ = new JButton();
-	private static JButton upperMenuRedoButton_ = new JButton();
-	private static JButton upperMenuLoginAsDeveloperButton_ = new JButton();
-	private static JButton upperMenuLoginAsExpertButton_ = new JButton();
-	private static JButton upperMenuReadTheTestFileRegressionTestButton_ = new JButton();
-	private static JButton upperMenuStopTestingButton_ = new JButton();
-	private static JButton upperMenuMoreExamplesButton_ = new JButton();
+	private static final JButton upperMenuClearYourMindButton_ = new JButton();
+	private static final JButton upperMenuRestartButton_ = new JButton();
+	private static final JButton upperMenuUndoButton_ = new JButton();
+	private static final JButton upperMenuRedoButton_ = new JButton();
+	private static final JButton upperMenuLoginAsDeveloperButton_ = new JButton();
+	private static final JButton upperMenuLoginAsExpertButton_ = new JButton();
+	private static final JButton upperMenuReadTheTestFileRegressionTestButton_ = new JButton();
+	private static final JButton upperMenuStopTestingButton_ = new JButton();
+	private static final JButton upperMenuMoreExamplesButton_ = new JButton();
 
-	private static JLabel upperMenuProgressLabel_ = new JLabel();
-	private static JProgressBar upperMenuProgressBar_ = new JProgressBar();
+	private static final JLabel upperMenuProgressLabel_ = new JLabel();
+	private static final JProgressBar upperMenuProgressBar_ = new JProgressBar();
 
 	private static JFileChooser fileChooser_ = new JFileChooser( GlobalVariables.currentPathStringBuffer + Constants.FILE_DATA_EXAMPLES_DIRECTORY_NAME_STRING );
 
 	// Private components - Main menu
-	private static JButton mainMenuProgrammingSubMenuButton_ = new JButton();
-	private static JButton mainMenuReadTheFileProgrammingConnect4Button_ = new JButton();
-	private static JButton mainMenuReadTheFileProgrammingTowerOfHanoiButton_ = new JButton();
+	private static final JButton mainMenuProgrammingSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReadTheFileProgrammingConnect4Button_ = new JButton();
+	private static final JButton mainMenuReadTheFileProgrammingTowerOfHanoiButton_ = new JButton();
 
-	private static JButton mainMenuReasoningSubMenuButton_ = new JButton();
-	private static JButton mainMenuReasoningFamilyDefinitionsSubMenuButton_ = new JButton();
-	private static JButton mainMenuReasoningFamilyConflictsSubMenuButton_ = new JButton();
-	private static JButton mainMenuReasoningFamilyJustificationSubMenuButton_ = new JButton();
-	private static JButton mainMenuReasoningFamilyQuestionsSubMenuButton_ = new JButton();
-	private static JButton mainMenuReasoningFamilyDisplayInformationSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningFamilyDefinitionsSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningFamilyConflictsSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningFamilyJustificationSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningFamilyQuestionsSubMenuButton_ = new JButton();
+	private static final JButton mainMenuReasoningFamilyDisplayInformationSubMenuButton_ = new JButton();
 
-	private static JButton mainMenuReasoningReadTheFileScientificChallengeButton_ = new JButton();
+	private static final JButton mainMenuReasoningReadTheFileScientificChallengeButton_ = new JButton();
 
-	private static JButton mainMenuReasoningReadTheFileFamilyDefinitionButton_ = new JButton();
+	private static final JButton mainMenuReasoningReadTheFileFamilyDefinitionButton_ = new JButton();
 
-	private static JButton mainMenuBackButton_ = new JButton();
-	private static JButton mainMenuChangeLanguageButton_ = new JButton();
-	private static JButton mainMenuChangeFontButton_ = new JButton();
-	private static JButton mainMenuHelpButton_ = new JButton();
+	private static final JButton mainMenuBackButton_ = new JButton();
+	private static final JButton mainMenuChangeLanguageButton_ = new JButton();
+	private static final JButton mainMenuChangeFontButton_ = new JButton();
+	private static final JButton mainMenuHelpButton_ = new JButton();
 
 	// Private components - sub-menus
-	private static JLabel initialLabelDemoButtons_ = new JLabel();
-	private static JLabel initialLabelEnterSentence_ = new JLabel();
+	private static final JLabel initialLabelDemoButtons_ = new JLabel();
+	private static final JLabel initialLabelEnterSentence_ = new JLabel();
 
-	private static JButton[] subMenuButtonArray_ = new JButton[Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS];
+	private static final JButton[] subMenuButtonArray_ = new JButton[Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS];
 
 	// Private components - input area
-	private static JTextField inputField_ = new JTextField();
-	private static JPasswordField passwordField_ = new JPasswordField();
+	private static final JTextField inputField_ = new JTextField();
+	private static final JPasswordField passwordField_ = new JPasswordField();
 
 
 	// Private methods
@@ -152,8 +153,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		if( nSubMenuButtons_ >= 0 &&
 		nSubMenuButtons_ < Constants.CONSOLE_MAX_NUMBER_OF_SUBMENU_BUTTONS &&
-		currentLanguageWordItem_ != null &&
-		( interfaceString = currentLanguageWordItem_.interfaceString( interfaceParameter ) ) != null &&
+		( interfaceString = WordItem.interfaceString( interfaceParameter ) ) != null &&
 		!interfaceString.equals( Constants.NO_INTERFACE_STRING_FOUND_STRING ) )
 			{
 			subMenuButtonArray_[nSubMenuButtons_].setEnabled( true );
@@ -188,26 +188,23 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				}
 			else
 				{
-				if( currentLanguageWordItem_ != null )
+				interfaceString = WordItem.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_DECREASE );
+
+				if( interfaceString != null &&
+				interfaceString.equals( fontString ) )
 					{
-					interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_DECREASE );
+					hasFoundAction = true;
+					currentFontSize_--;
+					}
+				else
+					{
+					interfaceString = WordItem.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_INCREASE );
 
 					if( interfaceString != null &&
 					interfaceString.equals( fontString ) )
 						{
 						hasFoundAction = true;
-						currentFontSize_--;
-						}
-					else
-						{
-						interfaceString = currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_FONT_SIZE_INCREASE );
-
-						if( interfaceString != null &&
-						interfaceString.equals( fontString ) )
-							{
-							hasFoundAction = true;
-							currentFontSize_++;
-							}
+						currentFontSize_++;
 						}
 					}
 				}
@@ -372,6 +369,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			// Increasing the number of visible sub-menu buttons of the pane
 			nSubMenuButtons_++;
 
+		// Control pane has preferred size
 		if( preferredOutputScrollPaneSize == previousPreferredOutputScrollPaneSize_ )
 			{
 			if( nSubMenuButtons_ > 1 &&
@@ -391,12 +389,13 @@ class Console extends JPanel implements ActionListener, ComponentListener
 					isConsoleReady_ = true;
 					sleepTime_ = Constants.CONSOLE_SLEEP_TIME_RESIZE_FRAME_AFTER_STARTUP;
 
-					// Enable menus again
-					enableMenus( true, true, false );
+					if( !isInputQuestion_ )
+						// Enable menus again
+						enableMenus( true, true, false );
 					}
 				}
 			}
-		else
+		else	// Control pane has not preferred size
 			{
 			if( preferredOutputScrollPaneSize < previousPreferredOutputScrollPaneSize_ )
 				{
@@ -422,7 +421,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 
 		if( menuButton != null )
 			{
-			interfaceString = ( currentLanguageWordItem_ != null ? currentLanguageWordItem_.interfaceString( interfaceParameter ) : null );
+			interfaceString = WordItem.interfaceString( interfaceParameter );
 
 			isButtonInvisible = ( isInvisible &&
 								interfaceString != null &&
@@ -485,8 +484,8 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			setSubMenuButtonTexts();
 
 			// Initial labels
-			initialLabelDemoButtons_.setText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_INITIAL_MESSAGE_DEMO_BUTTONS ) );
-			initialLabelEnterSentence_.setText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_INITIAL_MESSAGE_ENTER_SENTENCE ) );
+			initialLabelDemoButtons_.setText( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_INITIAL_MESSAGE_DEMO_BUTTONS ) );
+			initialLabelEnterSentence_.setText( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_INITIAL_MESSAGE_ENTER_SENTENCE ) );
 			}
 		}
 
@@ -1104,10 +1103,17 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		passwordField_.setVisible( true );
 		passwordField_.requestFocus();
 
+		// Rewrite sub-menu panel
+		subMenuPanel_.revalidate();
+
+		// Get password string
 		inputString_ = manualInputString();
 
 		// Hide password field afterwards
 		passwordField_.setVisible( false );
+
+		// Clear input field
+		inputField_.setText( Constants.EMPTY_STRING );
 
 		return inputString_;
 		}
@@ -1117,6 +1123,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		boolean isSystemStartingUp = ( !isConsoleReady_ ||
 										adminItem_ == null );
 
+		isInputQuestion_ = isQuestion;
 		isTesting_ = false;
 		isTestingCanceled_ = false;
 
@@ -1130,7 +1137,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 			inputField_.setText( Constants.EMPTY_STRING );
 
 		// Set Upper menu visible
-		setUpperMenuVisible( true );
+		setUpperMenuVisible( !isQuestion );
 
 		// Enable menus again
 		enableMenus( !isSystemStartingUp, !isSystemStartingUp, isQuestion );
@@ -1140,9 +1147,12 @@ class Console extends JPanel implements ActionListener, ComponentListener
 		inputField_.setEnabled( true );
 		inputField_.setVisible( isQuestion || ( adminItem_ != null && adminItem_.isDeveloperOrExpertTheCurrentUser() ) );
 		inputField_.requestFocus();
-
-		// Select all text in input field
 		inputField_.selectAll();
+
+		// Rewrite sub-menu panel
+		subMenuPanel_.revalidate();
+
+		// Get input string
 		inputString_ = manualInputString();
 
 		// Disable input field
@@ -1177,7 +1187,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 				if( ( actionCommandString = actionEvent.getActionCommand() ) != null )
 					{
 					// Disable menus during action
-					enableMenus( false, false, false );
+					enableMenus( false, false, ( inputField_.isVisible() || passwordField_.isVisible() ) );
 
 					if( actionSource == passwordField_ )
 						inputString_ = String.valueOf( passwordField_.getPassword() );
@@ -1211,7 +1221,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 									if( actionSource == upperMenuReadTheTestFileRegressionTestButton_ )
 										{
 										isTesting_ = true;
-										inputString_ = ( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE ) + currentLanguageWordItem_.anyWordTypeString() + Constants.SYMBOL_SLASH + actionCommandString + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) ) );
+										inputString_ = ( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_THE_TEST_FILE ) + currentLanguageWordItem_.anyWordTypeString() + Constants.SYMBOL_SLASH + actionCommandString + convertDiacriticalText( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) ) );
 										}
 									else
 										{
@@ -1242,7 +1252,7 @@ class Console extends JPanel implements ActionListener, ComponentListener
 													( selectedFilePath = selectedFile.getPath() ) != null )
 														{
 														hasSelectedMoreExamples_ = true;
-														inputString_ = convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + convertDiacriticalText( currentLanguageWordItem_.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
+														inputString_ = convertDiacriticalText( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_START ) ) + selectedFilePath + convertDiacriticalText( WordItem.interfaceString( Constants.INTERFACE_CONSOLE_UPPER_MENU_READ_FILE_END ) );
 														}
 													}
 												else

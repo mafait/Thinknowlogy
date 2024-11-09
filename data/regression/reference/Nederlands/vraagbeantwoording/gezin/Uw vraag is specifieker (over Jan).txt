@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -136,13 +136,13 @@
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een persoon.
-< Paul heeft mogelijk een ouder, genaamd Jan.
 < Paul is waarschijnlijk een kind van Jan.
 < Paul is waarschijnlijk deel van een gezin.
+< Paul heeft mogelijk een ouder, genaamd Jan.
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
 < Jan is mogelijk een ouder van Paul.
 < Jan is mogelijk deel van een gezin.
 < Jan is misschien een persoon.
-< Jan heeft waarschijnlijk een kind, genaamd Paul.
 * 
 * Mijn vragen:
 < Is Paul een jongen of een man?
@@ -164,10 +164,10 @@
 < Jan heeft een zoon, genaamd Paul.
 * 
 * Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul.
 < Jan is mogelijk een ouder van Paul.
 < Jan is mogelijk deel van een gezin.
 < Jan is misschien een persoon.
-< Jan heeft waarschijnlijk een kind, genaamd Paul.
 * 
 * Mijn vragen:
 < Is Jan een vader of een moeder?
@@ -175,8 +175,8 @@
 < Is Jan mannelijk of vrouwelijk?
 * 
 * Gerelateerde informatie:
-< Paul heeft mogelijk een ouder, genaamd Jan.
 < Paul is waarschijnlijk een kind van Jan.
+< Paul heeft mogelijk een ouder, genaamd Jan.
 < Paul is de zoon van Jan.
 < 
 * 
@@ -185,15 +185,23 @@
 <	- Paul is de zoon van Jan.
 * 
 * Mijn veronderstellingen:
+< Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
+<	- Paul is waarschijnlijk een kind van Jan.
+* 	en:
+<	- Jan heeft een zoon, genaamd Paul.
+<	- Een zoon is waarschijnlijk een kind.
 < Jan is mogelijk een ouder van Paul. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Ieder kind is een zoon of een dochter.
-<	- Jan heeft een zoon, genaamd Paul.
+<	- Paul is waarschijnlijk een kind van Jan.
 * 	en:
 <	- Paul heeft mogelijk een ouder, genaamd Jan.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Paul is waarschijnlijk een kind van Jan.
+<	- Jan heeft waarschijnlijk een kind, genaamd Paul.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Ieder kind is een zoon of een dochter.
+<	- Jan heeft een zoon, genaamd Paul.
 < Jan is mogelijk deel van een gezin. Omdat:
 <	- Jan is mogelijk een ouder van Paul.
 <	- Ouders zijn deel van ieder gezin.
@@ -203,11 +211,6 @@
 < Jan is misschien een persoon. Omdat:
 <	- Jan is mogelijk een ouder van Paul.
 <	- Een ouder is waarschijnlijk een persoon.
-< Jan heeft waarschijnlijk een kind, genaamd Paul. Omdat:
-<	- Paul is waarschijnlijk een kind van Jan.
-* 	en:
-<	- Jan heeft een zoon, genaamd Paul.
-<	- Een zoon is waarschijnlijk een kind.
 * 
 * Mijn vragen:
 < Is Jan een vader of een moeder? Omdat:

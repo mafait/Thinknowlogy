@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -229,6 +229,10 @@
 <	- Amélie est un parent de Lorraine.
 < Lorraine est probablement partie d'une famille. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.
+<	- Enfants sont partie de chaque famille.
+* 	et:
+<	- Olivier a probablement un enfant, appelée Lorraine.
+<	- Amélie a probablement un enfant, appelée Lorraine.
 <	- Enfants sont partie de chaque famille.
 < Lorraine est peut-être une fille de Olivier et Amélie. En raison:
 <	- Lorraine est probablement un enfant de Olivier et Amélie.

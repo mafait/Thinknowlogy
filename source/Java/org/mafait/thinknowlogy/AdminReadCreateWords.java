@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		Creating words of the read sentence
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ class AdminReadCreateWords
 
 	private short lastCreatedWordOrderNr_ = Constants.NO_ORDER_NR;
 
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
@@ -197,44 +197,6 @@ class AdminReadCreateWords
 	protected short lastCreatedWordOrderNr()
 		{
 		return lastCreatedWordOrderNr_;
-		}
-
-	protected int convertChineseNumbers( char chineseChar )
-		{
-		switch( chineseChar )
-			{
-			case Constants.SYMBOL_CHINESE_ZERO:
-				return 0;
-
-			case Constants.SYMBOL_CHINESE_ONE:
-				return 1;
-
-			case Constants.SYMBOL_CHINESE_TWO:
-				return 2;
-
-			case Constants.SYMBOL_CHINESE_THREE:
-				return 3;
-
-			case Constants.SYMBOL_CHINESE_FOUR:
-				return 4;
-
-			case Constants.SYMBOL_CHINESE_FIVE:
-				return 5;
-
-			case Constants.SYMBOL_CHINESE_SIX:
-				return 6;
-
-			case Constants.SYMBOL_CHINESE_SEVEN:
-				return 7;
-
-			case Constants.SYMBOL_CHINESE_EIGHT:
-				return 8;
-
-			case Constants.SYMBOL_CHINESE_NINE:
-				return 9;
-			}
-
-		return -1;
 		}
 
 	protected BoolResultType createReadWords( boolean isChineseCurrentLanguage, String readUserSentenceString )
@@ -592,27 +554,29 @@ class AdminReadCreateWords
 											// Not the first part of a multiple word, but an adjective
 											isExactWord = false;
 										}
-									else
+									else	// Single word
 										{
 										isPartOfMultipleWord = false;
 
 										if( previousWordAdjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER )
 											{
-											if( !isChineseCurrentLanguage &&
-											foundWordTypeItem.setAdjectiveParameter( previousWordAdjectiveParameter ) != Constants.RESULT_OK )
+											// Set adjective parameter of a singular noun
+											if( foundWordItem.setAdjectiveParameter( isChineseCurrentLanguage, previousWordAdjectiveParameter, foundWordTypeItem ) != Constants.RESULT_OK )
 												return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the adjective parameter of a singular noun" );
 											}
 										else
 											{
 											if( previousWordDefiniteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER )
 												{
-												if( foundWordTypeItem.setDefiniteArticleParameter( previousWordDefiniteArticleParameter ) != Constants.RESULT_OK )
+												// Set definite article parameter of a singular noun
+												if( foundWordItem.setDefiniteArticleParameter( previousWordDefiniteArticleParameter, foundWordTypeItem ) != Constants.RESULT_OK )
 													return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
 												}
 											else
 												{
 												if( previousWordIndefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
-												foundWordTypeItem.setIndefiniteArticleParameter( previousWordIndefiniteArticleParameter ) != Constants.RESULT_OK )
+												// Set indefinite article parameter of a singular noun
+												foundWordItem.setIndefiniteArticleParameter( previousWordIndefiniteArticleParameter, foundWordTypeItem ) != Constants.RESULT_OK )
 													return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to set the indefinite article parameter of a singular noun" );
 												}
 											}
@@ -628,7 +592,6 @@ class AdminReadCreateWords
 				if( !isBasicVerb &&
 				!isPartOfMultipleWord &&
 				!wasPreviousWordExactNoun &&
-
 				// Delete obsolete read items, that where part of a mutliple word
 				adminItem_.deleteReadItemsWithNonMatchingMultipleWordPart( currentWordOrderNr, readUserSentenceString.substring( currentPosition ) ) != Constants.RESULT_OK )
 					return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to delete the read items with a non-matching multiple word part" );
@@ -638,8 +601,8 @@ class AdminReadCreateWords
 				if( isFirstWord &&
 				isUpperChar &&
 
-				( !isExactWord ||
-				wordStringLength == 1 ) )
+					( !isExactWord ||
+					wordStringLength == 1 ) )
 					{
 					if( ( shortResult = getWordTypeNr( false, false, wordStringLength, lowerCaseWordString ) ).result != Constants.RESULT_OK )
 						return adminItem_.addBoolResultError( 1, moduleNameString_, "I failed to get the word type number of a lower-case word" );
@@ -766,7 +729,7 @@ class AdminReadCreateWords
 							{
 							isCheckingProperNoun = ( !isChineseCurrentLanguage ||
 													// Typical for Chinese
-													convertChineseNumbers( currentChar ) < 0 );
+													AdminItem.convertChineseNumbers( currentChar ) < 0 );
 
 							// Typical for Chinese
 							isForcingChineseProperNoun = ( isChineseCurrentLanguage &&
@@ -902,7 +865,9 @@ class AdminReadCreateWords
 				( ( !isUpperChar &&
 				wasPreviousWordArticle ) ||
 
-				// Typical for English. Test files: "Boiling point" and "Condensation point"
+				// Typical for English
+				// Test files: "reasoning\Boiling point",
+				//				"reasoning\Condensation point"
 				( hasFoundAdjectiveEvery &&
 				isPreposition &&
 				wasPreviousWordCreatedSingularNoun ) ) ) ||
@@ -1228,7 +1193,7 @@ class AdminReadCreateWords
 				GlobalVariables.lastPredefinedWordItem = createdWordItem;
 				}
 
-			if( adminItem_.isAdjectiveParameter( wordParameter ) )
+			if( Item.isAdjectiveParameter( wordParameter ) )
 				adjectiveParameter = wordParameter;
 			else
 				{
@@ -1236,7 +1201,7 @@ class AdminReadCreateWords
 					adjectiveParameter = previousWordAdjectiveParameter;
 				}
 
-			if( adminItem_.isDefiniteArticleParameter( wordParameter ) )
+			if( Item.isDefiniteArticleParameter( wordParameter ) )
 				definiteArticleParameter = wordParameter;
 			else
 				{
@@ -1244,7 +1209,7 @@ class AdminReadCreateWords
 					definiteArticleParameter = previousWordDefiniteArticleParameter;
 				}
 
-			if( adminItem_.isIndefiniteArticleParameter( wordParameter ) )
+			if( Item.isIndefiniteArticleParameter( wordParameter ) )
 				indefiniteArticleParameter = wordParameter;
 			else
 				{
@@ -1260,9 +1225,8 @@ class AdminReadCreateWords
 
 			if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
 			wordTypeResult.wordTypeItem != null &&
-			adminItem_.isNounWordType( wordTypeNr ) &&
+			Item.isNounWordType( wordTypeNr ) &&
 			!wordTypeResult.wordTypeItem.isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) &&
-
 			// Write 'different indefinite article used' notification
 			InputOutput.writeInterfaceText( false, Constants.INPUT_OUTPUT_PROMPT_NOTIFICATION, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, Constants.INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != Constants.RESULT_OK )
 				return adminItem_.addWordResultError( 1, moduleNameString_, "I failed to write the 'different indefinite article used' interface notification" );

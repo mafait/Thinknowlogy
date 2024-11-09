@@ -49,7 +49,7 @@
 < Especificaciones:
 < Bill Clinton es el anterior presidente de los Estados Unidos.
 < George Bush es el corriente presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tiene un presidente, llamado George Bush.
 < Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton.
 < Los Estados Unidos tenido un presidente, llamado George Bush.
@@ -61,7 +61,7 @@
 < Los Estados Unidos tiene un anterior presidente, llamado Bill Clinton. Porque:
 <	- Bill Clinton es el anterior presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < 
 * Sé.
 * 
@@ -74,9 +74,9 @@
 < 
 < Especificaciones:
 < Barack Obama es el corriente presidente de los Estados Unidos.
-< Bill Clinton era presidente de los Estados Unidos.
+< Bill Clinton era un presidente de los Estados Unidos.
 < George Bush es el anterior presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tiene un presidente, llamado Barack Obama.
 < Los Estados Unidos tiene un anterior presidente, llamado George Bush.
 < Los Estados Unidos tenido un presidente, llamado George Bush.
@@ -89,9 +89,9 @@
 < Los Estados Unidos tiene un anterior presidente, llamado George Bush. Porque:
 <	- George Bush es el anterior presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado Bill Clinton. Porque:
-<	- Bill Clinton era presidente de los Estados Unidos.
+<	- Bill Clinton era un presidente de los Estados Unidos.
 < 
 * Sé.
 * 
@@ -105,9 +105,9 @@
 < Especificaciones:
 < Donald Trump es el corriente presidente de los Estados Unidos.
 < Barack Obama es el anterior presidente de los Estados Unidos.
-< Bill Clinton era presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
+< Bill Clinton era un presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tiene un presidente, llamado Donald Trump.
 < Los Estados Unidos tiene un anterior presidente, llamado Barack Obama.
 < Los Estados Unidos tenido un presidente, llamado George Bush.
@@ -121,11 +121,11 @@
 < Los Estados Unidos tiene un anterior presidente, llamado Barack Obama. Porque:
 <	- Barack Obama es el anterior presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado Bill Clinton. Porque:
-<	- Bill Clinton era presidente de los Estados Unidos.
+<	- Bill Clinton era un presidente de los Estados Unidos.
 < 
 * 
 * Mis conclusiones:
@@ -137,10 +137,10 @@
 < Especificaciones:
 < Joe Biden es el corriente presidente de los Estados Unidos.
 < Donald Trump es el anterior presidente de los Estados Unidos.
-< Barack Obama era presidente de los Estados Unidos.
-< Bill Clinton era presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
-< George Bush era presidente de los Estados Unidos.
+< Barack Obama era un presidente de los Estados Unidos.
+< Bill Clinton era un presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
+< George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tiene un presidente, llamado Joe Biden.
 < Los Estados Unidos tiene un anterior presidente, llamado Donald Trump.
 < Los Estados Unidos tenido un presidente, llamado Barack Obama.
@@ -155,11 +155,11 @@
 < Los Estados Unidos tiene un anterior presidente, llamado Donald Trump. Porque:
 <	- Donald Trump es el anterior presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado Barack Obama. Porque:
-<	- Barack Obama era presidente de los Estados Unidos.
+<	- Barack Obama era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado George Bush. Porque:
-<	- George Bush era presidente de los Estados Unidos.
+<	- George Bush era un presidente de los Estados Unidos.
 < Los Estados Unidos tenido un presidente, llamado Bill Clinton. Porque:
-<	- Bill Clinton era presidente de los Estados Unidos.
+<	- Bill Clinton era un presidente de los Estados Unidos.
 < 

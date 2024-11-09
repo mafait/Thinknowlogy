@@ -1,9 +1,9 @@
 ﻿/*	Class:			ContextItem
  *	Parent class:	Item
  *	Purpose:		Storing the context info of a word
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,6 @@ class ContextItem : private Item
 	unsigned short specificationWordTypeNr_ = NO_WORD_TYPE_NR;
 
 	unsigned int contextNr_ = NO_CONTEXT_NR;
-	unsigned int spanishAmbiguousCollectionNr_ = NO_COLLECTION_NR;
 
 	WordItem *specificationWordItem_ = NULL;
 
@@ -44,7 +43,7 @@ class ContextItem : private Item
 	protected:
 	// Constructor
 
-	ContextItem( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
+	ContextItem( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem, GlobalVariables *globalVariables, InputOutput *inputOutput, List *myList, WordItem *myWordItem )
 		{
 		initializeItemVariables( NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, NO_SENTENCE_NR, "ContextItem", globalVariables, inputOutput, myList, myWordItem );
 
@@ -54,7 +53,6 @@ class ContextItem : private Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 
 		contextNr_ = contextNr;
-		spanishAmbiguousCollectionNr_ = spanishAmbiguousCollectionNr;
 
 		specificationWordItem_ = specificationWordItem;
 		}
@@ -129,12 +127,6 @@ class ContextItem : private Item
 			strcat( queryString, tempString );
 			}
 
-		if( spanishAmbiguousCollectionNr_ > NO_COLLECTION_NR )
-			{
-			sprintf( tempString, "%cspanishAmbiguousCollectionNr:%u", QUERY_SEPARATOR_CHAR, spanishAmbiguousCollectionNr_ );
-			strcat( queryString, tempString );
-			}
-
 		if( specificationWordTypeNr_ > NO_WORD_TYPE_NR )
 			{
 			if( specificationWordTypeString == NULL )
@@ -178,19 +170,9 @@ class ContextItem : private Item
 		return contextWordTypeNr_;
 		}
 
-	unsigned short specificationWordTypeNr()
-		{
-		return specificationWordTypeNr_;
-		}
-
 	unsigned int contextNr()
 		{
 		return contextNr_;
-		}
-
-	unsigned int spanishAmbiguousCollectionNr()
-		{
-		return spanishAmbiguousCollectionNr_;
 		}
 
 	ContextItem *nextContextItem()

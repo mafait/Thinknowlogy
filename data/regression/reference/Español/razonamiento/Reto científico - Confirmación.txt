@@ -8,11 +8,11 @@
 < 
 * 
 * Mis conclusiones:
-< Laura es hija de Ana.
+< Laura es una hija de Ana.
 < 
 * 
 * Mis conclusiones que han sido confirmadas:
-< Laura es hija de Ana.
+< Laura es una hija de Ana.
 < 
 * 
 * Mis conclusiones:

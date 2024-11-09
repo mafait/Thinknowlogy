@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminWrite
  *	Supports class:	AdminItem
  *	Purpose:		Writing selected specifications as sentences
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -40,6 +40,7 @@ class AdminWrite
 
 	JustificationItem *lastWrittenJustificationItem_ = NULL;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminWrite";
 
 	// Private initialized variables
@@ -108,7 +109,8 @@ class AdminWrite
 
 	signed char writeJustificationSpecifications( bool isWritingPrimarySpecification, bool isWritingSeparator, JustificationItem *startJustificationItem, SpecificationItem *selfGeneratedSpecificationItem )
 		{
-		bool hasPrimarySpecificationRelationContext;
+		bool hasPrimarySpecificationCompoundCollection;
+		bool hasPrimarySpecificationRelationWord;
 		bool isExclusiveSecondarySpecification;
 		bool isFirstTime = true;
 		bool isForcingSeparator = false;
@@ -123,7 +125,6 @@ class AdminWrite
 		SpecificationItem *previousSecondarySpecificationItem = NULL;
 		SpecificationItem *primarySpecificationItem;
 		SpecificationItem *secondarySpecificationItem;
-		WordItem *generalizationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeJustificationSpecifications";
 
 		if( startJustificationItem == NULL )
@@ -137,37 +138,58 @@ class AdminWrite
 			isOnlyWritingPrimarySpecification = false;
 			isQuestionJustification = currentJustificationItem->isQuestionJustification();
 
-			if( ( secondarySpecificationItem = currentJustificationItem->secondarySpecificationItem() ) != NULL &&
-			secondarySpecificationItem->isExclusiveSpecification() )
-				isExclusiveSecondarySpecification = true;
-
-			if( !isWritingPrimarySpecification &&
-			secondarySpecificationItem == NULL )
-				isForcingSeparator = true;
-
 			if( ( primarySpecificationItem = currentJustificationItem->primarySpecificationItem() ) == NULL )
 				return adminItem_->startError( functionNameString, moduleNameString_, "The primary specification of the current justification is undefined" );
 
-			hasPrimarySpecificationRelationContext = primarySpecificationItem->hasRelationContext();
+			hasPrimarySpecificationCompoundCollection = primarySpecificationItem->hasCompoundSpecificationCollection();
+			hasPrimarySpecificationRelationWord = primarySpecificationItem->hasRelationWord();
 			isPrimarySpecificationWordSpanishAmbiguous = primarySpecificationItem->isSpecificationWordSpanishAmbiguous();
 			isPossessivePrimarySpecification = primarySpecificationItem->isPossessive();
 
+			// No secondary specification
+			if( ( secondarySpecificationItem = currentJustificationItem->secondarySpecificationItem() ) == NULL )
+				{
+				if( !isWritingPrimarySpecification )
+					// Test files: "reasoning\Collect afterwards - Past tense",
+					//				"reasoning\Collect afterwards - Uncertainty"
+					{
+					isForcingSeparator = true;
+					isWritingPrimarySpecification = true;
+					}
+				}
+			else	// Secondary specification
+				{
+				if( secondarySpecificationItem->isExclusiveSpecification() &&
+
+					// Question
+					( ( isQuestionJustification &&
+					!isWritingPrimarySpecification ) ||
+
+					// Test file: "reasoning\family\Justification report"
+					( hasPrimarySpecificationCompoundCollection &&
+					currentJustificationItem->isSpecificationSubstitutionAssumptionOrConclusion() ) ) )
+					isExclusiveSecondarySpecification = true;
+				}
+
+			// No question
 			if( ( !isQuestionJustification &&
 
-			( hasPrimarySpecificationRelationContext ||
-			isForcingSeparator ) ) ||
+				( hasPrimarySpecificationRelationWord ||
+				isForcingSeparator ) ) ||
 
+			// Question
 			( isQuestionJustification &&
 			isPossessivePrimarySpecification ) )
 				{
-				isWritingPrimarySpecification = true;
+				if( currentJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() != NULL )
+					isOnlyWritingPrimarySpecification = true;
 
-				isOnlyWritingPrimarySpecification = ( currentJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() != NULL );
-
+				// Typical for Spanish
 				if( isPrimarySpecificationWordSpanishAmbiguous &&
+				!hasPrimarySpecificationCompoundCollection &&
 				isPossessivePrimarySpecification &&
-				!primarySpecificationItem->hasCompoundSpecificationCollection() &&
 				primarySpecificationItem->hasOnlyOneRelationWord() &&
+				// Spanish test file: "Reto científico"
 				!primarySpecificationItem->isArchivedAssignment() &&
 				primarySpecificationItem->isSelfGeneratedConclusion() &&
 				!currentJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() )
@@ -176,25 +198,28 @@ class AdminWrite
 
 			if( isWritingPrimarySpecification ||
 
-			( ( isFirstTime &&
-			!isQuestionJustification &&
-			primarySpecificationItem != previousPrimarySpecificationItem ) ||
-
 			( !isExclusiveSecondarySpecification &&
 			previousPrimarySpecificationItem != NULL &&
-			secondarySpecificationItem != previousSecondarySpecificationItem ) ) )
+			secondarySpecificationItem != previousSecondarySpecificationItem ) ||
+
+			// Test file: "reasoning\family\Justification report"
+			( isFirstTime &&
+			!isQuestionJustification &&
+			primarySpecificationItem != previousPrimarySpecificationItem ) )
 				{
 				if( isFirstTime &&
 
-				( isWritingSeparator ||
-				isForcingSeparator ) &&
+					( isForcingSeparator ||
+					isWritingSeparator ) &&
 
+				// Write word to screen / output file
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_JUSTIFICATION_AND ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an extra justification string" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a word to the screen / output file" );
 
+				// Spanish test file: "razonamiento\familia\Que haya confirmado al menos una palabra de relación"
 				if( isQuestionJustification &&
-				hasPrimarySpecificationRelationContext &&
-				!isPossessivePrimarySpecification &&
+				hasPrimarySpecificationRelationWord &&
+				!isOnlyWritingPrimarySpecification &&
 				!isPrimarySpecificationWordSpanishAmbiguous &&
 				// Next justification with same type and order number exists
 				currentJustificationItem->nextJustificationItemWithSameTypeAndOrderNr() != NULL )
@@ -209,25 +234,10 @@ class AdminWrite
 					isWritingPrimarySpecification = false;
 
 				currentJustificationItem->hasJustificationBeenWritten = true;
-
 				lastWrittenJustificationItem_ = currentJustificationItem;
+
 				previousPrimarySpecificationItem = primarySpecificationItem;
 				previousSecondarySpecificationItem = secondarySpecificationItem;
-
-				if( primarySpecificationItem->isSelfGeneratedQuestion() &&
-
-				( currentJustificationItem->isQuestionJustification() ||
-				// Correct invalid suggestive assumption by opposite suggestive question
-				primarySpecificationItem->isCorrectedSpecification() ) &&
-
-				( generalizationWordItem = primarySpecificationItem->generalizationWordItem() ) != NULL )
-					{
-					if( generalizationWordItem->writeRelatedJustificationSpecifications( currentJustificationItem->justificationTypeNr(), currentJustificationItem->justificationOrderNr, currentJustificationItem->secondarySpecificationCollectionNr() ) != RESULT_OK )
-						return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the related justification specifications" );
-
-					previousPrimarySpecificationItem = NULL;
-					lastWrittenJustificationItem_ = NULL;
-					}
 				}
 			else
 				isStop = true;
@@ -243,7 +253,6 @@ class AdminWrite
 		bool isExclusiveSpecification;
 		bool isNegative;
 		bool isPossessive;
-		bool isQuestion;
 		bool isSelfGeneratedQuestion;
 		bool isSpecificationGeneralization;
 		bool isWritingPrimarySpecificationOrSeparator;
@@ -251,13 +260,14 @@ class AdminWrite
 		unsigned short selectedJustificationTypeNr;
 		unsigned short specificationWordTypeNr;
 		unsigned int generalizationContextNr;
-		unsigned int relationContextNr;
+		unsigned int relationCollectionNr;
 		unsigned int specificationCollectionNr;
 		JustificationItem *currentJustificationItem;
 		SpecificationItem *currentSpecificationItem;
 		SpecificationItem *currentPrimarySpecificationItem;
 		SpecificationItem *currentSecondarySpecificationItem;
 		WordItem *generalizationWordItem;
+		WordItem *relationWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeJustificationType";
 
 		if( writeJustificationItem == NULL )
@@ -274,8 +284,9 @@ class AdminWrite
 			if( inputOutput_->writeText( INPUT_OUTPUT_PROMPT_WRITE, globalVariables_->writtenSentenceString, globalVariables_->learnedFromUserString ) != RESULT_OK )
 				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification sentence" );
 
+			// Write text to screen / output file
 			if( inputOutput_->writeInterfaceText( false, false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_JUSTIFICATION_BECAUSE ) != RESULT_OK )
-				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification start string" );
+				return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a text to the screen / output file" );
 			}
 
 		// Write justifications of this specification
@@ -291,62 +302,57 @@ class AdminWrite
 			isExclusiveSpecification = selfGeneratedSpecificationItem->isExclusiveSpecification();
 			isNegative = selfGeneratedSpecificationItem->isNegative();
 			isPossessive = selfGeneratedSpecificationItem->isPossessive();
-			isQuestion = selfGeneratedSpecificationItem->isQuestion();
 			isSpecificationGeneralization = selfGeneratedSpecificationItem->isSpecificationGeneralization();
 			assumptionLevel = selfGeneratedSpecificationItem->assumptionLevel();
+			relationCollectionNr = selfGeneratedSpecificationItem->relationCollectionNr();
 			specificationCollectionNr = selfGeneratedSpecificationItem->specificationCollectionNr();
 			specificationWordTypeNr = selfGeneratedSpecificationItem->specificationWordTypeNr();
 			generalizationContextNr = selfGeneratedSpecificationItem->generalizationContextNr();
-			relationContextNr = selfGeneratedSpecificationItem->relationContextNr();
+			relationWordItem = selfGeneratedSpecificationItem->relationWordItem();
 
 			do	{
-				if( lastWrittenJustificationItem_ != NULL &&
-				currentSpecificationItem != selfGeneratedSpecificationItem &&
-				currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, generalizationContextNr, relationContextNr ) != NULL )
+				if( currentSpecificationItem != selfGeneratedSpecificationItem &&
+				currentSpecificationItem->relatedSpecificationWordItem( isExclusiveSpecification, isNegative, isPossessive, true, assumptionLevel, specificationWordTypeNr, specificationCollectionNr, relationCollectionNr, generalizationContextNr, relationWordItem ) != NULL &&
+				( currentPrimarySpecificationItem = writeJustificationItem->primarySpecificationItem() ) != NULL )
 					{
-					currentPrimarySpecificationItem = writeJustificationItem->primarySpecificationItem();
-
 					isSelfGeneratedQuestion = ( ( currentSecondarySpecificationItem = writeJustificationItem->secondarySpecificationItem() ) != NULL &&
 												selfGeneratedSpecificationItem->isQuestion() );
 
-													// Test file: "No conflict on multiple related specifications"
+													// Test file: "conflict\family\No conflict on multiple related specifications"
 					selectedJustificationTypeNr = ( isPossessive ? JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION :
 
-													// Test files: "Collect afterwards - Past tense" and "Collect afterwards - Uncertainty"
+													// Test files: "reasoning\Collect afterwards - Past tense",
+													//				"reasoning\Collect afterwards - Uncertainty"
 													( isSpecificationGeneralization ? JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION :
 
-													// Test file: "Correcting invalidated assumption (by opposite suggestive question)"
+													// Test file: "reasoning\family\Correcting invalidated assumption (by opposite suggestive question)"
 													( currentSecondarySpecificationItem == NULL &&
-													currentSpecificationItem->isCorrectedSpecification() ? lastWrittenJustificationItem_->justificationTypeNr() :
+													currentSpecificationItem->isCorrectedSpecification() ? JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION :
 
-													// Test file: "This information is more specific (non-exclusive)"
 													( isSelfGeneratedQuestion &&
-													currentPrimarySpecificationItem != NULL &&
 													!currentPrimarySpecificationItem->isPossessive() ? JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION :
+
+													// Test files: "conflict\family\No conflict on multiple related specifications",
+													//				"reasoning\Basic reasoning",
+													//				"reasoning\Scientific challenge",
+													//				"reasoning\family\Justification report",
+													//				"reasoning\family\Simple family definition - Justification report",
+													//				"reasoning\family\This information is more specific (non-exclusive)"
 																										JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION ) ) ) );
 
+					if( lastWrittenJustificationItem_ != NULL &&
 					// Find related justification in current specification
-					currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_->justificationOrderNr ) :
-																			currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr ) );
+					( currentJustificationItem = ( isExclusiveSpecification ? currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr, lastWrittenJustificationItem_->justificationOrderNr ) :
+																				// Test file: "conflict\family\No conflict on multiple related specifications"
+																				currentSpecificationItem->firstJustificationItem( selectedJustificationTypeNr ) ) ) != NULL &&
 
-					if( currentJustificationItem != NULL &&
-
-					// Exclude question justification with primary specification that has relation context
-					( !isQuestion ||
-					// Suggestive question assumption
-					currentSecondarySpecificationItem == NULL ||
-					!currentJustificationItem->hasPrimarySpecificationRelationContext() ) )
+						( !currentJustificationItem->hasPrimarySpecificationRelationWord() ||
+						// Test file: "reasoning\family\Correcting invalidated assumption (by opposite suggestive question)"
+						currentSecondarySpecificationItem == NULL ) )
 						{
-						isWritingPrimarySpecificationOrSeparator = ( ( currentSecondarySpecificationItem == NULL &&
-																	currentJustificationItem->isSuggestiveQuestionAssumption() ) ||
-
-																	( currentSecondarySpecificationItem != NULL &&
-
-																	( currentSecondarySpecificationItem->isGeneralizationProperNoun() ||
-
-																	( !isSelfGeneratedQuestion &&
-																	currentPrimarySpecificationItem != NULL &&
-																	currentPrimarySpecificationItem->isGeneralizationProperNoun() ) ) ) );
+						// Test file: "conflict\family\No conflict on multiple related specifications"
+						isWritingPrimarySpecificationOrSeparator = ( !isExclusiveSpecification &&
+																	currentSecondarySpecificationItem != NULL );
 
 						// Write related justification specifications
 						if( writeJustificationSpecifications( isWritingPrimarySpecificationOrSeparator, isWritingPrimarySpecificationOrSeparator, currentJustificationItem, NULL ) != RESULT_OK )
@@ -386,7 +392,7 @@ class AdminWrite
 	signed char writeSpecification( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isWritingCurrentSentenceOnly, bool isWritingJustification, bool isWritingUserSpecifications, bool isWritingSelfGeneratedConclusions, bool isWritingSelfGeneratedAssumptions, bool isWritingUserQuestions, bool isWritingSelfGeneratedQuestions, WordItem *writeWordItem )
 		{
 		bool hasCurrentSpecificationAssumptionLevel;
-		bool hasCurrentSpecificationRelationContext;
+		bool hasCurrentSpecificationRelationWord;
 		bool hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore;
 		bool hasHeaderBeenWritten = false;
 		bool isCurrentSpecificationSelfGenerated;
@@ -407,65 +413,67 @@ class AdminWrite
 			{
 			do	{
 				hasCurrentSpecificationAssumptionLevel = currentSpecificationItem->hasAssumptionLevel();
-				hasCurrentSpecificationRelationContext = currentSpecificationItem->hasRelationContext();
+				hasCurrentSpecificationRelationWord = currentSpecificationItem->hasRelationWord();
 				isCurrentSpecificationSelfGenerated = currentSpecificationItem->isSelfGeneratedSpecification();
 				isCurrentSpecificationWordSpanishAmbiguous = currentSpecificationItem->isSpecificationWordSpanishAmbiguous();
 				isHiddenSpanishSpecification = false;
 
+				// Typical for Spanish
 				if( isCurrentSpecificationWordSpanishAmbiguous &&
-				hasCurrentSpecificationRelationContext &&
+				hasCurrentSpecificationRelationWord &&
+				isCurrentSpecificationSelfGenerated &&
+				currentSpecificationItem->isPossessive() &&
 				currentSpecificationItem->isFirstJustificationReversibleAssumptionOrConclusion() )
 					{
-					if( ( currentSpecificationItem->isOlderItem() &&
-					currentSpecificationItem->isSelfGeneratedAssumption() &&
-					writeWordItem->hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore ) ||
-
-					( currentSpecificationItem->isPossessive() &&
+					// Self-generated conclusion
+					if( ( ( singleRelationWordItem = currentSpecificationItem->singleRelationWordItem() ) != NULL &&
+					!hasCurrentSpecificationAssumptionLevel &&
 					currentSpecificationItem->hasNonCompoundSpecificationCollection() &&
-					( singleRelationWordItem = currentSpecificationItem->singleRelationWordItem() ) != NULL &&
-					singleRelationWordItem->isMasculineWord() ) )
+					singleRelationWordItem->isMasculineWord() ) ||
+
+					// Spanish test file: "razonamiento\familia\Complejo (16)"
+					( singleRelationWordItem == NULL &&
+					hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore &&
+					hasCurrentSpecificationAssumptionLevel ) )
 						isHiddenSpanishSpecification = true;
 					}
 
 				if( !isHiddenSpanishSpecification &&
 
-				// Conclusions
-				( ( isWritingSelfGeneratedConclusions &&
+				// User specifications
+				( ( isWritingUserSpecifications &&
+				currentSpecificationItem->isUserSpecification() ) ||
+
+				// User questions
+				( isWritingUserQuestions &&
+				currentSpecificationItem->isUserQuestion() ) ||
+
+				// Self-generated conclusions
+				( ( ( isWritingSelfGeneratedConclusions &&
 				!hasCurrentSpecificationAssumptionLevel &&
-				isCurrentSpecificationSelfGenerated &&
+				isCurrentSpecificationSelfGenerated ) ||
 
-				( !hasDisplayedSpanishSpecificationsThatAreNotHiddenAnymore ||
-				// Typical for Spanish
-				!hasCurrentSpecificationRelationContext ||
-				currentSpecificationItem->hasOnlyOneRelationWord() ) ) ||
-
-				// Assumptions
+				// Self-generated assumptions
 				( isWritingSelfGeneratedAssumptions &&
 				hasCurrentSpecificationAssumptionLevel &&
 				isCurrentSpecificationSelfGenerated ) ||
 
-				// Questions
+				// Self-generated questions
 				( isWritingSelfGeneratedQuestions &&
-				currentSpecificationItem->isSelfGeneratedQuestion() ) ||
+				currentSpecificationItem->isSelfGeneratedQuestion() ) ) &&
 
-				( isWritingUserSpecifications &&
-				currentSpecificationItem->isUserSpecification() ) ||
+						// Filter on current or updated sentences
+						( ( ( !isWritingCurrentSentenceOnly ||
+						currentSpecificationItem->hasUpdatedWriteInformation() ) &&
 
-				( isWritingUserQuestions &&
-				currentSpecificationItem->isUserQuestion() ) ) &&
+							( !isCurrentSpecificationWordSpanishAmbiguous ||
+							// Typical for Spanish: Don't write hidden specifications
+							!currentSpecificationItem->isHiddenSpanishSpecification() ) ) ||
 
-				( !isCurrentSpecificationWordSpanishAmbiguous ||
-				// Typical for Spanish
-				!currentSpecificationItem->isHiddenSpanishSpecification() ) &&
-
-				// Filter on current or updated sentences
-				( !isWritingCurrentSentenceOnly ||
-				currentSpecificationItem->hasNewInformation() ||
-
-				// Typical for Spanish
-				// Spanish test filea: "Complejo (15)", "Complejo (17)" and "Preguntas respondidas indirectamente - Juan es masculino"
-				( isCurrentSpecificationWordSpanishAmbiguous &&
-				currentSpecificationItem->wasHiddenSpanishSpecification() ) ) )
+						// Typical for Spanish
+						// Spanish test file: "respuestas a las preguntas\familia\Preguntas respondidas indirectamente - Juan es masculino"
+						( isCurrentSpecificationWordSpanishAmbiguous &&
+						currentSpecificationItem->wasHiddenSpanishSpecification() ) ) ) ) )
 					{
 					isOnlyOptionLeftAssignment = ( isAssignment &&
 													isCurrentSpecificationSelfGenerated &&
@@ -523,8 +531,9 @@ class AdminWrite
 
 						if( hasHeaderBeenWritten )
 							{
+							// Write header to screen / output file
 							if( inputOutput_->writeInterfaceText( true, INPUT_OUTPUT_PROMPT_NOTIFICATION, ( isCurrentSpecificationSelfGenerated ? ( isWritingSelfGeneratedConclusions ? INTERFACE_LISTING_MY_CONCLUSIONS : ( isWritingSelfGeneratedAssumptions ? INTERFACE_LISTING_MY_ASSUMPTIONS : INTERFACE_LISTING_MY_QUESTIONS ) ) : ( isWritingUserSpecifications ? ( isCurrentSpecificationSelfGenerated ? INTERFACE_LISTING_MY_INFORMATION : INTERFACE_LISTING_YOUR_INFORMATION ) : INTERFACE_LISTING_YOUR_QUESTIONS ) ) ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write my conclusions header" );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write a header to the screen / output file" );
 
 							hasHeaderBeenWritten = false;
 							}
@@ -642,10 +651,13 @@ class AdminWrite
 					}
 				else
 					{
-					isWritingCurrentSpecificationWordOnly = ( secondarySpecificationItem->isPartOf() ||
+					isWritingCurrentSpecificationWordOnly = ( writeJustificationItem->isSpecificationSubstitutionPartOfAssumptionOrConclusion() ||
 
-															( !secondarySpecificationItem->isExclusiveSpecification() &&
-															secondarySpecificationItem->isGeneralizationProperNoun() &&
+															// Test file: "conflict\family\No conflict on multiple related specifications"
+															( isWritingPrimarySpecification &&
+															writeJustificationItem->isOppositePossessiveSpecificationAssumption() &&
+															!secondarySpecificationItem->hasRelationWord() &&
+															!secondarySpecificationItem->isExclusiveSpecification() &&
 															!secondarySpecificationItem->isPossessive() ) );
 
 					if( generalizationWordItem->writeJustificationSpecificationInWord( isWritingCurrentSpecificationWordOnly, secondarySpecificationItem ) != RESULT_OK )
@@ -697,8 +709,9 @@ class AdminWrite
 
 						if( feminineOrMasculineProperNounEndingWordItem != lastWrittenFeminineOrMasculineProperNounEndingWordItem )
 							{
+							// Write justification sentence start string to screen / output file
 							if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_WRITE_INDENTED, INTERFACE_JUSTIFICATION_FEMININE_OR_MASCULINE_PROPER_NOUN_ENDING, feminineOrMasculineProperNounEndingWordItem->anyWordTypeString(), ( feminineOrMasculineProperNounEndingWordItem->hasFeminineProperNounEnding() ? INTERFACE_JUSTIFICATION_FEMININE_PROPER_NOUN_ENDING : INTERFACE_JUSTIFICATION_MASCULINE_PROPER_NOUN_ENDING ) ) != RESULT_OK )
-								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification sentence start string" );
+								return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the justification sentence start string to the screen / output file" );
 
 							lastWrittenFeminineOrMasculineProperNounEndingWordItem = feminineOrMasculineProperNounEndingWordItem;
 							}
@@ -742,17 +755,17 @@ class AdminWrite
 		if( writeSpecification( false, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered specifications" );
 
-		// Active assignments
-		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered current-tense assignments" );
+		// Archived assignments
+		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered archived assignments" );
 
 		// Inactive assignments
 		if( writeSpecification( true, true, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered past-tense assignments" );
 
-		// Archived assignments
-		if( writeSpecification( true, false, true, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered archived assignments" );
+		// Active assignments
+		if( writeSpecification( true, false, false, isWritingCurrentSentenceOnly, false, true, false, false, false, false, writeWordItem ) != RESULT_OK )
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user-entered current-tense assignments" );
 
 		return RESULT_OK;
 		}
@@ -890,23 +903,27 @@ class AdminWrite
 		WordItem *currentTouchedWordItem;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "answerQuestions";
 
+		// Write 'question is already answered' interface notification to screen / output file
 		if( globalVariables_->isQuestionAlreadyAnswered &&
 		inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_QUESTION_IS_ALREADY_ANSWERED ) != RESULT_OK )
-			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'question is already answered' interface notification" );
+			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'question is already answered' interface notification to the screen / output file" );
 
 		if( ( currentTouchedWordItem = globalVariables_->firstTouchedWordItem ) != NULL )
 			{
 			// Do for all words touched during current sentence
 			do	{
+				// Find answer to new user questions
 				if( currentTouchedWordItem->findAnswerToNewUserQuestion() != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to find an answer to new user questions of word \"", currentTouchedWordItem->anyWordTypeString(), "\"" );
 				}
 			while( ( currentTouchedWordItem = currentTouchedWordItem->nextTouchedWordItem ) != NULL );
 			}
 
+		// Didn't find any answer
 		if( !globalVariables_->hasFoundAnswerToQuestion &&
 		!globalVariables_->isConflictingQuestion &&
-		inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != RESULT_OK )
+			// Write text to screen / output file
+			inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_QUESTION_I_DONT_KNOW_THE_ANSWER_TO_THIS_QUESTION ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the 'I don't know the answer to this question' interface notification" );
 
 		return RESULT_OK;
@@ -931,29 +948,21 @@ class AdminWrite
 
 		if( !haveAllWordsPassed )
 			{
-			if( readUserSentenceString != NULL &&
+			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ &&
+			readUserSentenceString != NULL )
+				{
+				// Write interface warning to screen / output file
+				if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS ) != RESULT_OK )
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning to the screen / output file" );
 
-			( adminItem_->isCurrentlyTesting() ||
-			adminItem_->isSystemStartingUp() ) )
-				{
-				if( inputOutput_->writeInterfaceText( INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START, readUserSentenceString, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE ) ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-				}
-			else
-				{
-				if( inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE, EMPTY_STRING, ( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ ? INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS : INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE ) ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
-				}
-
-			if( hasFoundAnyWordPassingIntegrityCheckOfStoredUserSentence_ )
-				{
 				if( displayWordsThatDidntPassIntegrityCheckOfStoredUserSentence() != RESULT_OK )
 					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to display the words that didn't pass the integrity check" );
 
 				if( ( writtenSentenceString = globalVariables_->writtenSentenceString ) != NULL &&
 				strlen( writtenSentenceString ) > 0 &&
+				// Write interface warning to screen / output file
 				inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_WARNING, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START, writtenSentenceString, INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END ) != RESULT_OK )
-					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning" );
+					return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write an interface warning to the screen / output file" );
 				}
 
 			if( adminItem_->isSystemStartingUp() )
@@ -1000,10 +1009,8 @@ class AdminWrite
 
 											( readUserSentenceString[0] == writtenUserSentenceString[0] ||
 											(char)tolower( readUserSentenceString[0] ) == writtenUserSentenceString[0] ) &&
-
-											( readUserSentenceStringLength == 1 ||
 											// The read user string and written user string are equal
-											strcmp( &readUserSentenceString[1], &writtenUserSentenceString[1] ) == 0 ) );
+											strcmp( &readUserSentenceString[1], &writtenUserSentenceString[1] ) == 0 );
 
 			do	{
 				do	{
@@ -1114,10 +1121,12 @@ class AdminWrite
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "writeInfoAboutWord";
 
 		if( isWritingUserSpecifications &&
+		// Write user specifications
 		writeUserSpecifications( isWritingCurrentSentenceOnly, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user specifications" );
 
 		if( isWritingUserQuestions &&
+		// Write user questions
 		writeUserQuestions( isWritingCurrentSentenceOnly, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write user questions" );
 
@@ -1125,15 +1134,18 @@ class AdminWrite
 		isWritingSelfGeneratedAssumptions ||
 		isWritingSelfGeneratedQuestions ) &&
 
+		// Write self-generated info
 		writeSelfGeneratedInfo( isWritingCurrentSentenceOnly, false, isWritingSelfGeneratedConclusions, isWritingSelfGeneratedAssumptions, isWritingSelfGeneratedQuestions, writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write the self-generated info" );
 
 		if( isWritingSpecificationInfo &&
 		!writeWordItem->isNounWordSpanishAmbiguous() &&
+		// Write selected specification info
 		writeSelectedSpecificationInfo( writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write selected specification info" );
 
 		if( isWritingRelatedInfo &&
+		// Write selected relation info
 		writeSelectedRelationInfo( writeWordItem ) != RESULT_OK )
 			return adminItem_->addError( functionNameString, moduleNameString_, "I failed to write selected related info" );
 

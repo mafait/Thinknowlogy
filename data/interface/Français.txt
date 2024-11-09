@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the interface texts for the French language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -346,10 +346,7 @@
 
 # Phrase (erreurs)
 :1640			"\nFaute d'intégrité! Mon implémentation est insuffisante pour stocker ou récupérer "
-:1641			"cette phrase."
-:1642			"cette phrase, en raison de mots:"
-:1643			"phrase «"
+:1641			"phrase «"
+:1642			"», en raison de mots:"
+:1643			"\nJe reçus de retour de mon système: «"
 :1644			"»."
-:1645			"», en raison de mots:"
-:1646			"\nJe reçus de retour de mon système: «"
-:1647			"»."

@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the regression test for the Spanish language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -187,6 +187,7 @@
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (11)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Sé (12)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Hernando era el padre de Rafael (antes de la definición de la familia)".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/José tiene 2 padres - Ana - Paz".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/José tiene 2 padres - José es hijo".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/José es hijo - José tiene 2 padres".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/José es hijo - Juan y Ana".
@@ -195,12 +196,15 @@
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Ana - Paz, José y Luisa".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Luisa - Juan y Ana".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Paz - Ana".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Paz - Luisa".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan - Luz - Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan y Ana - Paz, José y Luisa".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan tiene 2 hijos y una hija".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan tiene 2 hijos y una hija (antes de la definición de la familia)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan tiene una hija y 2 hijos".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan es un padre - Paz tiene 2 padres".
-#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan es un padre - Paz es hijo de Juan y Ana".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan es un padre - Paz es un hijo de Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan es un padre - Paz es un hijo".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan es el padre de Paz - José - Luisa - Bonita".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Juan era el padre de Paz, José y Luisa".
@@ -213,7 +217,7 @@
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa - Juan y Ana - José".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa - Paz - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa tiene 2 padres - Luisa es una hija".
-#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa tiene un padre - Luisa es hija - Juan y Ana".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa tiene un padre - Luisa es una hija - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Luisa es hija - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (hijos)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Mis suposiciones que se confirman (padres)".
@@ -229,12 +233,12 @@
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Mis conclusiones que se confirman (sin relación)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - Ana - José - Luisa - José - Juan - Paz".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - Ana - José - Luisa - Juan".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - José - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - José - Luisa - Juan y Ana (padres)".
-#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - José - Luisa - Juan y Ana (hijo - hija)".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz - Juan y Ana - José - Luisa".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz tiene un padre - Paz tiene 2 padres".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz es un niño - Luisa es una niña".
-#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz es hijo - Juan y Ana".
+#Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz es un hijo - Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz es un hombre - Paz es un hijo".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Paz es el hijo Juan y Ana".
 #Dev#Leer el archivo de prueba "Español/razonamiento/familia/Tiempo pasado".

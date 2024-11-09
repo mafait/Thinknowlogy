@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -133,8 +133,8 @@
 < Olivier a probablement un enfant.
 * 
 * Mes questions:
-< Est Olivier féminin ou masculin?
 < Est Olivier une femme ou un homme?
+< Est Olivier féminin ou masculin?
 < Est Olivier un père ou une mère?
 < 
 * 
@@ -146,8 +146,8 @@
 < Patrique a probablement un enfant.
 * 
 * Mes questions:
-< Est Patrique féminin ou masculin?
 < Est Patrique une femme ou un homme?
+< Est Patrique féminin ou masculin?
 < Est Patrique un père ou une mère?
 < 
 * 
@@ -171,24 +171,24 @@
 * 
 * Mes conclusions:
 < Amélie est une femme.
-< Amélie n'est pas un père.
+< Amélie n'est pas masculin.
+< Amélie est féminin.
 < Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
-< Amélie n'est pas masculin.
+< Amélie n'est pas un père.
 < Amélie n'est pas un homme.
-< Amélie est féminin.
 < Pascal a une mère, appelée Amélie.
 * 
 * Mes hypothèses:
 < Amélie n'est probablement pas une jeune-fille.
 < Amélie est probablement une personne.
-< Amélie a possible un enfant, appelé Pascal.
 < Amélie est probablement un parent de Pascal.
 < Amélie est probablement partie d'une famille.
+< Amélie a possible un enfant, appelé Pascal.
+< Pascal a probablement un parent, appelée Amélie.
 < Pascal est possible un enfant de Amélie.
 < Pascal est possible partie d'une famille.
 < Pascal est peut-être une personne.
-< Pascal a probablement un parent, appelée Amélie.
 * 
 * Mes questions:
 < Est Pascal une jeune-fille, une femme, un garçon ou un homme?
@@ -200,12 +200,12 @@
 * 
 * Mes conclusions:
 < Guillaume était un homme.
-< Guillaume ne était pas une fille.
-< Guillaume ne était pas une mère.
-< Guillaume ne était pas une jeune-fille.
-< Guillaume ne était pas féminin.
-< Guillaume ne était pas une femme.
 < Guillaume était masculin.
+< Guillaume ne était pas une fille.
+< Guillaume ne était pas une jeune-fille.
+< Guillaume ne était pas une mère.
+< Guillaume ne était pas une femme.
+< Guillaume ne était pas féminin.
 < Armand n'a aucun père plus.
 < Armand avait un père, appelé Guillaume.
 * 

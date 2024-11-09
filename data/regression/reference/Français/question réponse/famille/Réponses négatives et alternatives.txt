@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -127,12 +127,12 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
-< Olivier n'est pas une fille.
-< Olivier n'est pas une mère.
-< Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
-< Olivier n'est pas une femme.
 < Olivier est masculin.
+< Olivier n'est pas une fille.
+< Olivier n'est pas une jeune-fille.
+< Olivier n'est pas une mère.
+< Olivier n'est pas une femme.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -140,12 +140,12 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
-< Amélie n'est pas un père.
+< Amélie n'est pas masculin.
+< Amélie est féminin.
 < Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
-< Amélie n'est pas masculin.
+< Amélie n'est pas un père.
 < Amélie n'est pas un homme.
-< Amélie est féminin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon.
@@ -210,24 +210,24 @@
 * 
 * Mes conclusions:
 < Guillaume est un homme.
-< Guillaume n'est pas une fille.
-< Guillaume n'est pas une mère.
-< Guillaume n'est pas une jeune-fille.
 < Guillaume n'est pas féminin.
-< Guillaume n'est pas une femme.
 < Guillaume est masculin.
+< Guillaume n'est pas une fille.
+< Guillaume n'est pas une jeune-fille.
+< Guillaume n'est pas une mère.
+< Guillaume n'est pas une femme.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:
 < Guillaume n'est probablement pas un garçon.
 < Guillaume est probablement une personne.
-< Guillaume a possible un enfant, appelé Armand.
 < Guillaume est probablement un parent de Armand.
 < Guillaume est probablement partie d'une famille.
+< Guillaume a possible un enfant, appelé Armand.
+< Armand a probablement un parent, appelé Guillaume.
 < Armand est possible un enfant de Guillaume.
 < Armand est possible partie d'une famille.
 < Armand est peut-être une personne.
-< Armand a probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
 < Est Armand une jeune-fille, une femme, un garçon ou un homme?
@@ -249,11 +249,11 @@
 * 
 * Mes conclusions:
 < Fabrice n'est pas féminin.
-< Fabrice est masculin.
 < Fabrice est un homme.
+< Fabrice est masculin.
 < Fabrice n'est pas une fille.
-< Fabrice n'est pas une mère.
 < Fabrice n'est pas une jeune-fille.
+< Fabrice n'est pas une mère.
 < Fabrice n'est pas une femme.
 * 
 * Mes hypothèses:
@@ -273,54 +273,54 @@
 < Olivier est un homme. En raison:
 <	- Olivier est un père.
 <	- Chaque père est un homme.
-< Olivier n'est pas une fille. En raison:
-<	- Olivier est un homme.
-<	- Chaque homme n'est pas une fille.
-* 	et:
-<	- Olivier est masculin.
-<	- Chaque fille n'est pas masculin.
-* 	et:
-<	- Olivier est un père.
-<	- Chaque père n'est pas une fille.
-< Olivier n'est pas une mère. En raison:
-<	- Olivier est un père.
-<	- Chaque père n'est pas une mère.
-* 	et:
-<	- Olivier est un homme.
-<	- Chaque homme n'est pas une mère.
-* 	et:
-<	- Olivier est masculin.
-<	- Chaque mère n'est pas masculin.
-< Olivier n'est pas une jeune-fille. En raison:
-<	- Olivier est un homme.
-<	- Chaque homme n'est pas une jeune-fille.
-* 	et:
-<	- Olivier est masculin.
-<	- Chaque jeune-fille n'est pas masculin.
-* 	et:
-<	- Olivier est un père.
-<	- Chaque père n'est pas une jeune-fille.
 < Olivier n'est pas féminin. En raison:
 <	- Olivier est un père.
 <	- Chaque père n'est pas féminin.
 * 	et:
 <	- Olivier est un homme.
 <	- Chaque homme n'est pas féminin.
-< Olivier n'est pas une femme. En raison:
-<	- Olivier est un homme.
-<	- Chaque homme n'est pas une femme.
-* 	et:
-<	- Olivier est masculin.
-<	- Chaque femme n'est pas masculin.
-* 	et:
-<	- Olivier est un père.
-<	- Chaque père n'est pas une femme.
 < Olivier est masculin. En raison:
 <	- Olivier est un homme.
 <	- Chaque homme est masculin.
 * 	et:
 <	- Olivier est un père.
 <	- Chaque père est masculin.
+< Olivier n'est pas une fille. En raison:
+<	- Olivier est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une fille.
+< Olivier n'est pas une jeune-fille. En raison:
+<	- Olivier est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une jeune-fille.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une jeune-fille.
+< Olivier n'est pas une mère. En raison:
+<	- Olivier est masculin.
+<	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une mère.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une mère.
+< Olivier n'est pas une femme. En raison:
+<	- Olivier est masculin.
+<	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Olivier est un homme.
+<	- Chaque homme n'est pas une femme.
+* 	et:
+<	- Olivier est un père.
+<	- Chaque père n'est pas une femme.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon. En raison:
@@ -342,6 +342,11 @@
 < Olivier est probablement partie d'une famille. En raison:
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
 <	- Parents sont partie de chaque famille.
+* 	et:
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
+<	- Parents sont partie de chaque famille.
 < Olivier a possible 3 enfants, appelés Pascal, Julien et Lorraine. En raison:
 <	- Chaque famille a parents et enfants.
 <	- Olivier est probablement un parent de Pascal, Julien et Lorraine.
@@ -349,6 +354,11 @@
 <	- Pascal est possible un enfant de Olivier et Amélie.
 <	- Julien est possible un enfant de Olivier et Amélie.
 <	- Lorraine est possible un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+<	- Julien a probablement 2 parents, appelés Olivier et Amélie.
+<	- Lorraine a probablement 2 parents, appelés Olivier et Amélie.
 < Olivier a peut-être une fille, appelée Lorraine. En raison:
 <	- Lorraine est peut-être une fille de Olivier et Amélie.
 < 
@@ -378,6 +388,9 @@
 <	- Amélie a possible 3 enfants, appelés Pascal, Julien et Lorraine.
 * 	et:
 <	- Chaque famille a parents et enfants.
+<	- Pascal a probablement 2 parents, appelés Olivier et Amélie.
+* 	et:
+<	- Chaque famille a parents et enfants.
 <	- Chaque parent est un père ou une mère.
 <	- Pascal a un père, appelé Olivier.
 <	- Pascal a une mère, appelée Amélie.
@@ -386,6 +399,7 @@
 <	- Enfants sont partie de chaque famille.
 * 	et:
 <	- Olivier a possible 3 enfants, appelés Pascal, Julien et Lorraine.
+<	- Amélie a possible 3 enfants, appelés Pascal, Julien et Lorraine.
 <	- Enfants sont partie de chaque famille.
 < Pascal est peut-être une personne. En raison:
 <	- Pascal est possible un enfant de Olivier et Amélie.
@@ -401,9 +415,9 @@
 < Est Pascal féminin ou masculin? En raison:
 <	- Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 <	- Chaque garçon est masculin.
+<	- Chaque homme est masculin.
 <	- Chaque jeune-fille est féminin.
 <	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
 * 	et:
 <	- Pascal est possible un enfant de Olivier et Amélie.
 <	- Chaque enfant est féminin ou masculin.
@@ -416,54 +430,54 @@
 < Guillaume est un homme. En raison:
 <	- Guillaume est un père.
 <	- Chaque père est un homme.
-< Guillaume n'est pas une fille. En raison:
-<	- Guillaume est un homme.
-<	- Chaque homme n'est pas une fille.
-* 	et:
-<	- Guillaume est masculin.
-<	- Chaque fille n'est pas masculin.
-* 	et:
-<	- Guillaume est un père.
-<	- Chaque père n'est pas une fille.
-< Guillaume n'est pas une mère. En raison:
-<	- Guillaume est un père.
-<	- Chaque père n'est pas une mère.
-* 	et:
-<	- Guillaume est un homme.
-<	- Chaque homme n'est pas une mère.
-* 	et:
-<	- Guillaume est masculin.
-<	- Chaque mère n'est pas masculin.
-< Guillaume n'est pas une jeune-fille. En raison:
-<	- Guillaume est un homme.
-<	- Chaque homme n'est pas une jeune-fille.
-* 	et:
-<	- Guillaume est masculin.
-<	- Chaque jeune-fille n'est pas masculin.
-* 	et:
-<	- Guillaume est un père.
-<	- Chaque père n'est pas une jeune-fille.
 < Guillaume n'est pas féminin. En raison:
 <	- Guillaume est un père.
 <	- Chaque père n'est pas féminin.
 * 	et:
 <	- Guillaume est un homme.
 <	- Chaque homme n'est pas féminin.
-< Guillaume n'est pas une femme. En raison:
-<	- Guillaume est un homme.
-<	- Chaque homme n'est pas une femme.
-* 	et:
-<	- Guillaume est masculin.
-<	- Chaque femme n'est pas masculin.
-* 	et:
-<	- Guillaume est un père.
-<	- Chaque père n'est pas une femme.
 < Guillaume est masculin. En raison:
 <	- Guillaume est un homme.
 <	- Chaque homme est masculin.
 * 	et:
 <	- Guillaume est un père.
 <	- Chaque père est masculin.
+< Guillaume n'est pas une fille. En raison:
+<	- Guillaume est masculin.
+<	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Guillaume est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
+<	- Guillaume est un père.
+<	- Chaque père n'est pas une fille.
+< Guillaume n'est pas une jeune-fille. En raison:
+<	- Guillaume est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Guillaume est un homme.
+<	- Chaque homme n'est pas une jeune-fille.
+* 	et:
+<	- Guillaume est un père.
+<	- Chaque père n'est pas une jeune-fille.
+< Guillaume n'est pas une mère. En raison:
+<	- Guillaume est masculin.
+<	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Guillaume est un homme.
+<	- Chaque homme n'est pas une mère.
+* 	et:
+<	- Guillaume est un père.
+<	- Chaque père n'est pas une mère.
+< Guillaume n'est pas une femme. En raison:
+<	- Guillaume est masculin.
+<	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Guillaume est un homme.
+<	- Chaque homme n'est pas une femme.
+* 	et:
+<	- Guillaume est un père.
+<	- Chaque père n'est pas une femme.
 * 
 * Mes hypothèses:
 < Guillaume n'est probablement pas un garçon. En raison:
@@ -475,11 +489,6 @@
 * 	et:
 <	- Guillaume est un père.
 <	- Un père est probablement une personne.
-< Guillaume a possible un enfant, appelé Armand. En raison:
-<	- Armand est possible un enfant de Guillaume.
-* 	et:
-<	- Chaque famille a parents et enfants.
-<	- Guillaume est probablement un parent de Armand.
 < Guillaume est probablement un parent de Armand. En raison:
 <	- Guillaume est le père de Armand.
 <	- Un père est probablement un parent.
@@ -488,6 +497,17 @@
 < Guillaume est probablement partie d'une famille. En raison:
 <	- Guillaume est probablement un parent de Armand.
 <	- Parents sont partie de chaque famille.
+* 	et:
+<	- Armand a probablement un parent, appelé Guillaume.
+<	- Parents sont partie de chaque famille.
+< Guillaume a possible un enfant, appelé Armand. En raison:
+<	- Chaque famille a parents et enfants.
+<	- Guillaume est probablement un parent de Armand.
+* 	et:
+<	- Armand est possible un enfant de Guillaume.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Armand a probablement un parent, appelé Guillaume.
 < 
 * 
 * Mes conclusions:
@@ -497,48 +517,48 @@
 * 	et:
 <	- Fabrice est un homme.
 <	- Chaque homme n'est pas féminin.
-< Fabrice est masculin. En raison:
-<	- Fabrice est un père.
-<	- Chaque père est masculin.
-* 	et:
-<	- Fabrice est un homme.
-<	- Chaque homme est masculin.
 < Fabrice est un homme. En raison:
 <	- Fabrice est un père.
 <	- Chaque père est un homme.
-< Fabrice n'est pas une fille. En raison:
+< Fabrice est masculin. En raison:
 <	- Fabrice est un homme.
-<	- Chaque homme n'est pas une fille.
+<	- Chaque homme est masculin.
 * 	et:
+<	- Fabrice est un père.
+<	- Chaque père est masculin.
+< Fabrice n'est pas une fille. En raison:
 <	- Fabrice est masculin.
 <	- Chaque fille n'est pas masculin.
 * 	et:
+<	- Fabrice est un homme.
+<	- Chaque homme n'est pas une fille.
+* 	et:
 <	- Fabrice est un père.
 <	- Chaque père n'est pas une fille.
-< Fabrice n'est pas une mère. En raison:
+< Fabrice n'est pas une jeune-fille. En raison:
+<	- Fabrice est masculin.
+<	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Fabrice est un homme.
+<	- Chaque homme n'est pas une jeune-fille.
+* 	et:
 <	- Fabrice est un père.
-<	- Chaque père n'est pas une mère.
+<	- Chaque père n'est pas une jeune-fille.
+< Fabrice n'est pas une mère. En raison:
+<	- Fabrice est masculin.
+<	- Chaque mère n'est pas masculin.
 * 	et:
 <	- Fabrice est un homme.
 <	- Chaque homme n'est pas une mère.
 * 	et:
-<	- Fabrice est masculin.
-<	- Chaque mère n'est pas masculin.
-< Fabrice n'est pas une jeune-fille. En raison:
-<	- Fabrice est un homme.
-<	- Chaque homme n'est pas une jeune-fille.
-* 	et:
-<	- Fabrice est masculin.
-<	- Chaque jeune-fille n'est pas masculin.
-* 	et:
 <	- Fabrice est un père.
-<	- Chaque père n'est pas une jeune-fille.
+<	- Chaque père n'est pas une mère.
 < Fabrice n'est pas une femme. En raison:
-<	- Fabrice est un homme.
-<	- Chaque homme n'est pas une femme.
-* 	et:
 <	- Fabrice est masculin.
 <	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Fabrice est un homme.
+<	- Chaque homme n'est pas une femme.
 * 	et:
 <	- Fabrice est un père.
 <	- Chaque père n'est pas une femme.
@@ -569,15 +589,23 @@
 <	- Guillaume est le père de Armand.
 * 
 * Mes hypothèses:
+< Armand a probablement un parent, appelé Guillaume. En raison:
+<	- Guillaume est probablement un parent de Armand.
+* 	et:
+<	- Armand a un père, appelé Guillaume.
+<	- Un père est probablement un parent.
 < Armand est possible un enfant de Guillaume. En raison:
 <	- Chaque famille a parents et enfants.
-<	- Chaque parent est un père ou une mère.
-<	- Armand a un père, appelé Guillaume.
+<	- Guillaume est probablement un parent de Armand.
 * 	et:
 <	- Guillaume a possible un enfant, appelé Armand.
 * 	et:
 <	- Chaque famille a parents et enfants.
-<	- Guillaume est probablement un parent de Armand.
+<	- Armand a probablement un parent, appelé Guillaume.
+* 	et:
+<	- Chaque famille a parents et enfants.
+<	- Chaque parent est un père ou une mère.
+<	- Armand a un père, appelé Guillaume.
 < Armand est possible partie d'une famille. En raison:
 <	- Armand est possible un enfant de Guillaume.
 <	- Enfants sont partie de chaque famille.
@@ -587,11 +615,6 @@
 < Armand est peut-être une personne. En raison:
 <	- Armand est possible un enfant de Guillaume.
 <	- Un enfant est probablement une personne.
-< Armand a probablement un parent, appelé Guillaume. En raison:
-<	- Guillaume est probablement un parent de Armand.
-* 	et:
-<	- Armand a un père, appelé Guillaume.
-<	- Un père est probablement un parent.
 * 
 * Mes questions:
 < Est Armand une jeune-fille, une femme, un garçon ou un homme? En raison:
@@ -603,9 +626,9 @@
 < Est Armand féminin ou masculin? En raison:
 <	- Est Armand une jeune-fille, une femme, un garçon ou un homme?
 <	- Chaque garçon est masculin.
+<	- Chaque homme est masculin.
 <	- Chaque jeune-fille est féminin.
 <	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
 * 	et:
 <	- Armand est possible un enfant de Guillaume.
 <	- Chaque enfant est féminin ou masculin.

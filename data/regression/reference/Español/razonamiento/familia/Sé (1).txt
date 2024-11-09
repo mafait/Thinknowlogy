@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -123,11 +123,11 @@
 < Juan no es femenina.
 < Juan es parte de una familia.
 < Juan es un hombre.
-< Juan no es una hija.
-< Juan no es una madre.
-< Juan no es una niña.
-< Juan no es una mujer.
 < Juan es masculino.
+< Juan no es una hija.
+< Juan no es una niña.
+< Juan no es una madre.
+< Juan no es una mujer.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
@@ -139,11 +139,11 @@
 < Luz no es femenina.
 < Luz es parte de una familia.
 < Luz es un hombre.
-< Luz no es una hija.
-< Luz no es una madre.
-< Luz no es una niña.
-< Luz no es una mujer.
 < Luz es masculino.
+< Luz no es una hija.
+< Luz no es una niña.
+< Luz no es una madre.
+< Luz no es una mujer.
 * 
 * Mis suposiciones:
 < Luz es probablemente una persona.
@@ -165,7 +165,7 @@
 < José no es femenina.
 * 
 * Mis suposiciones:
-< Juan es probablemente padre de José.
+< Juan es probablemente un padre de José.
 < José es probablemente una persona.
 < José tiene probablemente un padre, llamado Juan.
 * 
@@ -176,12 +176,12 @@
 * Mis conclusiones:
 < Ana es parte de una familia.
 < Ana es una mujer.
-< Ana no es un padre.
+< Ana no es masculino.
+< Ana es femenina.
 < Ana no es un hijo.
 < Ana no es un niño.
-< Ana no es masculino.
+< Ana no es un padre.
 < Ana no es un hombre.
-< Ana es femenina.
 < Paz tiene una madre, llamada Ana.
 * 
 * Mis suposiciones:
@@ -201,19 +201,19 @@
 * Mis conclusiones:
 < Jorge era parte de una familia.
 < Jorge era un hombre.
-< Jorge no era una hija.
-< Jorge no era una madre.
-< Jorge no era una niña.
-< Jorge no era femenina.
-< Jorge no era una mujer.
 < Jorge era masculino.
+< Jorge no era una hija.
+< Jorge no era una niña.
+< Jorge no era una madre.
+< Jorge no era una mujer.
+< Jorge no era femenina.
 < Alfonso no tiene un padre nunca-más.
 < Alfonso tenido un padre, llamado Jorge.
 * 
 * Mis suposiciones:
 < Jorge era probablemente una persona.
 < Jorge no era probablemente un niño.
-< Alfonso es posiblemente hijo de Jorge.
+< Alfonso es posiblemente un hijo de Jorge.
 < Alfonso es posiblemente parte de una familia.
 < Alfonso es puede-ser una persona.
 < Alfonso es posiblemente masculino.

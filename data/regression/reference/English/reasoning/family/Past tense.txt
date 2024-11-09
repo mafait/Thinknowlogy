@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -127,12 +127,12 @@
 * 
 * My conclusions:
 < James was a man.
-< James was not a daughter.
-< James was not a mother.
-< James was not a girl.
-< James was not feminine.
-< James was not a woman.
 < James was masculine.
+< James was not a daughter.
+< James was not a girl.
+< James was not a mother.
+< James was not a woman.
+< James was not feminine.
 < Peter has no father anymore.
 < Peter had a father, called James.
 * 
@@ -157,61 +157,61 @@
 < James was a man. Because:
 <	- James was the father of Peter.
 <	- Every father is a man.
-< James was not a daughter. Because:
-<	- James was a man.
-<	- Every man is not a daughter.
-* 	and:
-<	- James was masculine.
-<	- Every daughter is not masculine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is not a daughter.
-< James was not a mother. Because:
-<	- James was the father of Peter.
-<	- Every father is not a mother.
-* 	and:
-<	- James was a man.
-<	- Every man is not a mother.
-* 	and:
-<	- James was masculine.
-<	- Every mother is not masculine.
-< James was not a girl. Because:
-<	- James was a man.
-<	- Every man is not a girl.
-* 	and:
-<	- James was masculine.
-<	- Every girl is not masculine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is not a girl.
-< James was not feminine. Because:
-<	- James was the father of Peter.
-<	- Every father is not feminine.
-* 	and:
-<	- James was a man.
-<	- Every man is not feminine.
-< James was not a woman. Because:
-<	- James was a man.
-<	- Every man is not a woman.
-* 	and:
-<	- James was masculine.
-<	- Every woman is not masculine.
-* 	and:
-<	- James was the father of Peter.
-<	- Every father is not a woman.
 < James was masculine. Because:
 <	- James was a man.
 <	- Every man is masculine.
 * 	and:
 <	- James was the father of Peter.
 <	- Every father is masculine.
+< James was not a daughter. Because:
+<	- James was masculine.
+<	- Every daughter is not masculine.
+* 	and:
+<	- James was a man.
+<	- Every man is not a daughter.
+* 	and:
+<	- James was the father of Peter.
+<	- Every father is not a daughter.
+< James was not a girl. Because:
+<	- James was masculine.
+<	- Every girl is not masculine.
+* 	and:
+<	- James was a man.
+<	- Every man is not a girl.
+* 	and:
+<	- James was the father of Peter.
+<	- Every father is not a girl.
+< James was not a mother. Because:
+<	- James was masculine.
+<	- Every mother is not masculine.
+* 	and:
+<	- James was a man.
+<	- Every man is not a mother.
+* 	and:
+<	- James was the father of Peter.
+<	- Every father is not a mother.
+< James was not a woman. Because:
+<	- James was masculine.
+<	- Every woman is not masculine.
+* 	and:
+<	- James was a man.
+<	- Every man is not a woman.
+* 	and:
+<	- James was the father of Peter.
+<	- Every father is not a woman.
+< James was not feminine. Because:
+<	- James was the father of Peter.
+<	- Every father is not feminine.
+* 	and:
+<	- James was a man.
+<	- Every man is not feminine.
 * 
 * My assumptions:
 < James has possibly a child, called Peter. Because:
-<	- Peter is possibly a child of James.
-* 	and:
 <	- Every family has parents and children.
 <	- James was probably a parent of Peter.
+* 	and:
+<	- Peter is possibly a child of James.
 < James was probably not a boy. Because:
 <	- James was a man.
 <	- A man is probably not a boy.
@@ -227,6 +227,9 @@
 * 	and:
 <	- Peter had probably a parent, called James.
 < James was probably part of a family. Because:
+<	- Peter had probably a parent, called James.
+<	- Parents are part of every family.
+* 	and:
 <	- James was probably a parent of Peter.
 <	- Parents are part of every family.
 < 
@@ -240,13 +243,16 @@
 * My assumptions:
 < Peter is possibly a child of James. Because:
 <	- Every family has parents and children.
-<	- Every parent is a father or a mother.
-<	- Peter had a father, called James.
+<	- James was probably a parent of Peter.
 * 	and:
 <	- James has possibly a child, called Peter.
 * 	and:
 <	- Every family has parents and children.
-<	- James was probably a parent of Peter.
+<	- Peter had probably a parent, called James.
+* 	and:
+<	- Every family has parents and children.
+<	- Every parent is a father or a mother.
+<	- Peter had a father, called James.
 < Peter is possibly part of a family. Because:
 <	- Peter is possibly a child of James.
 <	- Children are part of every family.
@@ -269,9 +275,9 @@
 < Is Peter feminine or masculine? Because:
 <	- Is Peter a girl, a woman, a boy or a man?
 <	- Every boy is masculine.
+<	- Every man is masculine.
 <	- Every girl is feminine.
 <	- Every woman is feminine.
-<	- Every man is masculine.
 * 	and:
 <	- Peter is possibly a child of James.
 <	- Every child is feminine or masculine.

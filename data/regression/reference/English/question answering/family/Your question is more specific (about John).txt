@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -136,13 +136,13 @@
 * 
 * My assumptions:
 < Paul is probably a person.
-< Paul has possibly a parent, called John.
 < Paul is probably a child of John.
 < Paul is probably part of a family.
+< Paul has possibly a parent, called John.
+< John has probably a child, called Paul.
 < John is possibly a parent of Paul.
 < John is possibly part of a family.
 < John is maybe a person.
-< John has probably a child, called Paul.
 * 
 * My questions:
 < Is Paul a boy or a man?
@@ -164,10 +164,10 @@
 < John has a son, called Paul.
 * 
 * My assumptions:
+< John has probably a child, called Paul.
 < John is possibly a parent of Paul.
 < John is possibly part of a family.
 < John is maybe a person.
-< John has probably a child, called Paul.
 * 
 * My questions:
 < Is John a father or a mother?
@@ -175,8 +175,8 @@
 < Is John masculine or feminine?
 * 
 * Related information:
-< Paul has possibly a parent, called John.
 < Paul is probably a child of John.
+< Paul has possibly a parent, called John.
 < Paul is the son of John.
 < 
 * 
@@ -185,15 +185,23 @@
 <	- Paul is the son of John.
 * 
 * My assumptions:
+< John has probably a child, called Paul. Because:
+<	- Paul is probably a child of John.
+* 	and:
+<	- John has a son, called Paul.
+<	- A son is probably a child.
 < John is possibly a parent of Paul. Because:
 <	- Every family has parents and children.
-<	- Every child is a son or a daughter.
-<	- John has a son, called Paul.
+<	- Paul is probably a child of John.
 * 	and:
 <	- Paul has possibly a parent, called John.
 * 	and:
 <	- Every family has parents and children.
-<	- Paul is probably a child of John.
+<	- John has probably a child, called Paul.
+* 	and:
+<	- Every family has parents and children.
+<	- Every child is a son or a daughter.
+<	- John has a son, called Paul.
 < John is possibly part of a family. Because:
 <	- John is possibly a parent of Paul.
 <	- Parents are part of every family.
@@ -203,11 +211,6 @@
 < John is maybe a person. Because:
 <	- John is possibly a parent of Paul.
 <	- A parent is probably a person.
-< John has probably a child, called Paul. Because:
-<	- Paul is probably a child of John.
-* 	and:
-<	- John has a son, called Paul.
-<	- A son is probably a child.
 * 
 * My questions:
 < Is John a father or a mother? Because:

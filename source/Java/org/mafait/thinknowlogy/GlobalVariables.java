@@ -1,8 +1,8 @@
-/*	Class:		GlobalVariables
+﻿/*	Class:		GlobalVariables
  *	Purpose:	To hold the global variables
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ class GlobalVariables
 	protected static boolean isConflictingQuestion;
 	protected static boolean isFirstAnswerToQuestion;
 	protected static boolean isQuestionAlreadyAnswered;
+	protected static boolean isSystemStartingUp;
 
 	protected static byte result;
 
@@ -64,6 +65,8 @@ class GlobalVariables
 
 	protected static int nCreatedJustificationItems;
 	protected static int nCreatedSpecificationItems;
+	protected static int nCreatedReadItems;
+	protected static int nCreatedWriteItems;
 	protected static int nTotalCreatedItems;
 
 	protected static int nReplacedJustificationItems;
@@ -72,13 +75,13 @@ class GlobalVariables
 
 	protected static int nDeletedJustificationItems;
 	protected static int nDeletedSpecificationItems;
+	protected static int nDeletedReadItems;
 	protected static int nTotalDeletedItems;
 
 	// Used for developer statistics
 	protected static int nIdleReasoningCalls;
 	protected static int nUsefulReasoningCalls;
 	protected static int nTotalReasoningCalls;
-	protected static int nSkippedRemovingObsoleteJustifications;
 
 	// Private methods
 	protected static int nIdleCalls_askQuestions1;
@@ -91,8 +94,7 @@ class GlobalVariables
 	protected static int nIdleCalls_drawOnlyOptionLeftProperNounConclusion;
 	protected static int nIdleCalls_drawProperNounPartOfConclusions;
 	protected static int nIdleCalls_drawPossessiveReversibleConclusions;
-	protected static int nIdleCalls_drawReversibleConclusions;
-	protected static int nIdleCalls_drawUserReversibleConclusions;
+	protected static int nIdleCalls_drawSelectedReversibleConclusions;
 	protected static int nIdleCalls_makeOppositePossessiveSpecificationAssumption;
 
 	protected static int nUsefulCalls_askQuestions1;
@@ -105,8 +107,7 @@ class GlobalVariables
 	protected static int nUsefulCalls_drawOnlyOptionLeftProperNounConclusion;
 	protected static int nUsefulCalls_drawProperNounPartOfConclusions;
 	protected static int nUsefulCalls_drawPossessiveReversibleConclusions;
-	protected static int nUsefulCalls_drawReversibleConclusions;
-	protected static int nUsefulCalls_drawUserReversibleConclusions;
+	protected static int nUsefulCalls_drawSelectedReversibleConclusions;
 	protected static int nUsefulCalls_makeOppositePossessiveSpecificationAssumption;
 
 	// Protected methods
@@ -117,9 +118,9 @@ class GlobalVariables
 	protected static int nIdleCalls_drawSpecificationGeneralizationConclusion;
 	protected static int nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion;
 	protected static int nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption;
+	protected static int nIdleCalls_makeGeneralizationAssumption;
 	protected static int nIdleCalls_makeIndirectlyAnsweredQuestionAssumption;
-	protected static int nIdleCalls_makeSpecificationSubstitutionPartOfAssumption;
-	protected static int nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound;
+	protected static int nIdleCalls_drawDefinitionSpecificationSubstitutionConclusion;
 
 	protected static int nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion;
 	protected static int nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion;
@@ -128,9 +129,9 @@ class GlobalVariables
 	protected static int nUsefulCalls_drawSpecificationGeneralizationConclusion;
 	protected static int nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion;
 	protected static int nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption;
+	protected static int nUsefulCalls_makeGeneralizationAssumption;
 	protected static int nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption;
-	protected static int nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption;
-	protected static int nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound;
+	protected static int nUsefulCalls_drawDefinitionSpecificationSubstitutionConclusion;
 
 
 	protected static SelectionList adminConditionList;
@@ -143,6 +144,7 @@ class GlobalVariables
 	protected static WordItem firstContextWordItem;
 	protected static WordItem firstPossessiveNounWordItem;
 	protected static WordItem firstPredefinedWordItem;
+	protected static WordItem firstProperNounWordItem;
 	protected static WordItem firstSpecificationWordItem;
 	protected static WordItem firstTouchedWordItem;
 	protected static WordItem firstUserDefinedProperNounWordItem;
@@ -176,6 +178,7 @@ class GlobalVariables
 		isConflictingQuestion = false;
 		isFirstAnswerToQuestion = false;
 		isQuestionAlreadyAnswered = false;
+		isSystemStartingUp = true;
 
 		result = Constants.RESULT_OK;
 
@@ -207,6 +210,8 @@ class GlobalVariables
 
 		nCreatedJustificationItems = 0;
 		nCreatedSpecificationItems = 0;
+		nCreatedReadItems = 0;
+		nCreatedWriteItems = 0;
 		nTotalCreatedItems = 0;
 
 		nReplacedJustificationItems = 0;
@@ -215,12 +220,12 @@ class GlobalVariables
 
 		nDeletedJustificationItems = 0;
 		nDeletedSpecificationItems = 0;
+		nDeletedReadItems = 0;
 		nTotalDeletedItems = 0;
 
 		nIdleReasoningCalls = 0;
 		nUsefulReasoningCalls = 0;
 		nTotalReasoningCalls = 0;
-		nSkippedRemovingObsoleteJustifications = 0;
 
 		// Private methods
 		nIdleCalls_askQuestions1 = 0;
@@ -233,8 +238,7 @@ class GlobalVariables
 		nIdleCalls_drawOnlyOptionLeftProperNounConclusion = 0;
 		nIdleCalls_drawProperNounPartOfConclusions = 0;
 		nIdleCalls_drawPossessiveReversibleConclusions = 0;
-		nIdleCalls_drawReversibleConclusions = 0;
-		nIdleCalls_drawUserReversibleConclusions = 0;
+		nIdleCalls_drawSelectedReversibleConclusions = 0;
 		nIdleCalls_makeOppositePossessiveSpecificationAssumption = 0;
 
 		nUsefulCalls_askQuestions1 = 0;
@@ -247,8 +251,7 @@ class GlobalVariables
 		nUsefulCalls_drawOnlyOptionLeftProperNounConclusion = 0;
 		nUsefulCalls_drawProperNounPartOfConclusions = 0;
 		nUsefulCalls_drawPossessiveReversibleConclusions = 0;
-		nUsefulCalls_drawReversibleConclusions = 0;
-		nUsefulCalls_drawUserReversibleConclusions = 0;
+		nUsefulCalls_drawSelectedReversibleConclusions = 0;
 		nUsefulCalls_makeOppositePossessiveSpecificationAssumption = 0;
 
 		// Protected methods
@@ -259,9 +262,9 @@ class GlobalVariables
 		nIdleCalls_drawSpecificationGeneralizationConclusion = 0;
 		nIdleCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
 		nIdleCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+		nIdleCalls_makeGeneralizationAssumption = 0;
 		nIdleCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
-		nIdleCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
-		nIdleCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
+		nIdleCalls_drawDefinitionSpecificationSubstitutionConclusion = 0;
 
 		nUsefulCalls_askSpecificationSubstitutionQuestionOrDrawNegativeConclusion = 0;
 		nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion = 0;
@@ -270,9 +273,9 @@ class GlobalVariables
 		nUsefulCalls_drawSpecificationGeneralizationConclusion = 0;
 		nUsefulCalls_drawSpecificationSubstitutionConclusionOrAskQuestion = 0;
 		nUsefulCalls_makeExclusiveSpecificationSubstitutionAssumption = 0;
+		nUsefulCalls_makeGeneralizationAssumption = 0;
 		nUsefulCalls_makeIndirectlyAnsweredQuestionAssumption = 0;
-		nUsefulCalls_makeSpecificationSubstitutionPartOfAssumption = 0;
-		nUsefulCalls_drawCompoundSpecificationSubstitutionConclusion_Compound = 0;
+		nUsefulCalls_drawDefinitionSpecificationSubstitutionConclusion = 0;
 
 
 		adminConditionList = null;
@@ -285,6 +288,7 @@ class GlobalVariables
 		firstContextWordItem = null;
 		firstPossessiveNounWordItem = null;
 		firstPredefinedWordItem = null;
+		firstProperNounWordItem = null;
 		firstSpecificationWordItem = null;
 		firstTouchedWordItem = null;
 		firstUserDefinedProperNounWordItem = null;

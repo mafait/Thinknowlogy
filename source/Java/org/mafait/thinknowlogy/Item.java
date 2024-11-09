@@ -1,8 +1,8 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ class Item
 	private char statusChar_ = Constants.QUERY_ACTIVE_CHAR;
 	private List myList_ = null;
 	private WordItem myWordItem_ = null;
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 	// Protected constructed variables
 	protected boolean isSelectedByQuery = false;
 	protected boolean isSelectedByJustificationQuery = false;
@@ -46,40 +46,39 @@ class Item
 
 	// Private methods
 
-	private static int justificationAssumptionGrade( boolean hasFeminineOrMasculineProperNounEnding, boolean hasAdditionalDefinitionSpecification, boolean isExclusivePrimarySpecification, boolean isNegativePrimarySpecification, boolean isNegativeSecondarySpecification, short justificationTypeNr )
+	private static short justificationAssumptionGrade( boolean hasFeminineOrMasculineProperNounEnding, boolean hasAdditionalDefinitionSpecification, boolean isExclusivePrimarySpecification, boolean isNegativePrimarySpecification, boolean isNegativeSecondarySpecification, short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
 			case Constants.JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-			case Constants.JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
-				return 1;
+				return (short)1;
 
 			case Constants.JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION:
 				return ( hasAdditionalDefinitionSpecification ?
-						( hasFeminineOrMasculineProperNounEnding ? 3 : 2 ) : 1 );
+						( hasFeminineOrMasculineProperNounEnding ? (short)3 : (short)2 ) : (short)1 );
 
 			case Constants.JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION:
 				return ( hasAdditionalDefinitionSpecification &&
-						hasFeminineOrMasculineProperNounEnding ? 3 :
+						hasFeminineOrMasculineProperNounEnding ? (short)3 :
 
 							( hasFeminineOrMasculineProperNounEnding ||
-							isExclusivePrimarySpecification ? 2 : 1 ) );
+							isExclusivePrimarySpecification ? (short)2 : (short)1 ) );
+
+			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ? (short)1 : (short)0 );
 
 			case Constants.JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ||
 						isNegativePrimarySpecification ||
 
 						( isExclusivePrimarySpecification &&
-						!isNegativeSecondarySpecification ) ? 1 : 0 );
-
-			case Constants.JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
-				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+						!isNegativeSecondarySpecification ) ? (short)1 : (short)0 );
 
 			case Constants.JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ?
-						( hasFeminineOrMasculineProperNounEnding ? 2 : 1 ) : 0 );
+						( hasFeminineOrMasculineProperNounEnding ? (short)2 : (short)1 ) : (short)0 );
 
 			default:
 				return Constants.NO_ASSUMPTION_LEVEL;
@@ -112,23 +111,23 @@ class Item
 
 	// Protected error methods
 
-	protected byte addError( int methodLevel, String moduleNameString, String errorString )
+	protected final byte addError( int methodLevel, String moduleNameString, String errorString )
 		{
 		return addError( ( methodLevel + 1 ), moduleNameString, ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), errorString );
 		}
 
-	protected byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
+	protected final byte addError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
 		{
 		InputOutput.displayError( Constants.SYMBOL_QUESTION_MARK, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordItemString, ( methodLevel + 1 ), errorString );
 		return GlobalVariables.result;
 		}
-	protected byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final byte addError( char listChar, int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		InputOutput.displayError( listChar, ( moduleNameString == null ? this.getClass().getName() : moduleNameString ), ( moduleNameString == null ? this.getClass().getSuperclass().getName() : null ), wordNameString, ( methodLevel + 1 ), errorString );
 		return GlobalVariables.result;
 		}
 
-	protected byte startError( int methodLevel, String moduleNameString, String errorString )
+	protected final byte startError( int methodLevel, String moduleNameString, String errorString )
 		{
 		addError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 
@@ -136,7 +135,7 @@ class Item
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final byte startError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		addError( ( methodLevel + 1 ), moduleNameString, wordNameString, errorString );
 
@@ -144,12 +143,12 @@ class Item
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startSystemError( int methodLevel, String moduleNameString, String errorString )
+	protected final byte startSystemError( int methodLevel, String moduleNameString, String errorString )
 		{
 		return startSystemError( ( methodLevel + 1 ), moduleNameString, null, errorString );
 		}
 
-	protected byte startSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final byte startSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		char textChar;
 		int errorStringPosition = 0;
@@ -177,7 +176,7 @@ class Item
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
 
-	protected BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		BoolResultType boolResult = new BoolResultType();
 
@@ -185,7 +184,7 @@ class Item
 		return boolResult;
 		}
 
-	protected BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
+	protected final BoolResultType addBoolResultError( int methodLevel, String moduleNameString, String wordItemString, String errorString )
 		{
 		BoolResultType boolResult = new BoolResultType();
 
@@ -193,7 +192,7 @@ class Item
 		return boolResult;
 		}
 
-	protected BoolResultType startBoolResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final BoolResultType startBoolResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		BoolResultType boolResult = new BoolResultType();
 
@@ -201,7 +200,7 @@ class Item
 		return boolResult;
 		}
 
-	protected BoolResultType startBoolResultSystemError( int methodLevel, String moduleNameString, String errorString )
+	protected final BoolResultType startBoolResultSystemError( int methodLevel, String moduleNameString, String errorString )
 		{
 		BoolResultType boolResult = new BoolResultType();
 
@@ -209,7 +208,15 @@ class Item
 		return boolResult;
 		}
 
-	protected CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = addError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected final CollectionResultType addCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 
@@ -217,7 +224,15 @@ class Item
 		return collectionResult;
 		}
 
-	protected CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String errorString )
+		{
+		CollectionResultType collectionResult = new CollectionResultType();
+
+		collectionResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
+		return collectionResult;
+		}
+
+	protected final CollectionResultType startCollectionResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 
@@ -225,7 +240,7 @@ class Item
 		return collectionResult;
 		}
 
-	protected CompoundResultType addCompoundResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CompoundResultType addCompoundResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CompoundResultType compoundResult = new CompoundResultType();
 
@@ -233,7 +248,7 @@ class Item
 		return compoundResult;
 		}
 
-	protected ConditionResultType addConditionResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ConditionResultType addConditionResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ConditionResultType conditionResult = new ConditionResultType();
 
@@ -241,7 +256,7 @@ class Item
 		return conditionResult;
 		}
 
-	protected ConditionResultType startConditionResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ConditionResultType startConditionResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ConditionResultType conditionResult = new ConditionResultType();
 
@@ -249,7 +264,7 @@ class Item
 		return conditionResult;
 		}
 
-	protected CompoundResultType startCompoundResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CompoundResultType startCompoundResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CompoundResultType compoundResult = new CompoundResultType();
 
@@ -257,7 +272,7 @@ class Item
 		return compoundResult;
 		}
 
-	protected ContextResultType addContextResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ContextResultType addContextResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ContextResultType contextResult = new ContextResultType();
 
@@ -265,7 +280,7 @@ class Item
 		return contextResult;
 		}
 
-	protected ContextResultType startContextResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ContextResultType startContextResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ContextResultType contextResult = new ContextResultType();
 
@@ -273,7 +288,7 @@ class Item
 		return contextResult;
 		}
 
-	protected ContextResultType startContextResultSystemError( int methodLevel, String moduleNameString, String errorString )
+	protected final ContextResultType startContextResultSystemError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ContextResultType contextResult = new ContextResultType();
 
@@ -281,7 +296,7 @@ class Item
 		return contextResult;
 		}
 
-	protected CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -289,7 +304,7 @@ class Item
 		return createAndAssignResult;
 		}
 
-	protected CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -297,7 +312,7 @@ class Item
 		return createAndAssignResult;
 		}
 
-	protected CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -305,7 +320,7 @@ class Item
 		return createAndAssignResult;
 		}
 
-	protected CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -313,7 +328,7 @@ class Item
 		return createAndAssignResult;
 		}
 
-	protected CreateAndAssignResultType startCreateAndAssignResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final CreateAndAssignResultType startCreateAndAssignResultSystemError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -321,7 +336,7 @@ class Item
 		return createAndAssignResult;
 		}
 
-	protected CreateReadWordResultType addCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CreateReadWordResultType addCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
 
@@ -329,7 +344,7 @@ class Item
 		return createReadWordResult;
 		}
 
-	protected CreateReadWordResultType startCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final CreateReadWordResultType startCreateReadWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		CreateReadWordResultType createReadWordResult = new CreateReadWordResultType();
 
@@ -337,7 +352,7 @@ class Item
 		return createReadWordResult;
 		}
 
-	protected DuplicateResultType startDuplicateResultError( int methodLevel, String errorString )
+	protected final DuplicateResultType startDuplicateResultError( String errorString )
 		{
 		DuplicateResultType duplicateResult = new DuplicateResultType();
 
@@ -345,7 +360,7 @@ class Item
 		return duplicateResult;
 		}
 
-	protected FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final FileResultType addFileResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		FileResultType fileResult = new FileResultType();
 
@@ -353,7 +368,7 @@ class Item
 		return fileResult;
 		}
 
-	protected FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final FileResultType startFileResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		FileResultType fileResult = new FileResultType();
 
@@ -361,7 +376,7 @@ class Item
 		return fileResult;
 		}
 
-	protected FindSpecificationResultType startFindSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final FindSpecificationResultType startFindSpecificationResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		FindSpecificationResultType findSpecificationResult = new FindSpecificationResultType();
 
@@ -369,7 +384,7 @@ class Item
 		return findSpecificationResult;
 		}
 
-	protected GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final GrammarResultType startGrammarResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
 
@@ -377,7 +392,7 @@ class Item
 		return grammarResult;
 		}
 
-	protected JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final JustificationResultType startJustificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		JustificationResultType justificationResult = new JustificationResultType();
 
@@ -385,7 +400,7 @@ class Item
 		return justificationResult;
 		}
 
-	protected QueryResultType addQueryResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final QueryResultType addQueryResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		QueryResultType queryResult = new QueryResultType();
 
@@ -393,14 +408,14 @@ class Item
 		return queryResult;
 		}
 
-	protected QueryResultType startQueryResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final QueryResultType startQueryResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		QueryResultType queryResult = new QueryResultType();
 
 		queryResult.result = startError( ( methodLevel + 1 ), moduleNameString, errorString );
 		return queryResult;
 		}
-	protected ReadWordResultType startReadWordResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ReadWordResultType startReadWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ReadWordResultType readWordResult = new ReadWordResultType();
 
@@ -408,7 +423,7 @@ class Item
 		return readWordResult;
 		}
 
-	protected RelatedResultType addRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final RelatedResultType addRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		RelatedResultType relatedResult = new RelatedResultType();
 
@@ -416,7 +431,7 @@ class Item
 		return relatedResult;
 		}
 
-	protected RelatedResultType startRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final RelatedResultType startRelatedResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		RelatedResultType relatedResult = new RelatedResultType();
 
@@ -424,7 +439,7 @@ class Item
 		return relatedResult;
 		}
 
-	protected SelectionResultType startSelectionResultError( int methodLevel, String errorString )
+	protected final SelectionResultType startSelectionResultError( String errorString )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 
@@ -432,7 +447,7 @@ class Item
 		return selectionResult;
 		}
 
-	protected ShortResultType startShortResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final ShortResultType startShortResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		ShortResultType shortResult = new ShortResultType();
 
@@ -440,7 +455,7 @@ class Item
 		return shortResult;
 		}
 
-	protected SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final SpecificationResultType addSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
@@ -448,7 +463,7 @@ class Item
 		return specificationResult;
 		}
 
-	protected SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final SpecificationResultType startSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		SpecificationResultType specificationResult = new SpecificationResultType();
 
@@ -456,7 +471,7 @@ class Item
 		return specificationResult;
 		}
 
-	protected UserSpecificationResultType addUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final UserSpecificationResultType addUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
 
@@ -464,7 +479,7 @@ class Item
 		return userSpecificationResult;
 		}
 
-	protected UserSpecificationResultType startUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final UserSpecificationResultType startUserSpecificationResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		UserSpecificationResultType userSpecificationResult = new UserSpecificationResultType();
 
@@ -472,7 +487,7 @@ class Item
 		return userSpecificationResult;
 		}
 
-	protected WordEndingResultType startWordEndingResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final WordEndingResultType startWordEndingResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		WordEndingResultType wordEndingResult = new WordEndingResultType();
 
@@ -480,7 +495,7 @@ class Item
 		return wordEndingResult;
 		}
 
-	protected WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final WordResultType addWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
 
@@ -488,7 +503,7 @@ class Item
 		return wordResult;
 		}
 
-	protected WordResultType startWordResultError( int methodLevel, String moduleNameString, String errorString )
+	protected final WordResultType startWordResultError( int methodLevel, String moduleNameString, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
 
@@ -496,7 +511,7 @@ class Item
 		return wordResult;
 		}
 
-	protected WordTypeResultType startWordTypeResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
+	protected final WordTypeResultType startWordTypeResultError( int methodLevel, String moduleNameString, String wordNameString, String errorString )
 		{
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
 
@@ -563,7 +578,7 @@ class Item
 		return null;
 		}
 
-	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
+	protected StringBuffer itemToStringBuffer( short _queryWordTypeNr )
 		{
 		// This is a virtual method. Therefore, the given variables are unreferenced.
 		return null;
@@ -578,66 +593,66 @@ class Item
 
 	// Protected common methods
 
-	protected void clearArchivedSentenceNr()
+	protected final void clearArchivedSentenceNr()
 		{
 		archivedSentenceNr_ = Constants.NO_SENTENCE_NR;
 		}
 
-	protected void clearReplacedSentenceNr()
+	protected final void clearReplacedSentenceNr()
 		{
 		replacedSentenceNr_ = Constants.NO_SENTENCE_NR;
 		}
 
-	protected void setActiveStatus()
+	protected final void setActiveStatus()
 		{
 		statusChar_ = Constants.QUERY_ACTIVE_CHAR;
 		}
 
-	protected void setArchivedStatus()
+	protected final void setArchivedStatus()
 		{
 		statusChar_ = Constants.QUERY_ARCHIVED_CHAR;
 		}
 
-	protected void setInactiveStatus()
+	protected final void setInactiveStatus()
 		{
 		statusChar_ = Constants.QUERY_INACTIVE_CHAR;
 		}
 
-	protected void setReplacedStatus()
+	protected final void setReplacedStatus()
 		{
 		statusChar_ = Constants.QUERY_REPLACED_CHAR;
 		}
 
-	protected void setDeletedStatus()
+	protected final void setDeletedStatus()
 		{
 		statusChar_ = Constants.QUERY_DELETED_CHAR;
 		}
 
-	protected void setActiveSentenceNr()
+	protected final void setActiveSentenceNr()
 		{
 		if( activeSentenceNr_ == Constants.NO_SENTENCE_NR )
 			activeSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
-	protected void setArchivedSentenceNr()
+	protected final void setArchivedSentenceNr()
 		{
 		if( archivedSentenceNr_ == Constants.NO_SENTENCE_NR )
 			archivedSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
-	protected void setInactiveSentenceNr()
+	protected final void setInactiveSentenceNr()
 		{
 		if( inactiveSentenceNr_ == Constants.NO_SENTENCE_NR )
 			inactiveSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
-	protected void setReplacedSentenceNr()
+	protected final void setReplacedSentenceNr()
 		{
 		if( replacedSentenceNr_ == Constants.NO_SENTENCE_NR )
 			replacedSentenceNr_ = GlobalVariables.currentSentenceNr;
 		}
 
-	protected void displayWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
+	protected final void displayWords( boolean isReturnQueryToPosition, short queryWordTypeNr )
 		{
 		String myWordString;
 
@@ -659,7 +674,7 @@ class Item
 		}
 
 	// Strictly for initialization of AdminItem
-	protected void initializeItemVariables( WordItem myWordItem )
+	protected final void initializeItemVariables( WordItem myWordItem )
 		{
 		// Checking private initialized variables
 
@@ -667,7 +682,7 @@ class Item
 			startSystemError( 1, null, "The given my word item is undefined" );
 		}
 
-	protected void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
+	protected final void initializeItemVariables( int originalSentenceNr, int activeSentenceNr, int inactiveSentenceNr, int archivedSentenceNr, List myList, WordItem myWordItem )
 		{
 		// Private initialized variables
 		userNr_ = GlobalVariables.currentUserNr;
@@ -699,47 +714,47 @@ class Item
 			startSystemError( 1, null, null, "The given my word item is undefined" );
 		}
 
-	protected boolean hasActiveSentenceNr()
+	protected final boolean hasActiveSentenceNr()
 		{
 		return ( activeSentenceNr_ > Constants.NO_SENTENCE_NR );
 		}
 
-	protected boolean hasInactiveSentenceNr()
+	protected final boolean hasInactiveSentenceNr()
 		{
 		return ( inactiveSentenceNr_ > Constants.NO_SENTENCE_NR );
 		}
 
-	protected boolean hasCurrentCreationSentenceNr()
+	protected final boolean hasCurrentCreationSentenceNr()
 		{
 		return ( creationSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentOrNewerCreationSentenceNr()
+	protected final boolean hasCurrentOrNewerCreationSentenceNr()
 		{
 		return ( creationSentenceNr_ >= GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentActiveSentenceNr()
+	protected final boolean hasCurrentActiveSentenceNr()
 		{
 		return ( activeSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentInactiveSentenceNr()
+	protected final boolean hasCurrentInactiveSentenceNr()
 		{
 		return ( inactiveSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentArchivedSentenceNr()
+	protected final boolean hasCurrentArchivedSentenceNr()
 		{
 		return ( archivedSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasCurrentReplacedSentenceNr()
+	protected final boolean hasCurrentReplacedSentenceNr()
 		{
 		return ( replacedSentenceNr_ == GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean hasSentenceNr( int sentenceNr )
+	protected final boolean hasSentenceNr( int sentenceNr )
 		{
 		return ( originalSentenceNr_ == sentenceNr ||
 				creationSentenceNr_ == sentenceNr ||
@@ -749,103 +764,103 @@ class Item
 				replacedSentenceNr_ == sentenceNr );
 		}
 
-	protected boolean hasUserNr()
+	protected final boolean hasUserNr()
 		{
 		return ( userNr_ > Constants.NO_USER_NR );
 		}
 
-	protected boolean isOlderItem()
+	protected final boolean isOlderItem()
 		{
 		return ( originalSentenceNr_ < GlobalVariables.currentSentenceNr );
 		}
 
-	protected boolean isActiveItem()
+	protected final boolean isActiveItem()
 		{
 		return ( statusChar_ == Constants.QUERY_ACTIVE_CHAR );
 		}
 
-	protected boolean isInactiveItem()
+	protected final boolean isInactiveItem()
 		{
 		return ( statusChar_ == Constants.QUERY_INACTIVE_CHAR );
 		}
 
-	protected boolean isArchivedItem()
+	protected final boolean isArchivedItem()
 		{
 		return ( statusChar_ == Constants.QUERY_ARCHIVED_CHAR );
 		}
 
-	protected boolean isReplacedItem()
+	protected final boolean isReplacedItem()
 		{
 		return ( statusChar_ == Constants.QUERY_REPLACED_CHAR );
 		}
 
-	protected boolean isDeletedItem()
+	protected final boolean isDeletedItem()
 		{
 		return ( statusChar_ == Constants.QUERY_DELETED_CHAR );
 		}
 
-	protected boolean isReplacedOrDeletedItem()
+	protected final boolean isReplacedOrDeletedItem()
 		{
 		return ( statusChar_ == Constants.QUERY_REPLACED_CHAR ||
 				statusChar_ == Constants.QUERY_DELETED_CHAR );
 		}
 
-	protected boolean wasActiveBefore()
+	protected final boolean wasActiveBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_ACTIVE_CHAR );
 		}
 
-	protected boolean wasInactiveBefore()
+	protected final boolean wasInactiveBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_INACTIVE_CHAR );
 		}
 
-	protected boolean wasArchivedBefore()
+	protected final boolean wasArchivedBefore()
 		{
 		return ( previousStatusChar == Constants.QUERY_ARCHIVED_CHAR );
 		}
 
-	protected short userNr()
+	protected final short userNr()
 		{
 		return userNr_;
 		}
 
-	protected int activeSentenceNr()
+	protected final int activeSentenceNr()
 		{
 		return activeSentenceNr_;
 		}
 
-	protected int inactiveSentenceNr()
+	protected final int inactiveSentenceNr()
 		{
 		return inactiveSentenceNr_;
 		}
 
-	protected int originalSentenceNr()
+	protected final int originalSentenceNr()
 		{
 		return originalSentenceNr_;
 		}
 
-	protected int creationSentenceNr()
+	protected final int creationSentenceNr()
 		{
 		return creationSentenceNr_;
 		}
 
-	protected int archivedSentenceNr()
+	protected final int archivedSentenceNr()
 		{
 		return archivedSentenceNr_;
 		}
 
-	protected int replacedSentenceNr()
+	protected final int replacedSentenceNr()
 		{
 		return replacedSentenceNr_;
 		}
 
-	protected int itemNr()
+	protected final int itemNr()
 		{
 		return itemNr_;
 		}
 
-	protected byte decrementActiveSentenceNr()
+	protected final byte decrementActiveSentenceNr()
 		{
 		if( activeSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The active sentence number is undefined" );
@@ -855,7 +870,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementInactiveSentenceNr()
+	protected final byte decrementInactiveSentenceNr()
 		{
 		if( inactiveSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The inactive sentence number is undefined" );
@@ -865,7 +880,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementOriginalSentenceNr()
+	protected final byte decrementOriginalSentenceNr()
 		{
 		if( originalSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The original sentence number is undefined" );
@@ -875,7 +890,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementCreationSentenceNr()
+	protected final byte decrementCreationSentenceNr()
 		{
 		if( creationSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The creation sentence number is undefined" );
@@ -885,7 +900,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementArchivedSentenceNr()
+	protected final byte decrementArchivedSentenceNr()
 		{
 		if( archivedSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The archived sentence number is undefined" );
@@ -895,7 +910,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementReplacedSentenceNr()
+	protected final byte decrementReplacedSentenceNr()
 		{
 		if( replacedSentenceNr_ <= Constants.NO_SENTENCE_NR )
 			return startError( 1, moduleNameString_, "The replaced sentence number is undefined" );
@@ -905,7 +920,7 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementItemNr( int decrementOffset )
+	protected final byte decrementItemNr( int decrementOffset )
 		{
 		if( decrementOffset >= itemNr_ )
 			return startError( 1, moduleNameString_, "The given decrement offset is higher than the item number itself" );
@@ -915,17 +930,16 @@ class Item
 		return Constants.RESULT_OK;
 		}
 
-	protected char statusChar()
+	protected final char statusChar()
 		{
 		return statusChar_;
 		}
 
-	protected StringBuffer itemBaseToStringBuffer( short queryWordTypeNr )
+	protected final StringBuffer itemBaseToStringBuffer( short queryWordTypeNr )
 		{
 		String myWordString = myWordTypeString( queryWordTypeNr );
 		StringBuffer queryStringBuffer;
-		String userNameString = ( myWordItem_ != null ?
-								myWordItem_.userNameString( userNr_ ) : null );
+		String userNameString = WordItem.userNameString( userNr_ );
 		GlobalVariables.queryStringBuffer = new StringBuffer();
 
 		queryStringBuffer = GlobalVariables.queryStringBuffer;
@@ -973,12 +987,12 @@ class Item
 		return queryStringBuffer;
 		}
 
-	protected List myList()
+	protected final List myList()
 		{
 		return myList_;
 		}
 
-	protected Item tailOfList()
+	protected final Item tailOfList()
 		{
 		Item previousSearchItem = this;
 		Item searchItem = nextItem;
@@ -992,7 +1006,7 @@ class Item
 		return previousSearchItem;
 		}
 
-	protected WordItem myWordItem()
+	protected final WordItem myWordItem()
 		{
 		return myWordItem_;
 		}
@@ -1000,7 +1014,7 @@ class Item
 
 	// Protected database connection methods
 /*
-	byte storeChangesInFutureDatabase()
+	protected final byte storeChangesInFutureDatabase()
 		{
 		// Save changes of this item to the database
 
@@ -1010,7 +1024,7 @@ class Item
 
 	// Protected definition methods
 
-	protected boolean doesStringStartWithPhoneticVowel( String textString )
+	protected static final boolean doesStringStartWithPhoneticVowel( String textString )
 		{
 		short index = 0;
 
@@ -1028,7 +1042,7 @@ class Item
 		return false;
 		}
 
-	protected boolean isAdjectiveParameter( short checkParameter )
+	protected static final boolean isAdjectiveParameter( short checkParameter )
 		{
 		return ( checkParameter == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
 				checkParameter == Constants.WORD_PARAMETER_ADJECTIVE_EVERY_FEMININE_MASCULINE ||
@@ -1042,7 +1056,7 @@ class Item
 //				checkParameter == Constants.WORD_PARAMETER_ADJECTIVE_NEXT_FEMININE_MASCULINE );
 		}
 
-	protected boolean isDefiniteArticleParameter( short checkParameter )
+	protected static final boolean isDefiniteArticleParameter( short checkParameter )
 		{
 		return ( checkParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_PLURAL_NEUTRAL ||
 				checkParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_PLURAL_FEMININE ||
@@ -1052,7 +1066,7 @@ class Item
 				checkParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	protected boolean isIndefiniteArticleParameter( short checkParameter )
+	protected static final boolean isIndefiniteArticleParameter( short checkParameter )
 		{
 		return ( checkParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE ||
 				checkParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE ||
@@ -1065,7 +1079,7 @@ class Item
 				checkParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE );
 		}
 
-	protected boolean isFeminineArticleParameter( short articleParameter )
+	protected static final boolean isFeminineArticleParameter( short articleParameter )
 		{
 		return ( articleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE ||
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_FEMININE ||
@@ -1076,7 +1090,7 @@ class Item
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE );
 		}
 
-	protected boolean isMasculineArticleParameter( short articleParameter )
+	protected static final boolean isMasculineArticleParameter( short articleParameter )
 		{
 		return ( articleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE ||
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_SINGULAR_MASCULINE ||
@@ -1087,7 +1101,7 @@ class Item
 				articleParameter == Constants.WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
-	protected boolean isMatchingWordType( short firstWordTypeNr, short secondWordTypeNr )
+	protected static final boolean isMatchingWordType( short firstWordTypeNr, short secondWordTypeNr )
 		{
 		return	( firstWordTypeNr == secondWordTypeNr ||
 
@@ -1095,30 +1109,30 @@ class Item
 				isNounWordType( secondWordTypeNr ) ) );
 		}
 
-	protected boolean isNounWordType( short wordTypeNr )
+	protected static final boolean isNounWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected boolean isGeneralizationReasoningWordType( short wordTypeNr )
+	protected static final boolean isGeneralizationReasoningWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_PROPER_NOUN ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected boolean isSpecificationReasoningWordType( short wordTypeNr )
+	protected static final boolean isSpecificationReasoningWordType( short wordTypeNr )
 		{
 		return ( wordTypeNr == Constants.WORD_TYPE_ADJECTIVE ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == Constants.WORD_TYPE_NOUN_PLURAL );
 		}
 
-	protected int justificationAssumptionLevel( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem additionalDefinitionSpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem additionalProperNounSpecificationItem )
+	protected static final short justificationAssumptionLevel( boolean hasFeminineOrMasculineProperNounEnding, short justificationTypeNr, SpecificationItem primarySpecificationItem, SpecificationItem additionalDefinitionSpecificationItem, SpecificationItem secondarySpecificationItem, SpecificationItem additionalProperNounSpecificationItem )
 		{
-		int assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != null ), ( primarySpecificationItem != null && primarySpecificationItem.isExclusiveSpecification() ), ( primarySpecificationItem != null && primarySpecificationItem.isNegative() ), ( secondarySpecificationItem != null && secondarySpecificationItem.isNegative() ), justificationTypeNr );
-		int tempAssumptionLevel;
+		short assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != null ), ( primarySpecificationItem != null && primarySpecificationItem.isExclusiveSpecification() ), ( primarySpecificationItem != null && primarySpecificationItem.isNegative() ), ( secondarySpecificationItem != null && secondarySpecificationItem.isNegative() ), justificationTypeNr );
+		short tempAssumptionLevel;
 
 		if( primarySpecificationItem != null &&
 		( tempAssumptionLevel = primarySpecificationItem.assumptionLevel() ) > Constants.NO_ASSUMPTION_LEVEL )

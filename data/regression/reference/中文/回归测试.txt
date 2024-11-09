@@ -20,10 +20,10 @@
  呈现保证。
 ------------------------------------------------------------------------------
  Example files:	* Use button <更多的例子>
-              or see folder: Thinknowlogy2023/data/examples/中文/
- Fundamental:	* folder: Thinknowlogy2023/documents/
- Design:	* folder: Thinknowlogy2023/documents/design/
- Screenshots:	* folder: Thinknowlogy2023/screenshots/中文/
+              or see folder: Thinknowlogy2024/data/examples/中文/
+ Fundamental:	* folder: Thinknowlogy2024/documents/
+ Design:	* folder: Thinknowlogy2024/documents/design/
+ Screenshots:	* folder: Thinknowlogy2024/screenshots/中文/
 ------------------------------------------------------------------------------
 < 
 < 细则：
@@ -34,7 +34,7 @@
 < English是语言。 {learned from user Admin}
 < 
 ------------------------------------------------------------------------------
- Total number of items: 8683.
+ Total number of items: 8655.
 ------------------------------------------------------------------------------
  Items in administrator:	422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Actions:		15.
     <Z> Alternatives:		0.
 ------------------------------------------------------------------------------
- Items in words:	8261.
+ Items in words:	8233.
 ------------------------------------------------------------------------------
- * Active items:	        8209.
+ * Active items:	        8181.
     <a> assignments:		7.
     <c> collections:		272.
     <g> generalizations:		348.
-    <i> interface:		1301.
+    <i> interface:		1284.
     <j> justification:		8.
-    <l> grammar:		4819.
+    <l> grammar:		4808.
     <m> multiple word:		69.
     <s> specifications:		384.
     <r> write words (temporary):	0.
@@ -146,7 +146,7 @@
 ------------------------------------------------------------------------------
  In files '~' will mark the end of a query		...~#<W>~...
 ------------------------------------------------------------------------------
- 著作权所有 (c) 2023, Menno Mafait
+ 著作权所有 (c) 2024, Menno Mafait
  Thinknowlogy 不负担保责任，欲知详情请单击'帮助'和'呈现保证。'。
  这是一个自由软件，欢迎您在特定条件下再发布本程序；
  欲知详情请单击'帮助'和'呈现GNU 通用公共授权。'。

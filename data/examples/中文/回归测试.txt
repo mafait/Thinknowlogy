@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the regression test for the Chinese language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -187,6 +187,7 @@
 #Dev#阅读测试文档"中文/推理/家庭/I know (11)"。
 #Dev#阅读测试文档"中文/推理/家庭/I know (12)"。
 #Dev#阅读测试文档"中文/推理/家庭/James was the father of Peter (before family definition)"。
+#Dev#阅读测试文档"中文/推理/家庭/Joe has 2 parents - Anna - Paul"。
 #Dev#阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a child"。
 #Dev#阅读测试文档"中文/推理/家庭/Joe has 2 parents - Joe is a son"。
 #Dev#阅读测试文档"中文/推理/家庭/Joe is a child - Joe has 2 parents"。
@@ -197,6 +198,8 @@
 #Dev#阅读测试文档"中文/推理/家庭/John - Anna - Paul, Joe and Laura"。
 #Dev#阅读测试文档"中文/推理/家庭/John - John and Anna"。
 #Dev#阅读测试文档"中文/推理/家庭/John - Laura - John and Anna"。
+#Dev#阅读测试文档"中文/推理/家庭/John - Paul - Anna"。
+#Dev#阅读测试文档"中文/推理/家庭/John - Peter - Anna"。
 #Dev#阅读测试文档"中文/推理/家庭/John and Anna - Paul, Joe and Laura"。
 #Dev#阅读测试文档"中文/推理/家庭/John has 2 sons and a daughter"。
 #Dev#阅读测试文档"中文/推理/家庭/John has 2 sons and a daughter (before family definition)"。
@@ -231,8 +234,8 @@
 #Dev#阅读测试文档"中文/推理/家庭/My conclusions that are confirmed (without relation)"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - Joe - John - Paul"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Anna - Joe - Laura - John"。
+#Dev#阅读测试文档"中文/推理/家庭/Paul - Joe - John and Anna"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (parents)"。
-#Dev#阅读测试文档"中文/推理/家庭/Paul - Joe - Laura - John and Anna (son - daughter)"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul - John and Anna - Joe - Laura"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul has a father - Paul has 2 parents"。
 #Dev#阅读测试文档"中文/推理/家庭/Paul is a boy - Laura is a girl"。

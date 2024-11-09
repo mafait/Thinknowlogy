@@ -20,10 +20,10 @@
  Display the warranty.
 ------------------------------------------------------------------------------
  Example files:	* Use button <more examples>
-              or see folder: Thinknowlogy2023/data/examples/English/
- Fundamental:	* folder: Thinknowlogy2023/documents/
- Design:	* folder: Thinknowlogy2023/documents/design/
- Screenshots:	* folder: Thinknowlogy2023/screenshots/English/
+              or see folder: Thinknowlogy2024/data/examples/English/
+ Fundamental:	* folder: Thinknowlogy2024/documents/
+ Design:	* folder: Thinknowlogy2024/documents/design/
+ Screenshots:	* folder: Thinknowlogy2024/screenshots/English/
 ------------------------------------------------------------------------------
 < 
 < Specifications:
@@ -34,7 +34,7 @@
 < English is the current language. {learned from user Admin}
 < 
 ------------------------------------------------------------------------------
- Total number of items: 8684.
+ Total number of items: 8656.
 ------------------------------------------------------------------------------
  Items in administrator:	422.
 ------------------------------------------------------------------------------
@@ -47,15 +47,15 @@
     <Y> Actions:		15.
     <Z> Alternatives:		0.
 ------------------------------------------------------------------------------
- Items in words:	8262.
+ Items in words:	8234.
 ------------------------------------------------------------------------------
- * Active items:	        8210.
+ * Active items:	        8182.
     <a> assignments:		6.
     <c> collections:		272.
     <g> generalizations:		348.
-    <i> interface:		1301.
+    <i> interface:		1284.
     <j> justification:		8.
-    <l> grammar:		4819.
+    <l> grammar:		4808.
     <m> multiple word:		69.
     <s> specifications:		384.
     <r> write words (temporary):	0.
@@ -146,7 +146,7 @@
 ------------------------------------------------------------------------------
  In files '~' will mark the end of a query		...~#<W>~...
 ------------------------------------------------------------------------------
- Copyright (C) 2023, Menno Mafait
+ Copyright (C) 2024, Menno Mafait
  Thinknowlogy comes with ABSOLUTELY NO WARRANTY; for details click "Help."
  and "Display the warranty.". This is free software, and you are welcome to redistribute
  it under certain conditions; click "Help." and "Display the GPLv2-license." for details.

@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -179,6 +179,9 @@
 < John is probably a parent.
 < John is probably part of a family.
 * 
+* Your questions that have been answered:
+< Is John the father of Paul?
+* 
 * My earlier assumptions that have relation words now:
 < John is probably a parent.
 * 
@@ -190,12 +193,12 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
-< Anna is not a father.
+< Anna is not masculine.
+< Anna is feminine.
 < Anna is not a son.
 < Anna is not a boy.
-< Anna is not masculine.
+< Anna is not a father.
 < Anna is not a man.
-< Anna is feminine.
 * 
 * My assumptions:
 < John is probably a parent of Paul, Joe and Laura.

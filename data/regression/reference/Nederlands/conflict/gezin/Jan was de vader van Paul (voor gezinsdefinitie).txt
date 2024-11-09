@@ -45,10 +45,10 @@
 < Iedere vader is niet vrouwelijk.
 < Iedere vader is geen vrouw.
 < Iedere vrouw is geen vader.
-< Jan was mannelijk.
-< Jan was niet vrouwelijk.
-< Jan was geen vrouw.
 < Jan was een man.
+< Jan was mannelijk.
+< Jan was geen vrouw.
+< Jan was niet vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Een vader is waarschijnlijk een persoon.
@@ -116,8 +116,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.

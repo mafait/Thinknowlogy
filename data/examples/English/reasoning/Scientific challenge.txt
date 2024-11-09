@@ -18,13 +18,19 @@ Adam is a child.
 Peter has a parent.
 Ronald has a child.
 #-----------------------------------------------------------------
-# Block 3: Grouping of knowledge
+# Block 3: Grouping of knowledge (specifications)
+# To be published in the second half of 2025.
+#-----------------------------------------------------------------
+#John has 3 apples.
+#Peter has 4 apples.
+#-----------------------------------------------------------------
+# Block 4: Grouping of knowledge (relations)
 #-----------------------------------------------------------------
 John is a parent of Paul.
 Anna is a parent of Paul.
 Paul has 2 parents, called John and Anna.
 #-----------------------------------------------------------------
-# Block 4: Past tense reasoning
+# Block 5: Past tense reasoning
 #-----------------------------------------------------------------
 James was the father of Joe.
 Every father is a man.
@@ -34,19 +40,19 @@ Every father is a man.
 Every philosopher is mortal.
 Socrates was a philosopher.
 #-----------------------------------------------------------------
-# Block 5: Detection of a conflict and generation of a question
+# Block 6: Detection of a conflict and generation of a question
 #-----------------------------------------------------------------
 Every person is a man or a woman.
 Alex is a man and a woman.
 Alex is a person.
 Alex is not a woman.
 #-----------------------------------------------------------------
-# Block 6: Archiving of knowledge
+# Block 7: Archiving of knowledge
 #-----------------------------------------------------------------
 Donald Trump is the president of the United States.
 Joe Biden is the president of the United States.
 #-----------------------------------------------------------------
-# Block 7: Advanced reasoning
+# Block 8: Advanced reasoning
 #-----------------------------------------------------------------
 Every woman is feminine.
 Every man is masculine.
@@ -59,7 +65,7 @@ Every boy is masculine.
 Every son is a boy or a man.
 Every daughter is a girl or a woman.
 #-----------------------------------------------------------------
-# Block 8: Justification reports
+# Block 9: Justification reports
 #-----------------------------------------------------------------
 Display the justification report about parents.
 Display the justification report about persons.

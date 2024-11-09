@@ -1,9 +1,9 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		Storing collections of a word
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -128,8 +128,8 @@ class CollectionItem : private Item
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
 
-				( collectionOrderNr_ > NO_ORDER_NR ||
-				collectionNr_ > NO_COLLECTION_NR ) ) );
+					( collectionOrderNr_ > NO_ORDER_NR ||
+					collectionNr_ > NO_COLLECTION_NR ) ) );
 		}
 
 	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )
@@ -297,12 +297,12 @@ class CollectionItem : private Item
 		{
 		return collectionOrderNr_;
 		}
-
+/*
 	unsigned short collectionWordTypeNr()
 		{
 		return collectionWordTypeNr_;
 		}
-
+*/
 	unsigned int collectionNr()
 		{
 		return collectionNr_;

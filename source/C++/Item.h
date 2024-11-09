@@ -1,8 +1,8 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -92,7 +92,7 @@ class Item
 
 	// Private functions
 
-	unsigned int justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr );
+	unsigned short justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr );
 
 	char *myWordTypeString( unsigned short queryWordTypeNr );
 
@@ -150,7 +150,11 @@ class Item
 	BoolResultType startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
 	BoolResultType startBoolResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
+	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
+	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 );
+	CollectionResultType addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
+	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
 	CollectionResultType startCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString );
 
 	CompoundResultType addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString );
@@ -345,7 +349,7 @@ class Item
 	bool isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr );
 	bool isNounWordType( unsigned short wordTypeNr );
 
-	unsigned int justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem );
+	unsigned short justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem );
 	};
 #endif
 

@@ -62,19 +62,19 @@
 < A father is probably a person.
 < A father is probably a parent.
 < A parent is probably a person.
-< John is probably masculine.
+< John is probably a man.
 < John is probably not feminine.
 < John is probably not a woman.
+< John is probably masculine.
 < John is possibly not a mother.
-< John is probably a man.
 < John is possibly a person.
 < John is possibly a parent.
 < John is possibly part of a family.
-< James was probably masculine.
-< James was probably not feminine.
-< James was probably not a woman.
-< James was possibly not a mother.
 < James was probably a man.
+< James was probably masculine.
+< James was probably not a woman.
+< James was probably not feminine.
+< James was possibly not a mother.
 < James was possibly a person.
 < James was possibly a parent.
 < James was possibly part of a family.
@@ -139,8 +139,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -173,10 +173,10 @@
 * 
 * My assumptions that have been concluded:
 < John is not a mother.
-< John is masculine.
-< John is not a woman.
-< John is not feminine.
 < John is a man.
+< John is not feminine.
+< John is not a woman.
+< John is masculine.
 * 
 * My assumptions that have been adjusted:
 < John is probably a person.
@@ -196,12 +196,12 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
-< Anna is not a father.
+< Anna is not masculine.
+< Anna is feminine.
 < Anna is not a son.
 < Anna is not a boy.
-< Anna is not masculine.
+< Anna is not a father.
 < Anna is not a man.
-< Anna is feminine.
 * 
 * My assumptions:
 < Paul has probably 2 parents, called John and Anna.
@@ -245,30 +245,34 @@
 * 
 * My conclusions:
 < Michael is a man.
-< Michael is not a daughter.
-< Michael is not a mother.
-< Michael is not a girl.
 < Michael is not feminine.
-< Michael is not a woman.
 < Michael is masculine.
+< Michael is not a daughter.
+< Michael is not a girl.
+< Michael is not a mother.
+< Michael is not a woman.
 < Adam has a father, called Michael.
 * 
 * My assumptions:
 < Michael is probably not a boy.
 < Michael is probably a person.
-< Michael has possibly a child, called Adam.
 < Michael is probably a parent of Adam.
 < Michael is probably part of a family.
+< Michael has possibly a child, called Adam.
+< Adam has probably a parent, called Michael.
 < Adam is possibly a child of Michael.
 < Adam is possibly part of a family.
 < Adam is maybe a person.
-< Adam has probably a parent, called Michael.
 * 
 * My questions:
 < Is Adam a girl, a woman, a boy or a man?
 < Is Adam a son or a daughter?
 < Is Adam feminine or masculine?
 < 
+* 
+* You had the same question before.
+* 
+* My answer:
 < Paul is possibly a child of John and Anna.
 < Joe is possibly a child of John and Anna.
 < 

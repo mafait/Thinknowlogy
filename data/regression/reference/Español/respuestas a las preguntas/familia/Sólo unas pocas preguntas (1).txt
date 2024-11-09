@@ -71,11 +71,11 @@
 < Juan no es posiblemente una madre.
 < Juan es posiblemente una persona.
 < Hernando era probablemente un hombre.
-< Hernando no era probablemente femenina.
-< Hernando no era probablemente una mujer.
 < Hernando era probablemente masculino.
-< Hernando era posiblemente una persona.
+< Hernando no era probablemente una mujer.
+< Hernando no era probablemente femenina.
 < Hernando no era posiblemente una madre.
+< Hernando era posiblemente una persona.
 < 
 * 
 * Mis suposiciones que se han concluido:
@@ -134,8 +134,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -192,12 +192,12 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
-< Ana no es un padre.
+< Ana no es masculino.
+< Ana es femenina.
 < Ana no es un hijo.
 < Ana no es un niño.
-< Ana no es masculino.
+< Ana no es un padre.
 < Ana no es un hombre.
-< Ana es femenina.
 * 
 * Mis suposiciones:
 < Paz es posiblemente una persona.
@@ -206,7 +206,7 @@
 < Juan tiene puede-ser una hija, llamada Luisa.
 < José es posiblemente una persona.
 < José es probablemente parte de una familia.
-< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser una hija de Juan y Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
 < Luisa no es puede-ser un hijo.
@@ -232,12 +232,12 @@
 * Mis conclusiones:
 < Jorge es parte de una familia.
 < Jorge es un hombre.
-< Jorge no es una hija.
-< Jorge no es una madre.
-< Jorge no es una niña.
 < Jorge no es femenina.
-< Jorge no es una mujer.
 < Jorge es masculino.
+< Jorge no es una hija.
+< Jorge no es una niña.
+< Jorge no es una madre.
+< Jorge no es una mujer.
 < Diaz tiene un padre, llamado Jorge.
 * 
 * Mis suposiciones:
@@ -252,6 +252,8 @@
 < ¿Es Diaz un hijo o una hija?
 < 
 * 
+* Tenías la misma pregunta antes.
+* 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 < No, Paz tiene 2 padres, llamados Juan y Ana.
@@ -261,25 +263,25 @@
 < José tiene 2 padres, llamados Juan y Ana.
 < 
 * 
-* Tenías una pregunta similar antes:
-< ¿Es Paz un padre?
+* Esta pregunta es más específica que la anterior pregunta:
+< ¿Es Paz un hijo?
+< ¿Es José un hijo?
 * 
-* Tenías una pregunta similar antes:
-< ¿Es José un padre?
+* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
+* 
+* 
+* Tenías una pregunta relacionada antes:
+< ¿Es Paz un hijo de Diaz?
+* 
+* Tenías una pregunta relacionada antes:
+< ¿Es José un hijo de Diaz?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 
 * 
 * Esta pregunta es más específica que la anterior pregunta:
-< ¿Es Paz un padre?
-< ¿Es José un padre?
-* 
-* No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
-* 
-* 
-* Esta pregunta es más específica que la anterior pregunta:
-< ¿Es Paz un padre?
-< ¿Es José un padre?
+< ¿Es Paz un hijo de Juan?
+< ¿Es José un hijo de Juan?
 * 
 * No sé la respuesta a esta pregunta, pero lo tendré en cuenta.
 * 

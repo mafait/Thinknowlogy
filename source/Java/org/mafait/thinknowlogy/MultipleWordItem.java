@@ -1,9 +1,9 @@
 ﻿/*	Class:			MultipleWordItem
  *	Parent class:	Item
  *	Purpose:		Storing info about multiple words
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -95,11 +95,10 @@ class MultipleWordItem extends Item
 	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem _myWordItem = myWordItem();
-		String languageNameString = _myWordItem.languageNameString( wordTypeLanguageNr_ );
+		String languageNameString = WordItem.languageNameString( wordTypeLanguageNr_ );
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String wordTypeString = _myWordItem.wordTypeNameString( wordTypeNr_ );
+		String wordTypeString = WordItem.wordTypeNameString( wordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 

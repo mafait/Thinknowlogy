@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -133,8 +133,8 @@
 < John has probably a child.
 * 
 * My questions:
-< Is John feminine or masculine?
 < Is John a woman or a man?
+< Is John feminine or masculine?
 < Is John a father or a mother?
 < 
 * 
@@ -146,11 +146,11 @@
 * My conclusions:
 < John is not feminine.
 < John is a man.
-< John is not a daughter.
-< John is not a mother.
-< John is not a girl.
-< John is not a woman.
 < John is masculine.
+< John is not a daughter.
+< John is not a girl.
+< John is not a mother.
+< John is not a woman.
 * 
 * My assumptions:
 < John is probably not a boy.

@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -126,7 +126,7 @@
 * 
 * Mis suposiciones:
 < Luisa tiene posiblemente una madre, llamada Ana.
-< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser una hija de Juan y Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
 < Luisa no es puede-ser un hijo.
@@ -138,7 +138,7 @@
 < Juan es probablemente una persona.
 < Juan tiene puede-ser una hija, llamada Luisa.
 < Ana es probablemente una persona.
-< Ana es posiblemente madre de Luisa.
+< Ana es posiblemente una madre de Luisa.
 < Ana es posiblemente una mujer.
 < Ana no es posiblemente un hijo.
 < Ana no es posiblemente un niño.
@@ -156,7 +156,7 @@
 < 
 * 
 * Usted ha confirmado la especificación - pero ninguno de sus relaciones - de mis supuestos anteriores:
-< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser una hija de Juan y Ana.
 * 
 * Mis suposiciones que se han concluido:
 < Luisa es parte de una familia.
@@ -211,12 +211,12 @@
 <	- Luisa es una hija.
 <	- Una hija es probablemente una persona.
 < Luisa tiene posiblemente una madre, llamada Ana. Porque:
-<	- Ana es posiblemente madre de Luisa.
+<	- Ana es posiblemente una madre de Luisa.
 * 	y:
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
-< Luisa es puede-ser hija de Juan y Ana. Porque:
+< Luisa es puede-ser una hija de Juan y Ana. Porque:
 <	- Luisa tiene 2 padres, llamados Juan y Ana.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.

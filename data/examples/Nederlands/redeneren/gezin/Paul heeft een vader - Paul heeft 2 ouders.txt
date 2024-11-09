@@ -2,4 +2,9 @@
 Paul heeft een vader, genaamd Jan.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 Paul heeft 2 ouders, genaamd Jan en Anna.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

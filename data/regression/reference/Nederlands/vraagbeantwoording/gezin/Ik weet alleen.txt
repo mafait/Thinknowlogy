@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -133,8 +133,8 @@
 < Jan heeft waarschijnlijk een kind.
 * 
 * Mijn vragen:
-< Is Jan vrouwelijk of mannelijk?
 < Is Jan een vrouw of een man?
+< Is Jan vrouwelijk of mannelijk?
 < Is Jan een vader of een moeder?
 < 
 * 
@@ -146,11 +146,11 @@
 * Mijn conclusies:
 < Jan is niet vrouwelijk.
 < Jan is een man.
-< Jan is geen dochter.
-< Jan is geen moeder.
-< Jan is geen meisje.
-< Jan is geen vrouw.
 < Jan is mannelijk.
+< Jan is geen dochter.
+< Jan is geen meisje.
+< Jan is geen moeder.
+< Jan is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk geen jongen.

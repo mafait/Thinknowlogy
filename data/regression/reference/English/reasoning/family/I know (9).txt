@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -128,12 +128,12 @@
 * My conclusions:
 < John is a father of Laura.
 < John is a man.
-< John is not a daughter.
-< John is not a mother.
-< John is not a girl.
 < John is not feminine.
-< John is not a woman.
 < John is masculine.
+< John is not a daughter.
+< John is not a girl.
+< John is not a mother.
+< John is not a woman.
 * 
 * My assumptions:
 < Laura has probably a parent, called John.
@@ -147,8 +147,8 @@
 < Laura is maybe not a father.
 < Laura is maybe not a man.
 < Laura is maybe not masculine.
-< John is probably not a boy.
 < John is probably a person.
+< John is probably not a boy.
 < John is probably a parent of Laura.
 < John is probably part of a family.
 < John has possibly a child, called Laura.
@@ -168,16 +168,16 @@
 < Joe has a father, called John.
 < Joe has a mother, called Anna.
 < Anna is a woman.
-< Anna is not a father.
+< Anna is not masculine.
+< Anna is feminine.
 < Anna is not a son.
 < Anna is not a boy.
-< Anna is not masculine.
+< Anna is not a father.
 < Anna is not a man.
-< Anna is feminine.
 * 
 * My assumptions:
-< John is probably a parent of Laura, Paul and Joe.
-< John has possibly 3 children, called Laura, Paul and Joe.
+< John is probably a parent of Paul, Joe and Laura.
+< John has possibly 3 children, called Paul, Joe and Laura.
 < Laura is possibly a child of John and Anna.
 < Laura is maybe a daughter of John and Anna.
 < Laura has probably 2 parents, called John and Anna.
@@ -191,9 +191,9 @@
 < Joe is maybe a person.
 < Anna is probably not a girl.
 < Anna is probably a person.
-< Anna is probably a parent of Laura, Paul and Joe.
+< Anna is probably a parent of Paul, Joe and Laura.
 < Anna is probably part of a family.
-< Anna has possibly 3 children, called Laura, Paul and Joe.
+< Anna has possibly 3 children, called Paul, Joe and Laura.
 < Anna has maybe a daughter, called Laura.
 * 
 * My questions:

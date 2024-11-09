@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminQuery
  *	Supports class:	AdminItem
  *	Purpose:		Processing queries
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ class AdminQuery
 	private int queryItemNr_ = Constants.NO_ITEM_NR;
 	private int querySentenceNr_ = Constants.NO_SENTENCE_NR;
 
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
@@ -232,7 +232,7 @@ class AdminQuery
 
 		if( !isSuppressingMessage &&
 		nTotalCountQuery() == 0 )
-			textStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+			textStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 
 		return Constants.RESULT_OK;
 		}
@@ -317,7 +317,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -331,7 +331,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_REFERENCE_ITEM_WAS_FOUND ) );
 
 					break;
 
@@ -351,7 +351,7 @@ class AdminQuery
 						!isAdminListChar( nameStringBuffer.charAt( listStringPosition ) ) )
 							{
 							isInvalidChar = true;
-							queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
+							queryStringBuffer.append( WordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_INVALID_CHARACTER_IN_LIST ) );
 							}
 						}
 					while( !isInvalidChar &&
@@ -366,7 +366,7 @@ class AdminQuery
 
 						if( !isSuppressingMessage &&
 						nTotalCountQuery() == 0 )
-							queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
+							queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_LIST_WAS_FOUND ) );
 						}
 
 					break;
@@ -384,7 +384,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
+								queryStringBuffer.append( WordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingWords = true;
@@ -400,7 +400,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
+								queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_WAS_FOUND ) );
 							}
 						}
 					else
@@ -425,7 +425,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
+								queryStringBuffer.append( WordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_WORD_REFERENCE ) );
 							else
 								{
 								isReturnQueryToPosition = true;
@@ -441,7 +441,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
+								queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCE_WAS_FOUND ) );
 							}
 						}
 					else
@@ -474,7 +474,7 @@ class AdminQuery
 							{
 							if( queryCommandStringPosition_ < queryCommandStringLength &&
 							queryCommandString.charAt( queryCommandStringPosition_ ) != Constants.QUERY_CHAR )
-								queryStringBuffer.append( adminItem_.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
+								queryStringBuffer.append( WordItem.interfaceString( isSuppressingMessage ? Constants.INTERFACE_QUERY_ERROR : Constants.INTERFACE_QUERY_EMPTY_STRING_SPECIFICATION ) );
 							else
 								{
 								isOnlyDisplayingStrings = true;
@@ -490,7 +490,7 @@ class AdminQuery
 
 							if( !isSuppressingMessage &&
 							nTotalCountQuery() == 0 )
-								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
+								queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_STRING_WAS_FOUND ) );
 							}
 						}
 					else
@@ -519,7 +519,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_TYPE_WAS_FOUND ) );
 
 					break;
 
@@ -538,7 +538,7 @@ class AdminQuery
 
 					if( !isSuppressingMessage &&
 					nTotalCountQuery() == 0 )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_PARAMETER_WAS_FOUND ) );
 
 					break;
 
@@ -716,7 +716,7 @@ class AdminQuery
 				else
 					{
 					if( nTotalCount == 0 )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_ITEMS_WERE_FOUND ) );
 					else
 						{
 						if( isDisplayingTotal() )
@@ -768,15 +768,15 @@ class AdminQuery
 				queryStringBuffer.length() == 0 )
 					{
 					if( isOnlyDisplayingWords )
-						queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
+						queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORDS_WERE_FOUND ) );
 					else
 						{
 						if( isOnlyDisplayingWordReferences )
-							queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
+							queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_WORD_REFERENCES_WERE_FOUND ) );
 						else
 							{
 							if( isOnlyDisplayingStrings )
-								queryStringBuffer.append( adminItem_.interfaceString( Constants.INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
+								queryStringBuffer.append( WordItem.interfaceString( Constants.INTERFACE_QUERY_NO_STRINGS_WERE_FOUND ) );
 							}
 						}
 					}

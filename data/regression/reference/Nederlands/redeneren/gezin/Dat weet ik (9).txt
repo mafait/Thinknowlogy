@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -128,12 +128,12 @@
 * Mijn conclusies:
 < Jan is een vader van Laura.
 < Jan is een man.
-< Jan is geen dochter.
-< Jan is geen moeder.
-< Jan is geen meisje.
 < Jan is niet vrouwelijk.
-< Jan is geen vrouw.
 < Jan is mannelijk.
+< Jan is geen dochter.
+< Jan is geen meisje.
+< Jan is geen moeder.
+< Jan is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Laura heeft waarschijnlijk een ouder, genaamd Jan.
@@ -147,8 +147,8 @@
 < Laura is misschien geen vader.
 < Laura is misschien geen man.
 < Laura is misschien niet mannelijk.
-< Jan is waarschijnlijk geen jongen.
 < Jan is waarschijnlijk een persoon.
+< Jan is waarschijnlijk geen jongen.
 < Jan is waarschijnlijk een ouder van Laura.
 < Jan is waarschijnlijk deel van een gezin.
 < Jan heeft mogelijk een kind, genaamd Laura.
@@ -168,16 +168,16 @@
 < Johan heeft een vader, genaamd Jan.
 < Johan heeft een moeder, genaamd Anna.
 < Anna is een vrouw.
-< Anna is geen vader.
+< Anna is niet mannelijk.
+< Anna is vrouwelijk.
 < Anna is geen zoon.
 < Anna is geen jongen.
-< Anna is niet mannelijk.
+< Anna is geen vader.
 < Anna is geen man.
-< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
-< Jan is waarschijnlijk een ouder van Laura, Paul en Johan.
-< Jan heeft mogelijk 3 kinderen, genaamd Laura, Paul en Johan.
+< Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
+< Jan heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Laura is mogelijk een kind van Jan en Anna.
 < Laura is misschien een dochter van Jan en Anna.
 < Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
@@ -191,9 +191,9 @@
 < Johan is misschien een persoon.
 < Anna is waarschijnlijk geen meisje.
 < Anna is waarschijnlijk een persoon.
-< Anna is waarschijnlijk een ouder van Laura, Paul en Johan.
+< Anna is waarschijnlijk een ouder van Paul, Johan en Laura.
 < Anna is waarschijnlijk deel van een gezin.
-< Anna heeft mogelijk 3 kinderen, genaamd Laura, Paul en Johan.
+< Anna heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura.
 < Anna heeft misschien een dochter, genaamd Laura.
 * 
 * Mijn vragen:

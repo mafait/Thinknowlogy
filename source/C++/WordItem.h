@@ -1,9 +1,9 @@
 ﻿/*	Class:			WordItem
  *	Parent class:	Item
  *	Purpose:		Storing and processing word information
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -149,8 +149,6 @@ class WordItem : protected Item
 
 	signed char addErrorWithWordListNr( unsigned short wordListNr, const char *functionNameString, const char *moduleNameString, const char *errorString );
 
-	BoolResultType startBoolResultErrorInWord( const char *functionNameString, const char *errorString );
-
 	CollectionResultType addCollectionResultErrorInWord( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 );
 	CollectionResultType startCollectionResultErrorInWord( const char *functionNameString, const char *moduleNameString, const char *errorString );
 
@@ -165,13 +163,13 @@ class WordItem : protected Item
 
 	// Private assignment functions
 
-	signed char inactivateAssignment( bool isAmbiguousRelationContext, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	signed char inactivateAssignment( bool isAmbiguousRelationContext, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 	signed char inactivateCurrentAssignments();
 
-	SpecificationItem *firstActiveNonQuestionAssignmentItem( unsigned int relationContextNr, WordItem *specificationWordItem );
-	SpecificationItem *firstAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isSelfGenerated, unsigned short questionParameter, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *firstActiveNonQuestionAssignmentItem( unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
+	SpecificationItem *firstAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isSelfGenerated, unsigned short questionParameter, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 
-	CreateAndAssignResultType assignSpecification( bool isAmbiguousRelationContext, bool isInactiveAssignment, bool isArchivedAssignment, bool isCharacteristicFor, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString );
+	CreateAndAssignResultType assignSpecification( bool isAmbiguousRelationContext, bool isInactiveAssignment, bool isArchivedAssignment, bool isCharacteristicFor, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString );
 
 
 	// Private collection functions
@@ -183,9 +181,14 @@ class WordItem : protected Item
 
 	// Private context functions
 
-	bool isContextSubsetInWord( unsigned int fullSetContextNr, unsigned int subsetContextNr );
+	ContextItem *contextItem( unsigned int contextNr );
 
-	WordItem *_nextContextWordItem( bool isIncludingThisItem, unsigned int contextNr );
+	WordItem *_nextCollectionWordItem( bool isIncludingThisItem, unsigned int collectionNr );
+
+
+	// Private generalization functions
+
+	GeneralizationItem *firstGeneralizationItem();
 
 
 	// Private grammar functions
@@ -245,6 +248,7 @@ class WordItem : protected Item
 	WordItem *nextCollectionWordItem = NULL;
 	WordItem *nextContextWordItem = NULL;
 	WordItem *nextPossessiveNounWordItem = NULL;
+	WordItem *nextProperNounWordItem = NULL;
 	WordItem *nextSpecificationWordItem = NULL;
 	WordItem *nextTouchedWordItem = NULL;
 	WordItem *nextUserDefinedProperNounWordItem = NULL;
@@ -368,14 +372,14 @@ class WordItem : protected Item
 	SpecificationItem *lastActiveNonQuestionAssignmentItem();
 
 	SpecificationItem *firstAssignmentItem( bool isInactiveAssignment, bool isArchivedAssignment, bool isQuestion );
-	SpecificationItem *firstAssignmentItem( bool isPossessive, bool isQuestion, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *firstAssignmentItem( bool isPossessive, bool isQuestion, WordItem *specificationWordItem );
 
 	SpecificationItem *firstNonPossessiveActiveAssignmentItem( WordItem *relationWordItem );
 	SpecificationItem *firstNonQuestionActiveAssignmentItem();
 	SpecificationItem *firstNonQuestionAssignmentItem( bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem );
 	SpecificationItem *firstQuestionAssignmentItem();
 
-	CreateAndAssignResultType assignSpecification( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString, char *authorizationKey );
+	CreateAndAssignResultType assignSpecification( bool isAmbiguousRelationContext, bool isAssignedOrClear, bool isInactiveAssignment, bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isSpecificationGeneralization, bool isUniqueUserRelation, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short relationWordTypeNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, char *authorizationKey );
 
 
 	// Protected cleanup functions
@@ -384,7 +388,7 @@ class WordItem : protected Item
 	void rebuildQuickAccessWordLists();
 
 	unsigned int highestCurrentSentenceItemNrInWord( unsigned int currentSentenceNr, unsigned int currentSentenceItemNr );
-	unsigned int highestFoundSentenceNrInWord( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int highestFoundSentenceNr, unsigned int maxSentenceNr );
+	unsigned int highestFoundSentenceNrInWord( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, bool isIncludingWordTypeList, unsigned int highestFoundSentenceNr, unsigned int maxSentenceNr );
 
 	signed char decrementItemNrRangeInWord( unsigned int decrementSentenceNr, unsigned int decrementItemNr, unsigned int decrementOffset );
 	signed char decrementSentenceNrsInWord( unsigned int startSentenceNr );
@@ -398,6 +402,8 @@ class WordItem : protected Item
 
 	bool hasCollection();
 	bool hasCollectionNr( unsigned int collectionNr );
+	bool hasCollectionCurrentlyBeenUpdated( unsigned int collectionNr );
+	bool hasSimilarRelationCollection( unsigned int firstCollectionNr, unsigned int secondCollectionNr );
 
 	bool isCompoundCollection( unsigned int collectionNr );
 	bool isExclusiveCollection( unsigned int collectionNr );
@@ -407,49 +413,37 @@ class WordItem : protected Item
 
 	unsigned short highestCollectionOrderNrInCollectionWords( unsigned int collectionNr );
 
-	unsigned int collectionNr( unsigned short collectionWordTypeNr );
+	unsigned int collectionNr();
 	unsigned int collectionNr( WordItem *commonWordItem );
-	unsigned int collectionNrByCompoundGeneralizationWordInWord( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem );
-
+	unsigned int collectionNrByCompoundGeneralizationWordInWord( unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem );
 	unsigned int compoundCollectionNr();
+	unsigned int highestCollectionNrInCollectionWords();
 	unsigned int nonCompoundCollectionNr();
 	unsigned int nonCompoundCollectionNrInWord( unsigned int compoundCollectionNr );
-	unsigned int highestCollectionNrInCollectionWords();
+	unsigned int nRelationWords( unsigned int relationCollectionNr, WordItem *relationWordItem );
 
-	WordItem *collectionWordItem( unsigned int compoundCollectionNr );
+	WordItem *collectionWordItem( unsigned int collectionNr );
 	WordItem *commonWordItem( unsigned int collectionNr );
 	WordItem *compoundGeneralizationWordItem( unsigned int compoundCollectionNr );
 	WordItem *feminineCollectionWordItem();
 	WordItem *masculineCollectionWordItem();
 
+	WordItem *firstCollectionWordItem( unsigned int collectionNr );
+	WordItem *_nextCollectionWordItem( unsigned int collectionNr );
+
 	BoolResultType findCollection( bool isAllowingDifferentCommonWord, WordItem *collectionWordItem, WordItem *commonWordItem );
 
-	CollectionResultType createCollectionItem( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem );
+	CollectionResultType createCollectionItem( bool isCheckingForSameCollectionNumber, bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem );
 
 
 	// Protected context functions
 
-	bool hasContextCurrentlyBeenUpdatedInWord( unsigned int contextNr );
-	bool hasContextInWord( unsigned int contextNr );
-	bool hasContextInWord( unsigned int contextNr, WordItem *specificationWordItem );
-	bool isContextSimilarInWord( unsigned int firstContextNr, unsigned int secondContextNr );
-	bool isContextSubsetInContextWords( unsigned int fullSetContextNr, unsigned int subsetContextNr );
-
 	unsigned short contextWordTypeNr( unsigned int contextNr );
 
 	unsigned int contextNr( WordItem *specificationWordItem );
-	unsigned int contextNr( unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem );
 	unsigned int highestContextNrInWord();
-	unsigned int nContextWords( unsigned int contextNr );
 
-	signed char addContext( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem );
-
-	ContextItem *firstActiveContextItem();
-	ContextItem *contextItem( unsigned int contextNr );
-	ContextItem *contextItem( bool isCompoundCollectionSpanishAmbiguous, unsigned int nContextWords, unsigned int spanishAmbiguousCollectionNr, WordItem *specificationWordItem );
-
-	WordItem *firstContextWordItem( unsigned int contextNr );
-	WordItem *_nextContextWordItem( unsigned int contextNr );
+	signed char addContext( unsigned short contextWordTypeNr, unsigned short specificationWordTypeNr, unsigned int contextNr, WordItem *specificationWordItem );
 
 
 	// Protected database connection functions
@@ -461,7 +455,6 @@ class WordItem : protected Item
 
 	signed char createGeneralizationItem( bool isRelation, unsigned short specificationWordTypeNr, unsigned short generalizationWordTypeNr, WordItem *generalizationWordItem );
 
-	GeneralizationItem *firstGeneralizationItem();
 	GeneralizationItem *firstNounSpecificationGeneralizationItem();
 	GeneralizationItem *firstProperNounSpecificationGeneralizationItem();
 	GeneralizationItem *firstSpecificationGeneralizationItem( bool isOnlySelectingCurrentLanguage );
@@ -510,11 +503,9 @@ class WordItem : protected Item
 	bool hasJustification( SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 	bool hasQuestionJustificationWithNonCompoundSecondarySpecificationCollection();
 
-	signed char cleanupUnreferencedJustifications();
 	signed char replaceJustification( JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem );
 	signed char replaceOrDeleteJustification( JustificationItem *obsoleteJustificationItem );
 	signed char updateSpecificationOfJustificationsInWord( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
-	signed char writeRelatedJustificationSpecifications( unsigned short justificationTypeNr, unsigned short orderNr, unsigned int secondarySpecificationCollectionNr );
 
 	JustificationResultType copyJustificationItem( SpecificationItem *newPrimarySpecificationItem, SpecificationItem *newSecondarySpecificationItem, JustificationItem *newAttachedJustificationItem, JustificationItem *originalJustificationItem );
 	JustificationResultType createJustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, unsigned short orderNr, unsigned int originalSentenceNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem, JustificationItem *attachedJustificationItem );
@@ -522,7 +513,7 @@ class WordItem : protected Item
 	JustificationItem *foundJustificationItem( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem );
 	JustificationItem *primarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem );
 	JustificationItem *primaryAndSecondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *secondarySpecificationItem );
-	JustificationItem *secondarySpecificationJustificationItem( bool isSelectingOlderItemOnly, unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem );
+	JustificationItem *secondarySpecificationJustificationItem( unsigned short justificationTypeNr, SpecificationItem *secondarySpecificationItem );
 
 	SpecificationItem *suggestiveQuestionAssumptionSpecificationItem();
 
@@ -538,8 +529,8 @@ class WordItem : protected Item
 
 	// Protected query functions
 
-	void countQuery();
 	void clearQuerySelections();
+	void countQuery();
 
 	void itemQueryInWord( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr );
 	void listQueryInWord( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, char *queryListString );
@@ -579,41 +570,43 @@ class WordItem : protected Item
 	bool hasMultipleSpecificationWordsWithSameSentenceNr( unsigned int creationSentenceNr, unsigned int skipThisItemNr, unsigned int specificationCollectionNr );
 	bool hasNegativeSpecification();
 	bool hasPossiblyGapInKnowledge( unsigned int exclusiveSecondarySpecificationCollectionNr, unsigned int primarySpecificationCollectionNr, SpecificationItem *primarySpecificationItem );
-	bool hasRelationContextInSpecificationsInWord( unsigned int relationContextNr );
 
 	bool isJustificationInUse( JustificationItem *unusedJustificationItem );
 
-	unsigned int nRemainingSpecificationWordsForWriting( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGeneratedSpecification, unsigned short assumptionLevel, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, unsigned int creationSentenceNr );
+	unsigned int nRemainingSpecificationWordsForWriting( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGeneratedSpecification, unsigned short assumptionLevel, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int creationSentenceNr, WordItem *relationWordItem );
 	unsigned int userSpecificationCollectionNr();
 
-	signed char checkForSpecificationConflict( bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isUserSpecificationWordSpanishAmbiguous, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	signed char changeSpecification( bool isNewAnsweredQuestion, bool isNewExclusiveGeneralization, unsigned int newGeneralizationCollectionNr, unsigned int newSpecificationCollectionNr, unsigned int newRelationCollectionNr, JustificationItem *newFirstJustificationItem, SpecificationItem *originalSpecificationItem );
+	signed char checkForSpecificationConflict( bool isArchivedAssignment, bool isNegative, bool isPossessive, bool isUserSpecificationWordSpanishAmbiguous, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 	signed char clearStoredSentenceStringWithUnknownPluralNoun( const char *unknownPluralNounString, WordItem *specificationWordItem );
 	signed char collectGeneralizations( bool isExclusiveGeneralization, unsigned int generalizationCollectionNr );
 	signed char collectSpecificationsInWord( bool isExclusiveSpecification, bool isQuestion, unsigned int specificationCollectionNr );
 	signed char confirmSpecificationButNotItsRelation( SpecificationItem *confirmationSpecificationItem );
-	signed char recalculateAssumptionLevelsInWord();
-	signed char removeObsoleteAssumptionJustificationsFromPartSpecificationsInWord();
+	signed char recalculateAssumptionLevelsInWord( bool isSituationStable );
 	signed char replaceOrDeleteSpecification( SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
 	signed char updateJustificationInSpecifications( bool isExclusiveGeneralization, JustificationItem *obsoleteJustificationItem, JustificationItem *replacingJustificationItem );
 	signed char updateSpecificationOfJustificationsOfInvolvedWords( bool isIncludingUpdateOfCurrentWord, SpecificationItem *obsoleteSpecificationItem, SpecificationItem *replacingSpecificationItem );
 	signed char writeConfirmedSpecification( unsigned short interfaceParameter, SpecificationItem *writeSpecificationItem );
 
-	SpecificationItem *bestAssumptionLevelSpecificationItem( bool isPossessive, WordItem *specificationWordItem );
-
-	SpecificationItem *bestMatchingRelationContextNrSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem );
-	SpecificationItem *bestMatchingRelationContextNrSpecificationItem( bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
-	SpecificationItem *bestMatchingRelationContextNrSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem, WordItem *relationWordItem );
-	SpecificationItem *bestMatchingRelationContextNrSpecificationItem( bool isAllowingEmptyRelationContext, bool isIncludingAnsweredQuestions, bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isQuestion, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingRelationSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingRelationSpecificationItem( bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingRelationSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, WordItem *specificationWordItem, WordItem *relationWordItem );
+	SpecificationItem *bestMatchingRelationSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingRelationSpecificationItem( bool isAllowingEmptyRelation, bool isIncludingAnsweredQuestions, bool isIncludingActiveAssignments, bool isIncludingInactiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isQuestion, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 
 	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
-	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isAllowingEmptyGeneralizationContext, bool isAllowingEmptyRelationContext, bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
+	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int generalizationContextNr, WordItem *specificationWordItem, WordItem *relationWordItem );
+	SpecificationItem *bestMatchingSpecificationWordSpecificationItem( bool isAllowingEmptyRelation, bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 
 	SpecificationItem *firstActiveQuestionSpecificationItem();
 	SpecificationItem *firstAdjectiveSpecificationItem( bool isNegative, bool isQuestion );
 
-	SpecificationItem *firstAssignmentOrSpecificationItem( bool isNegative, bool isPossessive, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *firstAssignmentOrSpecificationItem( bool isNegative, bool isPossessive, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 	SpecificationItem *firstAssignmentOrSpecificationItem( bool isIncludingActiveAssignments, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem );
 
+	SpecificationItem *firstCandidateForQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification );
+	SpecificationItem *firstCollectionSpecificationItem( bool isPossessive, unsigned int relationCollectionNr );
 	SpecificationItem *firstExclusiveSpecificationItem( bool isIncludingAdjectives );
 	SpecificationItem *firstExclusiveSpecificationItem( WordItem *specificationWordItem );
 	SpecificationItem *firstFeminineOrMasculineSpecificationItem();
@@ -621,19 +614,20 @@ class WordItem : protected Item
 	SpecificationItem *firstNegativeSpecificationItem();
 	SpecificationItem *firstNonCollectedSpecificationItem( bool isSelfGenerated, WordItem *excludeSpecificationWordItem );
 	SpecificationItem *firstNonCompoundUserSpecificationItem();
-	SpecificationItem *firstNonCompoundCollectionSpecificationItem( unsigned int specificationCollectionNr );
+	SpecificationItem *firstNonCompoundCollectionSpecificationItem( bool isNegative, bool isPossessive, unsigned int compoundSpecificationCollectionNr );
 	SpecificationItem *firstNonExclusiveSpecificationItem( bool isNegative, bool isPossessive, bool isQuestion, WordItem *specificationWordItem );
-	SpecificationItem *firstNonNegativeNonPossessiveDefinitionSpecificationItem();
+	SpecificationItem *firstNonNegativeNonPosessiveDefinitionSpecificationItem();
 	SpecificationItem *firstNonQuestionSpecificationItem();
-	SpecificationItem *firstNonQuestionSpecificationItem( bool isAllowingEmptyRelationContext, bool isAssignment, bool isArchivedAssignment );
+	SpecificationItem *firstNonQuestionSpecificationItem( bool isAllowingEmptyRelation, bool isAssignment, bool isArchivedAssignment );
 	SpecificationItem *firstOlderNonPossessiveNonQuestionSpecificationItem( bool isArchivedAssignment );
-
+	SpecificationItem *firstPartOfSpecificationItem();
+	SpecificationItem *firstPartOfSpecificationItem( WordItem *specificationWordItem );
 	SpecificationItem *firstPossessiveSpecificationItem();
-	SpecificationItem *firstCandidateForQuestionSpecificationItem( bool isAllowingSpanishPossessiveSpecification );
 
-	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyRelationContext, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, WordItem *specificationWordItem, WordItem *relationWordItem );
 	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isExclusiveSpecification, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
-	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyRelationContext, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyRelation, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGeneratedAssumption, WordItem *specificationWordItem, WordItem *relationWordItem );
+	SpecificationItem *firstSelfGeneratedCheckSpecificationItem( bool isAllowingEmptyRelation, bool isIncludingArchivedAssignments, bool isNegative, bool isPossessive, bool isSelfGenerated, unsigned short questionParameter, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, WordItem *specificationWordItem, WordItem *relationWordItem );
+	SpecificationItem *firstSelfGeneratedConclusionSpecificationItem( bool isNegative, bool isPossessive, bool isUserAssignment, WordItem *specificationWordItem );
 
 	SpecificationItem *firstSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isQuestion );
 	SpecificationItem *firstSpecificationItem( bool isIncludingAnsweredQuestions, bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, unsigned short questionParameter );
@@ -641,22 +635,20 @@ class WordItem : protected Item
 	SpecificationItem *firstSpecificationItem( bool isPossessive, bool isSpecificationGeneralization, unsigned short questionParameter, WordItem *specificationWordItem );
 
 	SpecificationItem *firstUnhiddenSpanishSpecificationItem();
-	SpecificationItem *firstUserSpecificationItem( bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	SpecificationItem *firstUserSpecificationItem( bool isNegative, bool isPossessive, unsigned int specificationCollectionNr, WordItem *specificationWordItem );
 
-	SpecificationItem *noRelationContextSpecificationItem( bool isPossessive, bool isSelfGenerated, WordItem *specificationWordItem );
-	SpecificationItem *partOfSpecificationItem( WordItem *specificationWordItem );
+	SpecificationItem *noRelationWordSpecificationItem( bool isPossessive, bool isSelfGenerated, WordItem *specificationWordItem );
 	SpecificationItem *sameUserQuestionSpecificationItem( unsigned short questionParameter );
 
 	WordItem *feminineOrMasculineCommonWordItem( bool isFeminineWord );
 
 	CollectionResultType collectExclusiveSpecificationWords( unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, WordItem *generalizationWordItem, WordItem *collectionWordItem );
 
-	CreateAndAssignResultType addSpecificationInWord( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isCharacteristicFor, bool isConditional, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSelection, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int copiedRelationContextNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, char *authorizationKey );
-	CreateAndAssignResultType copyAndReplaceSpecification( bool isNewAnsweredQuestion, bool isNewExclusiveGeneralization, unsigned int newGeneralizationCollectionNr, unsigned int newSpecificationCollectionNr, JustificationItem *newFirstJustificationItem, SpecificationItem *originalSpecificationItem );
-	CreateAndAssignResultType createSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isAnsweredQuestion, bool isCharacteristicFor, bool isConditional, bool isCorrectedSpecification, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assignmentLevel, unsigned short assumptionLevel, unsigned short languageNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nContextRelations, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, char *specificationString, char *storedSentenceString, char *storedSentenceWithOnlyOneSpecificationString );
+	CreateAndAssignResultType addSpecificationInWord( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isCharacteristicFor, bool isConditional, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assumptionLevel, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, char *authorizationKey );
+	CreateAndAssignResultType createSpecificationItem( bool isAssignment, bool isInactiveAssignment, bool isArchivedAssignment, bool isAnsweredQuestion, bool isCharacteristicFor, bool isConditional, bool isCorrectedSpecification, bool isEveryGeneralization, bool isExclusiveGeneralization, bool isExclusiveSpecification, bool isNegative, bool isPartOf, bool isPossessive, bool isSpecific, bool isSpecificationGeneralization, bool isUncountableGeneralizationNoun, bool isUniqueUserRelation, bool isValueSpecification, unsigned short assignmentLevel, unsigned short assumptionLevel, unsigned short languageNr, unsigned short prepositionParameter, unsigned short questionParameter, unsigned short generalizationWordTypeNr, unsigned short specificationWordTypeNr, unsigned short relationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, unsigned int specificationContextNr, unsigned int relationContextNr, unsigned int originalSentenceNr, unsigned int activeSentenceNr, unsigned int inactiveSentenceNr, unsigned int archivedSentenceNr, unsigned int nEnteredRelationWords, JustificationItem *firstJustificationItem, WordItem *specificationWordItem, WordItem *relationWordItem, char *specificationString, char *storedSentenceString, char *storedSentenceWithOnlyOneSpecificationString );
 
 	RelatedResultType findRelatedSpecification( bool isCheckingRelationContext, SpecificationItem *searchSpecificationItem );
-	RelatedResultType findRelatedSpecification( bool isIgnoringNegative, bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int generalizationContextNr, unsigned int relationContextNr, WordItem *specificationWordItem );
+	RelatedResultType findRelatedSpecification( bool isIgnoringNegative, bool isIncludingAssignments, bool isIncludingArchivedAssignments, bool isExclusiveSpecification, bool isNegative, bool isPossessive, unsigned short questionParameter, unsigned short specificationWordTypeNr, unsigned int specificationCollectionNr, unsigned int relationCollectionNr, unsigned int generalizationContextNr, WordItem *specificationWordItem, WordItem *relationWordItem );
 
 
 	// Protected word type functions
@@ -692,6 +684,10 @@ class WordItem : protected Item
 	signed char markSpecificationWordTypeAsWritten( unsigned short wordTypeNr );
 	signed char markRelationWordTypeAsWritten( unsigned short wordTypeNr );
 
+	signed char setAdjectiveParameter( bool isChineseCurrentLanguage, unsigned short adjectiveParameter, WordTypeItem *thisWordTypeItem );
+	signed char setDefiniteArticleParameter( unsigned short definiteArticleParameter, WordTypeItem *thisWordTypeItem );
+	signed char setIndefiniteArticleParameter( unsigned short indefiniteArticleParameter, WordTypeItem *thisWordTypeItem );
+
 	WordTypeItem *activeWordTypeItem( unsigned short wordTypeNr );
 	WordTypeItem *activeWordTypeItem( bool isCheckingAllLanguages, unsigned short wordTypeNr );
 
@@ -700,8 +696,9 @@ class WordItem : protected Item
 	char *singularNounString();
 	char *wordTypeString( bool isCheckingAllLanguages, unsigned short wordTypeNr );
 
-	WordTypeResultType addWordType( bool isMultipleWord, bool isProperNounPrecededByDefiniteArticle, unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, unsigned short wordTypeNr, size_t wordLength, char *wordTypeString );
 	WordResultType findWordType( bool isCheckingAllLanguages, unsigned short wordTypeNr, char *wordTypeString );
+
+	WordTypeResultType addWordType( bool isMultipleWord, bool isProperNounPrecededByDefiniteArticle, unsigned short adjectiveParameter, unsigned short definiteArticleParameter, unsigned short indefiniteArticleParameter, unsigned short wordTypeNr, size_t wordLength, char *wordTypeString );
 
 
 	// Protected write functions

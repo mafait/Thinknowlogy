@@ -1,0 +1,11 @@
+﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
+José tiene 2 padres, llamados Juan y Ana.
+Ana es la madre de Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre José.
+Paz es un hijo de Juan y Ana.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+# Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

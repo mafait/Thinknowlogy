@@ -1,8 +1,10 @@
 ﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
-Anna is de moeder van Paul, Johan en Laura.
+#Anna is de moeder van Paul, Johan en Laura.
+Anna is een ouder van Paul, Johan en Laura.
 Laura is een meisje.
 Laura heeft een moeder, genaamd Anna.
-Anna is de moeder van Paul, Johan en Laura.
+#Anna is de moeder van Paul, Johan en Laura.
+Anna is een ouder van Paul, Johan en Laura.
 #Dev#Toon de verantwoordingsrapportage over Anna.
 #Dev#Toon de verantwoordingsrapportage over Laura.
 # Om verder te gaan, klik op knop «Wis je geheugen.» of «Herstart.».

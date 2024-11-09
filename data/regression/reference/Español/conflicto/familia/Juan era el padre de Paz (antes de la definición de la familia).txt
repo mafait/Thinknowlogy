@@ -51,14 +51,14 @@
 < Cada padre no es una mujer.
 < Cada mujer no es un padre.
 < Juan era un hombre.
-< Juan no era femenina.
-< Juan no era una mujer.
 < Juan era masculino.
+< Juan no era una mujer.
+< Juan no era femenina.
 * 
 * Mis suposiciones:
 < Un padre es probablemente una persona.
-< Juan era probablemente una persona.
 < Juan no era probablemente una madre.
+< Juan era probablemente una persona.
 < 
 * 
 * Mis suposiciones que se han concluido:
@@ -114,8 +114,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.

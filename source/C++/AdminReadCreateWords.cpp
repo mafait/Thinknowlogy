@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminReadCreateWords
  *	Supports class:	AdminItem
  *	Purpose:		Creating words of the read sentence
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@ class AdminReadCreateWords
 
 	unsigned short lastCreatedWordOrderNr_ = NO_ORDER_NR;
 
+//Java_private_final
 	char moduleNameString_[FUNCTION_NAME_STRING_LENGTH] = "AdminReadCreateWords";
 
 	// Private initialized variables
@@ -509,27 +510,29 @@ class AdminReadCreateWords
 											// Not the first part of a multiple word, but an adjective
 											isExactWord = false;
 										}
-									else
+									else	// Single word
 										{
 										isPartOfMultipleWord = false;
 
 										if( previousWordAdjectiveParameter > NO_ADJECTIVE_PARAMETER )
 											{
-											if( !isChineseCurrentLanguage &&
-											foundWordTypeItem->setAdjectiveParameter( previousWordAdjectiveParameter ) != RESULT_OK )
+											// Set adjective parameter of a singular noun
+											if( foundWordItem->setAdjectiveParameter( isChineseCurrentLanguage, previousWordAdjectiveParameter, foundWordTypeItem ) != RESULT_OK )
 												return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to set the adjective parameter of a singular noun" );
 											}
 										else
 											{
 											if( previousWordDefiniteArticleParameter > NO_DEFINITE_ARTICLE_PARAMETER )
 												{
-												if( foundWordTypeItem->setDefiniteArticleParameter( previousWordDefiniteArticleParameter ) != RESULT_OK )
+												// Set definite article parameter of a singular noun
+												if( foundWordItem->setDefiniteArticleParameter( previousWordDefiniteArticleParameter, foundWordTypeItem ) != RESULT_OK )
 													return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
 												}
 											else
 												{
 												if( previousWordIndefiniteArticleParameter > NO_INDEFINITE_ARTICLE_PARAMETER &&
-												foundWordTypeItem->setIndefiniteArticleParameter( previousWordIndefiniteArticleParameter ) != RESULT_OK )
+												// Set indefinite article parameter of a singular noun
+												foundWordItem->setIndefiniteArticleParameter( previousWordIndefiniteArticleParameter, foundWordTypeItem ) != RESULT_OK )
 													return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to set the indefinite article parameter of a singular noun" );
 												}
 											}
@@ -545,7 +548,6 @@ class AdminReadCreateWords
 				if( !isBasicVerb &&
 				!isPartOfMultipleWord &&
 				!wasPreviousWordExactNoun &&
-
 				// Delete obsolete read items, that where part of a mutliple word
 				adminItem_->deleteReadItemsWithNonMatchingMultipleWordPart( currentWordOrderNr, &readUserSentenceString[currentPosition] ) != RESULT_OK )
 					return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to delete the read items with a non-matching multiple word part" );
@@ -555,8 +557,8 @@ class AdminReadCreateWords
 				if( isFirstWord &&
 				isUpperChar &&
 
-				( !isExactWord ||
-				wordStringLength == 1 ) )
+					( !isExactWord ||
+					wordStringLength == 1 ) )
 					{
 					if( ( shortResult = getWordTypeNr( false, wordStringLength, lowerCaseWordString ) ).result != RESULT_OK )
 						return adminItem_->addBoolResultError( functionNameString, moduleNameString_, "I failed to get the word type number of a lower-case word" );
@@ -746,7 +748,9 @@ class AdminReadCreateWords
 				( ( !isUpperChar &&
 				wasPreviousWordArticle ) ||
 
-				// Typical for English. Test files: "Boiling point" and "Condensation point"
+				// Typical for English
+				// Test files: "reasoning\Boiling point",
+				//				"reasoning\Condensation point"
 				( hasFoundAdjectiveEvery &&
 				isPreposition &&
 				wasPreviousWordCreatedSingularNoun ) ) ) ) )
@@ -1054,7 +1058,6 @@ class AdminReadCreateWords
 			wordTypeResult.wordTypeItem != NULL &&
 			adminItem_->isNounWordType( wordTypeNr ) &&
 			!wordTypeResult.wordTypeItem->isCorrectIndefiniteArticle( false, indefiniteArticleParameter ) &&
-
 			// Write 'different indefinite article used' notification
 			inputOutput_->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, wordTypeString, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
 				return adminItem_->addWordResultError( functionNameString, moduleNameString_, "I failed to write the 'different indefinite article used' interface notification" );

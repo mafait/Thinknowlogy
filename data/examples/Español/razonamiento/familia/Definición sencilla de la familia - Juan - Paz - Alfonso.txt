@@ -1,5 +1,5 @@
 ﻿Cada familia tiene un padre y un hijo.
 Juan es el padre de Paz.
 Paz es el padre de Alfonso.
-Alfonso es hijo de Paz.
+Alfonso es un hijo de Paz.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

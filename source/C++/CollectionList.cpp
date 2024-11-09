@@ -1,9 +1,9 @@
 ﻿/*	Class:			CollectionList
  *	Parent class:	List
  *	Purpose:		Storing collection items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -97,44 +97,34 @@ class CollectionList : private List
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->collectionNr() == collectionNr )
-				return true;
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == collectionNr )
+					return true;
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return false;
 		}
 
-	bool isExclusiveCollection( unsigned int collectionNr )
+	bool hasCollectionCurrentlyBeenUpdated( unsigned int collectionNr )
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->isExclusiveSpecification() &&
-			searchCollectionItem->collectionNr() == collectionNr )
-				return true;
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == collectionNr &&
+				searchCollectionItem->hasCurrentCreationSentenceNr() )
+					return true;
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
-			}
-
-		return false;
-		}
-
-	bool isNonExclusiveCollection( unsigned int collectionNr )
-		{
-		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
-
-		while( searchCollectionItem != NULL )
-			{
-			if( !searchCollectionItem->isExclusiveSpecification() &&
-			searchCollectionItem->collectionNr() == collectionNr )
-				return true;
-
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return false;
@@ -144,13 +134,54 @@ class CollectionList : private List
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->isCompoundGeneralization() &&
-			searchCollectionItem->collectionNr() == collectionNr )
-				return true;
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->isCompoundGeneralization() &&
+				searchCollectionItem->collectionNr() == collectionNr )
+					return true;
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool isExclusiveCollection( unsigned int collectionNr )
+		{
+		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
+
+		if( collectionNr > NO_COLLECTION_NR )
+			{
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->isExclusiveSpecification() &&
+				searchCollectionItem->collectionNr() == collectionNr )
+					return true;
+
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
+			}
+
+		return false;
+		}
+
+	bool isNonExclusiveCollection( unsigned int collectionNr )
+		{
+		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
+
+		if( collectionNr > NO_COLLECTION_NR )
+			{
+			while( searchCollectionItem != NULL )
+				{
+				if( !searchCollectionItem->isExclusiveSpecification() &&
+				searchCollectionItem->collectionNr() == collectionNr )
+					return true;
+
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return false;
@@ -160,13 +191,16 @@ class CollectionList : private List
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( !searchCollectionItem->isCompoundGeneralization() &&
-			searchCollectionItem->collectionNr() == collectionNr )
-				return true;
+			while( searchCollectionItem != NULL )
+				{
+				if( !searchCollectionItem->isCompoundGeneralization() &&
+				searchCollectionItem->collectionNr() == collectionNr )
+					return true;
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return false;
@@ -177,31 +211,26 @@ class CollectionList : private List
 		unsigned short highestCollectionOrderNr = NO_ORDER_NR;
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->collectionNr() == collectionNr &&
-			searchCollectionItem->collectionOrderNr() > highestCollectionOrderNr )
-				highestCollectionOrderNr = searchCollectionItem->collectionOrderNr();
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == collectionNr &&
+				searchCollectionItem->collectionOrderNr() > highestCollectionOrderNr )
+					highestCollectionOrderNr = searchCollectionItem->collectionOrderNr();
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return highestCollectionOrderNr;
 		}
 
-	unsigned int collectionNr( unsigned short collectionWordTypeNr )
+	unsigned int collectionNr()
 		{
-		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
+		CollectionItem *firstCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
-			{
-			if( searchCollectionItem->collectionWordTypeNr() == collectionWordTypeNr )
-				return searchCollectionItem->collectionNr();
-
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
-			}
-
-		return NO_COLLECTION_NR;
+		return ( firstCollectionItem == NULL ? NO_COLLECTION_NR : firstCollectionItem->collectionNr() );
 		}
 
 	unsigned int collectionNr( WordItem *commonWordItem )
@@ -256,27 +285,30 @@ class CollectionList : private List
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 		WordItem *collectionWordItem;
 
-		while( searchCollectionItem != NULL )
+		if( compoundCollectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->collectionNr() == compoundCollectionNr &&
-			( collectionWordItem = searchCollectionItem->collectionWordItem() ) != NULL &&
-			( nonCompoundCollectionNr = collectionWordItem->nonCompoundCollectionNr() ) > NO_COLLECTION_NR )
-				return nonCompoundCollectionNr;
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == compoundCollectionNr &&
+				( collectionWordItem = searchCollectionItem->collectionWordItem() ) != NULL &&
+				( nonCompoundCollectionNr = collectionWordItem->nonCompoundCollectionNr() ) > NO_COLLECTION_NR )
+					return nonCompoundCollectionNr;
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return NO_COLLECTION_NR;
 		}
 
-	unsigned int collectionNrByCompoundGeneralizationWord( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem )
+	unsigned int collectionNrByCompoundGeneralizationWord( unsigned short collectionWordTypeNr, WordItem *compoundGeneralizationWordItem )
 		{
 		unsigned int lastFoundCollectionNr = NO_COLLECTION_NR;
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
 		while( searchCollectionItem != NULL )
 			{
-			if( searchCollectionItem->isExclusiveSpecification() == isExclusiveSpecification &&
+			if( searchCollectionItem->isExclusiveSpecification() &&
 			searchCollectionItem->isMatchingCollectionWordTypeNr( collectionWordTypeNr ) &&
 			searchCollectionItem->compoundGeneralizationWordItem() == compoundGeneralizationWordItem )
 				lastFoundCollectionNr = searchCollectionItem->collectionNr();
@@ -318,16 +350,19 @@ class CollectionList : private List
 		return globalVariables()->result;
 		}
 
-	WordItem *collectionWordItem( unsigned int compoundCollectionNr )
+	WordItem *collectionWordItem( unsigned int collectionNr )
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->collectionNr() == compoundCollectionNr )
-				return searchCollectionItem->collectionWordItem();
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == collectionNr )
+					return searchCollectionItem->collectionWordItem();
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return NULL;
@@ -337,12 +372,15 @@ class CollectionList : private List
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( collectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->collectionNr() == collectionNr )
-				return searchCollectionItem->commonWordItem();
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->collectionNr() == collectionNr )
+					return searchCollectionItem->commonWordItem();
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return NULL;
@@ -352,13 +390,16 @@ class CollectionList : private List
 		{
 		CollectionItem *searchCollectionItem = firstActiveCollectionItem();
 
-		while( searchCollectionItem != NULL )
+		if( compoundCollectionNr > NO_COLLECTION_NR )
 			{
-			if( searchCollectionItem->isCompoundGeneralization() &&
-			searchCollectionItem->collectionNr() == compoundCollectionNr )
-				return searchCollectionItem->compoundGeneralizationWordItem();
+			while( searchCollectionItem != NULL )
+				{
+				if( searchCollectionItem->isCompoundGeneralization() &&
+				searchCollectionItem->collectionNr() == compoundCollectionNr )
+					return searchCollectionItem->compoundGeneralizationWordItem();
 
-			searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				searchCollectionItem = searchCollectionItem->nextCollectionItem();
+				}
 			}
 
 		return NULL;
@@ -424,25 +465,35 @@ class CollectionList : private List
 		return boolResult;
 		}
 
-	CollectionResultType createCollectionItem( bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int _collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
+	CollectionResultType createCollectionItem( bool isCheckingForSameCollectionNumber, bool isExclusiveSpecification, unsigned short collectionWordTypeNr, unsigned short commonWordTypeNr, unsigned int _collectionNr, WordItem *collectionWordItem, WordItem *commonWordItem, WordItem *compoundGeneralizationWordItem )
 		{
 		unsigned short collectionOrderNr;
+		unsigned int foundCollectionNr;
 		WordItem *_myWordItem = myWordItem();
 		CollectionResultType collectionResult;
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "createCollectionItem";
 
 		if( collectionWordTypeNr <= NO_WORD_TYPE_NR ||
 		collectionWordTypeNr >= NUMBER_OF_WORD_TYPES )
-			return startCollectionResultError( functionNameString, "The given collected word type number is undefined or out of bounds: ", collectionWordTypeNr );
+			return startCollectionResultError( functionNameString, "The given collection word type number is undefined or out of bounds: ", collectionWordTypeNr );
 
 		if( collectionWordItem == NULL )
-			return startCollectionResultError( functionNameString, "The given collected word is undefined" );
+			return startCollectionResultError( functionNameString, "The given collection word is undefined" );
 
 		if( commonWordItem == NULL )
 			return startCollectionResultError( functionNameString, "The given common word is undefined" );
 
-		if( collectionWordItem == myWordItem() )
-			return startCollectionResultError( functionNameString, "The given collected word is the same as my word" );
+		if( collectionWordItem == _myWordItem )
+			return startCollectionResultError( functionNameString, "The given collection word is the same as my word" );
+
+		if( isCheckingForSameCollectionNumber &&
+		( foundCollectionNr = _myWordItem->collectionNr( commonWordItem ) ) > NO_COLLECTION_NR &&
+
+			( _collectionNr == NO_COLLECTION_NR ||
+			foundCollectionNr == _collectionNr ) &&
+
+		collectionWordItem->collectionNr( commonWordItem ) == foundCollectionNr )
+			return startCollectionResultError( functionNameString, "Both the given collection word and my word are already collected through the same collection number" );
 
 		if( collectionWordTypeNr == WORD_TYPE_NOUN_PLURAL )
 			collectionWordTypeNr = WORD_TYPE_NOUN_SINGULAR;
@@ -473,7 +524,7 @@ class CollectionList : private List
 			addToCollectionWordQuickAccessList();
 			}
 
-		if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, globalVariables(), inputOutput(), this, myWordItem() ) ) != RESULT_OK )
+		if( addItemToList( QUERY_ACTIVE_CHAR, new CollectionItem( isExclusiveSpecification, ++collectionOrderNr, collectionWordTypeNr, commonWordTypeNr, _collectionNr, collectionWordItem, commonWordItem, compoundGeneralizationWordItem, globalVariables(), inputOutput(), this, _myWordItem ) ) != RESULT_OK )
 			return addCollectionResultError( functionNameString, "I failed to add a collection item" );
 
 		return collectionResult;

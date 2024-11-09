@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -123,11 +123,11 @@
 < Pedro no es femenina.
 < Pedro es parte de una familia.
 < Pedro es un hombre.
-< Pedro no es una hija.
-< Pedro no es una madre.
-< Pedro no es una niña.
-< Pedro no es una mujer.
 < Pedro es masculino.
+< Pedro no es una hija.
+< Pedro no es una niña.
+< Pedro no es una madre.
+< Pedro no es una mujer.
 * 
 * Mis suposiciones:
 < Pedro es probablemente una persona.

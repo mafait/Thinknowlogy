@@ -3,9 +3,9 @@
  *	Purpose:		Storing info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ package org.mafait.thinknowlogy;
 
 class GeneralizationItem extends Item
 	{
-			// Private initialized variables
+	// Private initialized variables
 
 	private boolean isLanguageWord_ = false;
 	private boolean isRelation_ = false;
@@ -119,11 +119,10 @@ class GeneralizationItem extends Item
 	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem _myWordItem = myWordItem();
-		String generalizationWordTypeString = _myWordItem.wordTypeNameString( generalizationWordTypeNr_ );
-		String languageNameString = _myWordItem.languageNameString( languageNr_ );
+		String generalizationWordTypeString = WordItem.wordTypeNameString( generalizationWordTypeNr_ );
+		String languageNameString = WordItem.languageNameString( languageNr_ );
 		StringBuffer queryStringBuffer;
-		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String specificationWordTypeString = WordItem.wordTypeNameString( specificationWordTypeNr_ );
 		String wordString;
 
 		itemBaseToStringBuffer( queryWordTypeNr );
@@ -183,14 +182,15 @@ class GeneralizationItem extends Item
 			{
 			if( searchGeneralizationItem.isRelation_ == isRelation &&
 
-			( !isOnlySelectingCurrentLanguage ||
-			searchGeneralizationItem.languageNr_ == currentLanguageNr ) &&
+				( !isOnlySelectingCurrentLanguage ||
+				searchGeneralizationItem.languageNr_ == currentLanguageNr ) &&
 
-			( !isOnlySelectingNoun ||
-			searchGeneralizationItem.isNoun() ) &&
+				( !isOnlySelectingNoun ||
+				searchGeneralizationItem.isNoun() ) &&
 
-			( !isOnlySelectingProperNoun ||
-			searchGeneralizationItem.isProperNoun() ) )
+				( !isOnlySelectingProperNoun ||
+				searchGeneralizationItem.isProperNoun() ) )
+
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem.nextGeneralizationItem();

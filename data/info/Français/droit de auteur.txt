@@ -1,4 +1,4 @@
-﻿Affichez " Copyright (C) 2023, Menno Mafait".
+﻿Affichez " Copyright (C) 2024, Menno Mafait".
 #C++#Affichez " Thinknowlogy n'est accompagné d'ABSOLUMENT AUCUNE GARANTIE ;".
 #C++#Affichez " pour plus de détails tapez \"Affichez le droit d'auteur.\". Ceci est un logiciel".
 #C++#Affichez " libre et vous êtes invité à le redistribuer en respectant certaines obligations;".

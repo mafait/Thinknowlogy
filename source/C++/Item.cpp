@@ -1,8 +1,8 @@
 ﻿/*	Class:		Item
  *	Purpose:	Base class for the knowledge structure
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -43,12 +43,11 @@
 
 	// Private functions
 
-	unsigned int Item::justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr )
+	unsigned short Item::justificationAssumptionGrade( bool hasFeminineOrMasculineProperNounEnding, bool hasAdditionalDefinitionSpecification, bool isExclusivePrimarySpecification, bool isNegativePrimarySpecification, bool isNegativeSecondarySpecification, unsigned short justificationTypeNr )
 		{
 		switch( justificationTypeNr )
 			{
 			case JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION:
-			case JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION:
 			case JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION:
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION:
 				return 1;
@@ -64,15 +63,15 @@
 							( hasFeminineOrMasculineProperNounEnding ||
 							isExclusivePrimarySpecification ? 2 : 1 ) );
 
+			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
+				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
+
 			case JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ||
 						isNegativePrimarySpecification ||
 
 						( isExclusivePrimarySpecification &&
 						!isNegativeSecondarySpecification ) ? 1 : 0 );
-
-			case JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION:
-				return ( hasAdditionalDefinitionSpecification ? 1 : 0 );
 
 			case JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION:
 				return ( hasAdditionalDefinitionSpecification ?
@@ -102,20 +101,25 @@
 
 	Item::Item()
 		{
+		// Used for developer statistics
+		if( globalVariables_ != NULL )
+			globalVariables_->nTotalCreatedItems++;
 		}
 
 
 	// Protected error functions
 
+//Java_protected_final
 	signed char Item::addError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		return addError( functionNameString, moduleNameString, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
+//Java_protected_final
 	signed char Item::addError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
 		{
 		if( inputOutput_ == NULL )
-			fprintf( stderr, "\nClass:\t%s\nParent class:\t%s\nFunction:\t%s\nWordItem:%s\nError:\t\t%s.\n", classNameString_, parentClassNameString_, functionNameString, ( wordItemString == NULL ? ADMIN_USER_NAME_STRING : wordItemString ), errorString );
+			fprintf( stderr, "\nClass:\t%s\nParent class:\t%s\nFunction:\t%s\nWordItem:\t%s\nError:\t\t%s.\n", classNameString_, parentClassNameString_, functionNameString, ( wordItemString == NULL ? ADMIN_USER_NAME_STRING : wordItemString ), errorString );
 		else
 			inputOutput_->displayError( SYMBOL_QUESTION_MARK, ( moduleNameString == NULL ? classNameString_ : moduleNameString ), ( moduleNameString == NULL ? parentClassNameString_ : NULL ), wordItemString, functionNameString, errorString );
 
@@ -152,6 +156,7 @@
 		return addError( functionNameString, moduleNameString, NULL, tempString );
 		}
 
+//Java_protected_final
 	signed char Item::addError( char listChar, const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		if( inputOutput_ == NULL )
@@ -162,6 +167,7 @@
 		return ( globalVariables_ == NULL ? RESULT_ERROR : globalVariables_->result );
 		}
 
+//Java_protected_final
 	signed char Item::startError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		addError( functionNameString, moduleNameString, NULL, errorString );
@@ -171,6 +177,7 @@
 		return RESULT_ERROR;
 		}
 
+//Java_protected_final
 	signed char Item::startError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		addError( functionNameString, moduleNameString, wordNameString, errorString );
@@ -222,11 +229,13 @@
 		return startError( functionNameString, moduleNameString, tempString );
 		}
 
+//Java_protected_final
 	signed char Item::startSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		return startSystemError( functionNameString, moduleNameString, NULL, errorString );
 		}
 
+//Java_protected_final
 	signed char Item::startSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		char textChar;
@@ -258,6 +267,7 @@
 		return RESULT_SYSTEM_ERROR;
 		}
 
+//Java_protected_final
 	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		BoolResultType boolResult;
@@ -266,6 +276,7 @@
 		return boolResult;
 		}
 
+//Java_protected_final
 	BoolResultType Item::addBoolResultError( const char *functionNameString, const char *moduleNameString, char *wordItemString, const char *errorString )
 		{
 		BoolResultType boolResult;
@@ -298,6 +309,7 @@
 		return boolResult;
 		}
 
+//Java_protected_final
 	BoolResultType Item::startBoolResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		BoolResultType boolResult;
@@ -330,6 +342,7 @@
 		return boolResult;
 		}
 
+//Java_protected_final
 	BoolResultType Item::startBoolResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		BoolResultType boolResult;
@@ -338,6 +351,16 @@
 		return boolResult;
 		}
 
+//Java_protected_final
+	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = addError( functionNameString, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+//Java_protected_final
 	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		CollectionResultType collectionResult;
@@ -346,6 +369,32 @@
 		return collectionResult;
 		}
 
+	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3 )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3 );
+		return collectionResult;
+		}
+
+	CollectionResultType Item::addCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString1, const char *errorString2, const char *errorString3, const char *errorString4, const char *errorString5 )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = addError( functionNameString, moduleNameString, errorString1, errorString2, errorString3, errorString4, errorString5 );
+		return collectionResult;
+		}
+
+//Java_protected_final
+	CollectionResultType Item::startCollectionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
+		{
+		CollectionResultType collectionResult;
+
+		collectionResult.result = startError( functionNameString, moduleNameString, errorString );
+		return collectionResult;
+		}
+
+//Java_protected_final
 	CollectionResultType Item::startCollectionResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		CollectionResultType collectionResult;
@@ -354,6 +403,7 @@
 		return collectionResult;
 		}
 
+//Java_protected_final
 	CompoundResultType Item::addCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CompoundResultType compoundResult;
@@ -374,6 +424,7 @@
 		return addCompoundResultError( functionNameString, moduleNameString, tempString );
 		}
 
+//Java_protected_final
 	ConditionResultType Item::addConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ConditionResultType conditionResult;
@@ -382,6 +433,7 @@
 		return conditionResult;
 		}
 
+//Java_protected_final
 	ConditionResultType Item::startConditionResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ConditionResultType conditionResult;
@@ -390,6 +442,7 @@
 		return conditionResult;
 		}
 
+//Java_protected_final
 	CompoundResultType Item::startCompoundResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CompoundResultType compoundResult;
@@ -398,6 +451,7 @@
 		return compoundResult;
 		}
 
+//Java_protected_final
 	ContextResultType Item::addContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ContextResultType contextResult;
@@ -414,6 +468,7 @@
 		return contextResult;
 		}
 
+//Java_protected_final
 	ContextResultType Item::startContextResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ContextResultType contextResult;
@@ -422,6 +477,7 @@
 		return contextResult;
 		}
 
+//Java_protected_final
 	ContextResultType Item::startContextResultSystemError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ContextResultType contextResult;
@@ -430,6 +486,7 @@
 		return contextResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -454,6 +511,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType Item::addCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -462,6 +520,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -486,6 +545,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType Item::startCreateAndAssignResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -494,6 +554,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType Item::startCreateAndAssignResultSystemError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -502,6 +563,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateReadWordResultType Item::addCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CreateReadWordResultType createReadWordResult;
@@ -510,6 +572,7 @@
 		return createReadWordResult;
 		}
 
+//Java_protected_final
 	CreateReadWordResultType Item::startCreateReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		CreateReadWordResultType createReadWordResult;
@@ -526,6 +589,7 @@
 		return duplicateResult;
 		}
 
+//Java_protected_final
 	FileResultType Item::addFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		FileResultType fileResult;
@@ -534,6 +598,7 @@
 		return fileResult;
 		}
 
+//Java_protected_final
 	FileResultType Item::startFileResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		FileResultType fileResult;
@@ -542,6 +607,7 @@
 		return fileResult;
 		}
 
+//Java_protected_final
 	FindSpecificationResultType Item::startFindSpecificationResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		FindSpecificationResultType findSpecificationResult;
@@ -550,6 +616,7 @@
 		return findSpecificationResult;
 		}
 
+//Java_protected_final
 	GrammarResultType Item::startGrammarResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		GrammarResultType grammarResult;
@@ -558,6 +625,7 @@
 		return grammarResult;
 		}
 
+//Java_protected_final
 	JustificationResultType Item::startJustificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		JustificationResultType justificationResult;
@@ -566,6 +634,7 @@
 		return justificationResult;
 		}
 
+//Java_protected_final
 	QueryResultType Item::addQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		QueryResultType queryResult;
@@ -574,6 +643,7 @@
 		return queryResult;
 		}
 
+//Java_protected_final
 	QueryResultType Item::startQueryResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		QueryResultType queryResult;
@@ -588,6 +658,7 @@
 		return startQueryResultError( functionNameString, moduleNameString, tempString );
 		}
 
+//Java_protected_final
 	ReadWordResultType Item::startReadWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ReadWordResultType readWordResult;
@@ -596,6 +667,7 @@
 		return readWordResult;
 		}
 
+//Java_protected_final
 	RelatedResultType Item::addRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		RelatedResultType relatedResult;
@@ -604,6 +676,7 @@
 		return relatedResult;
 		}
 
+//Java_protected_final
 	RelatedResultType Item::startRelatedResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		RelatedResultType relatedResult;
@@ -620,6 +693,7 @@
 		return selectionResult;
 		}
 
+//Java_protected_final
 	ShortResultType Item::startShortResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		ShortResultType shortResult;
@@ -636,6 +710,7 @@
 		return shortResult;
 		}
 
+//Java_protected_final
 	SpecificationResultType Item::addSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		SpecificationResultType specificationResult;
@@ -644,6 +719,7 @@
 		return specificationResult;
 		}
 
+//Java_protected_final
 	SpecificationResultType Item::startSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		SpecificationResultType specificationResult;
@@ -652,6 +728,7 @@
 		return specificationResult;
 		}
 
+//Java_protected_final
 	UserSpecificationResultType Item::addUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		UserSpecificationResultType userSpecificationResult;
@@ -660,6 +737,7 @@
 		return userSpecificationResult;
 		}
 
+//Java_protected_final
 	UserSpecificationResultType Item::startUserSpecificationResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		UserSpecificationResultType userSpecificationResult;
@@ -668,6 +746,7 @@
 		return userSpecificationResult;
 		}
 
+//Java_protected_final
 	WordEndingResultType Item::startWordEndingResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		WordEndingResultType wordEndingResult;
@@ -676,6 +755,7 @@
 		return wordEndingResult;
 		}
 
+//Java_protected_final
 	WordResultType Item::addWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		WordResultType wordResult;
@@ -692,6 +772,7 @@
 		return wordResult;
 		}
 
+//Java_protected_final
 	WordResultType Item::startWordResultError( const char *functionNameString, const char *moduleNameString, const char *errorString )
 		{
 		WordResultType wordResult;
@@ -700,6 +781,7 @@
 		return wordResult;
 		}
 
+//Java_protected_final
 	WordTypeResultType Item::startWordTypeResultError( const char *functionNameString, const char *moduleNameString, char *wordNameString, const char *errorString )
 		{
 		WordTypeResultType wordTypeResult;
@@ -783,65 +865,77 @@
 
 	// Protected common functions
 
+//Java_protected_final
 	void Item::clearArchivedSentenceNr()
 		{
 		archivedSentenceNr_ = NO_SENTENCE_NR;
 		}
 
+//Java_protected_final
 	void Item::clearReplacedSentenceNr()
 		{
 		replacedSentenceNr_ = NO_SENTENCE_NR;
 		}
 
+//Java_protected_final
 	void Item::setActiveStatus()
 		{
 		statusChar_ = QUERY_ACTIVE_CHAR;
 		}
 
+//Java_protected_final
 	void Item::setArchivedStatus()
 		{
 		statusChar_ = QUERY_ARCHIVED_CHAR;
 		}
 
+//Java_protected_final
 	void Item::setInactiveStatus()
 		{
 		statusChar_ = QUERY_INACTIVE_CHAR;
 		}
 
+//Java_protected_final
 	void Item::setReplacedStatus()
 		{
 		statusChar_ = QUERY_REPLACED_CHAR;
 		}
 
+//Java_protected_final
 	void Item::setDeletedStatus()
 		{
 		statusChar_ = QUERY_DELETED_CHAR;
 		}
 
+//Java_protected_final
 	void Item::setActiveSentenceNr()
 		{
 		if( activeSentenceNr_ == NO_SENTENCE_NR )
 			activeSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
+//Java_protected_final
 	void Item::setArchivedSentenceNr()
 		{
 		if( archivedSentenceNr_ == NO_SENTENCE_NR )
 			archivedSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
+//Java_protected_final
 	void Item::setInactiveSentenceNr()
 		{
 		if( inactiveSentenceNr_ == NO_SENTENCE_NR )
 			inactiveSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
+//Java_protected_final
 	void Item::setReplacedSentenceNr()
 		{
 		if( replacedSentenceNr_ == NO_SENTENCE_NR )
 			replacedSentenceNr_ = globalVariables_->currentSentenceNr;
 		}
 
+//Java_protected_final
 	void Item::displayWords( bool isReturnQueryToPosition, unsigned short queryWordTypeNr )
 		{
 		char *myWordString;
@@ -932,46 +1026,55 @@
 			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, NULL, ( myWordItem_ == NULL || myWordItem_->isAdminWord() ? NULL : myWordItem_->anyWordTypeString() ), errorString );
 		}
 
+//Java_protected_final
 	bool Item::hasActiveSentenceNr()
 		{
 		return ( activeSentenceNr_ > NO_SENTENCE_NR );
 		}
 
+//Java_protected_final
 	bool Item::hasInactiveSentenceNr()
 		{
 		return ( inactiveSentenceNr_ > NO_SENTENCE_NR );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentCreationSentenceNr()
 		{
 		return ( creationSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentOrNewerCreationSentenceNr()
 		{
 		return ( creationSentenceNr_ >= globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentActiveSentenceNr()
 		{
 		return ( activeSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentInactiveSentenceNr()
 		{
 		return ( inactiveSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentArchivedSentenceNr()
 		{
 		return ( archivedSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasCurrentReplacedSentenceNr()
 		{
 		return ( replacedSentenceNr_ == globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasSentenceNr( unsigned int sentenceNr )
 		{
 		return ( originalSentenceNr_ == sentenceNr ||
@@ -982,102 +1085,122 @@
 				replacedSentenceNr_ == sentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::hasUserNr()
 		{
 		return ( userNr_ > NO_USER_NR );
 		}
 
+//Java_protected_final
 	bool Item::isOlderItem()
 		{
 		return ( originalSentenceNr_ < globalVariables_->currentSentenceNr );
 		}
 
+//Java_protected_final
 	bool Item::isActiveItem()
 		{
 		return ( statusChar_ == QUERY_ACTIVE_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::isInactiveItem()
 		{
 		return ( statusChar_ == QUERY_INACTIVE_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::isArchivedItem()
 		{
 		return ( statusChar_ == QUERY_ARCHIVED_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::isReplacedItem()
 		{
 		return ( statusChar_ == QUERY_REPLACED_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::isDeletedItem()
 		{
 		return ( statusChar_ == QUERY_DELETED_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::isReplacedOrDeletedItem()
 		{
 		return ( statusChar_ == QUERY_REPLACED_CHAR ||
 				statusChar_ == QUERY_DELETED_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::wasActiveBefore()
 		{
 		return ( previousStatusChar == QUERY_ACTIVE_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::wasInactiveBefore()
 		{
 		return ( previousStatusChar == QUERY_INACTIVE_CHAR );
 		}
 
+//Java_protected_final
 	bool Item::wasArchivedBefore()
 		{
 		return ( previousStatusChar == QUERY_ARCHIVED_CHAR );
 		}
 
+//Java_protected_final
 	unsigned short Item::userNr()
 		{
 		return userNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::activeSentenceNr()
 		{
 		return activeSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::inactiveSentenceNr()
 		{
 		return inactiveSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::originalSentenceNr()
 		{
 		return originalSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::creationSentenceNr()
 		{
 		return creationSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::archivedSentenceNr()
 		{
 		return archivedSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::replacedSentenceNr()
 		{
 		return replacedSentenceNr_;
 		}
 
+//Java_protected_final
 	unsigned int Item::itemNr()
 		{
 		return itemNr_;
 		}
 
+//Java_protected_final
 	signed char Item::decrementActiveSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementActiveSentenceNr";
@@ -1090,6 +1213,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementInactiveSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementInactiveSentenceNr";
@@ -1102,6 +1226,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementOriginalSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementOriginalSentenceNr";
@@ -1114,6 +1239,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementCreationSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementCreationSentenceNr";
@@ -1126,6 +1252,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementArchivedSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementArchivedSentenceNr";
@@ -1138,6 +1265,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementReplacedSentenceNr()
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementReplacedSentenceNr";
@@ -1150,6 +1278,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char Item::decrementItemNr( unsigned int decrementOffset )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "decrementItemNr";
@@ -1162,6 +1291,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	char Item::statusChar()
 		{
 		return statusChar_;
@@ -1275,11 +1405,13 @@
 		return inputOutput_;
 		}
 
+//Java_protected_final
 	List *Item::myList()
 		{
 		return myList_;
 		}
 
+//Java_protected_final
 	Item *Item::tailOfList()
 		{
 		Item *previousSearchItem = this;
@@ -1294,6 +1426,7 @@
 		return previousSearchItem;
 		}
 
+//Java_protected_final
 	WordItem *Item::myWordItem()
 		{
 		return myWordItem_;
@@ -1302,6 +1435,7 @@
 
 	// Protected database connection functions
 /*
+//Java_protected_final
 	signed char Item::storeChangesInFutureDatabase()
 		{
 		// Save changes of this item to the database
@@ -1312,6 +1446,7 @@
 
 	// Protected definition functions
 
+//Java_protected_static_final
 	bool Item::doesStringStartWithPhoneticVowel( char *textString )
 		{
 		unsigned short index = 0;
@@ -1330,6 +1465,7 @@
 		return false;
 		}
 
+//Java_protected_static_final
 	bool Item::isAdjectiveParameter( unsigned short checkParameter )
 		{
 		return ( checkParameter == WORD_PARAMETER_ADJECTIVE_EVERY_NEUTRAL ||
@@ -1344,6 +1480,7 @@
 //				checkParameter == WORD_PARAMETER_ADJECTIVE_NEXT_FEMININE_MASCULINE );
 		}
 
+//Java_protected_static_final
 	bool Item::isDefiniteArticleParameter( unsigned short checkParameter )
 		{
 		return ( checkParameter == WORD_PARAMETER_ARTICLE_DEFINITE_PLURAL_NEUTRAL ||
@@ -1354,6 +1491,7 @@
 				checkParameter == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
+//Java_protected_static_final
 	bool Item::isIndefiniteArticleParameter( unsigned short checkParameter )
 		{
 		return ( checkParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE ||
@@ -1367,6 +1505,7 @@
 				checkParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_SINGULAR_MASCULINE );
 		}
 
+//Java_protected_static_final
 	bool Item::isFeminineArticleParameter( unsigned short articleParameter )
 		{
 		return ( articleParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_FEMININE ||
@@ -1378,6 +1517,7 @@
 				articleParameter == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_FEMININE );
 		}
 
+//Java_protected_static_final
 	bool Item::isMasculineArticleParameter( unsigned short articleParameter )
 		{
 		return ( articleParameter == WORD_PARAMETER_ARTICLE_INDEFINITE_PHONETIC_VOWEL_PLURAL_MASCULINE ||
@@ -1389,6 +1529,7 @@
 				articleParameter == WORD_PARAMETER_ARTICLE_DEFINITE_SINGULAR_MASCULINE );
 		}
 
+//Java_protected_static_final
 	bool Item::isMatchingWordType( unsigned short firstWordTypeNr, unsigned short secondWordTypeNr )
 		{
 		return	( firstWordTypeNr == secondWordTypeNr ||
@@ -1397,12 +1538,14 @@
 				isNounWordType( secondWordTypeNr ) ) );
 		}
 
+//Java_protected_static_final
 	bool Item::isNounWordType( unsigned short wordTypeNr )
 		{
 		return ( wordTypeNr == WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
+//Java_protected_static_final
 	bool Item::isGeneralizationReasoningWordType( unsigned short wordTypeNr )
 		{
 		return ( wordTypeNr == WORD_TYPE_PROPER_NOUN ||
@@ -1410,6 +1553,7 @@
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
+//Java_protected_static_final
 	bool Item::isSpecificationReasoningWordType( unsigned short wordTypeNr )
 		{
 		return ( wordTypeNr == WORD_TYPE_ADJECTIVE ||
@@ -1417,10 +1561,11 @@
 				wordTypeNr == WORD_TYPE_NOUN_PLURAL );
 		}
 
-	unsigned int Item::justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem )
+//Java_protected_static_final
+	unsigned short Item::justificationAssumptionLevel( bool hasFeminineOrMasculineProperNounEnding, unsigned short justificationTypeNr, SpecificationItem *primarySpecificationItem, SpecificationItem *additionalDefinitionSpecificationItem, SpecificationItem *secondarySpecificationItem, SpecificationItem *additionalProperNounSpecificationItem )
 		{
-		unsigned int assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != NULL ), ( primarySpecificationItem != NULL && primarySpecificationItem->isExclusiveSpecification() ), ( primarySpecificationItem != NULL && primarySpecificationItem->isNegative() ), ( secondarySpecificationItem != NULL && secondarySpecificationItem->isNegative() ), justificationTypeNr );
-		unsigned int tempAssumptionLevel;
+		unsigned short assumptionLevel = justificationAssumptionGrade( hasFeminineOrMasculineProperNounEnding, ( additionalDefinitionSpecificationItem != NULL ), ( primarySpecificationItem != NULL && primarySpecificationItem->isExclusiveSpecification() ), ( primarySpecificationItem != NULL && primarySpecificationItem->isNegative() ), ( secondarySpecificationItem != NULL && secondarySpecificationItem->isNegative() ), justificationTypeNr );
+		unsigned short tempAssumptionLevel;
 
 		if( primarySpecificationItem != NULL &&
 		( tempAssumptionLevel = primarySpecificationItem->assumptionLevel() ) > NO_ASSUMPTION_LEVEL )

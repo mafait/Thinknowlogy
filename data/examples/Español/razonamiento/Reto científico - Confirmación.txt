@@ -1,7 +1,7 @@
-﻿Paz es hijo de Juan.
+﻿Paz es un hijo de Juan.
 Juan tiene un hijo, llamado Paz.
 Ana tiene una hija, llamada Laura.
-Laura es hija de Ana.
+Laura es una hija de Ana.
 
 Cada coche tiene un motor.
 Un motor es parte de cada coche.

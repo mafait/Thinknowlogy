@@ -3,9 +3,9 @@
  *	Purpose:		Storing info about generalizations of a word,
  *					which are the "parents" of that word,
  *					and is the opposite direction of its specifications
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -35,8 +35,8 @@ class GeneralizationItem : private Item
 	friend class AdminWrite;
 	friend class ContextList;
 	friend class GeneralizationList;
-		friend class SpecificationItem;
-		friend class SpecificationList;
+	friend class SpecificationItem;
+	friend class SpecificationList;
 	friend class WordItem;
 	friend class WordSpecification;
 
@@ -217,14 +217,15 @@ class GeneralizationItem : private Item
 			{
 			if( searchGeneralizationItem->isRelation_ == isRelation &&
 
-			( !isOnlySelectingCurrentLanguage ||
-			searchGeneralizationItem->languageNr_ == currentLanguageNr ) &&
+				( !isOnlySelectingCurrentLanguage ||
+				searchGeneralizationItem->languageNr_ == currentLanguageNr ) &&
 
-			( !isOnlySelectingNoun ||
-			searchGeneralizationItem->isNoun() ) &&
+				( !isOnlySelectingNoun ||
+				searchGeneralizationItem->isNoun() ) &&
 
-			( !isOnlySelectingProperNoun ||
-			searchGeneralizationItem->isProperNoun() ) )
+				( !isOnlySelectingProperNoun ||
+				searchGeneralizationItem->isProperNoun() ) )
+
 				return searchGeneralizationItem;
 
 			searchGeneralizationItem = searchGeneralizationItem->nextGeneralizationItem();

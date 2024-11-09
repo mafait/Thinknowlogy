@@ -1,8 +1,8 @@
 ﻿/*	Class:			GlobalVariables
  *	Purpose:		Holding global variables
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -102,6 +102,7 @@ class GlobalVariables
 	unsigned int nReplacedQueryItems = 0;
 
 	unsigned int nDeletedItems = 0;
+	unsigned int nTotalCreatedItems = 0;
 
 	unsigned int nUserGeneralizationWords = 0;
 	unsigned int nUserSpecificationWords = 0;
@@ -120,6 +121,7 @@ class GlobalVariables
 	WordItem *firstContextWordItem = NULL;
 	WordItem *firstPossessiveNounWordItem = NULL;
 	WordItem *firstPredefinedWordItem = NULL;
+	WordItem *firstProperNounWordItem = NULL;
 	WordItem *firstSpecificationWordItem = NULL;
 	WordItem *firstTouchedWordItem = NULL;
 	WordItem *firstUserDefinedProperNounWordItem = NULL;

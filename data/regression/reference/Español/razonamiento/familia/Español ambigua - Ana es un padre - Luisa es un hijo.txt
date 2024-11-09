@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -124,11 +124,11 @@
 < Ana no es femenina.
 < Ana es parte de una familia.
 < Ana es un hombre.
-< Ana no es una hija.
-< Ana no es una madre.
-< Ana no es una niña.
-< Ana no es una mujer.
 < Ana es masculino.
+< Ana no es una hija.
+< Ana no es una niña.
+< Ana no es una madre.
+< Ana no es una mujer.
 * 
 * Mis suposiciones:
 < Ana es probablemente una persona.
@@ -149,48 +149,48 @@
 < Ana es un hombre. Porque:
 <	- Ana es un padre.
 <	- Cada padre es un hombre.
-< Ana no es una hija. Porque:
-<	- Ana es un hombre.
-<	- Cada hombre no es una hija.
-* 	y:
-<	- Ana es masculino.
-<	- Cada hija no es masculino.
-* 	y:
-<	- Ana es un padre.
-<	- Cada padre no es una hija.
-< Ana no es una madre. Porque:
-<	- Ana es un padre.
-<	- Cada padre no es una madre.
-* 	y:
-<	- Ana es un hombre.
-<	- Cada hombre no es una madre.
-* 	y:
-<	- Ana es masculino.
-<	- Cada madre no es masculino.
-< Ana no es una niña. Porque:
-<	- Ana es un hombre.
-<	- Cada hombre no es una niña.
-* 	y:
-<	- Ana es masculino.
-<	- Cada niña no es masculino.
-* 	y:
-<	- Ana es un padre.
-<	- Cada padre no es una niña.
-< Ana no es una mujer. Porque:
-<	- Ana es un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
-<	- Ana es masculino.
-<	- Cada mujer no es masculino.
-* 	y:
-<	- Ana es un padre.
-<	- Cada padre no es una mujer.
 < Ana es masculino. Porque:
 <	- Ana es un hombre.
 <	- Cada hombre es masculino.
 * 	y:
 <	- Ana es un padre.
 <	- Cada padre es masculino.
+< Ana no es una hija. Porque:
+<	- Ana es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Ana es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Ana es un padre.
+<	- Cada padre no es una hija.
+< Ana no es una niña. Porque:
+<	- Ana es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Ana es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Ana es un padre.
+<	- Cada padre no es una niña.
+< Ana no es una madre. Porque:
+<	- Ana es masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Ana es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Ana es un padre.
+<	- Cada padre no es una madre.
+< Ana no es una mujer. Porque:
+<	- Ana es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Ana es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Ana es un padre.
+<	- Cada padre no es una mujer.
 * 
 * Mis suposiciones:
 < Ana es probablemente una persona. Porque:

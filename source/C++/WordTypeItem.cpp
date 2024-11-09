@@ -1,9 +1,9 @@
 ﻿/*	Class:			WordTypeItem
  *	Parent class:	Item
  *	Purpose:		Storing the word types of a word
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -198,10 +198,10 @@ class WordTypeItem : private Item
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
 
-				( adjectiveParameter_ > NO_ADJECTIVE_PARAMETER ||
-				definiteArticleParameter_ > NO_DEFINITE_ARTICLE_PARAMETER ||
-				indefiniteArticleParameter_ > NO_INDEFINITE_ARTICLE_PARAMETER ||
-				wordTypeLanguageNr_ > NO_LANGUAGE_NR ) ) );
+					( adjectiveParameter_ > NO_ADJECTIVE_PARAMETER ||
+					definiteArticleParameter_ > NO_DEFINITE_ARTICLE_PARAMETER ||
+					indefiniteArticleParameter_ > NO_INDEFINITE_ARTICLE_PARAMETER ||
+					wordTypeLanguageNr_ > NO_LANGUAGE_NR ) ) );
 		}
 
 	virtual bool hasWordType( unsigned short queryWordTypeNr )
@@ -388,6 +388,11 @@ class WordTypeItem : private Item
 		return myWordItem()->hasFeminineAndMasculineArticle( indefiniteArticleParameter_ );
 		}
 
+	bool isAnswer()
+		{
+		return ( wordTypeNr_ == WORD_TYPE_ANSWER );
+		}
+
 	bool isCorrectAdjective( unsigned short adjectiveParameter )
 		{
 		return ( adjectiveParameter_ == NO_ADJECTIVE_PARAMETER ||
@@ -445,11 +450,6 @@ class WordTypeItem : private Item
 				strcmp( wordTypeString_, compareString ) == 0 );
 		}
 
-	bool isAnswer()
-		{
-		return ( wordTypeNr_ == WORD_TYPE_ANSWER );
-		}
-
 	bool isDefiniteArticle()
 		{
 		return isDefiniteArticleParameter( definiteArticleParameter_ );
@@ -459,6 +459,11 @@ class WordTypeItem : private Item
 		{
 		return ( wordTypeNr_ == WORD_TYPE_NOUN_SINGULAR ||
 				wordTypeNr_ == WORD_TYPE_NOUN_PLURAL );
+		}
+
+	bool isProperNounPrecededByDefiniteArticle()
+		{
+		return isProperNounPrecededByDefiniteArticle_;
 		}
 
 	bool isProperNounPrecededByDefiniteArticle( unsigned short definiteArticleParameter )
@@ -502,14 +507,14 @@ class WordTypeItem : private Item
 		return indefiniteArticleParameter_;
 		}
 
-	unsigned short wordTypeNr()
-		{
-		return wordTypeNr_;
-		}
-
 	unsigned short wordTypeLanguageNr()
 		{
 		return wordTypeLanguageNr_;
+		}
+
+	unsigned short wordTypeNr()
+		{
+		return wordTypeNr_;
 		}
 
 	signed char markGeneralizationWordTypeAsWritten()
@@ -569,21 +574,26 @@ class WordTypeItem : private Item
 		return RESULT_OK;
 		}
 
-	signed char setAdjectiveParameter( unsigned short adjectiveParameter )
+	signed char setAdjectiveParameter( unsigned short newAdjectiveParameter )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setAdjectiveParameter";
 
 		if( !isSingularNoun() )
 			return startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
 
-		if( !isAdjectiveParameter( adjectiveParameter ) )
+		if( !isAdjectiveParameter( newAdjectiveParameter ) )
 			return startError( functionNameString, NULL, itemString(), "The given adjective parameter is no adjective parameter" );
 
 		if( adjectiveParameter_ == NO_ADJECTIVE_PARAMETER )
-			adjectiveParameter_ = adjectiveParameter;
+			{
+			if( !hasCurrentCreationSentenceNr() )
+				return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+			adjectiveParameter_ = newAdjectiveParameter;
+			}
 		else
 			{
-			if( adjectiveParameter_ != adjectiveParameter &&
+			if( adjectiveParameter_ != newAdjectiveParameter &&
 			inputOutput()->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
 				return addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of a different adjective" );
 			}
@@ -591,21 +601,27 @@ class WordTypeItem : private Item
 		return RESULT_OK;
 		}
 
-	signed char setDefiniteArticleParameter( unsigned short definiteArticleParameter )
+	signed char setDefiniteArticleParameter( unsigned short newDefiniteArticleParameter )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setDefiniteArticleParameter";
 
 		if( !isSingularNoun() )
 			return startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
 
-		if( !isDefiniteArticleParameter( definiteArticleParameter ) )
+		if( !isDefiniteArticleParameter( newDefiniteArticleParameter ) )
 			return startError( functionNameString, NULL, itemString(), "The given definite article parameter is no definite article parameter" );
 
 		if( definiteArticleParameter_ == NO_DEFINITE_ARTICLE_PARAMETER )
-			definiteArticleParameter_ = definiteArticleParameter;
+			{
+			// Need to be fixed by copy-and-replace of old word type item
+//			if( !hasCurrentCreationSentenceNr() )
+//				return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+			definiteArticleParameter_ = newDefiniteArticleParameter;
+			}
 		else
 			{
-			if( definiteArticleParameter_ != definiteArticleParameter &&
+			if( definiteArticleParameter_ != newDefiniteArticleParameter &&
 			inputOutput()->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_DEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
 				return addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of a different defnite article" );
 			}
@@ -613,27 +629,39 @@ class WordTypeItem : private Item
 		return RESULT_OK;
 		}
 
-	signed char setIndefiniteArticleParameter( unsigned short indefiniteArticleParameter )
+	signed char setIndefiniteArticleParameter( unsigned short newIndefiniteArticleParameter )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setIndefiniteArticleParameter";
 
 		if( !isSingularNoun() )
 			return startError( functionNameString, NULL, itemString(), "I am not a singular noun" );
 
-		if( !isIndefiniteArticleParameter( indefiniteArticleParameter ) )
+		if( !isIndefiniteArticleParameter( newIndefiniteArticleParameter ) )
 			return startError( functionNameString, NULL, itemString(), "The given indefinite article parameter is no indefinite article parameter" );
 
 		if( indefiniteArticleParameter_ == NO_INDEFINITE_ARTICLE_PARAMETER )
-			indefiniteArticleParameter_ = indefiniteArticleParameter;
+			{
+			// Need to be fixed by copy-and-replace of old word type item
+//			if( !hasCurrentCreationSentenceNr() )
+//				return startError( functionNameString, NULL, "It isn't allowed to change an older item afterwards" );
+
+			indefiniteArticleParameter_ = newIndefiniteArticleParameter;
+			}
 		else
 			{
-			if( indefiniteArticleParameter_ != indefiniteArticleParameter &&
-
+			if( indefiniteArticleParameter_ != newIndefiniteArticleParameter &&
+			// Write interface notification about the use of an indefinite article
 			inputOutput()->writeInterfaceText( false, INPUT_OUTPUT_PROMPT_NOTIFICATION, INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_INDEFINITE_ARTICLE_WITH_NOUN_START, itemString(), INTERFACE_SENTENCE_NOTIFICATION_USED_DIFFERENT_ADJECTIVE_OR_ARTICLE_WITH_NOUN_END ) != RESULT_OK )
 				return addError( functionNameString, NULL, itemString(), "I failed to write an interface notification about the use of an indefinite article" );
 			}
 
 		return RESULT_OK;
+		}
+
+//Java_protected_final
+	char *wordTypeString()
+		{
+		return wordTypeString_;
 		}
 
 	WordTypeItem *nextWordTypeItem()

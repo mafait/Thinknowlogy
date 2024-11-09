@@ -1,5 +1,5 @@
 ﻿* 
 * Mis conclusiones:
-< Los Estados Unidos tiene un ciudad, llamado Boston.
-< Los Reino Unido tiene un ciudad, llamado Boston.
+< Los Estados Unidos tiene una ciudad, llamado Boston.
+< Los Reino Unido tiene una ciudad, llamado Boston.
 < 

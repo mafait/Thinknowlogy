@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -122,12 +122,12 @@
 * Mis conclusiones:
 < Ana es parte de una familia.
 < Ana es una mujer.
-< Ana no es un padre.
+< Ana no es masculino.
+< Ana es femenina.
 < Ana no es un hijo.
 < Ana no es un niño.
-< Ana no es masculino.
+< Ana no es un padre.
 < Ana no es un hombre.
-< Ana es femenina.
 < Paz tiene una madre, llamada Ana.
 < José tiene una madre, llamada Ana.
 < Luisa tiene una madre, llamada Ana.
@@ -140,7 +140,7 @@
 < Paz es probablemente parte de una familia.
 < José es probablemente parte de una familia.
 < José es posiblemente una persona.
-< Luisa es puede-ser hija de Ana.
+< Luisa es puede-ser una hija de Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
 < Luisa no es puede-ser un hijo.
@@ -163,18 +163,16 @@
 * Mis preguntas que han sido respondidas:
 < ¿Es Luisa una niña o una mujer?
 * 
-* Mis suposiciones que se han concluido:
-< Luisa no es un hijo.
-< Luisa no es un niño.
-< Luisa no es masculino.
-< Luisa no es un padre.
-< Luisa no es un hombre.
-* 
 * Mis suposiciones que se han ajustado:
 < Luisa es probablemente una persona.
 * 
 * Mis suposiciones que se han concluido:
 < Luisa es femenina.
+< Luisa no es un hijo.
+< Luisa no es un niño.
+< Luisa no es masculino.
+< Luisa no es un padre.
+< Luisa no es un hombre.
 * 
 * Mis suposiciones:
 < Luisa no es probablemente una mujer.
@@ -193,42 +191,6 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es una mujer.
-< Ana no es un hijo. Porque:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada madre no es un hijo.
-* 	y:
-<	- Ana es una mujer.
-<	- Cada mujer no es un hijo.
-* 	y:
-<	- Ana es femenina.
-<	- Cada hijo no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un hijo.
-< Ana no es un niño. Porque:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada madre no es un niño.
-* 	y:
-<	- Ana es una mujer.
-<	- Cada mujer no es un niño.
-* 	y:
-<	- Ana es femenina.
-<	- Cada niño no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un niño.
-< Ana no es un padre. Porque:
-<	- Ana es una madre.
-<	- Cada madre no es un padre.
-* 	y:
-<	- Ana es una mujer.
-<	- Cada mujer no es un padre.
-* 	y:
-<	- Ana es femenina.
-<	- Cada padre no es femenina.
-* 	y:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada madre no es un padre.
 < Ana no es masculino. Porque:
 <	- Ana es una madre.
 <	- Cada madre no es masculino.
@@ -238,18 +200,6 @@
 * 	y:
 <	- Luisa tiene una madre, llamada Ana.
 <	- Cada madre no es masculino.
-< Ana no es un hombre. Porque:
-<	- Luisa tiene una madre, llamada Ana.
-<	- Cada madre no es un hombre.
-* 	y:
-<	- Ana es una mujer.
-<	- Cada mujer no es un hombre.
-* 	y:
-<	- Ana es femenina.
-<	- Cada hombre no es femenina.
-* 	y:
-<	- Ana es una madre.
-<	- Cada madre no es un hombre.
 < Ana es femenina. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- Cada madre es femenina.
@@ -259,6 +209,54 @@
 * 	y:
 <	- Ana es una madre.
 <	- Cada madre es femenina.
+< Ana no es un hijo. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un hijo.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hijo no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hijo.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hijo.
+< Ana no es un niño. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un niño.
+* 	y:
+<	- Ana es femenina.
+<	- Cada niño no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un niño.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un niño.
+< Ana no es un padre. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un padre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada padre no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un padre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un padre.
+< Ana no es un hombre. Porque:
+<	- Luisa tiene una madre, llamada Ana.
+<	- Cada madre no es un hombre.
+* 	y:
+<	- Ana es femenina.
+<	- Cada hombre no es femenina.
+* 	y:
+<	- Ana es una mujer.
+<	- Cada mujer no es un hombre.
+* 	y:
+<	- Ana es una madre.
+<	- Cada madre no es un hombre.
 < Ana es parte de una familia. Porque:
 <	- Luisa tiene una madre, llamada Ana.
 <	- Padres son parte de cada familia.
@@ -268,7 +266,7 @@
 * 
 * Mis suposiciones:
 < Ana tiene puede-ser una hija, llamada Luisa. Porque:
-<	- Luisa es puede-ser hija de Ana.
+<	- Luisa es puede-ser una hija de Ana.
 < Ana no es probablemente una niña. Porque:
 <	- Ana es una mujer.
 <	- Una mujer no es probablemente una niña.
@@ -316,7 +314,7 @@
 <	- Cada niña es femenina.
 * 
 * Mis suposiciones:
-< Luisa es puede-ser hija de Ana. Porque:
+< Luisa es puede-ser una hija de Ana. Porque:
 <	- Ana es la madre de Paz, José y Luisa.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
@@ -327,7 +325,7 @@
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Luisa" es probablemente femenino.
 < Luisa es puede-ser parte de una familia. Porque:
-<	- Luisa es puede-ser hija de Ana.
+<	- Luisa es puede-ser una hija de Ana.
 <	- Hijos son parte de cada familia.
 < Luisa no es probablemente una mujer. Porque:
 <	- Luisa es una niña.

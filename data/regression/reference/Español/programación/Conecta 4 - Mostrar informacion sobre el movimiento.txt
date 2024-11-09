@@ -34,6 +34,7 @@ Es tu turno.
 * Su información:
 < Un movimiento puede-estar G, F, E, D, C, B o A.
 < Un movimiento puede-estar inválido.
+< Un movimiento puede-estar inválido.
 < Mi movimiento era D.
 < El movimiento era C.
 < 
@@ -145,6 +146,7 @@ Es tu turno.
 * 
 * Su información:
 < Un movimiento puede-estar G, F, E, D, C, B o A.
+< Un movimiento puede-estar inválido.
 < Un movimiento puede-estar inválido.
 < Mi movimiento era A, C y D.
 < El movimiento era G, C y D.

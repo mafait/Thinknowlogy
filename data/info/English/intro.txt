@@ -1,13 +1,14 @@
 ﻿Display "------------------------------------------------------------------------------".
-Display " Thinknowlogy is the world's only self-organizing knowledge technology.".
+Display " Thinknowlogy is the world's only naturally intelligent knowledge technology.".
 Display "------------------------------------------------------------------------------".
-Display " I believe that life and the universe are intelligently designed. And I believe that any".
-Display " intelligent design can be unraveled through reverse engineering. I have identified".
-Display " the human language as a source of natural intelligence. I am utilizing the intelligent".
-Display " design of the human language to replicate human intelligence in software.".
+Display " Natural intelligence is the utilization of naturally occurring logic.".
 Display "------------------------------------------------------------------------------".
-Display " The natural logic of language is demonstrated by:".
-Display " * Reasoning (in sentences with restricted grammar):".
+Display " This naturally occurring logic provides clues for organizing natural objects,".
+Display " like grouping objects that belong together, separating objects that don't".
+Display " belong together, and archiving objects that have become less important.".
+Display "------------------------------------------------------------------------------".
+Display " The naturally occurring logic of language is demonstrated by:".
+Display " * Reasoning (in readable sentences with a restricted grammar):".
 Display "   - drawing conclusions (more advanced than scientific solutions),".
 Display "   - making assumptions (with self-adjusting level of uncertainty),".
 Display "   - asking questions about gaps in the knowledge,".

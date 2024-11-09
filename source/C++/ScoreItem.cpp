@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		Temporarily storing scoring info during
  *					solving (= assigning) words according the selections
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -116,15 +116,15 @@ class ScoreItem : private Item
 
 				( queryParameter == MAX_QUERY_PARAMETER &&
 
-				( assignmentLevel_ > NO_ASSIGNMENT_LEVEL ||
-				oldSatisfiedScore > NO_SCORE ||
-				newSatisfiedScore > NO_SCORE ||
-				oldDissatisfiedScore > NO_SCORE ||
-				newDissatisfiedScore > NO_SCORE ||
-				oldNotBlockingScore > NO_SCORE ||
-				newNotBlockingScore > NO_SCORE ||
-				oldBlockingScore > NO_SCORE ||
-				newBlockingScore > NO_SCORE ) ) );
+					( assignmentLevel_ > NO_ASSIGNMENT_LEVEL ||
+					oldSatisfiedScore > NO_SCORE ||
+					newSatisfiedScore > NO_SCORE ||
+					oldDissatisfiedScore > NO_SCORE ||
+					newDissatisfiedScore > NO_SCORE ||
+					oldNotBlockingScore > NO_SCORE ||
+					newNotBlockingScore > NO_SCORE ||
+					oldBlockingScore > NO_SCORE ||
+					newBlockingScore > NO_SCORE ) ) );
 		}
 
 	virtual bool hasReferenceItemById( unsigned int querySentenceNr, unsigned int queryItemNr )

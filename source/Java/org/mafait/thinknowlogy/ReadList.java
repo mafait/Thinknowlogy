@@ -1,9 +1,9 @@
 ﻿/*	Class:			ReadList
  *	Parent class:	List
  *	Purpose:		Temporarily storing read items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@ class ReadList extends List
 
 	protected ReadList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, "ReadList", myWordItem );
+		initializeListVariables( Constants.ADMIN_READ_LIST_SYMBOL, myWordItem );
 		}
 
 

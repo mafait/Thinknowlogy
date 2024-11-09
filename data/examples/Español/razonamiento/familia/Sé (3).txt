@@ -1,15 +1,32 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Paz es hijo de Juan y Ana.
-José es hijo de Juan y Ana.
-Luisa es hija de Juan y Ana.
+Paz es un hijo de Juan y Ana.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+José es un hijo de Juan y Ana.
+Luisa es una hija de Juan y Ana.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
 Juan es el padre y Ana es la madre de Paz, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre Paz.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
-Paz es hijo de Juan y Ana.
-José es hijo de Juan y Ana.
-Luisa es hija de Juan y Ana.
+# Confirmations
+Juan tiene 3 hijos, llamados Paz, José y Luisa.
+Ana tiene 3 hijos, llamados Paz, José y Luisa.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
+# I know
+Paz es un hijo de Juan y Ana.
+José es un hijo de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 Juan es el padre y Ana es la madre de Paz, José y Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

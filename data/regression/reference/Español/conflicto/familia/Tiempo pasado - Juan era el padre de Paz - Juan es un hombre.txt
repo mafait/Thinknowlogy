@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -122,12 +122,12 @@
 * Mis conclusiones:
 < Juan era parte de una familia.
 < Juan era un hombre.
-< Juan no era una hija.
-< Juan no era una madre.
-< Juan no era una niña.
-< Juan no era femenina.
-< Juan no era una mujer.
 < Juan era masculino.
+< Juan no era una hija.
+< Juan no era una niña.
+< Juan no era una madre.
+< Juan no era una mujer.
+< Juan no era femenina.
 < Paz no tiene un padre nunca-más.
 < Paz tenido un padre, llamado Juan.
 * 

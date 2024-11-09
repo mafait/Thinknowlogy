@@ -1,9 +1,9 @@
-﻿Installation instructions for Thinknowlogy 2023 (Shaking tree):
+﻿Installation instructions for Thinknowlogy 2024 (Intelligent Origin):
 
-• This software uses Java. In order to install or upgrade the Java Runtime Environment, go to http://java.com/ and follow the instructions;
-• For Windows 7 and Windows XP, please check if you have downloaded the 7-Zip version;
-• Now extract the downloaded Zip file. It doesn't matter in which folder the file is extracted;
-• Start Explorer (for files) and go to the extracted folder, called Thinknowlogy2023;
-• Here you will find Java archive file Thinknowlogy2023. Double-click on this file to start the program;
+• This software uses Java. Install or upgrade the Java Runtime Environment first: http://java.com/
+• This software is compressed using 7-Zip. To unpack, install or upgrade 7-Zip: https://sourceforge.net/projects/sevenzip/
+• Unpack the downloaded Thinknowlogy file;
+• Start Explorer (for files) and go to the extracted folder, called Thinknowlogy2024;
+• Here you will find Java archive file Thinknowlogy2024. Double-click on this file to start the program;
 • The documentation and the source code of the program (in Java as well as C++) are included;
 • This program applies software license GPLv2.

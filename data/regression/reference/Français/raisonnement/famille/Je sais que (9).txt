@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -128,12 +128,12 @@
 * Mes conclusions:
 < Olivier est un père de Lorraine.
 < Olivier est un homme.
-< Olivier n'est pas une fille.
-< Olivier n'est pas une mère.
-< Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
-< Olivier n'est pas une femme.
 < Olivier est masculin.
+< Olivier n'est pas une fille.
+< Olivier n'est pas une jeune-fille.
+< Olivier n'est pas une mère.
+< Olivier n'est pas une femme.
 * 
 * Mes hypothèses:
 < Lorraine a probablement un parent, appelé Olivier.
@@ -147,8 +147,8 @@
 < Lorraine n'est peut-être pas un père.
 < Lorraine n'est peut-être pas un homme.
 < Lorraine n'est peut-être pas masculin.
-< Olivier n'est probablement pas un garçon.
 < Olivier est probablement une personne.
+< Olivier n'est probablement pas un garçon.
 < Olivier est probablement un parent de Lorraine.
 < Olivier est probablement partie d'une famille.
 < Olivier a possible un enfant, appelée Lorraine.
@@ -168,16 +168,16 @@
 < Julien a un père, appelé Olivier.
 < Julien a une mère, appelée Amélie.
 < Amélie est une femme.
-< Amélie n'est pas un père.
+< Amélie n'est pas masculin.
+< Amélie est féminin.
 < Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
-< Amélie n'est pas masculin.
+< Amélie n'est pas un père.
 < Amélie n'est pas un homme.
-< Amélie est féminin.
 * 
 * Mes hypothèses:
-< Olivier est probablement un parent de Lorraine, Pascal et Julien.
-< Olivier a possible 3 enfants, appelés Lorraine, Pascal et Julien.
+< Olivier est probablement un parent de Pascal, Julien et Lorraine.
+< Olivier a possible 3 enfants, appelés Pascal, Julien et Lorraine.
 < Lorraine est possible un enfant de Olivier et Amélie.
 < Lorraine est peut-être une fille de Olivier et Amélie.
 < Lorraine a probablement 2 parents, appelés Olivier et Amélie.
@@ -191,9 +191,9 @@
 < Julien est peut-être une personne.
 < Amélie n'est probablement pas une jeune-fille.
 < Amélie est probablement une personne.
-< Amélie est probablement un parent de Lorraine, Pascal et Julien.
+< Amélie est probablement un parent de Pascal, Julien et Lorraine.
 < Amélie est probablement partie d'une famille.
-< Amélie a possible 3 enfants, appelés Lorraine, Pascal et Julien.
+< Amélie a possible 3 enfants, appelés Pascal, Julien et Lorraine.
 < Amélie a peut-être une fille, appelée Lorraine.
 * 
 * Mes questions:

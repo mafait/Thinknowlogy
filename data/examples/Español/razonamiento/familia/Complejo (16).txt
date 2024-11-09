@@ -2,7 +2,7 @@
 Luisa es una hija.
 Ana es la madre de Paz, José y Luisa.
 Paz tiene 2 padres, llamados Juan y Ana.
-Luisa es hija de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 Luisa es una mujer.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
@@ -10,7 +10,7 @@ Luisa es una mujer.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.
 Paz es un hijo.
-Paz es hijo de Juan y Ana.
+Paz es un hijo de Juan y Ana.
 Juan es el padre de Paz, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.

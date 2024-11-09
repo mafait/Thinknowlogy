@@ -34,6 +34,7 @@ Het is jouw beurt.
 * Uw informatie:
 < Een zet kan-zijn G, F, E, D, C, B of A.
 < Een zet kan-zijn ongeldig.
+< Een zet kan-zijn ongeldig.
 < Mijn zet was D.
 < De zet was C.
 < 
@@ -145,6 +146,7 @@ Het is jouw beurt.
 * 
 * Uw informatie:
 < Een zet kan-zijn G, F, E, D, C, B of A.
+< Een zet kan-zijn ongeldig.
 < Een zet kan-zijn ongeldig.
 < Mijn zet was A, C en D.
 < De zet was G, C en D.

@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -143,7 +143,7 @@
 * 
 * Mis conclusiones:
 < Juan tiene un hijo, llamado Paz. Porque:
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 * 
 * Mis suposiciones:
 < Juan es posiblemente una persona. Porque:
@@ -198,7 +198,7 @@
 < Juan es probablemente un hombre.
 < Juan no es posiblemente un niño.
 < Juan no es probablemente femenina.
-< Juan es probablemente padre de Paz.
+< Juan es probablemente un padre de Paz.
 < 
 * 
 * Mis conclusiones:
@@ -215,21 +215,21 @@
 <	- Juan es masculino.
 <	- Cada mujer no es masculino.
 < Juan tiene un hijo, llamado Paz. Porque:
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 * 
 * Mis suposiciones:
 < Juan es posiblemente una persona. Porque:
 <	- Juan es probablemente un hombre.
 <	- Un hombre es probablemente una persona.
 * 	y:
-<	- Juan es probablemente padre de Paz.
+<	- Juan es probablemente un padre de Paz.
 <	- Un padre es probablemente una persona.
 * 	y:
 <	- Juan tiene un hijo, llamado Paz.
 <	- Cada familia tiene padres y hijos.
 <	- Un padre es probablemente una persona.
 < Juan es probablemente un hombre. Porque:
-<	- Juan es probablemente padre de Paz.
+<	- Juan es probablemente un padre de Paz.
 <	- Cada padre es un hombre.
 < Juan no es posiblemente un niño. Porque:
 <	- Juan es probablemente un hombre.
@@ -238,15 +238,15 @@
 <	- Juan es probablemente un hombre.
 <	- Cada hombre no es femenina.
 * 	y:
-<	- Juan es probablemente padre de Paz.
+<	- Juan es probablemente un padre de Paz.
 <	- Cada padre no es femenina.
 < Juan es probablemente parte de una familia. Porque:
-<	- Juan es probablemente padre de Paz.
+<	- Juan es probablemente un padre de Paz.
 <	- Padres son parte de cada familia.
-< Juan es probablemente padre de Paz. Porque:
+< Juan es probablemente un padre de Paz. Porque:
 <	- Cada familia tiene padres y hijos.
 <	- Juan tiene un hijo, llamado Paz.
 * 	y:
 <	- Cada familia tiene padres y hijos.
-<	- Paz es hijo de Juan.
+<	- Paz es un hijo de Juan.
 < 

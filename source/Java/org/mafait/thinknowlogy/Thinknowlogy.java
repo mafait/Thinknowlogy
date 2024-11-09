@@ -1,8 +1,8 @@
-/*	Class:		Thinknowlogy
+﻿/*	Class:		Thinknowlogy
  *	Purpose:	Main class of the Thinknowlogy knowledge technology
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -113,7 +113,7 @@ class Thinknowlogy
 			System.gc();
 
 			if( result == Constants.RESULT_OK )
-				startupLanguageNameString = new String( adminItem.currentLanguageNameString() );
+				startupLanguageNameString = new String( WordItem.currentLanguageNameString() );
 			}
 		while( result == Constants.RESULT_OK &&
 		hasRequestedRestart );

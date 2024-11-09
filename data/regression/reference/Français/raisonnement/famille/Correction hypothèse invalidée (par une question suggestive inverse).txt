@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -220,7 +220,6 @@
 < Est Olivier la mère de Pascal?
 * 
 * Mes hypothèses antérieures qui sont corrigés par une question suggestive opposée:
-< Olivier est probablement féminin.
 < Olivier n'est probablement pas un fils.
 < Olivier n'est probablement pas un garçon.
 < Olivier n'est probablement pas un père.
@@ -228,10 +227,11 @@
 < Olivier n'est probablement pas un homme.
 < Olivier est probablement une femme.
 < Olivier n'est possible pas une jeune-fille.
+< Olivier est probablement féminin.
 * 
 * Mes questions:
+< Est Olivier une femme ou un homme?
 < Est Olivier féminin ou masculin?
-< Est Olivier un homme ou une femme?
 < Est Olivier une mère ou un père?
 * 
 * Je ne connais pas la réponse à cette question, mais je vais le garder à l'esprit.
@@ -251,11 +251,18 @@
 <	- Parents sont partie de chaque famille.
 * 
 * Mes questions:
-< Est Olivier féminin ou masculin? En raison:
-<	- Olivier est possible une personne.
-<	- Chaque personne est masculin ou féminin.
+< Est Olivier une femme ou un homme? En raison:
+<	- Olivier est possible un parent.
+<	- Chaque parent est une femme ou un homme.
 * 	et:
-<	- Est Olivier un homme ou une femme?
+<	- Olivier est possible une personne.
+<	- Chaque personne est un homme ou une femme.
+* 	et:
+<	- Est Olivier une mère ou un père?
+<	- Chaque père est un homme.
+<	- Chaque mère est une femme.
+< Est Olivier féminin ou masculin? En raison:
+<	- Est Olivier une femme ou un homme?
 <	- Chaque homme est masculin.
 <	- Chaque femme est féminin.
 * 	et:
@@ -265,16 +272,9 @@
 <	- Est Olivier une mère ou un père?
 <	- Chaque père est masculin.
 <	- Chaque mère est féminin.
-< Est Olivier un homme ou une femme? En raison:
+* 	et:
 <	- Olivier est possible une personne.
-<	- Chaque personne est un homme ou une femme.
-* 	et:
-<	- Olivier est possible un parent.
-<	- Chaque parent est une femme ou un homme.
-* 	et:
-<	- Est Olivier une mère ou un père?
-<	- Chaque mère est une femme.
-<	- Chaque père est un homme.
+<	- Chaque personne est masculin ou féminin.
 < Est Olivier une mère ou un père? En raison:
 <	- Est Olivier le père de Pascal?
 * 	et:

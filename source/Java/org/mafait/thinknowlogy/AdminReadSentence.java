@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminReadSentence
  *	Supports class:	AdminItem
  *	Purpose:		Reading and analyzing sentences
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -64,7 +64,7 @@ class AdminReadSentence
 	private ReadItem startRelationReadItem_ = null;
 	private ReadItem endRelationReadItem_ = null;
 
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
@@ -76,7 +76,7 @@ class AdminReadSentence
 	private void checkForChangesMadeByThisSentence()
 		{
 		int currentSentenceNr = GlobalVariables.currentSentenceNr;
-		int highestFoundSentenceNr = adminItem_.highestFoundSentenceNr( false, false, currentSentenceNr );
+		int highestFoundSentenceNr = adminItem_.highestFoundSentenceNr( false, false, false, currentSentenceNr );
 
 		hasAnyChangeBeenMadeByThisSentence_ = ( highestFoundSentenceNr >= currentSentenceNr );
 		}
@@ -173,7 +173,7 @@ class AdminReadSentence
 		GlobalVariables.currentLanguageNr = newLanguageNr;
 		GlobalVariables.currentLanguageWordItem = languageWordItem;
 
-		if( adminItem_.assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, languageWordItem, GlobalVariables.predefinedNounLanguageWordItem, null ).result != Constants.RESULT_OK )
+		if( adminItem_.assignSpecificationWithAuthorization( false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, languageWordItem, GlobalVariables.predefinedNounLanguageWordItem, null, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to assign the language with authorization" );
 
 		return Constants.RESULT_OK;
@@ -200,7 +200,6 @@ class AdminReadSentence
 		WordTypeItem currentWordTypeItem;
 		WordTypeItem differentWordTypeItem;
 		WordTypeItem firstWordTypeItem;
-		WordTypeItem foundWordTypeItem;
 		StringBuffer existingMultipleWordStringBuffer;
 		StringBuffer multipleWordStringBuffer;
 		WordResultType wordResult = new WordResultType();
@@ -245,7 +244,7 @@ class AdminReadSentence
 			// The current word has the same word type as the first word
 			if( isFirstWordTypeNumeral ||
 			isFrenchPreposition ||
-			adminItem_.isMatchingWordType( firstWordTypeNr, currentWordTypeNr ) )
+			Item.isMatchingWordType( firstWordTypeNr, currentWordTypeNr ) )
 				{
 				if( ( currentWordItem = currentReadItem.readWordItem() ) == null )
 					return adminItem_.startError( 1, moduleNameString_, "I found a read item without read word" );
@@ -315,30 +314,10 @@ class AdminReadSentence
 					return adminItem_.addError( 1, moduleNameString_, "I failed to add the multiple word" );
 
 				createdMultipleWordItem = wordResult.createdWordItem;
-				multipleWordItem = ( createdMultipleWordItem == null ? wordResult.foundWordItem :
-																		createdMultipleWordItem );
-				foundWordTypeItem = wordResult.foundWordTypeItem;
 
-				if( foundWordTypeItem != null )
-					{
-					if( adjectiveParameter > Constants.NO_ADJECTIVE_PARAMETER &&
-					!foundWordTypeItem.hasAdjectiveParameter() &&
-					// Set adjective parameter
-					foundWordTypeItem.setAdjectiveParameter( adjectiveParameter ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to set the adjective parameter of a singular noun" );
-
-					if( definiteArticleParameter > Constants.NO_DEFINITE_ARTICLE_PARAMETER &&
-					!foundWordTypeItem.hasDefiniteArticleParameter() &&
-					// Set definite article parameter
-					foundWordTypeItem.setDefiniteArticleParameter( definiteArticleParameter ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to set the definite article parameter of a singular noun" );
-
-					if( indefiniteArticleParameter > Constants.NO_INDEFINITE_ARTICLE_PARAMETER &&
-					!foundWordTypeItem.hasIndefiniteArticleParameter() &&
-					// Set indefinite article parameter
-					foundWordTypeItem.setIndefiniteArticleParameter( indefiniteArticleParameter ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to set the indefinite article parameter of a singular noun" );
-					}
+				if( ( multipleWordItem = ( createdMultipleWordItem == null ? wordResult.foundWordItem :
+																			createdMultipleWordItem ) ) == null )
+					return adminItem_.startError( 1, moduleNameString_, "The multiple word is undefined" );
 				}
 
 			if( createdMultipleWordItem != null )
@@ -353,9 +332,6 @@ class AdminReadSentence
 				if( currentWordItem.addMultipleWord( nWordParts, firstWordTypeNr, createdMultipleWordItem ) != Constants.RESULT_OK )
 					return adminItem_.addError( 1, moduleNameString_, "I failed to add the second multiple word" );
 				}
-
-			if( multipleWordItem == null )
-				return adminItem_.startError( 1, moduleNameString_, "The multiple word is undefined" );
 
 			if( firstReadItem.changeReadWord( ( isFirstWordTypeNumeral ? firstWordTypeNr : currentWordTypeNr ), multipleWordItem ) != Constants.RESULT_OK )
 				return adminItem_.addError( 1, moduleNameString_, "I failed to delete an active read item" );
@@ -430,6 +406,7 @@ class AdminReadSentence
 
 						if( !isSelection &&
 						( userSpecificationItem = adminItem_.userSpecificationItem() ) != null &&
+						// Prepare integrity check of stored user sentence
 						adminItem_.prepareIntegrityCheckOfStoredUserSentence( isChineseCurrentLanguage_, userSpecificationItem, readUserSentenceString ) != Constants.RESULT_OK )
 							return adminItem_.addErrorWithAdminListNr( selectionListNr_, 1, moduleNameString_, "I failed to prepare the integrity check of the stored user sentence" );
 					}
@@ -677,11 +654,11 @@ class AdminReadSentence
 						if( ( boolResult = adminItem_.selectMatchingWordType( currentParseWordOrderNr_, definitionParseGrammarItem.grammarParameter(), definitionParseGrammarItem.grammarWordTypeNr() ) ).result != Constants.RESULT_OK )
 							return adminItem_.addError( 1, moduleNameString_, "I failed to select a matching word type" );
 
-						// Has found matching word type
+						// Found matching word type
 						if( boolResult.booleanValue )
 							currentParseWordOrderNr_++;
 						}
-					else
+					else	// No definition start
 						{
 						if( grammarLevel + 1 >= Constants.MAX_GRAMMAR_LEVEL )
 							return adminItem_.startError( 1, moduleNameString_, "There is probably an endless loop in the grammar definitions, because I reached the grammar level: #" + grammarLevel );
@@ -753,7 +730,6 @@ class AdminReadSentence
 
 		definitionParseGrammarItem != null &&
 		definitionParseGrammarItem.isGrammarDefinition() &&
-
 		// Set grammar parameter
 		adminItem_.setGrammarParameter( ( currentParseWordOrderNr_ > startWordOrderNr ), startWordOrderNr, ( currentParseWordOrderNr_ > startWordOrderNr ? currentParseWordOrderNr_ : previousWordOrderNr ), definitionParseGrammarItem ) != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to set the grammar parameter of the read words between the positions " + startWordOrderNr + " and " + currentParseWordOrderNr_ );
@@ -778,7 +754,7 @@ class AdminReadSentence
 	private byte parseSentence( StringBuffer readUserSentenceStringBuffer )
 		{
 		boolean isAction = false;
-		boolean isChineseCurrentLanguage = adminItem_.isChineseCurrentLanguage();
+		boolean isChineseCurrentLanguage = WordItem.isChineseCurrentLanguage();
 		boolean isNewStart = true;
 		short selectionLevel = Constants.NO_SELECTION_LEVEL;
 		short wordOrderNr;
@@ -878,7 +854,7 @@ class AdminReadSentence
 							case Constants.WORD_PARAMETER_SELECTION_IF:
 								if( selectionListNr_ != Constants.NO_LIST_NR &&
 								++selectionLevel == Constants.MAX_LEVEL )
-									return adminItem_.startSystemError( 1, moduleNameString_, "Selection overflow in list <" + adminItem_.adminListChar( selectionListNr_ ) + "> at word position " + wordOrderNr );
+									return adminItem_.startSystemError( 1, moduleNameString_, "Selection overflow in list <" + AdminItem.adminListChar( selectionListNr_ ) + "> at word position " + wordOrderNr );
 
 								isNewStart = true;
 								selectionListNr_ = Constants.ADMIN_CONDITION_LIST;
@@ -939,7 +915,7 @@ class AdminReadSentence
 		if( readUserSentenceStringBuffer == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given read user sentence string buffer is undefined" );
 
-		if( ( nLanguages = adminItem_.nLanguages() ) <= Constants.NO_LANGUAGE_NR )
+		if( ( nLanguages = WordItem.nLanguages() ) <= Constants.NO_LANGUAGE_NR )
 			return adminItem_.startError( 1, moduleNameString_, "I couldn't find any language" );
 
 		currentLanguageNr = originalLanguageNr;
@@ -978,11 +954,11 @@ class AdminReadSentence
 			if( boolResult.booleanValue )
 				{
 				lastCreatedWordOrderNr = adminItem_.lastCreatedWordOrderNr();
-				readingGrammarItem = adminItem_.firstCurrentLanguageReadingGrammarItem();
+				readingGrammarItem = WordItem.firstCurrentLanguageReadingGrammarItem();
 
 				do	{
 					if( findGrammarPath( Constants.NO_GRAMMAR_LEVEL, lastCreatedWordOrderNr, readingGrammarItem ) != Constants.RESULT_OK )
-						return adminItem_.addError( 1, moduleNameString_, "I failed to find the grammar path for a sentence with language \"" + adminItem_.languageNameString( currentLanguageNr ) + "\"" );
+						return adminItem_.addError( 1, moduleNameString_, "I failed to find the grammar path for a sentence with language \"" + WordItem.languageNameString( currentLanguageNr ) + "\"" );
 
 					isInterpretationSuccessful = ( currentParseWordOrderNr_ == lastCreatedWordOrderNr );
 
@@ -1098,7 +1074,7 @@ class AdminReadSentence
 					{
 					hasFoundChineseImperativeVerb = true;
 					imperativeVerbParameter = tempVerbParameter;
-					imperativeVerbWordItem = adminItem_.predefinedWordItem( tempVerbParameter );
+					imperativeVerbWordItem = WordItem.predefinedWordItem( tempVerbParameter );
 					}
 				else
 					{
@@ -1251,7 +1227,7 @@ class AdminReadSentence
 			setVariables( currentWordParameter );
 
 			isSameWordTypeAsPreviousWord = ( isFrenchPreposition ||
-											adminItem_.isMatchingWordType( previousWordTypeNr, currentWordTypeNr ) );
+											Item.isMatchingWordType( previousWordTypeNr, currentWordTypeNr ) );
 
 			switch( currentReadItem_.grammarParameter )
 				{
@@ -1280,7 +1256,7 @@ class AdminReadSentence
 					switch( currentWordTypeNr )
 						{
 						case Constants.WORD_TYPE_ADJECTIVE:
-							if( adminItem_.isAdjectiveParameter( currentReadItem_.wordParameter() ) )
+							if( Item.isAdjectiveParameter( currentReadItem_.wordParameter() ) )
 								generalizationAdjectiveParameter = currentReadItem_.wordParameter();
 
 							if( currentReadItem_.isAdjectivePrevious() )
@@ -1297,7 +1273,7 @@ class AdminReadSentence
 						case Constants.WORD_TYPE_ARTICLE:
 							hasGeneralizationArticle = true;
 
-							if( currentReadItem_.isDefiniteArticleParameter( currentReadItem_.wordParameter() ) )
+							if( Item.isDefiniteArticleParameter( currentReadItem_.wordParameter() ) )
 								generalizationDefiniteArticleParameter = currentReadItem_.wordParameter();
 							else
 								generalizationIndefiniteArticleParameter = currentReadItem_.wordParameter();
@@ -1562,7 +1538,7 @@ class AdminReadSentence
 
 		if( ( contextResult.contextNr = contextWordItem.contextNr( null ) ) == Constants.NO_CONTEXT_NR )
 			{
-			if( ( contextResult.contextNr = adminItem_.highestContextNrInAllContextWords() ) >= Constants.MAX_CONTEXT_NR )
+			if( ( contextResult.contextNr = AdminItem.highestContextNrInAllContextWords() ) >= Constants.MAX_CONTEXT_NR )
 				return adminItem_.startContextResultSystemError( 1, moduleNameString_, "Context number overflow" );
 
 			// Create new context number
@@ -1570,7 +1546,7 @@ class AdminReadSentence
 			}
 
 		// Add pronoun context
-		if( contextWordItem.addContext( contextWordTypeNr, Constants.NO_WORD_TYPE_NR, contextResult.contextNr, Constants.NO_COLLECTION_NR, null ) != Constants.RESULT_OK )
+		if( contextWordItem.addContext( contextWordTypeNr, Constants.NO_WORD_TYPE_NR, contextResult.contextNr, null ) != Constants.RESULT_OK )
 			return adminItem_.addContextResultError( 1, moduleNameString_, "I failed to add a pronoun context to word \"" + contextWordItem.anyWordTypeString() + "\"" );
 
 		return contextResult;
@@ -1603,11 +1579,6 @@ class AdminReadSentence
 		return isUniqueUserRelation_;
 		}
 
-	protected boolean isUserQuestion()
-		{
-		return ( questionParameter_ > Constants.NO_QUESTION_PARAMETER );
-		}
-
 	protected boolean wasPreviousCommandUndoOrRedo()
 		{
 		return wasPreviousCommandUndoOrRedo_;
@@ -1616,6 +1587,8 @@ class AdminReadSentence
 	protected byte processReadSentence( StringBuffer readUserSentenceStringBuffer )
 		{
 		int startSentenceNr = GlobalVariables.currentSentenceNr;
+
+		isChineseCurrentLanguage_ = false;
 
 		GlobalVariables.hasFoundAnswerToQuestion = false;
 		GlobalVariables.isFirstAnswerToQuestion = true;

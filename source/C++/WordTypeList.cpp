@@ -1,9 +1,9 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		Storing word type items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,32 @@ class WordTypeList : private List
 			searchWordTypeItem = searchWordTypeItem->nextWordTypeItem();
 			delete deleteWordTypeItem;
 			}
+		}
+
+	signed char copyAndReplaceWordType( unsigned short newAdjectiveParameter, unsigned short newDefiniteArticleParameter, unsigned short newIndefiniteArticleParameter, WordTypeItem *obsoleteWordTypeItem )
+		{
+		char *wordTypeString;
+		WordTypeResultType wordTypeResult;
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setAdjectiveParameter";
+
+		if( obsoleteWordTypeItem == NULL )
+			return startError( functionNameString, "The given obsolete word type item is undefined" );
+
+		if( obsoleteWordTypeItem->hasCurrentCreationSentenceNr() )
+			return startError( functionNameString, "The given obsolete word type item is not old" );
+
+		wordTypeString = obsoleteWordTypeItem->wordTypeString();
+
+		if( ( wordTypeResult.wordTypeItem = new WordTypeItem( obsoleteWordTypeItem->hasFeminineWordEnding(), obsoleteWordTypeItem->hasMasculineWordEnding(), obsoleteWordTypeItem->isProperNounPrecededByDefiniteArticle(), newAdjectiveParameter, newDefiniteArticleParameter, newIndefiniteArticleParameter, obsoleteWordTypeItem->wordTypeLanguageNr(), obsoleteWordTypeItem->wordTypeNr(), strlen( wordTypeString ), wordTypeString, globalVariables(), inputOutput(), this, myWordItem() ) ) == NULL )
+			return startError( functionNameString, "The created word type item is undefined" );
+
+		if( addItemToList( QUERY_ACTIVE_CHAR, wordTypeResult.wordTypeItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to add a word type item" );
+
+		if( replaceItem( obsoleteWordTypeItem ) != RESULT_OK )
+			return addError( functionNameString, "I failed to replace an obsolete justification" );
+
+		return RESULT_OK;
 		}
 
 	WordTypeItem *nextWordTypeListItem()
@@ -379,6 +405,69 @@ class WordTypeList : private List
 			return addError( functionNameString, "I failed to mark a relation word as written" );
 
 		return RESULT_OK;
+		}
+
+	signed char setAdjectiveParameter( bool isChineseCurrentLanguage, unsigned short newAdjectiveParameter, unsigned short wordParameter, WordTypeItem *thisWordTypeItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setAdjectiveParameter";
+
+		if( thisWordTypeItem == NULL )
+			return startError( functionNameString, "The given word type item is undefined" );
+
+		if( thisWordTypeItem->hasAdjectiveParameter() ||
+		thisWordTypeItem->hasCurrentCreationSentenceNr() )
+			// Set definite article parameter of word type item
+			return thisWordTypeItem->setAdjectiveParameter( newAdjectiveParameter );
+
+		// Known bug. Avoid changing 'WORD_PARAMETER_ADJECTIVE_NEW_NEUTRAL' to 'WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL' in Chinese
+		// Chinese test file: "Scientific challenge - Confirmation"
+		// Workaround: Skip setting adjective parameter in Chinese language
+		if( !isChineseCurrentLanguage &&
+		// Known bug, due to Dutch word 'oplossingsmethode'
+		// Dutch test file: "programmeren\Vier op 'n rij - Gretig om te winnen"
+		// Workaround: Skip predefined words
+		wordParameter == NO_WORD_PARAMETER )
+			return copyAndReplaceWordType( newAdjectiveParameter, thisWordTypeItem->definiteArticleParameter(), thisWordTypeItem->indefiniteArticleParameter(), thisWordTypeItem );
+
+		return RESULT_OK;
+		}
+
+	signed char setDefiniteArticleParameter( unsigned short newDefiniteArticleParameter, unsigned short wordParameter, WordTypeItem *thisWordTypeItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setDefiniteArticleParameter";
+
+		if( thisWordTypeItem == NULL )
+			return startError( functionNameString, "The given word type item is undefined" );
+
+		if( thisWordTypeItem->hasDefiniteArticleParameter() ||
+		thisWordTypeItem->hasCurrentCreationSentenceNr() ||
+		// Known bug for predefined words in Spanish and French
+		// Workaround for predefined words: Set definite article in word type item instead of in word item
+		wordParameter > NO_WORD_PARAMETER )
+			// Set definite article parameter of word type item
+			return thisWordTypeItem->setDefiniteArticleParameter( newDefiniteArticleParameter );
+
+		return copyAndReplaceWordType( thisWordTypeItem->adjectiveParameter(), newDefiniteArticleParameter, thisWordTypeItem->indefiniteArticleParameter(), thisWordTypeItem );
+		}
+
+	signed char setIndefiniteArticleParameter( unsigned short newIndefiniteArticleParameter, unsigned short wordParameter, WordTypeItem *thisWordTypeItem )
+		{
+		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "setIndefiniteArticleParameter";
+
+		if( thisWordTypeItem == NULL )
+			return startError( functionNameString, "The given word type item is undefined" );
+
+		if( thisWordTypeItem->hasIndefiniteArticleParameter() ||
+		thisWordTypeItem->hasCurrentCreationSentenceNr() ||
+		// Known bug for predefined words in Spanish and French
+		// Spanish test file: "conflicto\Asignación en conflicto con especificación de definición"
+		// French test file: "conflit\Assignation en conflit avec la spécification de définition"
+		// Workaround for predefined words: Set indefinite article in word type item instead of in word item
+		wordParameter > NO_WORD_PARAMETER )
+			// Set indefinite article parameter of word type item
+			return thisWordTypeItem->setIndefiniteArticleParameter( newIndefiniteArticleParameter );
+
+		return copyAndReplaceWordType( thisWordTypeItem->adjectiveParameter(), thisWordTypeItem->definiteArticleParameter(), newIndefiniteArticleParameter, thisWordTypeItem );
 		}
 
 	char *wordTypeString( bool isCheckingAllLanguages, unsigned short wordTypeNr )

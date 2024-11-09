@@ -1,6 +1,6 @@
-﻿Changes in Thinknowlogy 2023 (Shaking tree) compared to Thinknowlogy 2018r4 (New Science):
+﻿Changes in Thinknowlogy 2024 (Intelligent Origin) compared to Thinknowlogy 2023beta4 (Shaking tree):
 - Bug fixes;
 - Reduced internal complexity;
 - Improved justification;
-- Added negative reasoning;
-- Added adjective reasoning.
+- Improved efficiency;
+- Slightly improved reasoning.

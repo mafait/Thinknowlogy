@@ -1,30 +1,30 @@
 ﻿* 
 * Mis conclusiones:
-< Los Estados Unidos tiene un ciudad, llamado Boston.
+< Los Estados Unidos tiene una ciudad, llamado Boston.
 < 
 * 
 * La palabra "Boston" es semánticamente ambiguas. Hay varias instancias de esta entidad.
 * 
 * Mis conclusiones:
-< Los Reino Unido tiene un ciudad, llamado Boston.
+< Los Reino Unido tiene una ciudad, llamado Boston.
 < 
 * 
 * Su información:
-< Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 * 
 * Información relacionada:
-< Los Reino Unido tiene un ciudad, llamado Boston.
-< Los Estados Unidos tiene un ciudad, llamado Boston.
+< Los Reino Unido tiene una ciudad, llamado Boston.
+< Los Estados Unidos tiene una ciudad, llamado Boston.
 < 
 * 
 * Mis conclusiones:
-< Los Estados Unidos tiene un ciudad, llamado Boston. Porque:
-<	- Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Los Estados Unidos tiene una ciudad, llamado Boston. Porque:
+<	- Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 < 
 * 
 * Mis conclusiones:
-< Los Reino Unido tiene un ciudad, llamado Boston. Porque:
-<	- Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Los Reino Unido tiene una ciudad, llamado Boston. Porque:
+<	- Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 < 
 * Sé.
 * 
@@ -32,19 +32,19 @@
 * 
 * 
 * Su información:
-< Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 * 
 * Información relacionada:
-< Los Reino Unido tiene un ciudad, llamado Boston.
-< Los Estados Unidos tiene un ciudad, llamado Boston.
+< Los Reino Unido tiene una ciudad, llamado Boston.
+< Los Estados Unidos tiene una ciudad, llamado Boston.
 < 
 * 
 * Mis conclusiones:
-< Los Estados Unidos tiene un ciudad, llamado Boston. Porque:
-<	- Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Los Estados Unidos tiene una ciudad, llamado Boston. Porque:
+<	- Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 < 
 * 
 * Mis conclusiones:
-< Los Reino Unido tiene un ciudad, llamado Boston. Porque:
-<	- Boston es ciudad de tanto los Estados Unidos y los Reino Unido.
+< Los Reino Unido tiene una ciudad, llamado Boston. Porque:
+<	- Boston es una ciudad de tanto los Estados Unidos y los Reino Unido.
 < 

@@ -1,14 +1,14 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Juan es un padre.
 Luz es un padre.
-José es hijo de Juan.
+José es un hijo de Juan.
 Ana es la madre de Paz.
 Ana es una madre.
 Jorge era el padre de Alfonso.
 
 Juan es un padre.
 Luz es un padre.
-José es hijo de Juan.
+José es un hijo de Juan.
 Ana es la madre de Paz.
 Ana es una madre.
 Jorge era el padre de Alfonso.

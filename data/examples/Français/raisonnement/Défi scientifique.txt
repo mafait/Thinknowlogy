@@ -15,16 +15,22 @@ Une voile est partie de chaque voilier.
 Chaque famille a un parent et un enfant.
 Guillaume est un parent.
 Armand est un enfant.
-Fabrice a un parent.
+Pierre a un parent.
 Louis a un enfant.
 #-----------------------------------------------------------------
-# Bloque 3: Regroupement des connaissances
+# Bloque 3: Regroupement de connaissances (cahier des charges)
+# A paraître au second semestre 2025.
+#-----------------------------------------------------------------
+#Olivier a 3 pommes.
+#Pierre a 4 pommes.
+#-----------------------------------------------------------------
+# Bloque 4: Regroupement de connaissances (relations)
 #-----------------------------------------------------------------
 Olivier est un parent de Pascal.
 Amélie est un parent de Pascal.
 Pascal a 2 parents, appelés Olivier et Amélie.
 #-----------------------------------------------------------------
-# Bloque 4: Raisonnement dans le passé
+# Bloque 5: Raisonnement dans le passé
 #-----------------------------------------------------------------
 Philippe était le père de Antoine.
 Chaque père est un homme.
@@ -34,19 +40,19 @@ Chaque père est un homme.
 Chaque philosophe est mortel.
 Socrate était un philosophe.
 #-----------------------------------------------------------------
-# Bloque 5: La détection d'un conflit et de génération d'une question
+# Bloque 6: La détection d'un conflit et de génération d'une question
 #-----------------------------------------------------------------
 Chaque personne est un homme ou une femme.
 Jules est un homme et une femme.
 Jules est une personne.
 Jules n'est pas une femme.
 #-----------------------------------------------------------------
-# Bloque 6: Archivage des connaissances
+# Bloque 7: Archivage des connaissances
 #-----------------------------------------------------------------
 Barack Obama est le président des États-Unis.
 Donald Trump est le président des États-Unis.
 #-----------------------------------------------------------------
-# Bloque 7: Raisonnement avancé
+# Bloque 8: Raisonnement avancé
 #-----------------------------------------------------------------
 Chaque femme est féminin.
 Chaque homme est masculin.
@@ -59,7 +65,7 @@ Chaque garçon est masculin.
 Chaque fils est un garçon ou un homme.
 Chaque fille est une jeune-fille ou une femme.
 #-----------------------------------------------------------------
-# Bloque 8: Rapports de justification
+# Bloque 9: Rapports de justification
 #-----------------------------------------------------------------
 Affichez le rapport de justification sur les parents.
 Affichez le rapport de justification sur les personnes.
@@ -71,7 +77,7 @@ Affichez le rapport de justification sur Amélie.
 Affichez le rapport de justification sur Lorraine.
 Affichez le rapport de justification sur Guillaume.
 Affichez le rapport de justification sur Armand.
-Affichez le rapport de justification sur Fabrice.
+Affichez le rapport de justification sur Pierre.
 Affichez le rapport de justification sur Louis.
 Affichez le rapport de justification sur Philippe.
 Affichez le rapport de justification sur Antoine.

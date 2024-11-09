@@ -1,5 +1,5 @@
 ﻿#----------------------------------------------------------------------------
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
 # De natuurlijke logica van taal wordt aangetoond door:
 # * Redeneren (in zinnen met beperkte grammatica):
@@ -10,7 +10,7 @@
 #   - het detecteren van bevestigingen en conflicten; en met een zelf-organiserend vermogen;
 # * Meertaligheid, wat aangeeft dat talen een gemeenschappelijke en logische oorsprong hebben.
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 

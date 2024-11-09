@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -127,9 +127,9 @@
 < Angel tiene probablemente un hijo.
 * 
 * Mis preguntas:
-< ¿Es Angel masculino o femenina?
 < ¿Es Angel un padre o una madre?
 < ¿Es Angel un hombre o una mujer?
+< ¿Es Angel masculino o femenina?
 < 
 * 
 * Esta información es más específica que la información anterior:

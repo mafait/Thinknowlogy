@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -220,7 +220,6 @@
 < Is Jan de moeder van Paul?
 * 
 * Mijn eerdere veronderstellingen die gecorrigeerd zijn door een tegengestelde suggestieve vraag:
-< Jan is waarschijnlijk vrouwelijk.
 < Jan is waarschijnlijk geen zoon.
 < Jan is waarschijnlijk geen jongen.
 < Jan is waarschijnlijk geen vader.
@@ -228,10 +227,11 @@
 < Jan is waarschijnlijk geen man.
 < Jan is waarschijnlijk een vrouw.
 < Jan is mogelijk geen meisje.
+< Jan is waarschijnlijk vrouwelijk.
 * 
 * Mijn vragen:
+< Is Jan een vrouw of een man?
 < Is Jan vrouwelijk of mannelijk?
-< Is Jan een man of een vrouw?
 < Is Jan een moeder of een vader?
 * 
 * Ik weet het antwoord niet op deze vraag, maar ik zal 'm onthouden.
@@ -251,11 +251,18 @@
 <	- Ouders zijn deel van ieder gezin.
 * 
 * Mijn vragen:
-< Is Jan vrouwelijk of mannelijk? Omdat:
-<	- Jan is mogelijk een persoon.
-<	- Iedere persoon is mannelijk of vrouwelijk.
+< Is Jan een vrouw of een man? Omdat:
+<	- Jan is mogelijk een ouder.
+<	- Iedere ouder is een vrouw of een man.
 * 	en:
-<	- Is Jan een man of een vrouw?
+<	- Jan is mogelijk een persoon.
+<	- Iedere persoon is een man of een vrouw.
+* 	en:
+<	- Is Jan een moeder of een vader?
+<	- Iedere vader is een man.
+<	- Iedere moeder is een vrouw.
+< Is Jan vrouwelijk of mannelijk? Omdat:
+<	- Is Jan een vrouw of een man?
 <	- Iedere man is mannelijk.
 <	- Iedere vrouw is vrouwelijk.
 * 	en:
@@ -265,16 +272,9 @@
 <	- Is Jan een moeder of een vader?
 <	- Iedere vader is mannelijk.
 <	- Iedere moeder is vrouwelijk.
-< Is Jan een man of een vrouw? Omdat:
+* 	en:
 <	- Jan is mogelijk een persoon.
-<	- Iedere persoon is een man of een vrouw.
-* 	en:
-<	- Jan is mogelijk een ouder.
-<	- Iedere ouder is een vrouw of een man.
-* 	en:
-<	- Is Jan een moeder of een vader?
-<	- Iedere moeder is een vrouw.
-<	- Iedere vader is een man.
+<	- Iedere persoon is mannelijk of vrouwelijk.
 < Is Jan een moeder of een vader? Omdat:
 <	- Is Jan de vader van Paul?
 * 	en:

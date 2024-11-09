@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -220,7 +220,6 @@
 < Is John the mother of Paul?
 * 
 * My earlier assumptions that have been corrected by an opposite suggestive question:
-< John is probably feminine.
 < John is probably not a son.
 < John is probably not a boy.
 < John is probably not a father.
@@ -228,10 +227,11 @@
 < John is probably not a man.
 < John is probably a woman.
 < John is possibly not a girl.
+< John is probably feminine.
 * 
 * My questions:
+< Is John a woman or a man?
 < Is John feminine or masculine?
-< Is John a man or a woman?
 < Is John a mother or a father?
 * 
 * I don't know the answer to this question, but I'll keep it in mind.
@@ -251,11 +251,18 @@
 <	- Parents are part of every family.
 * 
 * My questions:
-< Is John feminine or masculine? Because:
-<	- John is possibly a person.
-<	- Every person is masculine or feminine.
+< Is John a woman or a man? Because:
+<	- John is possibly a parent.
+<	- Every parent is a woman or a man.
 * 	and:
-<	- Is John a man or a woman?
+<	- John is possibly a person.
+<	- Every person is a man or a woman.
+* 	and:
+<	- Is John a mother or a father?
+<	- Every father is a man.
+<	- Every mother is a woman.
+< Is John feminine or masculine? Because:
+<	- Is John a woman or a man?
 <	- Every man is masculine.
 <	- Every woman is feminine.
 * 	and:
@@ -265,16 +272,9 @@
 <	- Is John a mother or a father?
 <	- Every father is masculine.
 <	- Every mother is feminine.
-< Is John a man or a woman? Because:
+* 	and:
 <	- John is possibly a person.
-<	- Every person is a man or a woman.
-* 	and:
-<	- John is possibly a parent.
-<	- Every parent is a woman or a man.
-* 	and:
-<	- Is John a mother or a father?
-<	- Every mother is a woman.
-<	- Every father is a man.
+<	- Every person is masculine or feminine.
 < Is John a mother or a father? Because:
 <	- Is John the father of Paul?
 * 	and:

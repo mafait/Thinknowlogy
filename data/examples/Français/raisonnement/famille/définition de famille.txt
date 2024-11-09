@@ -1,5 +1,5 @@
 ﻿#----------------------------------------------------------------------------
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
 # La logique naturelle du langage est démontrée par:
 # * Raisonnement (dans des phrases à grammaire restreinte):
@@ -10,7 +10,7 @@
 #   - en détectant les confirmations et les conflits; en utilisant des capacités d'auto-organisation;
 # * Multilinguisme, en supposant que les langues ont une origine commune et logique.
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 

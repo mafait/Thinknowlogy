@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -127,12 +127,12 @@
 * 
 * Mes conclusions:
 < Olivier était un homme.
-< Olivier ne était pas une fille.
-< Olivier ne était pas une mère.
-< Olivier ne était pas une jeune-fille.
-< Olivier ne était pas féminin.
-< Olivier ne était pas une femme.
 < Olivier était masculin.
+< Olivier ne était pas une fille.
+< Olivier ne était pas une jeune-fille.
+< Olivier ne était pas une mère.
+< Olivier ne était pas une femme.
+< Olivier ne était pas féminin.
 < Pascal n'a aucun père plus.
 < Pascal avait un père, appelé Olivier.
 * 

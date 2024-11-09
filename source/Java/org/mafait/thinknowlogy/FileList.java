@@ -1,9 +1,9 @@
 ﻿/*	Class:			FileList
  *	Parent class:	List
  *	Purpose:		Storing file items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -78,7 +78,7 @@ class FileList extends List
 
 	protected FileList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.ADMIN_FILE_LIST_SYMBOL, "FileList", myWordItem );
+		initializeListVariables( Constants.ADMIN_FILE_LIST_SYMBOL, myWordItem );
 		}
 
 

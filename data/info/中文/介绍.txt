@@ -1,13 +1,14 @@
 ﻿呈现"------------------------------------------------------------------------------"。
-呈现" Thinknowlogy is the world's only self-organizing knowledge technology."。
+呈现" Thinknowlogy is the world's only naturally intelligent knowledge technology."。
 呈现"------------------------------------------------------------------------------"。
-呈现" I believe that life and the universe are intelligently designed. And I believe that any"。
-呈现" intelligent design can be unraveled through reverse engineering. I have identified"。
-呈现" the human language as a source of natural intelligence. I am utilizing the intelligent"。
-呈现" design of the human language to replicate human intelligence in software."。
+呈现" Natural intelligence is the utilization of naturally occurring logic."。
 呈现"------------------------------------------------------------------------------"。
-呈现" The natural logic of language is demonstrated by:"。
-呈现" * Reasoning (in sentences with restricted grammar):"。
+呈现" This naturally occurring logic provides clues for organizing natural objects,"。
+呈现" like grouping objects that belong together, separating objects that don't"。
+呈现" belong together, and archiving objects that have become less important."。
+呈现"------------------------------------------------------------------------------"。
+呈现" The naturally occurring logic of language is demonstrated by:"。
+呈现" * Reasoning (in readable sentences with a restricted grammar):"。
 呈现"   - drawing conclusions (more advanced than scientific solutions),"。
 呈现"   - making assumptions (with self-adjusting level of uncertainty),"。
 呈现"   - asking questions about gaps in the knowledge,"。

@@ -24,4 +24,7 @@ Claudia has a mother, called Anna.
 Claudia is a child of Anna.
 #Dev#Display the justification report about Anna.
 #Dev#Display the justification report about Claudia.
+Claudia is a daughter of Anna.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Claudia.
 # To continue, click button «Clear your mind.» or «Restart.».

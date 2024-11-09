@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -120,15 +120,15 @@
 < 
 * 
 * Mis conclusiones:
-< Juan es padre de Paz.
+< Juan es un padre de Paz.
 < Juan es parte de una familia.
 < Juan es un hombre.
-< Juan no es una hija.
-< Juan no es una madre.
-< Juan no es una niña.
 < Juan no es femenina.
-< Juan no es una mujer.
 < Juan es masculino.
+< Juan no es una hija.
+< Juan no es una niña.
+< Juan no es una madre.
+< Juan no es una mujer.
 * 
 * Mis suposiciones:
 < Paz es probablemente parte de una familia.
@@ -143,7 +143,7 @@
 < 
 * 
 * Mis conclusiones que han sido confirmadas:
-< Juan es padre de Paz.
+< Juan es un padre de Paz.
 * 
 * Mis conclusiones:
 < Paz tiene 2 padres, llamados Juan y Ana.
@@ -156,18 +156,18 @@
 < Luisa tiene una madre, llamada Ana.
 < Ana es parte de una familia.
 < Ana es una mujer.
-< Ana no es un padre.
+< Ana no es masculino.
+< Ana es femenina.
 < Ana no es un hijo.
 < Ana no es un niño.
-< Ana no es masculino.
+< Ana no es un padre.
 < Ana no es un hombre.
-< Ana es femenina.
 * 
 * Mis suposiciones:
 < Juan tiene puede-ser una hija, llamada Luisa.
 < José es posiblemente una persona.
 < José es probablemente parte de una familia.
-< Luisa es puede-ser hija de Juan y Ana.
+< Luisa es puede-ser una hija de Juan y Ana.
 < Luisa es puede-ser parte de una familia.
 < Luisa es puede-ser femenina.
 < Luisa no es puede-ser un hijo.

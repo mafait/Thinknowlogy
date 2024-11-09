@@ -1,5 +1,5 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-Paz es hijo de Juan y Ana.
+Paz es un hijo de Juan y Ana.
 ¿Es Paz un hombre?
 ¿Es Paz una mujer?
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

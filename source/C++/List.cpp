@@ -1,8 +1,8 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -118,14 +118,10 @@
 		while( searchItem != NULL )
 			{
 			if( searchItem->creationSentenceNr() == decrementSentenceNr &&
-			searchItem->itemNr() >= startDecrementItemNr )
-				{
-				if( searchItem->itemNr() <= startDecrementItemNr )
-					return startError( functionNameString, "I found an item number equal to - or lower than - the given start item number" );
-
-				if( searchItem->decrementItemNr( decrementOffset ) != RESULT_OK )
-					return addError( functionNameString, "I failed to decrement the item number of an item with a certain offset" );
-				}
+			searchItem->itemNr() >= startDecrementItemNr &&
+			// Decrement item number
+			searchItem->decrementItemNr( decrementOffset ) != RESULT_OK )
+				return addError( functionNameString, "I failed to decrement the item number of an item with a certain offset" );
 
 			searchItem = searchItem->nextItem;
 			}
@@ -552,6 +548,7 @@
 
 	// Protected error functions
 
+//Java_protected_final
 	signed char List::addError( const char *functionNameString, const char *errorString )
 		{
 		if( inputOutput_ == NULL )
@@ -569,6 +566,7 @@
 		return startError( functionNameString, errorString );
 		}
 
+//Java_protected_final
 	signed char List::startError( const char *functionNameString, const char *errorString )
 		{
 		addError( functionNameString, errorString );
@@ -592,6 +590,7 @@
 		return startError( functionNameString, errorString );
 		}
 
+//Java_protected_final
 	signed char List::startSystemError( const char *functionNameString, const char *errorString )
 		{
 		addError( functionNameString, errorString );
@@ -602,6 +601,7 @@
 		return RESULT_SYSTEM_ERROR;
 		}
 
+//Java_protected_final
 	BoolResultType List::addBoolResultError( const char *functionNameString, const char *errorString )
 		{
 		BoolResultType interpretationResult;
@@ -610,6 +610,7 @@
 		return interpretationResult;
 		}
 
+//Java_protected_final
 	BoolResultType List::startBoolResultError( const char *functionNameString, const char *errorString )
 		{
 		BoolResultType boolResult;
@@ -618,6 +619,7 @@
 		return boolResult;
 		}
 
+//Java_protected_final
 	CollectionResultType List::addCollectionResultError( const char *functionNameString, const char *errorString )
 		{
 		CollectionResultType collectionResult;
@@ -626,6 +628,7 @@
 		return collectionResult;
 		}
 
+//Java_protected_final
 	CollectionResultType List::startCollectionResultError( const char *functionNameString, const char *errorString )
 		{
 		CollectionResultType collectionResult;
@@ -642,6 +645,7 @@
 		return collectionResult;
 		}
 
+//Java_protected_final
 	CollectionResultType List::startCollectionResultSystemError( const char *functionNameString, const char *errorString )
 		{
 		CollectionResultType collectionResult;
@@ -650,6 +654,7 @@
 		return collectionResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType List::addCreateAndAssignResultError( const char *functionNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -658,6 +663,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	CreateAndAssignResultType List::startCreateAndAssignResultError( const char *functionNameString, const char *errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult;
@@ -666,6 +672,7 @@
 		return createAndAssignResult;
 		}
 
+//Java_protected_final
 	DuplicateResultType List::addDuplicateResultError( const char *functionNameString, const char *errorString )
 		{
 		DuplicateResultType duplicateResult;
@@ -674,6 +681,7 @@
 		return duplicateResult;
 		}
 
+//Java_protected_final
 	DuplicateResultType List::startDuplicateResultError( const char *functionNameString, const char *errorString )
 		{
 		DuplicateResultType duplicateResult;
@@ -682,6 +690,7 @@
 		return duplicateResult;
 		}
 
+//Java_protected_final
 	FileResultType List::addFileResultError( const char *functionNameString, const char *errorString )
 		{
 		FileResultType fileResult;
@@ -690,6 +699,7 @@
 		return fileResult;
 		}
 
+//Java_protected_final
 	FileResultType List::startFileResultError( const char *functionNameString, const char *errorString )
 		{
 		FileResultType fileResult;
@@ -706,6 +716,7 @@
 		return fileResult;
 		}
 
+//Java_protected_final
 	GrammarResultType List::addGrammarResultError( const char *functionNameString, const char *errorString )
 		{
 		GrammarResultType grammarResult;
@@ -714,6 +725,7 @@
 		return grammarResult;
 		}
 
+//Java_protected_final
 	GrammarResultType List::startGrammarResultError( const char *functionNameString, const char *errorString )
 		{
 		GrammarResultType grammarResult;
@@ -722,6 +734,7 @@
 		return grammarResult;
 		}
 
+//Java_protected_final
 	JustificationResultType List::addJustificationResultError( const char *functionNameString, const char *errorString )
 		{
 		JustificationResultType justificationResult;
@@ -730,6 +743,7 @@
 		return justificationResult;
 		}
 
+//Java_protected_final
 	JustificationResultType List::startJustificationResultError( const char *functionNameString, const char *errorString )
 		{
 		JustificationResultType justificationResult;
@@ -738,6 +752,7 @@
 		return justificationResult;
 		}
 
+//Java_protected_final
 	SelectionResultType List::addSelectionResultError( const char *functionNameString, const char *errorString )
 		{
 		SelectionResultType selectionResult;
@@ -746,6 +761,7 @@
 		return selectionResult;
 		}
 
+//Java_protected_final
 	SelectionResultType List::startSelectionResultSystemError( const char *functionNameString, const char *errorString )
 		{
 		SelectionResultType selectionResult;
@@ -754,6 +770,7 @@
 		return selectionResult;
 		}
 
+//Java_protected_final
 	ShortResultType List::startShortResultError( const char *functionNameString, const char *errorString )
 		{
 		ShortResultType shortResult;
@@ -762,6 +779,7 @@
 		return shortResult;
 		}
 
+//Java_protected_final
 	WordEndingResultType List::startWordEndingResultError( const char *functionNameString, const char *errorString )
 		{
 		WordEndingResultType wordEndingResult;
@@ -770,6 +788,7 @@
 		return wordEndingResult;
 		}
 
+//Java_protected_final
 	WordResultType List::addWordResultError( const char *functionNameString, const char *errorString )
 		{
 		WordResultType wordResult;
@@ -778,6 +797,7 @@
 		return wordResult;
 		}
 
+//Java_protected_final
 	WordResultType List::startWordResultError( const char *functionNameString, const char *errorString )
 		{
 		WordResultType wordResult;
@@ -786,6 +806,7 @@
 		return wordResult;
 		}
 
+//Java_protected_final
 	WordTypeResultType List::addWordTypeResultError( const char *functionNameString, const char *errorString )
 		{
 		WordTypeResultType wordTypeResult;
@@ -794,6 +815,7 @@
 		return wordTypeResult;
 		}
 
+//Java_protected_final
 	WordTypeResultType List::startWordTypeResultError( const char *functionNameString, const char *errorString )
 		{
 		WordTypeResultType wordTypeResult;
@@ -841,6 +863,30 @@
 			startSystemError( INPUT_OUTPUT_ERROR_CONSTRUCTOR_FUNCTION_NAME, errorString );
 		}
 
+//Java_protected_final
+	void List::clearActiveList()
+		{
+		Item *removeItem = activeList_;
+
+		if( removeItem != NULL )
+			{
+			do	{
+				// Disconnect active list from item
+				activeList_ = activeList_->nextItem;
+
+				removeItem->checkForUsage();
+
+				// Disconnect item from active list
+				removeItem->nextItem = NULL;
+				delete removeItem;
+
+				removeItem = activeList_;
+				}
+			while( removeItem != NULL );
+			}
+		}
+
+//Java_protected_final
 	void List::deleteTemporaryList()
 		{
 		Item *searchItem = deletedList_;
@@ -853,7 +899,7 @@
 				deletedList_ = inactiveList_;
 			else
 				{
-				// Get the tail of the deleted list
+				// Get tail of deleted list
 				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = inactiveList_;
 				}
@@ -869,7 +915,7 @@
 				deletedList_ = activeList_;
 			else
 				{
-				// Get the tail of the deleted list
+				// Get tail of deleted list
 				searchItem = searchItem->tailOfList();
 				searchItem->nextItem = activeList_;
 				}
@@ -878,31 +924,37 @@
 			}
 		}
 
+//Java_protected_final
 	bool List::hasActiveItems()
 		{
 		return ( activeList_ != NULL );
 		}
 
+//Java_protected_final
 	bool List::isAdminList()
 		{
 		return ( isupper( listChar_ ) != 0 );
 		}
 
+//Java_protected_final
 	bool List::isAssignmentList()
 		{
 		return ( listChar_ == WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
+//Java_protected_final
 	unsigned int List::highestSentenceNrInList()
 		{
 		return highestSentenceNrInList_;
 		}
 
+//Java_protected_final
 	char List::listChar()
 		{
 		return listChar_;
 		}
 
+//Java_protected_final
 	signed char List::activateItem( Item *activateItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "activateItem";
@@ -926,6 +978,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::addItemToList( char statusChar, Item *newItem )
 		{
 		unsigned int creationSentenceNr;
@@ -1083,6 +1136,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::archiveItem( Item *archiveItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "archiveItem";
@@ -1110,10 +1164,10 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::deleteItem( Item *deleteItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "deleteItem";
-
 		if( removeItemFromList( deleteItem ) != RESULT_OK )
 			return addError( functionNameString, "I failed to remove an item from a list" );
 
@@ -1123,11 +1177,12 @@
 			return startError( functionNameString, "The given delete item is already a deleted item" );
 
 		if( addItemToList( QUERY_DELETED_CHAR, deleteItem ) != RESULT_OK )
-			return addError( functionNameString, "I failed to add an item to the deleted list" );
+			return addError( functionNameString, "I failed to add an item to deleted list" );
 
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::inactivateItem( Item *inactivateItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "inactivateItem";
@@ -1155,6 +1210,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::removeFirstRangeOfDeletedItemsInList()
 		{
 		unsigned int nDeletedItems = 0;
@@ -1179,7 +1235,7 @@
 
 				removeItem->checkForUsage();
 
-				// Disconnect item from the deleted list
+				// Disconnect item from deleted list
 				removeItem->nextItem = NULL;
 				delete removeItem;
 
@@ -1200,10 +1256,10 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::replaceItem( Item *replaceItem )
 		{
 		char functionNameString[FUNCTION_NAME_STRING_LENGTH] = "replaceItem";
-
 		if( replaceItem == NULL )
 			return startError( functionNameString, "The given replace item is undefined" );
 
@@ -1221,26 +1277,31 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	Item *List::firstActiveItem()
 		{
 		return activeList_;
 		}
 
+//Java_protected_final
 	Item *List::firstInactiveItem()
 		{
 		return inactiveList_;
 		}
 
+//Java_protected_final
 	Item *List::firstArchivedItem()
 		{
 		return archivedList_;
 		}
 
+//Java_protected_final
 	Item *List::firstReplacedItem()
 		{
 		return replacedList_;
 		}
 
+//Java_protected_final
 	Item *List::nextListItem()
 		{
 		return nextListItem_;
@@ -1256,11 +1317,13 @@
 		return inputOutput_;
 		}
 
+//Java_protected_final
 	WordItem *List::myWordItem()
 		{
 		return myWordItem_;
 		}
 
+//Java_protected_final
 	BoolResultType List::compareStrings( char *searchString, char *sourceString )
 		{
 		bool hasFoundMatchingString = true;
@@ -1352,6 +1415,7 @@
 
 	// Protected cleanup functions
 
+//Java_protected_final
 	unsigned int List::highestCurrentSentenceItemNrInList( unsigned int currentSentenceNr, unsigned int globalHighestItemNr )
 		{
 		unsigned int localHighestItemNr = NO_ITEM_NR;
@@ -1383,6 +1447,7 @@
 		return globalHighestItemNr;
 		}
 
+//Java_protected_final
 	unsigned int List::highestFoundSentenceNrInList( bool isIncludingDeletedItems, unsigned int globalHighestFoundSentenceNr, unsigned int maxSentenceNr )
 		{
 		unsigned int localHighestFoundSentenceNr = NO_SENTENCE_NR;
@@ -1415,6 +1480,7 @@
 		return globalHighestFoundSentenceNr;
 		}
 
+//Java_protected_final
 	signed char List::decrementItemNrRangeInList( unsigned int decrementSentenceNr, unsigned int startDecrementItemNr, unsigned int decrementOffset )
 		{
 		Item *searchItem;
@@ -1452,6 +1518,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::decrementSentenceNrsInList( unsigned int startSentenceNr )
 		{
 		Item *searchItem;
@@ -1485,6 +1552,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::deleteSentencesInList( unsigned int lowestSentenceNr )
 		{
 		bool isResultOK = ( globalVariables_->result == RESULT_OK );
@@ -1637,6 +1705,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::redoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
@@ -1797,6 +1866,7 @@
 		return RESULT_OK;
 		}
 
+//Java_protected_final
 	signed char List::undoCurrentSentenceInList()
 		{
 		Item *searchItem = firstActiveItem();
@@ -1918,6 +1988,7 @@
 
 	// Protected database connection functions
 /*
+//Java_protected_final
 	signed char List::storeChangesInListInFutureDatabase()
 		{
 		Item *searchItem;
@@ -1943,7 +2014,8 @@
 
 	// Protected query functions
 
-	void List::clearQuerySelectionsInList()
+//Java_protected_final
+		void List::clearQuerySelectionsInList()
 		{
 		Item *searchItem;
 
@@ -1960,6 +2032,7 @@
 			clearQuerySelections( searchItem );
 		}
 
+//Java_protected_final
 	void List::countQueryInList()
 		{
 		Item *searchItem = firstActiveItem();
@@ -2003,6 +2076,7 @@
 			}
 		}
 
+//Java_protected_final
 	void List::itemQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isReferenceQuery, unsigned int querySentenceNr, unsigned int queryItemNr )
 		{
 		Item *searchItem;
@@ -2024,6 +2098,7 @@
 			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
+//Java_protected_final
 	void List::listQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, char *queryListString )
 		{
 		bool isSelectingOnFindAndListIncluded;
@@ -2054,6 +2129,7 @@
 			}
 		}
 
+//Java_protected_final
 	void List::parameterQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, unsigned int queryParameter )
 		{
 		Item *searchItem;
@@ -2075,6 +2151,7 @@
 			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
+//Java_protected_final
 	void List::wordQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems )
 		{
 		Item *searchItem;
@@ -2096,6 +2173,7 @@
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
+//Java_protected_final
 	void List::wordTypeQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, unsigned short queryWordTypeNr )
 		{
 		Item *searchItem;
@@ -2117,6 +2195,7 @@
 			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
+//Java_protected_final
 	signed char List::displayQueryResultInList( bool isOnlyDisplayingWords, bool isOnlyDisplayingWordReferences, bool isOnlyDisplayingStrings, bool isReturnQueryToPosition, unsigned short promptTypeNr, unsigned short queryWordTypeNr, size_t queryWidth )
 		{
 		Item *searchItem;
@@ -2139,6 +2218,7 @@
 		return globalVariables_->result;
 		}
 
+//Java_protected_final
 	signed char List::stringQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, char *queryString )
 		{
 		Item *searchItem;
@@ -2165,6 +2245,7 @@
 		return globalVariables_->result;
 		}
 
+//Java_protected_final
 	signed char List::wordReferenceQueryInList( bool isSelectingOnFind, bool isSelectingActiveItems, bool isSelectingInactiveItems, bool isSelectingArchivedItems, bool isSelectingReplacedItems, bool isSelectingAttachedJustifications, bool isSelectingJustificationSpecifications, char *wordReferenceNameString )
 		{
 		Item *searchItem;

@@ -34,8 +34,8 @@
 < 
 * 
 * Mes hypothèses:
-< Fabrice est probablement un enfant.
-< Fabrice est probablement partie d'une famille.
+< Pierre est probablement un enfant.
+< Pierre est probablement partie d'une famille.
 < 
 * 
 * Mes hypothèses:
@@ -126,8 +126,8 @@
 < Chaque père n'est pas féminin.
 < Chaque père n'est pas une femme.
 < Philippe était masculin.
-< Philippe ne était pas féminin.
 < Philippe ne était pas une femme.
+< Philippe ne était pas féminin.
 * 
 * Mes hypothèses:
 < Un homme est probablement une personne.
@@ -213,10 +213,10 @@
 * 
 * Mes hypothèses:
 < Un fils est probablement une personne.
-< Pascal est probablement une personne.
 < Un garçon n'est probablement pas un homme.
 < Un garçon est probablement une personne.
 < Un homme n'est probablement pas un garçon.
+< Pascal est probablement une personne.
 < 
 * 
 * Mes conclusions:
@@ -239,10 +239,10 @@
 * 
 * Mes hypothèses:
 < Une fille est probablement une personne.
-< Lorraine est probablement une personne.
 < Une jeune-fille n'est probablement pas une femme.
 < Une jeune-fille est probablement une personne.
 < Une femme n'est probablement pas une jeune-fille.
+< Lorraine est probablement une personne.
 * 
 * Mes questions:
 < Est Lorraine une jeune-fille ou une femme?
@@ -364,11 +364,11 @@
 <	- Un fils est probablement une personne.
 < Pascal est probablement un enfant de Olivier et Amélie. En raison:
 <	- Chaque famille a un parent et un enfant.
-<	- Amélie est un parent de Pascal.
 <	- Olivier est un parent de Pascal.
+<	- Amélie est un parent de Pascal.
 * 	et:
-<	- Amélie a probablement un enfant, appelé Pascal.
 <	- Olivier a probablement un enfant, appelé Pascal.
+<	- Amélie a probablement un enfant, appelé Pascal.
 * 	et:
 <	- Chaque famille a un parent et un enfant.
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
@@ -377,12 +377,16 @@
 <	- Un enfant est partie de chaque famille.
 * 	et:
 <	- Olivier a probablement un enfant, appelé Pascal.
+<	- Amélie a probablement un enfant, appelé Pascal.
 <	- Un enfant est partie de chaque famille.
 < 
 * 
 * Mes conclusions:
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent de Pascal.
+<	- Un parent est partie de chaque famille.
+* 	et:
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
 <	- Un parent est partie de chaque famille.
 < Olivier a un fils, appelé Pascal. En raison:
 <	- Pascal est un fils de Olivier.
@@ -392,10 +396,10 @@
 <	- Olivier est un parent de Pascal.
 <	- Un parent est probablement une personne.
 < Olivier a probablement un enfant, appelé Pascal. En raison:
-<	- Pascal est probablement un enfant de Olivier et Amélie.
-* 	et:
 <	- Chaque famille a un parent et un enfant.
 <	- Olivier est un parent de Pascal.
+* 	et:
+<	- Pascal est probablement un enfant de Olivier et Amélie.
 * 	et:
 <	- Chaque famille a un parent et un enfant.
 <	- Pascal a 2 parents, appelés Olivier et Amélie.
@@ -415,6 +419,9 @@
 * Mes conclusions:
 < Amélie est partie d'une famille. En raison:
 <	- Amélie est un parent de Pascal.
+<	- Un parent est partie de chaque famille.
+* 	et:
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
 <	- Un parent est partie de chaque famille.
 * 
 * Mes hypothèses:
@@ -467,6 +474,9 @@
 <	- Amélie est un parent de Pascal.
 * 	et:
 <	- Pascal est probablement un enfant de Olivier et Amélie.
+* 	et:
+<	- Chaque famille a un parent et un enfant.
+<	- Pascal a 2 parents, appelés Olivier et Amélie.
 < 
 * 
 * Mes conclusions:
@@ -551,11 +561,11 @@
 < 
 * 
 * Mes hypothèses:
-< Fabrice est probablement un enfant. En raison:
+< Pierre est probablement un enfant. En raison:
 <	- Chaque famille a un parent et un enfant.
-<	- Fabrice a un parent.
-< Fabrice est probablement partie d'une famille. En raison:
-<	- Fabrice est probablement un enfant.
+<	- Pierre a un parent.
+< Pierre est probablement partie d'une famille. En raison:
+<	- Pierre est probablement un enfant.
 <	- Un enfant est partie de chaque famille.
 < 
 * 
@@ -593,11 +603,11 @@
 <	- Philippe était le père de Antoine.
 <	- Chaque père est masculin.
 < Philippe ne était pas une femme. En raison:
-<	- Philippe était un homme.
-<	- Chaque homme n'est pas une femme.
-* 	et:
 <	- Philippe était masculin.
 <	- Chaque femme n'est pas masculin.
+* 	et:
+<	- Philippe était un homme.
+<	- Chaque homme n'est pas une femme.
 * 	et:
 <	- Philippe était le père de Antoine.
 <	- Chaque père n'est pas une femme.

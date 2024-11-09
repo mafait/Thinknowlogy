@@ -4,14 +4,10 @@
 < 
 * 
 * Mes hypothèses:
-< Une vapeur d'eau est probablement un type de gaz.
 < La vapeur d'eau est probablement un type de gaz.
 < 
 * 
 * Mes hypothèses:
-< Une vapeur d'eau est probablement un type de gaz. En raison:
-<	- Chaque type de gaz a un point de condensation spécifique.
-<	- La vapeur d'eau a un point de condensation de 100 degrés Celsius.
 < La vapeur d'eau est probablement un type de gaz. En raison:
 <	- Chaque type de gaz a un point de condensation spécifique.
 <	- La vapeur d'eau a un point de condensation de 100 degrés Celsius.

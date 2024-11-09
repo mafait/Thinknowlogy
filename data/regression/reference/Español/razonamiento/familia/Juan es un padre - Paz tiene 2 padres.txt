@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -123,11 +123,11 @@
 < Juan no es femenina.
 < Juan es parte de una familia.
 < Juan es un hombre.
-< Juan no es una hija.
-< Juan no es una madre.
-< Juan no es una niña.
-< Juan no es una mujer.
 < Juan es masculino.
+< Juan no es una hija.
+< Juan no es una niña.
+< Juan no es una madre.
+< Juan no es una mujer.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona.
@@ -136,7 +136,7 @@
 < 
 * 
 * Mis conclusiones:
-< Juan es padre de Paz.
+< Juan es un padre de Paz.
 < Ana es parte de una familia.
 < Ana no es una niña.
 * 
@@ -145,7 +145,7 @@
 < Paz tiene posiblemente una madre, llamada Ana.
 < Paz es posiblemente una persona.
 < Ana es probablemente una persona.
-< Ana es posiblemente madre de Paz.
+< Ana es posiblemente una madre de Paz.
 < Ana es posiblemente una mujer.
 < Ana no es posiblemente un hijo.
 < Ana no es posiblemente un niño.
@@ -161,7 +161,7 @@
 < 
 * 
 * Mis conclusiones:
-< Juan es padre de Paz. Porque:
+< Juan es un padre de Paz. Porque:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 < Juan es parte de una familia. Porque:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
@@ -175,42 +175,6 @@
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es un hombre.
-< Juan no es una hija. Porque:
-<	- Paz tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre no es una hija.
-* 	y:
-<	- Juan es un hombre.
-<	- Cada hombre no es una hija.
-* 	y:
-<	- Juan es masculino.
-<	- Cada hija no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una hija.
-< Juan no es una niña. Porque:
-<	- Paz tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre no es una niña.
-* 	y:
-<	- Juan es un hombre.
-<	- Cada hombre no es una niña.
-* 	y:
-<	- Juan es masculino.
-<	- Cada niña no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una niña.
-< Juan no es una madre. Porque:
-<	- Juan es un padre.
-<	- Cada padre no es una madre.
-* 	y:
-<	- Juan es un hombre.
-<	- Cada hombre no es una madre.
-* 	y:
-<	- Juan es masculino.
-<	- Cada madre no es masculino.
-* 	y:
-<	- Paz tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre no es una madre.
 < Juan no es femenina. Porque:
 <	- Juan es un padre.
 <	- Cada padre no es femenina.
@@ -220,24 +184,60 @@
 * 	y:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre no es femenina.
-< Juan no es una mujer. Porque:
-<	- Paz tiene 2 padres, llamados Juan y Ana.
-<	- Cada padre no es una mujer.
-* 	y:
-<	- Juan es un hombre.
-<	- Cada hombre no es una mujer.
-* 	y:
-<	- Juan es masculino.
-<	- Cada mujer no es masculino.
-* 	y:
-<	- Juan es un padre.
-<	- Cada padre no es una mujer.
 < Juan es masculino. Porque:
 <	- Juan es un hombre.
 <	- Cada hombre es masculino.
 * 	y:
 <	- Juan es un padre.
 <	- Cada padre es masculino.
+< Juan no es una hija. Porque:
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una hija.
+* 	y:
+<	- Juan es masculino.
+<	- Cada hija no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una hija.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una hija.
+< Juan no es una niña. Porque:
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una niña.
+* 	y:
+<	- Juan es masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una niña.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una niña.
+< Juan no es una madre. Porque:
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una madre.
+* 	y:
+<	- Juan es masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una madre.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una madre.
+< Juan no es una mujer. Porque:
+<	- Paz tiene 2 padres, llamados Juan y Ana.
+<	- Cada padre no es una mujer.
+* 	y:
+<	- Juan es masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Juan es un hombre.
+<	- Cada hombre no es una mujer.
+* 	y:
+<	- Juan es un padre.
+<	- Cada padre no es una mujer.
 * 
 * Mis suposiciones:
 < Juan es probablemente una persona. Porque:
@@ -269,12 +269,12 @@
 < Ana es probablemente una persona. Porque:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Un padre es probablemente una persona.
-< Ana es posiblemente madre de Paz. Porque:
+< Ana es posiblemente una madre de Paz. Porque:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un padre o una madre.
 <	- Nombre propio "Ana" es probablemente femenino.
 < Ana es posiblemente una mujer. Porque:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre es una mujer.
 < Ana no es posiblemente un hijo. Porque:
 <	- Ana es posiblemente una mujer.
@@ -283,7 +283,7 @@
 <	- Ana es posiblemente femenina.
 <	- Cada hijo no es femenina.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre no es un hijo.
 < Ana no es posiblemente un niño. Porque:
 <	- Ana es posiblemente una mujer.
@@ -292,7 +292,7 @@
 <	- Ana es posiblemente femenina.
 <	- Cada niño no es femenina.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre no es un niño.
 < Ana no es posiblemente un padre. Porque:
 <	- Ana es posiblemente una mujer.
@@ -301,13 +301,13 @@
 <	- Ana es posiblemente femenina.
 <	- Cada padre no es femenina.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre no es un padre.
 < Ana no es posiblemente masculino. Porque:
 <	- Ana es posiblemente una mujer.
 <	- Cada mujer no es masculino.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre no es masculino.
 < Ana no es posiblemente un hombre. Porque:
 <	- Ana es posiblemente una mujer.
@@ -316,13 +316,13 @@
 <	- Ana es posiblemente femenina.
 <	- Cada hombre no es femenina.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre no es un hombre.
 < Ana es posiblemente femenina. Porque:
 <	- Ana es posiblemente una mujer.
 <	- Cada mujer es femenina.
 * 	y:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 <	- Cada madre es femenina.
 < 
 * 
@@ -331,7 +331,7 @@
 <	- ¿Es Paz un hijo o una hija?
 <	- Hijos son parte de cada familia.
 < Paz tiene posiblemente una madre, llamada Ana. Porque:
-<	- Ana es posiblemente madre de Paz.
+<	- Ana es posiblemente una madre de Paz.
 * 	y:
 <	- Paz tiene 2 padres, llamados Juan y Ana.
 <	- Cada padre es un padre o una madre.

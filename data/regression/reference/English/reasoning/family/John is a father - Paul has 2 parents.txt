@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -127,11 +127,11 @@
 * 
 * My conclusions:
 < John is not feminine.
-< John is masculine.
 < John is a man.
+< John is masculine.
 < John is not a daughter.
-< John is not a mother.
 < John is not a girl.
+< John is not a mother.
 < John is not a woman.
 * 
 * My assumptions:
@@ -184,54 +184,57 @@
 < John is part of a family. Because:
 <	- John is a parent of Paul.
 <	- Parents are part of every family.
+* 	and:
+<	- Paul has 2 parents, called John and Anna.
+<	- Parents are part of every family.
 < John is not feminine. Because:
 <	- John is a father.
 <	- Every father is not feminine.
 * 	and:
 <	- John is a man.
 <	- Every man is not feminine.
-< John is masculine. Because:
-<	- John is a father.
-<	- Every father is masculine.
-* 	and:
-<	- John is a man.
-<	- Every man is masculine.
 < John is a man. Because:
 <	- John is a father.
 <	- Every father is a man.
-< John is not a daughter. Because:
+< John is masculine. Because:
 <	- John is a man.
-<	- Every man is not a daughter.
+<	- Every man is masculine.
 * 	and:
+<	- John is a father.
+<	- Every father is masculine.
+< John is not a daughter. Because:
 <	- John is masculine.
 <	- Every daughter is not masculine.
 * 	and:
+<	- John is a man.
+<	- Every man is not a daughter.
+* 	and:
 <	- John is a father.
 <	- Every father is not a daughter.
-< John is not a mother. Because:
+< John is not a girl. Because:
+<	- John is masculine.
+<	- Every girl is not masculine.
+* 	and:
+<	- John is a man.
+<	- Every man is not a girl.
+* 	and:
 <	- John is a father.
-<	- Every father is not a mother.
+<	- Every father is not a girl.
+< John is not a mother. Because:
+<	- John is masculine.
+<	- Every mother is not masculine.
 * 	and:
 <	- John is a man.
 <	- Every man is not a mother.
 * 	and:
-<	- John is masculine.
-<	- Every mother is not masculine.
-< John is not a girl. Because:
-<	- John is a man.
-<	- Every man is not a girl.
-* 	and:
-<	- John is masculine.
-<	- Every girl is not masculine.
-* 	and:
 <	- John is a father.
-<	- Every father is not a girl.
+<	- Every father is not a mother.
 < John is not a woman. Because:
-<	- John is a man.
-<	- Every man is not a woman.
-* 	and:
 <	- John is masculine.
 <	- Every woman is not masculine.
+* 	and:
+<	- John is a man.
+<	- Every man is not a woman.
 * 	and:
 <	- John is a father.
 <	- Every father is not a woman.
@@ -239,6 +242,9 @@
 * My assumptions:
 < John has probably a child, called Paul. Because:
 <	- Paul is probably a child of John and Anna.
+* 	and:
+<	- Every family has parents and children.
+<	- Paul has 2 parents, called John and Anna.
 * 	and:
 <	- Every family has parents and children.
 <	- John is a parent of Paul.
@@ -285,6 +291,9 @@
 <	- Anna is a parent of Paul.
 * 	and:
 <	- Paul is probably a child of John and Anna.
+* 	and:
+<	- Every family has parents and children.
+<	- Paul has 2 parents, called John and Anna.
 < Anna is possibly a woman. Because:
 <	- Anna is possibly a mother of Paul.
 <	- Every mother is a woman.
@@ -358,6 +367,10 @@
 <	- Anna is a parent of Paul.
 < Paul is probably part of a family. Because:
 <	- Paul is probably a child of John and Anna.
+<	- Children are part of every family.
+* 	and:
+<	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
 <	- Children are part of every family.
 < Paul is possibly a person. Because:
 <	- Paul is probably a child of John and Anna.

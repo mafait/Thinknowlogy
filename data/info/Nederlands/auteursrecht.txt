@@ -1,4 +1,4 @@
-﻿Toon " Copyright (C) 2023, Menno Mafait".
+﻿Toon " Copyright (C) 2024, Menno Mafait".
 #C++#Toon " Thinknowlogy heeft ABSOLUUT GEEN GARANTIE; voor details type \"Toon".
 #C++#Toon " de garantie.\". Dit is vrije software en het is u toegestaan deze te verspreiden".
 #C++#Toon " onder bepaalde voorwaarden; type \"Toon de GPLv2-licentie.\" voor meer details.".

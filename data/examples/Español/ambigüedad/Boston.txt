@@ -1,4 +1,4 @@
-﻿Boston es ciudad de los Estados Unidos.
-Boston es ciudad de los Reino Unido.
+﻿Boston es una ciudad de los Estados Unidos.
+Boston es una ciudad de los Reino Unido.
 Mostrar información sobre Boston.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

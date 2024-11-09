@@ -4,7 +4,7 @@
 < 
 * 
 * Mis conclusiones:
-< Luisa es hija de Ana.
+< Luisa es una hija de Ana.
 < 
 * 
 * Mis conclusiones:
@@ -49,9 +49,9 @@
 < 
 * 
 * Mis suposiciones:
-< Ronaldo es probablemente un hijo.
-< Ronaldo no es posiblemente una hija.
-< Ronaldo es probablemente parte de una familia.
+< Pedro es probablemente un hijo.
+< Pedro no es posiblemente una hija.
+< Pedro es probablemente parte de una familia.
 < 
 * 
 * Mis suposiciones:
@@ -65,23 +65,26 @@
 * 
 * Mis suposiciones:
 < Paz tiene probablemente un padre, llamado Pablo.
-< Pablo es posiblemente padre de Paz.
-< Pablo es posiblemente parte de una familia.
+< Pablo es posiblemente un padre de Paz.
+< Pablo es probablemente parte de una familia.
 < 
 * 
 * Mis conclusiones:
-< Paz es hijo de Pablo y Ana.
+< Paz es un hijo de Pablo y Ana.
 * 
 * Mis suposiciones:
 < Paz no es probablemente una hija.
 < Paz tiene probablemente una madre, llamada Ana.
 < Paz tiene probablemente 2 padres, llamados Pablo y Ana.
-< Ana es probablemente madre de Paz.
+< Ana es probablemente una madre de Paz.
 < Ana es probablemente parte de una familia.
 < 
 * 
 * Mis conclusiones que han sido confirmadas:
-< Paz es hijo de Pablo y Ana.
+< Paz es un hijo de Pablo y Ana.
+* 
+* Mis suposiciones que se han ajustado:
+< Pablo es probablemente un padre de Paz.
 < 
 * 
 * Mis conclusiones:
@@ -92,8 +95,8 @@
 * Mis suposiciones:
 < Hernando tiene probablemente un hijo, llamado Antonio.
 < Hernando no era probablemente una madre.
-< Antonio es posiblemente hijo de Hernando.
-< Antonio es posiblemente parte de una familia.
+< Antonio es posiblemente un hijo de Hernando.
+< Antonio es probablemente parte de una familia.
 < 
 * 
 * Mis conclusiones:
@@ -101,7 +104,7 @@
 < Jorge es un hombre.
 * 
 * Mis suposiciones:
-< Pablo es posiblemente un hombre.
+< Pablo es probablemente un hombre.
 < Santiago es probablemente un hombre.
 < 
 * 
@@ -164,10 +167,10 @@
 < Angel no es probablemente femenina.
 < Un padre es probablemente una persona.
 < Hernando era probablemente una persona.
-< Pablo es posiblemente masculino.
-< Pablo no es posiblemente una mujer.
-< Pablo no es posiblemente femenina.
-< Pablo es puede-ser una persona.
+< Pablo es probablemente masculino.
+< Pablo no es probablemente una mujer.
+< Pablo no es probablemente femenina.
+< Pablo es posiblemente una persona.
 < Santiago es probablemente masculino.
 < Santiago no es probablemente una mujer.
 < Santiago no es probablemente femenina.
@@ -176,14 +179,14 @@
 < 
 * 
 * Mis suposiciones:
-< Pablo no es puede-ser una madre.
+< Pablo no es posiblemente una madre.
 < 
 * 
 * Mis suposiciones que se han concluido:
 < Cada padre no es una madre.
 * 
 * Mis suposiciones que se han ajustado:
-< Pablo no es posiblemente una madre.
+< Pablo no es probablemente una madre.
 * 
 * Mis suposiciones que se han concluido:
 < Hernando no era una madre.
@@ -261,12 +264,12 @@
 < Antonio no es posiblemente femenina.
 < Antonio no es puede-ser una hija.
 < Antonio es puede-ser una persona.
-< Ronaldo es probablemente masculino.
-< Ronaldo no es probablemente una niña.
-< Ronaldo no es probablemente una madre.
-< Ronaldo no es probablemente una mujer.
-< Ronaldo no es probablemente femenina.
-< Ronaldo es posiblemente una persona.
+< Pedro es probablemente masculino.
+< Pedro no es probablemente una niña.
+< Pedro no es probablemente una madre.
+< Pedro no es probablemente una mujer.
+< Pedro no es probablemente femenina.
+< Pedro es posiblemente una persona.
 < Alfonso es probablemente una persona.
 < Paz es probablemente una persona.
 < Un niño no es probablemente un hombre.
@@ -274,11 +277,12 @@
 < Un hombre no es probablemente un niño.
 * 
 * Mis preguntas:
-< ¿Es Ronaldo un niño o un hombre?
+< ¿Es Pedro un niño o un hombre?
 < ¿Es Alfonso un niño o un hombre?
 < 
 * 
 * Mis suposiciones que se han concluido:
+< Cada hija no es un hijo.
 < Cada hijo no es una hija.
 * 
 * Mis suposiciones que se han ajustado:
@@ -288,11 +292,10 @@
 < Paz no es una hija.
 * 
 * Mis suposiciones que se han ajustado:
-< Ronaldo no es probablemente una hija.
+< Pedro no es probablemente una hija.
 * 
 * Mis suposiciones que se han concluido:
 < Alfonso no es una hija.
-< Cada hija no es un hijo.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -417,106 +420,102 @@
 <	- Ana tiene un hijo, llamado Paz.
 <	- Cada hijo no es una hija.
 * 	y:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo no es una hija.
 * 	y:
 <	- Paz es masculino.
 <	- Cada hija no es masculino.
 < Paz es masculino. Porque:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo es masculino.
 < Paz no es una niña. Porque:
 <	- Paz es masculino.
 <	- Cada niña no es masculino.
 * 	y:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo no es una niña.
 < Paz no es una madre. Porque:
 <	- Paz es masculino.
 <	- Cada madre no es masculino.
 * 	y:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo no es una madre.
 < Paz no es una mujer. Porque:
 <	- Paz es masculino.
 <	- Cada mujer no es masculino.
 * 	y:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo no es una mujer.
 < Paz no es femenina. Porque:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Cada hijo no es femenina.
 < Paz es parte de una familia. Porque:
 <	- Ana tiene un hijo, llamado Paz.
+<	- Pablo tiene un hijo, llamado Paz.
 <	- Hijos son parte de cada familia.
 * 	y:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Hijos son parte de cada familia.
 * 
 * Mis suposiciones:
 < Paz es probablemente una persona. Porque:
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Un hijo es probablemente una persona.
 < Paz tiene probablemente una madre, llamada Ana. Porque:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 < Paz tiene probablemente 2 padres, llamados Pablo y Ana. Porque:
 <	- Cada familia tiene padres y hijos.
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 * 	y:
 <	- Cada familia tiene padres y hijos.
 <	- Ana tiene un hijo, llamado Paz.
 <	- Pablo tiene un hijo, llamado Paz.
 * 	y:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 < 
 * 
 * Mis suposiciones:
-< Pablo no es posiblemente una madre. Porque:
-<	- Pablo es posiblemente padre de Paz.
+< Pablo no es probablemente una madre. Porque:
+<	- Pablo es probablemente un padre de Paz.
 <	- Cada padre no es una madre.
 * 	y:
-<	- Pablo es posiblemente masculino.
+<	- Pablo es probablemente masculino.
 <	- Cada madre no es masculino.
 * 	y:
-<	- Pablo es posiblemente un hombre.
+<	- Pablo es probablemente un hombre.
 <	- Cada hombre no es una madre.
-< Pablo es posiblemente un hombre. Porque:
-<	- Pablo es posiblemente padre de Paz.
+< Pablo es probablemente un hombre. Porque:
+<	- Pablo es probablemente un padre de Paz.
 <	- Cada padre es un hombre.
-< Pablo es posiblemente masculino. Porque:
-<	- Pablo es posiblemente un hombre.
+< Pablo es probablemente masculino. Porque:
+<	- Pablo es probablemente un hombre.
 <	- Cada hombre es masculino.
 * 	y:
-<	- Pablo es posiblemente padre de Paz.
+<	- Pablo es probablemente un padre de Paz.
 <	- Cada padre es masculino.
-< Pablo no es posiblemente una mujer. Porque:
-<	- Pablo es posiblemente masculino.
+< Pablo no es probablemente una mujer. Porque:
+<	- Pablo es probablemente masculino.
 <	- Cada mujer no es masculino.
 * 	y:
-<	- Pablo es posiblemente un hombre.
+<	- Pablo es probablemente un hombre.
 <	- Cada hombre no es una mujer.
-< Pablo no es posiblemente femenina. Porque:
-<	- Pablo es posiblemente un hombre.
+< Pablo no es probablemente femenina. Porque:
+<	- Pablo es probablemente un hombre.
 <	- Cada hombre no es femenina.
-< Pablo es puede-ser una persona. Porque:
-<	- Pablo es posiblemente un hombre.
+< Pablo es posiblemente una persona. Porque:
+<	- Pablo es probablemente un hombre.
 <	- Un hombre es probablemente una persona.
 * 	y:
-<	- Pablo es posiblemente padre de Paz.
+<	- Pablo es probablemente un padre de Paz.
 <	- Un padre es probablemente una persona.
-< Pablo es posiblemente padre de Paz. Porque:
-<	- Paz es hijo de Pablo y Ana.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Pablo" es probablemente masculino.
-* 	y:
-<	- Pablo tiene un hijo, llamado Paz.
-<	- Cada familia tiene padres y hijos.
-<	- Cada padre es un padre o una madre.
-<	- Nombre propio "Pablo" es probablemente masculino.
-< Pablo es posiblemente parte de una familia. Porque:
-<	- Pablo es posiblemente padre de Paz.
+< Pablo es probablemente parte de una familia. Porque:
+<	- Paz tiene probablemente 2 padres, llamados Pablo y Ana.
 <	- Padres son parte de cada familia.
+* 	y:
+<	- Pablo es probablemente un padre de Paz.
+<	- Padres son parte de cada familia.
+< Pablo es probablemente un padre de Paz. Porque:
+<	- Paz tiene probablemente 2 padres, llamados Pablo y Ana.
 < 
 * 
 * Mis suposiciones:
@@ -524,19 +523,19 @@
 <	- Ana es probablemente femenina.
 <	- Cada hijo no es femenina.
 < Ana es probablemente parte de una familia. Porque:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Padres son parte de cada familia.
 * 	y:
 <	- Paz tiene probablemente 2 padres, llamados Pablo y Ana.
 <	- Padres son parte de cada familia.
 < Ana es probablemente una mujer. Porque:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Cada madre es una mujer.
 < Ana no es probablemente masculino. Porque:
 <	- Ana es probablemente una mujer.
 <	- Cada mujer no es masculino.
 * 	y:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Cada madre no es masculino.
 < Ana no es probablemente un hombre. Porque:
 <	- Ana es probablemente una mujer.
@@ -545,68 +544,68 @@
 <	- Ana es probablemente femenina.
 <	- Cada hombre no es femenina.
 * 	y:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Cada madre no es un hombre.
 < Ana es probablemente femenina. Porque:
 <	- Ana es probablemente una mujer.
 <	- Cada mujer es femenina.
 * 	y:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Cada madre es femenina.
 < Ana no es posiblemente un padre. Porque:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Una madre no es probablemente un padre.
 < Ana es posiblemente una persona. Porque:
-<	- Ana es probablemente madre de Paz.
+<	- Ana es probablemente una madre de Paz.
 <	- Una madre es probablemente una persona.
 * 	y:
 <	- Ana es probablemente una mujer.
 <	- Una mujer es probablemente una persona.
-< Ana es probablemente madre de Paz. Porque:
+< Ana es probablemente una madre de Paz. Porque:
 <	- Cada familia tiene padres y hijos.
-<	- Paz es hijo de Pablo y Ana.
+<	- Paz es un hijo de Pablo y Ana.
 <	- Nombre propio "Ana" es probablemente femenino.
 < 
 * 
 * Mis conclusiones:
 < Luisa es parte de una familia. Porque:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Hijos son parte de cada familia.
 < Luisa es femenina. Porque:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija es femenina.
 < Luisa no es un hijo. Porque:
 <	- Luisa es femenina.
 <	- Cada hijo no es femenina.
 * 	y:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija no es un hijo.
 < Luisa no es un niño. Porque:
 <	- Luisa es femenina.
 <	- Cada niño no es femenina.
 * 	y:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija no es un niño.
 < Luisa no es un hombre. Porque:
 <	- Luisa es femenina.
 <	- Cada hombre no es femenina.
 * 	y:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija no es un hombre.
 < Luisa no es masculino. Porque:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija no es masculino.
-< Luisa es hija de Ana. Porque:
+< Luisa es una hija de Ana. Porque:
 <	- Ana tiene una hija, llamada Luisa.
 * 
 * Mis suposiciones:
 < Luisa es probablemente una persona. Porque:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Una hija es probablemente una persona.
 * 
 * Mis preguntas:
 < ¿Es Luisa una niña o una mujer? Porque:
-<	- Luisa es hija de Ana.
+<	- Luisa es una hija de Ana.
 <	- Cada hija es una niña o una mujer.
 < 
 * 
@@ -686,6 +685,10 @@
 <	- Alfonso es un hijo.
 <	- Cada hijo no es femenina.
 < Alfonso es parte de una familia. Porque:
+<	- Ana tiene un hijo, llamado Paz.
+<	- Pablo tiene un hijo, llamado Paz.
+<	- Hijos son parte de cada familia.
+* 	y:
 <	- Alfonso es un hijo.
 <	- Hijos son parte de cada familia.
 * 
@@ -703,50 +706,56 @@
 <	- Cada hijo es un niño o un hombre.
 < 
 * 
-* Mis suposiciones:
-< Ronaldo no es probablemente una hija. Porque:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo no es una hija.
+* Mis conclusiones:
+< Pedro es parte de una familia. Porque:
+<	- Ana tiene un hijo, llamado Paz.
+<	- Pablo tiene un hijo, llamado Paz.
+<	- Hijos son parte de cada familia.
 * 	y:
-<	- Ronaldo es probablemente masculino.
-<	- Cada hija no es masculino.
-< Ronaldo es probablemente masculino. Porque:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo es masculino.
-< Ronaldo no es probablemente una niña. Porque:
-<	- Ronaldo es probablemente masculino.
-<	- Cada niña no es masculino.
-* 	y:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo no es una niña.
-< Ronaldo no es probablemente una madre. Porque:
-<	- Ronaldo es probablemente masculino.
-<	- Cada madre no es masculino.
-* 	y:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo no es una madre.
-< Ronaldo no es probablemente una mujer. Porque:
-<	- Ronaldo es probablemente masculino.
-<	- Cada mujer no es masculino.
-* 	y:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo no es una mujer.
-< Ronaldo no es probablemente femenina. Porque:
-<	- Ronaldo es probablemente un hijo.
-<	- Cada hijo no es femenina.
-< Ronaldo es posiblemente una persona. Porque:
-<	- Ronaldo es probablemente un hijo.
-<	- Un hijo es probablemente una persona.
-< Ronaldo es probablemente un hijo. Porque:
-<	- Cada familia tiene padres y hijos.
-<	- Ronaldo tiene un padre.
-< Ronaldo es probablemente parte de una familia. Porque:
-<	- Ronaldo es probablemente un hijo.
+<	- Pedro es probablemente un hijo.
 <	- Hijos son parte de cada familia.
 * 
+* Mis suposiciones:
+< Pedro no es probablemente una hija. Porque:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo no es una hija.
+* 	y:
+<	- Pedro es probablemente masculino.
+<	- Cada hija no es masculino.
+< Pedro es probablemente masculino. Porque:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo es masculino.
+< Pedro no es probablemente una niña. Porque:
+<	- Pedro es probablemente masculino.
+<	- Cada niña no es masculino.
+* 	y:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo no es una niña.
+< Pedro no es probablemente una madre. Porque:
+<	- Pedro es probablemente masculino.
+<	- Cada madre no es masculino.
+* 	y:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo no es una madre.
+< Pedro no es probablemente una mujer. Porque:
+<	- Pedro es probablemente masculino.
+<	- Cada mujer no es masculino.
+* 	y:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo no es una mujer.
+< Pedro no es probablemente femenina. Porque:
+<	- Pedro es probablemente un hijo.
+<	- Cada hijo no es femenina.
+< Pedro es posiblemente una persona. Porque:
+<	- Pedro es probablemente un hijo.
+<	- Un hijo es probablemente una persona.
+< Pedro es probablemente un hijo. Porque:
+<	- Cada familia tiene padres y hijos.
+<	- Pedro tiene un padre.
+* 
 * Mis preguntas:
-< ¿Es Ronaldo un niño o un hombre? Porque:
-<	- Ronaldo es probablemente un hijo.
+< ¿Es Pedro un niño o un hombre? Porque:
+<	- Pedro es probablemente un hijo.
 <	- Cada hijo es un niño o un hombre.
 < 
 * 
@@ -823,6 +832,9 @@
 < Hernando era parte de una familia. Porque:
 <	- Hernando era el padre de Antonio.
 <	- Padres son parte de cada familia.
+* 	y:
+<	- Antonio tenido un padre, llamado Hernando.
+<	- Padres son parte de cada familia.
 * 
 * Mis suposiciones:
 < Hernando tiene probablemente un hijo, llamado Antonio. Porque:
@@ -847,39 +859,39 @@
 * 
 * Mis suposiciones:
 < Antonio no es posiblemente una hija. Porque:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo no es una hija.
 * 	y:
 <	- Antonio es posiblemente masculino.
 <	- Cada hija no es masculino.
 < Antonio es posiblemente masculino. Porque:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo es masculino.
 < Antonio no es posiblemente una niña. Porque:
 <	- Antonio es posiblemente masculino.
 <	- Cada niña no es masculino.
 * 	y:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo no es una niña.
 < Antonio no es posiblemente una madre. Porque:
 <	- Antonio es posiblemente masculino.
 <	- Cada madre no es masculino.
 * 	y:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo no es una madre.
 < Antonio no es posiblemente una mujer. Porque:
 <	- Antonio es posiblemente masculino.
 <	- Cada mujer no es masculino.
 * 	y:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo no es una mujer.
 < Antonio no es posiblemente femenina. Porque:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Cada hijo no es femenina.
 < Antonio es puede-ser una persona. Porque:
-<	- Antonio es posiblemente hijo de Hernando.
+<	- Antonio es posiblemente un hijo de Hernando.
 <	- Un hijo es probablemente una persona.
-< Antonio es posiblemente hijo de Hernando. Porque:
+< Antonio es posiblemente un hijo de Hernando. Porque:
 <	- Antonio tenido un padre, llamado Hernando.
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
@@ -889,8 +901,8 @@
 <	- Cada familia tiene padres y hijos.
 <	- Cada hijo es un hijo o una hija.
 <	- Nombre propio "Antonio" es probablemente masculino.
-< Antonio es posiblemente parte de una familia. Porque:
-<	- Antonio es posiblemente hijo de Hernando.
+< Antonio es probablemente parte de una familia. Porque:
+<	- Hernando tiene probablemente un hijo, llamado Antonio.
 <	- Hijos son parte de cada familia.
 < 
 * 

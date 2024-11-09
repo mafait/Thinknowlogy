@@ -1,13 +1,32 @@
 ﻿Lees het bestand "Nederlands/redeneren/gezin/gezinsdefinitie".
 Paul is een zoon van Jan en Anna.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
 Johan is een zoon van Jan en Anna.
 Laura is een dochter van Jan en Anna.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
 Jan is de vader en Anna is de moeder van Paul, Johan en Laura.
 #Dev#Toon de verantwoordingsrapportage over Jan.
 #Dev#Toon de verantwoordingsrapportage over Anna.
 #Dev#Toon de verantwoordingsrapportage over Paul.
 #Dev#Toon de verantwoordingsrapportage over Johan.
 #Dev#Toon de verantwoordingsrapportage over Laura.
+# Bevestigingen
+Jan heeft 2 zoons, genaamd Paul en Johan.
+Anna heeft 2 zoons, genaamd Paul en Johan.
+Jan heeft 3 kinderen, genaamd Paul, Johan en Laura.
+Anna heeft 3 kinderen, genaamd Paul, Johan en Laura.
+#Dev#Toon de verantwoordingsrapportage over Jan.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Paul.
+#Dev#Toon de verantwoordingsrapportage over Johan.
+#Dev#Toon de verantwoordingsrapportage over Laura.
+# Dat weet ik
 Paul is een zoon van Jan en Anna.
 Johan is een zoon van Jan en Anna.
 Laura is een dochter van Jan en Anna.

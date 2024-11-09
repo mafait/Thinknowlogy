@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -197,6 +197,10 @@
 * Mijn conclusies:
 < Jan is deel van een gezin. Omdat:
 <	- Jan is een ouder van Paul, Johan en Laura.
+<	- Ouders zijn deel van ieder gezin.
+* 	en:
+<	- Johan heeft een ouder, genaamd Jan.
+<	- Laura heeft een ouder, genaamd Jan.
 <	- Ouders zijn deel van ieder gezin.
 * 
 * Mijn veronderstellingen:
@@ -338,20 +342,23 @@
 < Paul is deel van een gezin. Omdat:
 <	- Paul is een kind van Jan en Anna.
 <	- Kinderen zijn deel van ieder gezin.
+* 	en:
+<	- Anna heeft een kind, genaamd Paul.
+<	- Kinderen zijn deel van ieder gezin.
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk een persoon. Omdat:
 <	- Paul is een kind van Jan en Anna.
 <	- Een kind is waarschijnlijk een persoon.
 < Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna. Omdat:
-<	- Anna is waarschijnlijk een ouder van Paul.
-<	- Jan is een ouder van Paul, Johan en Laura.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Anna heeft een kind, genaamd Paul.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Paul is een kind van Jan en Anna.
+* 	en:
+<	- Anna is waarschijnlijk een ouder van Paul.
+<	- Jan is een ouder van Paul, Johan en Laura.
 < Paul heeft misschien een moeder, genaamd Anna. Omdat:
 <	- Anna is misschien een moeder van Paul.
 * 
@@ -359,9 +366,9 @@
 < Is Paul vrouwelijk of mannelijk? Omdat:
 <	- Is Paul een meisje, een vrouw, een jongen of een man?
 <	- Iedere jongen is mannelijk.
+<	- Iedere man is mannelijk.
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
 * 	en:
 <	- Paul is een kind van Jan en Anna.
 <	- Ieder kind is vrouwelijk of mannelijk.
@@ -403,9 +410,9 @@
 < Is Johan vrouwelijk of mannelijk? Omdat:
 <	- Is Johan een meisje, een vrouw, een jongen of een man?
 <	- Iedere jongen is mannelijk.
+<	- Iedere man is mannelijk.
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
 * 	en:
 <	- Johan is waarschijnlijk een kind van Jan.
 <	- Ieder kind is vrouwelijk of mannelijk.

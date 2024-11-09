@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -127,12 +127,12 @@
 * 
 * My conclusions:
 < John is a man.
-< John is not a daughter.
-< John is not a mother.
-< John is not a girl.
 < John is not feminine.
-< John is not a woman.
 < John is masculine.
+< John is not a daughter.
+< John is not a girl.
+< John is not a mother.
+< John is not a woman.
 < Paul has a father, called John.
 < Paul has a mother, called Anna.
 < Joe has a father, called John.
@@ -140,12 +140,12 @@
 < Laura has a father, called John.
 < Laura has a mother, called Anna.
 < Anna is a woman.
-< Anna is not a father.
+< Anna is not masculine.
+< Anna is feminine.
 < Anna is not a son.
 < Anna is not a boy.
-< Anna is not masculine.
+< Anna is not a father.
 < Anna is not a man.
-< Anna is feminine.
 * 
 * My assumptions:
 < John is probably not a boy.
@@ -228,22 +228,25 @@
 * 
 * My assumptions that have been adjusted:
 < John has probably 3 children, called Paul, Joe and Laura.
-< Joe is probably part of a family.
-< Laura is probably part of a family.
 * 
 * My assumptions that have been concluded:
 < John is part of a family.
+* 
+* My assumptions that have been adjusted:
+< Joe is probably part of a family.
+< Laura is probably part of a family.
 < 
 * 
 * My assumptions that have been confirmed:
 < Anna is probably a parent of Paul, Joe and Laura.
 * 
+* My assumptions that have been concluded:
+< Paul has 2 parents, called John and Anna.
+* 
 * My assumptions that have been adjusted:
-< Laura is probably a child of John and Anna.
 < Anna has probably 3 children, called Paul, Joe and Laura.
 * 
 * My assumptions that have been concluded:
-< Paul has 2 parents, called John and Anna.
 < Anna is part of a family.
 * 
 * My assumptions that have been adjusted:
@@ -254,6 +257,7 @@
 < Joe has 2 parents, called John and Anna.
 * 
 * My assumptions that have been adjusted:
+< Laura is probably a child of John and Anna.
 < Laura is possibly a person.
 * 
 * My assumptions that have been concluded:

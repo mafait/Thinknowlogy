@@ -8,6 +8,6 @@ Juan es el padre y Ana es la madre de Paz, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Paz.
 Paz es un hijo.
 #Dev#Mostrar el informe de justificación sobre Paz.
-Paz es hijo de Juan y Ana.
+Paz es un hijo de Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Paz.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

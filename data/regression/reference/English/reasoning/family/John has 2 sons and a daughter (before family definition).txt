@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -126,5 +126,5 @@
 < 
 * 
 * Your information:
-< John has a daughter and 2 sons.
+< John has 2 sons and a daughter.
 < 

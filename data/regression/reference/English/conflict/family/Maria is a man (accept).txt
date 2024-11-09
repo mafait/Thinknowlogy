@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -127,12 +127,12 @@
 * I expected proper noun "Maria" to be feminine.
 * 
 * My conclusions:
-< Maria is not a daughter.
-< Maria is not a girl.
-< Maria is not a mother.
 < Maria is not feminine.
 < Maria is not a woman.
 < Maria is masculine.
+< Maria is not a daughter.
+< Maria is not a girl.
+< Maria is not a mother.
 * 
 * My assumptions:
 < Maria is probably not a boy.

@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -197,6 +197,10 @@
 * Mes conclusions:
 < Olivier est partie d'une famille. En raison:
 <	- Olivier est un parent de Pascal, Julien et Lorraine.
+<	- Parents sont partie de chaque famille.
+* 	et:
+<	- Julien a un parent, appelé Olivier.
+<	- Lorraine a un parent, appelé Olivier.
 <	- Parents sont partie de chaque famille.
 * 
 * Mes hypothèses:
@@ -338,20 +342,23 @@
 < Pascal est partie d'une famille. En raison:
 <	- Pascal est un enfant de Olivier et Amélie.
 <	- Enfants sont partie de chaque famille.
+* 	et:
+<	- Amélie a un enfant, appelé Pascal.
+<	- Enfants sont partie de chaque famille.
 * 
 * Mes hypothèses:
 < Pascal est probablement une personne. En raison:
 <	- Pascal est un enfant de Olivier et Amélie.
 <	- Un enfant est probablement une personne.
 < Pascal a probablement 2 parents, appelés Olivier et Amélie. En raison:
-<	- Amélie est probablement un parent de Pascal.
-<	- Olivier est un parent de Pascal, Julien et Lorraine.
-* 	et:
 <	- Chaque famille a parents et enfants.
 <	- Amélie a un enfant, appelé Pascal.
 * 	et:
 <	- Chaque famille a parents et enfants.
 <	- Pascal est un enfant de Olivier et Amélie.
+* 	et:
+<	- Amélie est probablement un parent de Pascal.
+<	- Olivier est un parent de Pascal, Julien et Lorraine.
 < Pascal a peut-être une mère, appelée Amélie. En raison:
 <	- Amélie est peut-être une mère de Pascal.
 * 
@@ -359,9 +366,9 @@
 < Est Pascal féminin ou masculin? En raison:
 <	- Est Pascal une jeune-fille, une femme, un garçon ou un homme?
 <	- Chaque garçon est masculin.
+<	- Chaque homme est masculin.
 <	- Chaque jeune-fille est féminin.
 <	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
 * 	et:
 <	- Pascal est un enfant de Olivier et Amélie.
 <	- Chaque enfant est féminin ou masculin.
@@ -403,9 +410,9 @@
 < Est Julien féminin ou masculin? En raison:
 <	- Est Julien une jeune-fille, une femme, un garçon ou un homme?
 <	- Chaque garçon est masculin.
+<	- Chaque homme est masculin.
 <	- Chaque jeune-fille est féminin.
 <	- Chaque femme est féminin.
-<	- Chaque homme est masculin.
 * 	et:
 <	- Julien est probablement un enfant de Olivier.
 <	- Chaque enfant est féminin ou masculin.

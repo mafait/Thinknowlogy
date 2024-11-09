@@ -1,10 +1,10 @@
 ﻿* 
 * Mis conclusiones:
-< Alfonso es hijo de Jorge.
+< Alfonso es un hijo de Jorge.
 < 
 * 
 * Mis conclusiones:
-< Alfonso es hijo de Jorge. Porque:
+< Alfonso es un hijo de Jorge. Porque:
 <	- Jorge tiene un hijo, llamado Alfonso.
 < 
 * 

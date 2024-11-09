@@ -97,8 +97,8 @@
 < 
 * 
 * Mis suposiciones que se han concluido:
-< Cada hijo no es una hija.
 < Cada hija no es un hijo.
+< Cada hijo no es una hija.
 * 
 * Mis conclusiones:
 < Cada hija es femenina.
@@ -151,9 +151,17 @@
 <	- Cada padre es un hombre.
 <	- Cada madre es una mujer.
 < ¿Es Juan femenina o masculino? Porque:
+<	- ¿Es Juan una mujer o un hombre?
+<	- Cada hombre es masculino.
+<	- Cada mujer es femenina.
+* 	y:
 <	- Juan tiene una hija y 2 hijos.
 <	- Cada familia tiene padres y hijos.
 <	- Cada padre es femenina o masculino.
+* 	y:
+<	- ¿Es Juan un padre o una madre?
+<	- Cada padre es masculino.
+<	- Cada madre es femenina.
 * 	y:
 <	- Juan es posiblemente una persona.
 <	- Cada persona es masculino o femenina.

@@ -1,9 +1,9 @@
 ﻿/*	Class:			SelectionItem
  *	Parent class:	Item
  *	Purpose:		Storing the selection structure
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -48,11 +48,13 @@ class SelectionItem extends Item
 	private short specificationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 	private short relationWordTypeNr_ = Constants.NO_WORD_TYPE_NR;
 
+	private int relationCollectionNr_ = Constants.NO_COLLECTION_NR;
+
 	private int generalizationContextNr_ = Constants.NO_CONTEXT_NR;
 	private int specificationContextNr_ = Constants.NO_CONTEXT_NR;
 	private int relationContextNr_ = Constants.NO_CONTEXT_NR;
 
-	private int nContextRelations_ = 0;
+	private int nEnteredRelationWords_ = 0;
 
 	private WordItem generalizationWordItem_ = null;
 	private WordItem specificationWordItem_ = null;
@@ -90,7 +92,7 @@ class SelectionItem extends Item
 
 	// Constructor
 
-	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nContextRelations, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
+	protected SelectionItem( boolean isAction, boolean isAssignedOrClear, boolean isInactiveAssignment, boolean isArchivedAssignment, boolean isFirstComparisonPart, boolean isNewStart, boolean isNegative, boolean isPossessive, boolean isSpecificationGeneralization, boolean isUniqueUserRelation, boolean isValueSpecification, short assumptionLevel, short selectionLevel, short imperativeVerbParameter, short prepositionParameter, short generalizationWordTypeNr, short specificationWordTypeNr, short relationWordTypeNr, int relationCollectionNr, int generalizationContextNr, int specificationContextNr, int relationContextNr, int nEnteredRelationWords, WordItem generalizationWordItem, WordItem specificationWordItem, WordItem relationWordItem, String specificationString, List myList, WordItem myWordItem )
 		{
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
@@ -121,11 +123,13 @@ class SelectionItem extends Item
 		specificationWordTypeNr_ = specificationWordTypeNr;
 		relationWordTypeNr_ = relationWordTypeNr;
 
+		relationCollectionNr_ = relationCollectionNr;
+
 		generalizationContextNr_ = generalizationContextNr;
 		specificationContextNr_ = specificationContextNr;
 		relationContextNr_ = relationContextNr;
 
-		nContextRelations_ = nContextRelations;
+		nEnteredRelationWords_ = nEnteredRelationWords;
 
 		generalizationWordItem_ = generalizationWordItem;
 		specificationWordItem_ = specificationWordItem;
@@ -222,17 +226,17 @@ class SelectionItem extends Item
 				generalizationContextNr_ == queryParameter ||
 				specificationContextNr_ == queryParameter ||
 				relationContextNr_ == queryParameter ||
-				nContextRelations_ == queryParameter ||
+				nEnteredRelationWords_ == queryParameter ||
 
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
 
-				( selectionLevel_ > Constants.NO_SELECTION_LEVEL ||
-				imperativeVerbParameter_ > Constants.NO_IMPERATIVE_PARAMETER ||
-				prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER ||
-				generalizationContextNr_ > Constants.NO_CONTEXT_NR ||
-				specificationContextNr_ > Constants.NO_CONTEXT_NR ||
-				relationContextNr_ > Constants.NO_CONTEXT_NR ||
-				nContextRelations_ > 0 ) ) );
+					( selectionLevel_ > Constants.NO_SELECTION_LEVEL ||
+					imperativeVerbParameter_ > Constants.NO_IMPERATIVE_PARAMETER ||
+					prepositionParameter_ > Constants.NO_PREPOSITION_PARAMETER ||
+					generalizationContextNr_ > Constants.NO_CONTEXT_NR ||
+					specificationContextNr_ > Constants.NO_CONTEXT_NR ||
+					relationContextNr_ > Constants.NO_CONTEXT_NR ||
+					nEnteredRelationWords_ > 0 ) ) );
 		}
 
 	@Override
@@ -268,12 +272,11 @@ class SelectionItem extends Item
 	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem _myWordItem = myWordItem();
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String generalizationWordTypeString = _myWordItem.wordTypeNameString( generalizationWordTypeNr_ );
-		String specificationWordTypeString = _myWordItem.wordTypeNameString( specificationWordTypeNr_ );
-		String relationWordTypeString = _myWordItem.wordTypeNameString( relationWordTypeNr_ );
+		String generalizationWordTypeString = WordItem.wordTypeNameString( generalizationWordTypeNr_ );
+		String specificationWordTypeString = WordItem.wordTypeNameString( specificationWordTypeNr_ );
+		String relationWordTypeString = WordItem.wordTypeNameString( relationWordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -356,6 +359,9 @@ class SelectionItem extends Item
 				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
+		if( relationCollectionNr_ > Constants.NO_COLLECTION_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationCollectionNr:" + relationCollectionNr_ );
+
 		if( relationContextNr_ > Constants.NO_CONTEXT_NR )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "relationContextNr:" + relationContextNr_ );
 
@@ -369,8 +375,8 @@ class SelectionItem extends Item
 				queryStringBuffer.append( Constants.QUERY_WORD_REFERENCE_START_CHAR + wordString + Constants.QUERY_WORD_REFERENCE_END_CHAR );
 			}
 
-		if( nContextRelations_ > Constants.NO_CONTEXT_NR )
-			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nContextRelations:" + nContextRelations_ );
+		if( nEnteredRelationWords_ > Constants.NO_CONTEXT_NR )
+			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "nEnteredRelationWords:" + nEnteredRelationWords_ );
 
 		if( specificationString_ != null )
 			queryStringBuffer.append( Constants.QUERY_SEPARATOR_STRING + "specificationString:" + Constants.QUERY_STRING_START_CHAR + specificationString_ + Constants.QUERY_STRING_END_CHAR );
@@ -495,6 +501,11 @@ class SelectionItem extends Item
 		return relationWordTypeNr_;
 		}
 
+	protected int relationCollectionNr()
+		{
+		return relationCollectionNr_;
+		}
+
 	protected int generalizationContextNr()
 		{
 		return generalizationContextNr_;
@@ -510,9 +521,9 @@ class SelectionItem extends Item
 		return relationContextNr_;
 		}
 
-	protected int nContextRelations()
+	protected int nEnteredRelationWords()
 		{
-		return nContextRelations_;
+		return nEnteredRelationWords_;
 		}
 
 	protected byte checkWordItemForUsage( WordItem unusedWordItem )

@@ -5,7 +5,7 @@ Luisa tiene una madre, llamada Ana.
 Luisa tiene 2 padres, llamados Juan y Ana.
 José tiene un padre, llamado Juan.
 Paz es un hijo.
-Luisa es hija de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 Luz tiene un padre, llamado Juan.
 #Dev#Mostrar el informe de justificación sobre Juan.
 #Dev#Mostrar el informe de justificación sobre Ana.
@@ -21,7 +21,7 @@ Becky tiene una madre, llamada Ana.
 #Dev#Mostrar el informe de justificación sobre Luisa.
 #Dev#Mostrar el informe de justificación sobre Luz.
 #Dev#Mostrar el informe de justificación sobre Becky.
-Becky es hija de Ana.
+Becky es una hija de Ana.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre Becky.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

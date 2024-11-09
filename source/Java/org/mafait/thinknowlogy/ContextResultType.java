@@ -1,9 +1,9 @@
 ﻿/*	Class:		ContextResultType
  *	Purpose:	To return context variables,
  *				as the result of a method call
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,6 @@ class ContextResultType
 	protected boolean isAmbiguousRelationContext = false;
 
 	protected int contextNr = Constants.NO_CONTEXT_NR;
-	protected int copiedRelationContextNr = Constants.NO_CONTEXT_NR;
 	}
 
 /*************************************************************************

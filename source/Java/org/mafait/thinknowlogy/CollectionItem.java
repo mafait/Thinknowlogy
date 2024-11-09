@@ -1,9 +1,9 @@
 ﻿/*	Class:			CollectionItem
  *	Parent class:	List
  *	Purpose:		Storing collections of a word
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -128,8 +128,8 @@ class CollectionItem extends Item
 
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
 
-				( collectionOrderNr_ > Constants.NO_ORDER_NR ||
-				collectionNr_ > Constants.NO_COLLECTION_NR ) ) );
+					( collectionOrderNr_ > Constants.NO_ORDER_NR ||
+					collectionNr_ > Constants.NO_COLLECTION_NR ) ) );
 		}
 
 	@Override
@@ -158,9 +158,8 @@ class CollectionItem extends Item
 	@Override
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
-		WordItem _myWordItem = myWordItem();
-		String collectionWordTypeString = _myWordItem.wordTypeNameString( collectionWordTypeNr_ );
-		String commonWordTypeString = _myWordItem.wordTypeNameString( commonWordTypeNr_ );
+		String collectionWordTypeString = WordItem.wordTypeNameString( collectionWordTypeNr_ );
+		String commonWordTypeString = WordItem.wordTypeNameString( commonWordTypeNr_ );
 		StringBuffer queryStringBuffer;
 		String wordString;
 
@@ -272,12 +271,12 @@ class CollectionItem extends Item
 		{
 		return collectionOrderNr_;
 		}
-
+/*
 	protected short collectionWordTypeNr()
 		{
 		return collectionWordTypeNr_;
 		}
-
+*/
 	protected int collectionNr()
 		{
 		return collectionNr_;

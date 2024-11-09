@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,12 +127,12 @@
 * 
 * Mijn conclusies:
 < Jan is een man.
-< Jan is geen dochter.
-< Jan is geen moeder.
-< Jan is geen meisje.
 < Jan is niet vrouwelijk.
-< Jan is geen vrouw.
 < Jan is mannelijk.
+< Jan is geen dochter.
+< Jan is geen meisje.
+< Jan is geen moeder.
+< Jan is geen vrouw.
 < Paul heeft een vader, genaamd Jan.
 < Paul heeft een moeder, genaamd Anna.
 < Johan heeft een vader, genaamd Jan.
@@ -140,12 +140,12 @@
 < Laura heeft een vader, genaamd Jan.
 < Laura heeft een moeder, genaamd Anna.
 < Anna is een vrouw.
-< Anna is geen vader.
+< Anna is niet mannelijk.
+< Anna is vrouwelijk.
 < Anna is geen zoon.
 < Anna is geen jongen.
-< Anna is niet mannelijk.
+< Anna is geen vader.
 < Anna is geen man.
-< Anna is vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk geen jongen.
@@ -210,24 +210,24 @@
 * 
 * Mijn conclusies:
 < Sjors is een man.
-< Sjors is geen dochter.
-< Sjors is geen moeder.
-< Sjors is geen meisje.
 < Sjors is niet vrouwelijk.
-< Sjors is geen vrouw.
 < Sjors is mannelijk.
+< Sjors is geen dochter.
+< Sjors is geen meisje.
+< Sjors is geen moeder.
+< Sjors is geen vrouw.
 < André heeft een vader, genaamd Sjors.
 * 
 * Mijn veronderstellingen:
 < Sjors is waarschijnlijk geen jongen.
 < Sjors is waarschijnlijk een persoon.
-< Sjors heeft mogelijk een kind, genaamd André.
 < Sjors is waarschijnlijk een ouder van André.
 < Sjors is waarschijnlijk deel van een gezin.
+< Sjors heeft mogelijk een kind, genaamd André.
+< André heeft waarschijnlijk een ouder, genaamd Sjors.
 < André is mogelijk een kind van Sjors.
 < André is mogelijk deel van een gezin.
 < André is misschien een persoon.
-< André heeft waarschijnlijk een ouder, genaamd Sjors.
 * 
 * Mijn vragen:
 < Is André een meisje, een vrouw, een jongen of een man?
@@ -249,11 +249,11 @@
 * 
 * Mijn conclusies:
 < Willem is niet vrouwelijk.
-< Willem is mannelijk.
 < Willem is een man.
+< Willem is mannelijk.
 < Willem is geen dochter.
-< Willem is geen moeder.
 < Willem is geen meisje.
+< Willem is geen moeder.
 < Willem is geen vrouw.
 * 
 * Mijn veronderstellingen:
@@ -273,54 +273,54 @@
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
-< Jan is geen dochter. Omdat:
-<	- Jan is een man.
-<	- Iedere man is geen dochter.
-* 	en:
-<	- Jan is mannelijk.
-<	- Iedere dochter is niet mannelijk.
-* 	en:
-<	- Jan is een vader.
-<	- Iedere vader is geen dochter.
-< Jan is geen moeder. Omdat:
-<	- Jan is een vader.
-<	- Iedere vader is geen moeder.
-* 	en:
-<	- Jan is een man.
-<	- Iedere man is geen moeder.
-* 	en:
-<	- Jan is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-< Jan is geen meisje. Omdat:
-<	- Jan is een man.
-<	- Iedere man is geen meisje.
-* 	en:
-<	- Jan is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-* 	en:
-<	- Jan is een vader.
-<	- Iedere vader is geen meisje.
 < Jan is niet vrouwelijk. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is niet vrouwelijk.
 * 	en:
 <	- Jan is een man.
 <	- Iedere man is niet vrouwelijk.
-< Jan is geen vrouw. Omdat:
-<	- Jan is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
-<	- Jan is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-* 	en:
-<	- Jan is een vader.
-<	- Iedere vader is geen vrouw.
 < Jan is mannelijk. Omdat:
 <	- Jan is een man.
 <	- Iedere man is mannelijk.
 * 	en:
 <	- Jan is een vader.
 <	- Iedere vader is mannelijk.
+< Jan is geen dochter. Omdat:
+<	- Jan is mannelijk.
+<	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen dochter.
+* 	en:
+<	- Jan is een vader.
+<	- Iedere vader is geen dochter.
+< Jan is geen meisje. Omdat:
+<	- Jan is mannelijk.
+<	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen meisje.
+* 	en:
+<	- Jan is een vader.
+<	- Iedere vader is geen meisje.
+< Jan is geen moeder. Omdat:
+<	- Jan is mannelijk.
+<	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen moeder.
+* 	en:
+<	- Jan is een vader.
+<	- Iedere vader is geen moeder.
+< Jan is geen vrouw. Omdat:
+<	- Jan is mannelijk.
+<	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen vrouw.
+* 	en:
+<	- Jan is een vader.
+<	- Iedere vader is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Jan is waarschijnlijk geen jongen. Omdat:
@@ -342,6 +342,11 @@
 < Jan is waarschijnlijk deel van een gezin. Omdat:
 <	- Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
 <	- Ouders zijn deel van ieder gezin.
+* 	en:
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Ouders zijn deel van ieder gezin.
 < Jan heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Jan is waarschijnlijk een ouder van Paul, Johan en Laura.
@@ -349,6 +354,11 @@
 <	- Paul is mogelijk een kind van Jan en Anna.
 <	- Johan is mogelijk een kind van Jan en Anna.
 <	- Laura is mogelijk een kind van Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Johan heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+<	- Laura heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
 < Jan heeft misschien een dochter, genaamd Laura. Omdat:
 <	- Laura is misschien een dochter van Jan en Anna.
 < 
@@ -378,6 +388,9 @@
 <	- Anna heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
+<	- Paul heeft waarschijnlijk 2 ouders, genaamd Jan en Anna.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
 <	- Iedere ouder is een vader of een moeder.
 <	- Paul heeft een vader, genaamd Jan.
 <	- Paul heeft een moeder, genaamd Anna.
@@ -386,6 +399,7 @@
 <	- Kinderen zijn deel van ieder gezin.
 * 	en:
 <	- Jan heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura.
+<	- Anna heeft mogelijk 3 kinderen, genaamd Paul, Johan en Laura.
 <	- Kinderen zijn deel van ieder gezin.
 < Paul is misschien een persoon. Omdat:
 <	- Paul is mogelijk een kind van Jan en Anna.
@@ -401,9 +415,9 @@
 < Is Paul vrouwelijk of mannelijk? Omdat:
 <	- Is Paul een meisje, een vrouw, een jongen of een man?
 <	- Iedere jongen is mannelijk.
+<	- Iedere man is mannelijk.
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
 * 	en:
 <	- Paul is mogelijk een kind van Jan en Anna.
 <	- Ieder kind is vrouwelijk of mannelijk.
@@ -416,54 +430,54 @@
 < Sjors is een man. Omdat:
 <	- Sjors is een vader.
 <	- Iedere vader is een man.
-< Sjors is geen dochter. Omdat:
-<	- Sjors is een man.
-<	- Iedere man is geen dochter.
-* 	en:
-<	- Sjors is mannelijk.
-<	- Iedere dochter is niet mannelijk.
-* 	en:
-<	- Sjors is een vader.
-<	- Iedere vader is geen dochter.
-< Sjors is geen moeder. Omdat:
-<	- Sjors is een vader.
-<	- Iedere vader is geen moeder.
-* 	en:
-<	- Sjors is een man.
-<	- Iedere man is geen moeder.
-* 	en:
-<	- Sjors is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-< Sjors is geen meisje. Omdat:
-<	- Sjors is een man.
-<	- Iedere man is geen meisje.
-* 	en:
-<	- Sjors is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-* 	en:
-<	- Sjors is een vader.
-<	- Iedere vader is geen meisje.
 < Sjors is niet vrouwelijk. Omdat:
 <	- Sjors is een vader.
 <	- Iedere vader is niet vrouwelijk.
 * 	en:
 <	- Sjors is een man.
 <	- Iedere man is niet vrouwelijk.
-< Sjors is geen vrouw. Omdat:
-<	- Sjors is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
-<	- Sjors is mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-* 	en:
-<	- Sjors is een vader.
-<	- Iedere vader is geen vrouw.
 < Sjors is mannelijk. Omdat:
 <	- Sjors is een man.
 <	- Iedere man is mannelijk.
 * 	en:
 <	- Sjors is een vader.
 <	- Iedere vader is mannelijk.
+< Sjors is geen dochter. Omdat:
+<	- Sjors is mannelijk.
+<	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Sjors is een man.
+<	- Iedere man is geen dochter.
+* 	en:
+<	- Sjors is een vader.
+<	- Iedere vader is geen dochter.
+< Sjors is geen meisje. Omdat:
+<	- Sjors is mannelijk.
+<	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Sjors is een man.
+<	- Iedere man is geen meisje.
+* 	en:
+<	- Sjors is een vader.
+<	- Iedere vader is geen meisje.
+< Sjors is geen moeder. Omdat:
+<	- Sjors is mannelijk.
+<	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Sjors is een man.
+<	- Iedere man is geen moeder.
+* 	en:
+<	- Sjors is een vader.
+<	- Iedere vader is geen moeder.
+< Sjors is geen vrouw. Omdat:
+<	- Sjors is mannelijk.
+<	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Sjors is een man.
+<	- Iedere man is geen vrouw.
+* 	en:
+<	- Sjors is een vader.
+<	- Iedere vader is geen vrouw.
 * 
 * Mijn veronderstellingen:
 < Sjors is waarschijnlijk geen jongen. Omdat:
@@ -475,11 +489,6 @@
 * 	en:
 <	- Sjors is een vader.
 <	- Een vader is waarschijnlijk een persoon.
-< Sjors heeft mogelijk een kind, genaamd André. Omdat:
-<	- André is mogelijk een kind van Sjors.
-* 	en:
-<	- Ieder gezin heeft ouders en kinderen.
-<	- Sjors is waarschijnlijk een ouder van André.
 < Sjors is waarschijnlijk een ouder van André. Omdat:
 <	- Sjors is de vader van André.
 <	- Een vader is waarschijnlijk een ouder.
@@ -488,6 +497,17 @@
 < Sjors is waarschijnlijk deel van een gezin. Omdat:
 <	- Sjors is waarschijnlijk een ouder van André.
 <	- Ouders zijn deel van ieder gezin.
+* 	en:
+<	- André heeft waarschijnlijk een ouder, genaamd Sjors.
+<	- Ouders zijn deel van ieder gezin.
+< Sjors heeft mogelijk een kind, genaamd André. Omdat:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Sjors is waarschijnlijk een ouder van André.
+* 	en:
+<	- André is mogelijk een kind van Sjors.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- André heeft waarschijnlijk een ouder, genaamd Sjors.
 < 
 * 
 * Mijn conclusies:
@@ -497,48 +517,48 @@
 * 	en:
 <	- Willem is een man.
 <	- Iedere man is niet vrouwelijk.
-< Willem is mannelijk. Omdat:
-<	- Willem is een vader.
-<	- Iedere vader is mannelijk.
-* 	en:
-<	- Willem is een man.
-<	- Iedere man is mannelijk.
 < Willem is een man. Omdat:
 <	- Willem is een vader.
 <	- Iedere vader is een man.
-< Willem is geen dochter. Omdat:
+< Willem is mannelijk. Omdat:
 <	- Willem is een man.
-<	- Iedere man is geen dochter.
+<	- Iedere man is mannelijk.
 * 	en:
+<	- Willem is een vader.
+<	- Iedere vader is mannelijk.
+< Willem is geen dochter. Omdat:
 <	- Willem is mannelijk.
 <	- Iedere dochter is niet mannelijk.
 * 	en:
+<	- Willem is een man.
+<	- Iedere man is geen dochter.
+* 	en:
 <	- Willem is een vader.
 <	- Iedere vader is geen dochter.
-< Willem is geen moeder. Omdat:
+< Willem is geen meisje. Omdat:
+<	- Willem is mannelijk.
+<	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Willem is een man.
+<	- Iedere man is geen meisje.
+* 	en:
 <	- Willem is een vader.
-<	- Iedere vader is geen moeder.
+<	- Iedere vader is geen meisje.
+< Willem is geen moeder. Omdat:
+<	- Willem is mannelijk.
+<	- Iedere moeder is niet mannelijk.
 * 	en:
 <	- Willem is een man.
 <	- Iedere man is geen moeder.
 * 	en:
-<	- Willem is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-< Willem is geen meisje. Omdat:
-<	- Willem is een man.
-<	- Iedere man is geen meisje.
-* 	en:
-<	- Willem is mannelijk.
-<	- Ieder meisje is niet mannelijk.
-* 	en:
 <	- Willem is een vader.
-<	- Iedere vader is geen meisje.
+<	- Iedere vader is geen moeder.
 < Willem is geen vrouw. Omdat:
-<	- Willem is een man.
-<	- Iedere man is geen vrouw.
-* 	en:
 <	- Willem is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Willem is een man.
+<	- Iedere man is geen vrouw.
 * 	en:
 <	- Willem is een vader.
 <	- Iedere vader is geen vrouw.
@@ -569,15 +589,23 @@
 <	- Sjors is de vader van André.
 * 
 * Mijn veronderstellingen:
+< André heeft waarschijnlijk een ouder, genaamd Sjors. Omdat:
+<	- Sjors is waarschijnlijk een ouder van André.
+* 	en:
+<	- André heeft een vader, genaamd Sjors.
+<	- Een vader is waarschijnlijk een ouder.
 < André is mogelijk een kind van Sjors. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- André heeft een vader, genaamd Sjors.
+<	- Sjors is waarschijnlijk een ouder van André.
 * 	en:
 <	- Sjors heeft mogelijk een kind, genaamd André.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Sjors is waarschijnlijk een ouder van André.
+<	- André heeft waarschijnlijk een ouder, genaamd Sjors.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- André heeft een vader, genaamd Sjors.
 < André is mogelijk deel van een gezin. Omdat:
 <	- André is mogelijk een kind van Sjors.
 <	- Kinderen zijn deel van ieder gezin.
@@ -587,11 +615,6 @@
 < André is misschien een persoon. Omdat:
 <	- André is mogelijk een kind van Sjors.
 <	- Een kind is waarschijnlijk een persoon.
-< André heeft waarschijnlijk een ouder, genaamd Sjors. Omdat:
-<	- Sjors is waarschijnlijk een ouder van André.
-* 	en:
-<	- André heeft een vader, genaamd Sjors.
-<	- Een vader is waarschijnlijk een ouder.
 * 
 * Mijn vragen:
 < Is André een meisje, een vrouw, een jongen of een man? Omdat:
@@ -603,9 +626,9 @@
 < Is André vrouwelijk of mannelijk? Omdat:
 <	- Is André een meisje, een vrouw, een jongen of een man?
 <	- Iedere jongen is mannelijk.
+<	- Iedere man is mannelijk.
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
 * 	en:
 <	- André is mogelijk een kind van Sjors.
 <	- Ieder kind is vrouwelijk of mannelijk.

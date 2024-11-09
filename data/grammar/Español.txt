@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the Spanish language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -459,8 +459,7 @@
 		$singular_structure_specification_noun_with_mandatory_article					article_indefinite singular_structure_specification_noun [ adjective_Specific ]
 		$singular_structure_specification_noun_with_optional_article					[ article_indefinite ] singular_structure_specification_noun
 		$comma_separated_singular_structure_specification_nouns							symbol_comma singular_structure_specification_noun_with_optional_article [ comma_separated_singular_structure_specification_nouns ]
-		$more_singular_exclusive_structure_specification_nouns							[ comma_separated_singular_structure_specification_nouns ] exclusive_specification_conjunction singular_structure_specification_noun_with_optional_article
-		$singular_exclusive_structure_specification_nouns								singular_structure_specification_noun_with_mandatory_article [ more_singular_exclusive_structure_specification_nouns ]
+		$singular_exclusive_structure_specification_nouns								singular_structure_specification_noun_with_mandatory_article [ comma_separated_singular_structure_specification_nouns ] [ exclusive_specification_conjunction singular_structure_specification_noun_with_optional_article ]
 
 		$multiple_word_plural_noun														noun_plural ( multiple_word_singular_noun )
 :5022	$plural_specification_noun														multiple_word_plural_noun
@@ -551,7 +550,6 @@
 		$Part_Of																		noun_singular_Part preposition_Of
 		$singular_proper_noun_specification												singular_possessive_verb structure_specification_nouns [ possessive_relations ] [ adverb_Anymore ]
 		$singular_proper_noun_specification												singular_verb [ Part_Of ] { structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
-		$singular_proper_noun_specification												singular_verb single_singular_specification_noun preposition_relations
 		$singular_proper_noun_generalization_structure									generalization_proper_noun singular_proper_noun_specification
 		$linked_singular_proper_noun_generalization_structure							{ singular_verb | singular_possessive_verb } singular_structure_specification_noun
 		$comma_separated_singular_proper_noun_generalization_structure					symbol_comma { singular_proper_noun_generalization_structure | linked_singular_proper_noun_generalization_structure } [ comma_separated_singular_proper_noun_generalization_structure ]
@@ -584,9 +582,7 @@
 :5000	$structure_generalization_specification											singular_proper_noun_generalization_structure [ more_singular_proper_noun_generalization_structures ]
 :5000	$structure_generalization_specification											singular_structure_noun_generalization { singular_verb | singular_conditional_verb } singular_structure_specification
 
-		$proper_noun_question_specification												{ structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
-		$proper_noun_question_specification												single_singular_specification_noun preposition_relations
-		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_question_specification
+		$structure_question_specification												generalization_proper_noun [ adverb_uncertainty ] { structure_specification_nouns | exclusive_specification_adjectives } [ preposition_relations ]
 		$structure_question_specification												singular_structure_noun_generalization singular_structure_specification
 		$assignment_question_specification												generalization_noun_singular_assignment { singular_structure_specification | singular_noun_assignment_specification }
 		$assignment_question_specification												generalization_proper_noun [ adverb_uncertainty ] proper_noun_assignment_specification [ preposition_relations ]

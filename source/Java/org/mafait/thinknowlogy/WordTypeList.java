@@ -1,9 +1,9 @@
 ﻿/*	Class:			WordTypeList
  *	Parent class:	List
  *	Purpose:		Storing word type items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,31 @@ class WordTypeList extends List
 
 
 	// Private methods
+
+	private byte copyAndReplaceWordType( short newAdjectiveParameter, short newDefiniteArticleParameter, short newIndefiniteArticleParameter, WordTypeItem obsoleteWordTypeItem )
+		{
+		String wordTypeString;
+		WordTypeResultType wordTypeResult = new WordTypeResultType();
+
+		if( obsoleteWordTypeItem == null )
+			return startError( 1, "The given obsolete word type item is undefined" );
+
+		if( obsoleteWordTypeItem.hasCurrentCreationSentenceNr() )
+			return startError( 1, "The given obsolete word type item is not old" );
+
+		wordTypeString = obsoleteWordTypeItem.wordTypeString();
+
+		if( ( wordTypeResult.wordTypeItem = new WordTypeItem( obsoleteWordTypeItem.hasFeminineWordEnding(), obsoleteWordTypeItem.hasMasculineWordEnding(), obsoleteWordTypeItem.isProperNounPrecededByDefiniteArticle(), newAdjectiveParameter, newDefiniteArticleParameter, newIndefiniteArticleParameter, obsoleteWordTypeItem.wordTypeLanguageNr(), obsoleteWordTypeItem.wordTypeNr(), wordTypeString.length(), wordTypeString, this, myWordItem() ) ) == null )
+			return startError( 1, "The created word type item is undefined" );
+
+		if( addItemToList( Constants.QUERY_ACTIVE_CHAR, wordTypeResult.wordTypeItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to add a word type item" );
+
+		if( replaceItem( obsoleteWordTypeItem ) != Constants.RESULT_OK )
+			return addError( 1, "I failed to replace an obsolete justification" );
+
+		return Constants.RESULT_OK;
+		}
 
 	private WordTypeItem nextWordTypeListItem()
 		{
@@ -80,7 +105,7 @@ class WordTypeList extends List
 
 	protected WordTypeList( WordItem myWordItem )
 		{
-		initializeListVariables( Constants.WORD_TYPE_LIST_SYMBOL, "WordTypeList", myWordItem );
+		initializeListVariables( Constants.WORD_TYPE_LIST_SYMBOL, myWordItem );
 		}
 
 
@@ -381,6 +406,63 @@ class WordTypeList extends List
 			return addError( 1, "I failed to mark a relation word as written" );
 
 		return Constants.RESULT_OK;
+		}
+
+	protected byte setAdjectiveParameter( boolean isChineseCurrentLanguage, short newAdjectiveParameter, short wordParameter, WordTypeItem thisWordTypeItem )
+		{
+		if( thisWordTypeItem == null )
+			return startError( 1, "The given word type item is undefined" );
+
+		if( thisWordTypeItem.hasAdjectiveParameter() ||
+		thisWordTypeItem.hasCurrentCreationSentenceNr() )
+			// Set definite article parameter of word type item
+			return thisWordTypeItem.setAdjectiveParameter( newAdjectiveParameter );
+
+		// Known bug. Avoid changing 'Constants.WORD_PARAMETER_ADJECTIVE_NEW_NEUTRAL' to 'Constants.WORD_PARAMETER_ADJECTIVE_PREVIOUS_NEUTRAL' in Chinese
+		// Chinese test file: "Scientific challenge - Confirmation"
+		// Workaround: Skip setting adjective parameter in Chinese language
+		if( !isChineseCurrentLanguage &&
+		// Known bug, due to Dutch word 'oplossingsmethode'
+		// Dutch test file: "programmeren\Vier op 'n rij - Gretig om te winnen"
+		// Workaround: Skip predefined words
+		wordParameter == Constants.NO_WORD_PARAMETER )
+			return copyAndReplaceWordType( newAdjectiveParameter, thisWordTypeItem.definiteArticleParameter(), thisWordTypeItem.indefiniteArticleParameter(), thisWordTypeItem );
+
+		return Constants.RESULT_OK;
+		}
+
+	protected byte setDefiniteArticleParameter( short newDefiniteArticleParameter, short wordParameter, WordTypeItem thisWordTypeItem )
+		{
+		if( thisWordTypeItem == null )
+			return startError( 1, "The given word type item is undefined" );
+
+		if( thisWordTypeItem.hasDefiniteArticleParameter() ||
+		thisWordTypeItem.hasCurrentCreationSentenceNr() ||
+		// Known bug for predefined words in Spanish and French
+		// Workaround for predefined words: Set definite article in word type item instead of in word item
+		wordParameter > Constants.NO_WORD_PARAMETER )
+			// Set definite article parameter of word type item
+			return thisWordTypeItem.setDefiniteArticleParameter( newDefiniteArticleParameter );
+
+		return copyAndReplaceWordType( thisWordTypeItem.adjectiveParameter(), newDefiniteArticleParameter, thisWordTypeItem.indefiniteArticleParameter(), thisWordTypeItem );
+		}
+
+	protected byte setIndefiniteArticleParameter( short newIndefiniteArticleParameter, short wordParameter, WordTypeItem thisWordTypeItem )
+		{
+		if( thisWordTypeItem == null )
+			return startError( 1, "The given word type item is undefined" );
+
+		if( thisWordTypeItem.hasIndefiniteArticleParameter() ||
+		thisWordTypeItem.hasCurrentCreationSentenceNr() ||
+		// Known bug for predefined words in Spanish and French
+		// Spanish test file: "conflicto\Asignación en conflicto con especificación de definición"
+		// French test file: "conflit\Assignation en conflit avec la spécification de définition"
+		// Workaround for predefined words: Set indefinite article in word type item instead of in word item
+		wordParameter > Constants.NO_WORD_PARAMETER )
+			// Set indefinite article parameter of word type item
+			return thisWordTypeItem.setIndefiniteArticleParameter( newIndefiniteArticleParameter );
+
+		return copyAndReplaceWordType( thisWordTypeItem.adjectiveParameter(), thisWordTypeItem.definiteArticleParameter(), newIndefiniteArticleParameter, thisWordTypeItem );
 		}
 
 	protected String wordTypeString( boolean isCheckingAllLanguages, short wordTypeNr )

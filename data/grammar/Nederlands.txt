@@ -1,8 +1,8 @@
 ﻿#----------------------------------------------------------------------------
 # Purpose: To define the grammar for the Dutch language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -536,7 +536,6 @@
 
 :5030	$preposition_noun_relation														{ preposition | preposition_Of } specification_assignment_relation_noun
 :5030	$preposition_relation															{ preposition | preposition_Of } { relation_proper_noun | specification_assignment_relation_noun }
-#:5030	$preposition_relations															{ preposition_Of | preposition } [ conjunction_Dutch_Zowel ] relation_proper_nouns
 :5030	$preposition_relations															{ preposition | preposition_Of } [ conjunction_Dutch_Zowel ] relation_proper_nouns
 :5030	$possessive_relations															[ symbol_comma ] adjective_Called relation_proper_nouns
 

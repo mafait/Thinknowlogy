@@ -2,4 +2,9 @@
 Paz tiene un padre, llamado Juan.
 Juan es el padre y Ana es la madre de Paz, José y Luisa.
 Paz tiene 2 padres, llamados Juan y Ana.
+#Dev#Mostrar el informe de justificación sobre Juan.
+#Dev#Mostrar el informe de justificación sobre Ana.
+#Dev#Mostrar el informe de justificación sobre Paz.
+#Dev#Mostrar el informe de justificación sobre José.
+#Dev#Mostrar el informe de justificación sobre Luisa.
 # Para continuar, haga clic en el botón «Despejar la mente.» o «Reiniciar.».

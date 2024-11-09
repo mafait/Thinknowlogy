@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -126,12 +126,12 @@
 < 
 * 
 * Mes conclusions:
-< Pascal n'est pas une fille.
-< Pascal n'est pas une jeune-fille.
-< Pascal n'est pas une mère.
 < Pascal n'est pas féminin.
 < Pascal n'est pas une femme.
 < Pascal est masculin.
+< Pascal n'est pas une fille.
+< Pascal n'est pas une jeune-fille.
+< Pascal n'est pas une mère.
 * 
 * Mes hypothèses:
 < Pascal n'est probablement pas un garçon.
@@ -149,11 +149,11 @@
 <	- Pascal est un fils.
 <	- Chaque fils n'est pas une fille.
 * 	et:
-<	- Pascal est un homme.
-<	- Chaque homme n'est pas une fille.
-* 	et:
 <	- Pascal est masculin.
 <	- Chaque fille n'est pas masculin.
+* 	et:
+<	- Pascal est un homme.
+<	- Chaque homme n'est pas une fille.
 < Pascal n'est pas féminin. En raison:
 <	- Pascal est un fils.
 <	- Chaque fils n'est pas féminin.
@@ -164,20 +164,20 @@
 <	- Pascal est un fils.
 <	- Chaque fils n'est pas une jeune-fille.
 * 	et:
-<	- Pascal est un homme.
-<	- Chaque homme n'est pas une jeune-fille.
-* 	et:
 <	- Pascal est masculin.
 <	- Chaque jeune-fille n'est pas masculin.
+* 	et:
+<	- Pascal est un homme.
+<	- Chaque homme n'est pas une jeune-fille.
 < Pascal n'est pas une mère. En raison:
 <	- Pascal est un fils.
 <	- Chaque fils n'est pas une mère.
 * 	et:
-<	- Pascal est un homme.
-<	- Chaque homme n'est pas une mère.
-* 	et:
 <	- Pascal est masculin.
 <	- Chaque mère n'est pas masculin.
+* 	et:
+<	- Pascal est un homme.
+<	- Chaque homme n'est pas une mère.
 < Pascal n'est pas une femme. En raison:
 <	- Pascal est un fils.
 <	- Chaque fils n'est pas une femme.

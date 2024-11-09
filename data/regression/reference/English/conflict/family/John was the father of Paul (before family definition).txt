@@ -45,10 +45,10 @@
 < Every father is not feminine.
 < Every father is not a woman.
 < Every woman is not a father.
-< John was masculine.
-< John was not feminine.
-< John was not a woman.
 < John was a man.
+< John was masculine.
+< John was not a woman.
+< John was not feminine.
 * 
 * My assumptions:
 < A father is probably a person.
@@ -116,8 +116,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.

@@ -18,13 +18,19 @@ André is een kind.
 Peter heeft een ouder.
 Willem heeft een kind.
 #-----------------------------------------------------------------------------
-# Blok 3: Het groeperen van kennis
+# Blok 3: Het groeperen van kennis (specificaties)
+# Wordt in de tweede helft van 2025 gepubliceerd.
+#-----------------------------------------------------------------------------
+#Jan heeft 3 appels.
+#Peter heeft 3 appels.
+#-----------------------------------------------------------------------------
+# Blok 4: Het groeperen van kennis (relaties)
 #-----------------------------------------------------------------------------
 Jan is een ouder van Paul.
 Anna is een ouder van Paul.
 Paul heeft 2 ouders, genaamd Jan en Anna.
 #-----------------------------------------------------------------------------
-# Blok 4: Redeneren in de verleden tijd
+# Blok 5: Redeneren in de verleden tijd
 #-----------------------------------------------------------------------------
 Johan was de vader van Jeroen.
 Iedere vader is een man.
@@ -34,19 +40,19 @@ Iedere vader is een man.
 Iedere filosoof is sterfelijk.
 Socrates was een filosoof.
 #-----------------------------------------------------------------------------
-# Blok 5: Conflictdetectie en het genereren van een vraag
+# Blok 6: Conflictdetectie en het genereren van een vraag
 #-----------------------------------------------------------------------------
 Ieder persoon is een man of een vrouw.
 Anne is een man en een vrouw.
 Anne is een persoon.
 Anne is geen vrouw.
 #-----------------------------------------------------------------------------
-# Blok 6: Het archiveren van kennis
+# Blok 7: Het archiveren van kennis
 #-----------------------------------------------------------------------------
 Barack Obama is de president van de Verenigde Staten.
 Donald Trump is de president van de Verenigde Staten.
 #-----------------------------------------------------------------
-# Blok 7: Geavanceerd redeneren
+# Blok 8: Geavanceerd redeneren
 #-----------------------------------------------------------------
 Iedere vrouw is vrouwelijk.
 Iedere man is mannelijk.
@@ -59,7 +65,7 @@ Iedere jongen is mannelijk.
 Iedere zoon is een jongen of een man.
 Iedere dochter is een meisje of een vrouw.
 #-----------------------------------------------------------------
-# Blok 8: Verantwoordingsrapportage
+# Blok 9: Verantwoordingsrapportage
 #-----------------------------------------------------------------
 Toon de verantwoordingsrapportage over ouders.
 Toon de verantwoordingsrapportage over personen.

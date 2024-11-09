@@ -1,8 +1,8 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
 Paz tiene un padre, llamado Juan.
 Ana es la madre de Paz, José y Luisa.
-José es hijo de Juan y Ana.
-Luisa es hija de Juan y Ana.
+José es un hijo de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 Juan es un padre.
 Juan es el padre de Paz, José y Luisa.
 #Dev#Mostrar el informe de justificación sobre Juan.

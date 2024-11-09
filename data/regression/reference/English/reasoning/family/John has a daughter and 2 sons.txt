@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -142,7 +142,7 @@
 < John is possibly a parent. Because:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
-<	- John has a daughter and 2 sons.
+<	- John has 2 sons and a daughter.
 < John is possibly part of a family. Because:
 <	- John is possibly a parent.
 <	- Parents are part of every family.
@@ -181,7 +181,7 @@
 < 
 * 
 * Your information:
-< John has a daughter and 2 sons.
+< John has 2 sons and a daughter.
 * 
 * My assumptions:
 < John is possibly a parent.

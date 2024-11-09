@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -181,6 +181,9 @@
 <	- Paul is probably a child of John and Anna.
 * 	and:
 <	- Paul has possibly 2 parents, called John and Anna.
+* 	and:
+<	- Every family has parents and children.
+<	- John has probably a child, called Paul.
 * 	and:
 <	- Every family has parents and children.
 <	- Every child is a son or a daughter.
@@ -264,6 +267,10 @@
 <	- John has probably a child, called Paul.
 <	- Anna has probably a child, called Paul.
 < Paul is probably part of a family. Because:
+<	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
+<	- Children are part of every family.
+* 	and:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
 < Paul has possibly 2 parents, called John and Anna. Because:
@@ -274,6 +281,7 @@
 <	- Anna is possibly a parent of Paul.
 * 	and:
 <	- Every family has parents and children.
+<	- John has probably a child, called Paul.
 <	- Anna has probably a child, called Paul.
 < Paul has maybe a mother, called Anna. Because:
 <	- Anna is maybe a mother of Paul.
@@ -388,6 +396,9 @@
 <	- Paul has possibly 2 parents, called John and Anna.
 * 	and:
 <	- Every family has parents and children.
+<	- John has probably a child, called Paul.
+* 	and:
+<	- Every family has parents and children.
 <	- Every child is a son or a daughter.
 <	- John has a son, called Paul.
 < John is possibly part of a family. Because:
@@ -441,6 +452,10 @@
 <	- John has probably a child, called Paul.
 <	- Anna has probably a child, called Paul.
 < Paul is probably part of a family. Because:
+<	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
+<	- Children are part of every family.
+* 	and:
 <	- Paul is probably a child of John and Anna.
 <	- Children are part of every family.
 < Paul has possibly 2 parents, called John and Anna. Because:
@@ -451,6 +466,7 @@
 <	- Anna is possibly a parent of Paul.
 * 	and:
 <	- Every family has parents and children.
+<	- John has probably a child, called Paul.
 <	- Anna has probably a child, called Paul.
 < Paul has maybe a mother, called Anna. Because:
 <	- Anna is maybe a mother of Paul.

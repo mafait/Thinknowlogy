@@ -21,6 +21,9 @@ Sanne heeft een moeder, genaamd Anna.
 #Dev#Toon de verantwoordingsrapportage over Laura.
 #Dev#Toon de verantwoordingsrapportage over Peter.
 #Dev#Toon de verantwoordingsrapportage over Sanne.
+Sanne is een kind van Anna.
+#Dev#Toon de verantwoordingsrapportage over Anna.
+#Dev#Toon de verantwoordingsrapportage over Sanne.
 Sanne is een dochter van Anna.
 #Dev#Toon de verantwoordingsrapportage over Anna.
 #Dev#Toon de verantwoordingsrapportage over Sanne.

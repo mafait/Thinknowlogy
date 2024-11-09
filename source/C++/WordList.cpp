@@ -1,9 +1,9 @@
 ﻿/*	Class:			WordList
  *	Parent class:	List
  *	Purpose:		Storing word items
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -163,7 +163,7 @@ class WordList : private List
 		return currentSentenceItemNr;
 		}
 
-	unsigned int highestFoundSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, unsigned int maxSentenceNr )
+	unsigned int highestFoundSentenceNrInWordList( bool isIncludingDeletedItems, bool isIncludingTemporaryLists, bool isIncludingWordTypeList, unsigned int maxSentenceNr )
 		{
 		unsigned int highestFoundSentenceNr = NO_SENTENCE_NR;
 		WordItem *searchWordItem = firstActiveWordItem();
@@ -173,7 +173,7 @@ class WordList : private List
 			{
 			// Efficiency: Only select words with higher sentence number
 			if( searchWordItem->highestSentenceNrInWord() > highestFoundSentenceNr )
-				highestFoundSentenceNr = searchWordItem->highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, highestFoundSentenceNr, maxSentenceNr );
+				highestFoundSentenceNr = searchWordItem->highestFoundSentenceNrInWord( isIncludingDeletedItems, isIncludingTemporaryLists, isIncludingWordTypeList, highestFoundSentenceNr, maxSentenceNr );
 
 			searchWordItem = searchWordItem->nextWordItem();
 			}

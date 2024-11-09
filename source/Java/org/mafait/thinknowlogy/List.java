@@ -1,8 +1,8 @@
 ﻿/*	Class:		List
  *	Purpose:	Base class to store the items of the knowledge structure
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -130,14 +130,10 @@ class List
 		while( searchItem != null )
 			{
 			if( searchItem.creationSentenceNr() == decrementSentenceNr &&
-			searchItem.itemNr() >= startDecrementItemNr )
-				{
-				if( searchItem.itemNr() <= startDecrementItemNr )
-					return startError( 1, "I found an item number equal to - or lower than - the given start item number" );
-
-				if( searchItem.decrementItemNr( decrementOffset ) != Constants.RESULT_OK )
-					return addError( 1, "I failed to decrement the item number of an item with a certain offset" );
-				}
+			searchItem.itemNr() >= startDecrementItemNr &&
+			// Decrement item number
+			searchItem.decrementItemNr( decrementOffset ) != Constants.RESULT_OK )
+				return addError( 1, "I failed to decrement the item number of an item with a certain offset" );
 
 			searchItem = searchItem.nextItem;
 			}
@@ -552,13 +548,13 @@ class List
 
 	// Protected error methods
 
-	protected byte addError( int methodLevel, String errorString )
+	protected final byte addError( int methodLevel, String errorString )
 		{
 		InputOutput.displayError( listChar_, this.getClass().getName(), this.getClass().getSuperclass().getName(), ( myWordItem_ == null || myWordItem_.isAdminWord() ? null : myWordItem_.anyWordTypeString() ), ( methodLevel + 1 ), errorString );
 		return GlobalVariables.result;
 		}
 
-	protected byte startError( int methodLevel, String errorString )
+	protected final byte startError( int methodLevel, String errorString )
 		{
 		addError( ( methodLevel + 1 ), errorString );
 
@@ -566,7 +562,7 @@ class List
 		return Constants.RESULT_ERROR;
 		}
 
-	protected byte startSystemError( int methodLevel, String errorString )
+	protected final byte startSystemError( int methodLevel, String errorString )
 		{
 		addError( ( methodLevel + 1 ), errorString );
 
@@ -575,7 +571,7 @@ class List
 		return Constants.RESULT_SYSTEM_ERROR;
 		}
 
-	protected BoolResultType addBoolResultError( int methodLevel, String errorString )
+	protected final BoolResultType addBoolResultError( int methodLevel, String errorString )
 		{
 		BoolResultType interpretationResult = new BoolResultType();
 
@@ -583,7 +579,7 @@ class List
 		return interpretationResult;
 		}
 
-	protected BoolResultType startBoolResultError( int methodLevel, String errorString )
+	protected final BoolResultType startBoolResultError( int methodLevel, String errorString )
 		{
 		BoolResultType boolResult = new BoolResultType();
 
@@ -591,7 +587,7 @@ class List
 		return boolResult;
 		}
 
-	protected CollectionResultType addCollectionResultError( int methodLevel, String errorString )
+	protected final CollectionResultType addCollectionResultError( int methodLevel, String errorString )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 
@@ -599,7 +595,7 @@ class List
 		return collectionResult;
 		}
 
-	protected CollectionResultType startCollectionResultError( int methodLevel, String errorString )
+	protected final CollectionResultType startCollectionResultError( int methodLevel, String errorString )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 
@@ -607,7 +603,7 @@ class List
 		return collectionResult;
 		}
 
-	protected CollectionResultType startCollectionResultSystemError( int methodLevel, String errorString )
+	protected final CollectionResultType startCollectionResultSystemError( int methodLevel, String errorString )
 		{
 		CollectionResultType collectionResult = new CollectionResultType();
 
@@ -615,7 +611,7 @@ class List
 		return collectionResult;
 		}
 
-	protected CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String errorString )
+	protected final CreateAndAssignResultType addCreateAndAssignResultError( int methodLevel, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -623,7 +619,7 @@ class List
 		return createAndAssignResult;
 		}
 
-	protected CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String errorString )
+	protected final CreateAndAssignResultType startCreateAndAssignResultError( int methodLevel, String errorString )
 		{
 		CreateAndAssignResultType createAndAssignResult = new CreateAndAssignResultType();
 
@@ -631,7 +627,7 @@ class List
 		return createAndAssignResult;
 		}
 
-	protected DuplicateResultType addDuplicateResultError( int methodLevel, String errorString )
+	protected final DuplicateResultType addDuplicateResultError( int methodLevel, String errorString )
 		{
 		DuplicateResultType duplicateResult = new DuplicateResultType();
 
@@ -639,7 +635,7 @@ class List
 		return duplicateResult;
 		}
 
-	protected DuplicateResultType startDuplicateResultError( int methodLevel, String errorString )
+	protected final DuplicateResultType startDuplicateResultError( int methodLevel, String errorString )
 		{
 		DuplicateResultType duplicateResult = new DuplicateResultType();
 
@@ -647,7 +643,7 @@ class List
 		return duplicateResult;
 		}
 
-	protected FileResultType addFileResultError( int methodLevel, String errorString )
+	protected final FileResultType addFileResultError( int methodLevel, String errorString )
 		{
 		FileResultType fileResult = new FileResultType();
 
@@ -655,7 +651,7 @@ class List
 		return fileResult;
 		}
 
-	protected FileResultType startFileResultError( int methodLevel, String errorString )
+	protected final FileResultType startFileResultError( int methodLevel, String errorString )
 		{
 		FileResultType fileResult = new FileResultType();
 
@@ -663,7 +659,7 @@ class List
 		return fileResult;
 		}
 
-	protected GrammarResultType addGrammarResultError( int methodLevel, String errorString )
+	protected final GrammarResultType addGrammarResultError( int methodLevel, String errorString )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
 
@@ -671,7 +667,7 @@ class List
 		return grammarResult;
 		}
 
-	protected GrammarResultType startGrammarResultError( int methodLevel, String errorString )
+	protected final GrammarResultType startGrammarResultError( int methodLevel, String errorString )
 		{
 		GrammarResultType grammarResult = new GrammarResultType();
 
@@ -679,7 +675,7 @@ class List
 		return grammarResult;
 		}
 
-	protected JustificationResultType addJustificationResultError( int methodLevel, String errorString )
+	protected final JustificationResultType addJustificationResultError( int methodLevel, String errorString )
 		{
 		JustificationResultType justificationResult = new JustificationResultType();
 
@@ -687,7 +683,7 @@ class List
 		return justificationResult;
 		}
 
-	protected JustificationResultType startJustificationResultError( int methodLevel, String errorString )
+	protected final JustificationResultType startJustificationResultError( int methodLevel, String errorString )
 		{
 		JustificationResultType justificationResult = new JustificationResultType();
 
@@ -695,7 +691,7 @@ class List
 		return justificationResult;
 		}
 
-	protected SelectionResultType addSelectionResultError( int methodLevel, String errorString )
+	protected final SelectionResultType addSelectionResultError( int methodLevel, String errorString )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 
@@ -703,7 +699,7 @@ class List
 		return selectionResult;
 		}
 
-	protected SelectionResultType startSelectionResultSystemError( int methodLevel, String errorString )
+	protected final SelectionResultType startSelectionResultSystemError( int methodLevel, String errorString )
 		{
 		SelectionResultType selectionResult = new SelectionResultType();
 
@@ -711,7 +707,7 @@ class List
 		return selectionResult;
 		}
 
-	protected ShortResultType startShortResultError( int methodLevel, String errorString )
+	protected final ShortResultType startShortResultError( int methodLevel, String errorString )
 		{
 		ShortResultType shortResult = new ShortResultType();
 
@@ -719,7 +715,7 @@ class List
 		return shortResult;
 		}
 
-	protected WordEndingResultType startWordEndingResultError( int methodLevel, String errorString )
+	protected final WordEndingResultType startWordEndingResultError( int methodLevel, String errorString )
 		{
 		WordEndingResultType wordEndingResult = new WordEndingResultType();
 
@@ -727,7 +723,7 @@ class List
 		return wordEndingResult;
 		}
 
-	protected WordResultType addWordResultError( int methodLevel, String errorString )
+	protected final WordResultType addWordResultError( int methodLevel, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
 
@@ -735,7 +731,7 @@ class List
 		return wordResult;
 		}
 
-	protected WordResultType startWordResultError( int methodLevel, String errorString )
+	protected final WordResultType startWordResultError( int methodLevel, String errorString )
 		{
 		WordResultType wordResult = new WordResultType();
 
@@ -743,7 +739,7 @@ class List
 		return wordResult;
 		}
 
-	protected WordTypeResultType addWordTypeResultError( int methodLevel, String errorString )
+	protected final WordTypeResultType addWordTypeResultError( int methodLevel, String errorString )
 		{
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
 
@@ -751,7 +747,7 @@ class List
 		return wordTypeResult;
 		}
 
-	protected WordTypeResultType startWordTypeResultError( int methodLevel, String errorString )
+	protected final WordTypeResultType startWordTypeResultError( int methodLevel, String errorString )
 		{
 		WordTypeResultType wordTypeResult = new WordTypeResultType();
 
@@ -770,7 +766,7 @@ class List
 
 	// Protected common methods
 
-	protected void initializeListVariables( char listChar, String classNameString, WordItem myWordItem )
+	protected final void initializeListVariables( char listChar, WordItem myWordItem )
 		{
 		// Private initialized variables
 
@@ -782,7 +778,28 @@ class List
 			startSystemError( 1, "The given my word item is undefined" );
 		}
 
-	protected void deleteTemporaryList()
+	protected final void clearActiveList()
+		{
+		Item removeItem = activeList_;
+
+		if( removeItem != null )
+			{
+			do	{
+				// Disconnect active list from item
+				activeList_ = activeList_.nextItem;
+
+				removeItem.checkForUsage();
+
+				// Disconnect item from active list
+				removeItem.nextItem = null;
+
+				removeItem = activeList_;
+				}
+			while( removeItem != null );
+			}
+		}
+
+	protected final void deleteTemporaryList()
 		{
 		Item searchItem = deletedList_;
 
@@ -794,7 +811,7 @@ class List
 				deletedList_ = inactiveList_;
 			else
 				{
-				// Get the tail of the deleted list
+				// Get tail of deleted list
 				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = inactiveList_;
 				}
@@ -810,7 +827,7 @@ class List
 				deletedList_ = activeList_;
 			else
 				{
-				// Get the tail of the deleted list
+				// Get tail of deleted list
 				searchItem = searchItem.tailOfList();
 				searchItem.nextItem = activeList_;
 				}
@@ -819,32 +836,32 @@ class List
 			}
 		}
 
-	protected boolean hasActiveItems()
+	protected final boolean hasActiveItems()
 		{
 		return ( activeList_ != null );
 		}
 
-	protected boolean isAdminList()
+	protected final boolean isAdminList()
 		{
 		return Character.isUpperCase( listChar_ );
 		}
 
-	protected boolean isAssignmentList()
+	protected final boolean isAssignmentList()
 		{
 		return ( listChar_ == Constants.WORD_ASSIGNMENT_LIST_SYMBOL );
 		}
 
-	protected int highestSentenceNrInList()
+	protected final int highestSentenceNrInList()
 		{
 		return highestSentenceNrInList_;
 		}
 
-	protected char listChar()
+	protected final char listChar()
 		{
 		return listChar_;
 		}
 
-	protected byte activateItem( Item activateItem )
+	protected final byte activateItem( Item activateItem )
 		{
 		if( activateItem == null )
 			return startError( 1, "The given activate item is undefined" );
@@ -865,7 +882,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte addItemToList( char statusChar, Item newItem )
+	protected final byte addItemToList( char statusChar, Item newItem )
 		{
 		int creationSentenceNr;
 		Item previousSearchItem = null;
@@ -1021,7 +1038,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte archiveItem( Item archiveItem )
+	protected final byte archiveItem( Item archiveItem )
 		{
 		if( archiveItem == null )
 			return startError( 1, "The given archive item is undefined" );
@@ -1046,10 +1063,13 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteItem( Item deleteItem )
+	protected final byte deleteItem( Item deleteItem )
 		{
 		// Used for developer statistics
 		GlobalVariables.nTotalDeletedItems++;
+
+		if( listChar_ == Constants.ADMIN_READ_LIST_SYMBOL )
+			GlobalVariables.nDeletedReadItems++;
 
 		if( removeItemFromList( deleteItem ) != Constants.RESULT_OK )
 			return addError( 1, "I failed to remove an item from a list" );
@@ -1060,12 +1080,12 @@ class List
 			return startError( 1, "The given delete item is already a deleted item" );
 
 		if( addItemToList( Constants.QUERY_DELETED_CHAR, deleteItem ) != Constants.RESULT_OK )
-			return addError( 1, "I failed to add an item to the deleted list" );
+			return addError( 1, "I failed to add an item to deleted list" );
 
 		return Constants.RESULT_OK;
 		}
 
-	protected byte inactivateItem( Item inactivateItem )
+	protected final byte inactivateItem( Item inactivateItem )
 		{
 		if( inactivateItem == null )
 			return startError( 1, "The given inactivate item is undefined" );
@@ -1090,7 +1110,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte removeFirstRangeOfDeletedItemsInList()
+	protected final byte removeFirstRangeOfDeletedItemsInList()
 		{
 		int nDeletedItems = 0;
 		int removeSentenceNr;
@@ -1113,7 +1133,7 @@ class List
 
 				removeItem.checkForUsage();
 
-				// Disconnect item from the deleted list
+				// Disconnect item from deleted list
 				removeItem.nextItem = null;
 
 				removeItem = deletedList_;
@@ -1133,7 +1153,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte replaceItem( Item replaceItem )
+	protected final byte replaceItem( Item replaceItem )
 		{
 		// Used for developer statistics
 		GlobalVariables.nTotalReplacedItems++;
@@ -1155,37 +1175,37 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected Item firstActiveItem()
+	protected final Item firstActiveItem()
 		{
 		return activeList_;
 		}
 
-	protected Item firstInactiveItem()
+	protected final Item firstInactiveItem()
 		{
 		return inactiveList_;
 		}
 
-	protected Item firstArchivedItem()
+	protected final Item firstArchivedItem()
 		{
 		return archivedList_;
 		}
 
-	protected Item firstReplacedItem()
+	protected final Item firstReplacedItem()
 		{
 		return replacedList_;
 		}
 
-	protected Item nextListItem()
+	protected final Item nextListItem()
 		{
 		return nextListItem_;
 		}
 
-	protected WordItem myWordItem()
+	protected final WordItem myWordItem()
 		{
 		return myWordItem_;
 		}
 
-	protected BoolResultType compareStrings( String searchString, String sourceString )
+	protected final BoolResultType compareStrings( String searchString, String sourceString )
 		{
 		boolean hasFoundMatchingString = true;
 		boolean isStop;
@@ -1275,7 +1295,7 @@ class List
 
 	// Protected cleanup methods
 
-	protected int highestCurrentSentenceItemNrInList( int currentSentenceNr, int globalHighestItemNr )
+	protected final int highestCurrentSentenceItemNrInList( int currentSentenceNr, int globalHighestItemNr )
 		{
 		int localHighestItemNr = Constants.NO_ITEM_NR;
 		int tempItemNr;
@@ -1306,7 +1326,7 @@ class List
 		return globalHighestItemNr;
 		}
 
-	protected int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
+	protected final int highestFoundSentenceNrInList( boolean isIncludingDeletedItems, int globalHighestFoundSentenceNr, int maxSentenceNr )
 		{
 		int localHighestFoundSentenceNr = Constants.NO_SENTENCE_NR;
 		int tempSentenceNr;
@@ -1338,7 +1358,7 @@ class List
 		return globalHighestFoundSentenceNr;
 		}
 
-	protected byte decrementItemNrRangeInList( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
+	protected final byte decrementItemNrRangeInList( int decrementSentenceNr, int startDecrementItemNr, int decrementOffset )
 		{
 		Item searchItem;
 
@@ -1374,7 +1394,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte decrementSentenceNrsInList( int startSentenceNr )
+	protected final byte decrementSentenceNrsInList( int startSentenceNr )
 		{
 		Item searchItem;
 
@@ -1406,7 +1426,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte deleteSentencesInList( int lowestSentenceNr )
+	protected final byte deleteSentencesInList( int lowestSentenceNr )
 		{
 		boolean isResultOK = ( GlobalVariables.result == Constants.RESULT_OK );
 		Item searchItem = firstActiveItem();
@@ -1557,7 +1577,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte redoCurrentSentenceInList()
+	protected final byte redoCurrentSentenceInList()
 		{
 		Item searchItem = firstActiveItem();
 
@@ -1716,7 +1736,7 @@ class List
 		return Constants.RESULT_OK;
 		}
 
-	protected byte undoCurrentSentenceInList()
+	protected final byte undoCurrentSentenceInList()
 		{
 		Item searchItem = firstActiveItem();
 
@@ -1836,7 +1856,7 @@ class List
 
 	// Protected database connection methods
 /*
-	protected byte storeChangesInListInFutureDatabase()
+	protected final byte storeChangesInListInFutureDatabase()
 		{
 		Item searchItem;
 
@@ -1861,7 +1881,7 @@ class List
 
 	// Protected query methods
 
-	protected void clearQuerySelectionsInList()
+	protected final 	void clearQuerySelectionsInList()
 		{
 		Item searchItem;
 
@@ -1878,7 +1898,7 @@ class List
 			clearQuerySelections( searchItem );
 		}
 
-	protected void countQueryInList()
+	protected final void countQueryInList()
 		{
 		Item searchItem = firstActiveItem();
 
@@ -1921,7 +1941,7 @@ class List
 			}
 		}
 
-	protected void itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
+	protected final void itemQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isReferenceQuery, int querySentenceNr, int queryItemNr )
 		{
 		Item searchItem;
 
@@ -1942,7 +1962,7 @@ class List
 			itemQuery( isSelectingOnFind, isReferenceQuery, querySentenceNr, queryItemNr, searchItem );
 		}
 
-	protected void listQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, StringBuffer queryListStringBuffer )
+	protected final void listQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, StringBuffer queryListStringBuffer )
 		{
 		boolean isSelectingOnFindAndListIncluded;
 		boolean isListIncludedInQuery = isIncludingThisList( queryListStringBuffer );
@@ -1972,7 +1992,7 @@ class List
 			}
 		}
 
-	protected void parameterQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, int queryParameter )
+	protected final void parameterQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, int queryParameter )
 		{
 		Item searchItem;
 
@@ -1993,7 +2013,7 @@ class List
 			parameterQuery( isSelectingOnFind, queryParameter, searchItem );
 		}
 
-	protected void wordQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems )
+	protected final void wordQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems )
 		{
 		Item searchItem;
 
@@ -2014,7 +2034,7 @@ class List
 			wordQuery( isSelectingOnFind, searchItem );
 		}
 
-	protected void wordTypeQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, short queryWordTypeNr )
+	protected final void wordTypeQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, short queryWordTypeNr )
 		{
 		Item searchItem;
 
@@ -2035,7 +2055,7 @@ class List
 			wordTypeQuery( isSelectingOnFind, queryWordTypeNr, searchItem );
 		}
 
-	protected byte displayQueryResultInList( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
+	protected final byte displayQueryResultInList( boolean isOnlyDisplayingWords, boolean isOnlyDisplayingWordReferences, boolean isOnlyDisplayingStrings, boolean isReturnQueryToPosition, short promptTypeNr, short queryWordTypeNr, int queryWidth )
 		{
 		Item searchItem;
 
@@ -2057,7 +2077,7 @@ class List
 		return GlobalVariables.result;
 		}
 
-	protected byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String queryString )
+	protected final byte stringQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, String queryString )
 		{
 		Item searchItem;
 
@@ -2083,7 +2103,7 @@ class List
 		return GlobalVariables.result;
 		}
 
-	protected byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
+	protected final byte wordReferenceQueryInList( boolean isSelectingOnFind, boolean isSelectingActiveItems, boolean isSelectingInactiveItems, boolean isSelectingArchivedItems, boolean isSelectingReplacedItems, boolean isSelectingAttachedJustifications, boolean isSelectingJustificationSpecifications, String wordReferenceNameString )
 		{
 		Item searchItem;
 

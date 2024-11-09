@@ -7,7 +7,7 @@
 * 
 * Mis conclusiones:
 < Juan es el padre de Paz y José.
-< Ana es padre de José.
+< Ana es un padre de José.
 < 
 * 
 * Su información:
@@ -22,7 +22,7 @@
 < 
 * 
 * Mis conclusiones:
-< Ana es padre de José.
+< Ana es un padre de José.
 * 
 * Información relacionada:
 < José tiene 2 padres, llamados Juan y Ana.
@@ -41,7 +41,7 @@
 * 
 * Información relacionada:
 < Juan es el padre de Paz y José.
-< Ana es padre de José.
+< Ana es un padre de José.
 < 
 * 
 * Mis conclusiones:
@@ -52,7 +52,7 @@
 < 
 * 
 * Mis conclusiones:
-< Ana es padre de José. Porque:
+< Ana es un padre de José. Porque:
 <	- José tiene 2 padres, llamados Juan y Ana.
 < 
 * 

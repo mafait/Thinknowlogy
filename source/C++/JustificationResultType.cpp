@@ -1,9 +1,9 @@
 ﻿/*	Class:		JustificationResultType
  *	Purpose:	To return justification variables,
  *				as the result of a function call
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -32,8 +32,8 @@ class JustificationResultType
 	friend class Item;
 	friend class JustificationList;
 	friend class List;
-		friend class SpecificationItem;
-		friend class SpecificationList;
+	friend class SpecificationItem;
+	friend class SpecificationList;
 	friend class WordSpecification;
 
 	protected:

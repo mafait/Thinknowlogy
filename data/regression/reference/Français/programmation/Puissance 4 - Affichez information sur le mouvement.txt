@@ -34,6 +34,7 @@ C'est ton virage.
 * Vos informations:
 < Un mouvement peut-être G, F, E, D, C, B ou A.
 < Un mouvement peut-être invalide.
+< Un mouvement peut-être invalide.
 < Mon mouvement était D.
 < Le mouvement était C.
 < 
@@ -145,6 +146,7 @@ C'est ton virage.
 * 
 * Vos informations:
 < Un mouvement peut-être G, F, E, D, C, B ou A.
+< Un mouvement peut-être invalide.
 < Un mouvement peut-être invalide.
 < Mon mouvement était A, C et D.
 < Le mouvement était G, C et D.

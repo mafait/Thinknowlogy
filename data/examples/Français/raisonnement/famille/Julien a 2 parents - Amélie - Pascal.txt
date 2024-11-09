@@ -1,0 +1,11 @@
+﻿Lirez le fichier "Français/raisonnement/famille/définition de famille".
+Julien a 2 parents, appelés Olivier et Amélie.
+Amélie est la mère de Pascal, Julien et Lorraine.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Julien.
+Pascal est un fils de Olivier et Amélie.
+#Dev#Affichez le rapport de justification sur Olivier.
+#Dev#Affichez le rapport de justification sur Amélie.
+#Dev#Affichez le rapport de justification sur Pascal.
+# Pour continuer, cliquez sur le bouton «Videz votre esprit.» ou «Redémarrer.».

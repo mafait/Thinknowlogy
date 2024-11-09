@@ -1,8 +1,8 @@
 ﻿/*	Class:		Constants
  *	Purpose:	To define constants
- *	Version:	Thinknowlogy 2023 (Shaking tree)
+ *	Version:	Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ class Constants
 	{
 	// Version constants
 	protected static final String PRODUCT_NAME =												"Thinknowlogy";
-	protected static final String VERSION_NAME =												"2023 (Shaking tree)";
+	protected static final String VERSION_NAME =												"2024 (Intelligent Origin)";
 
 	// Console constants
 	protected static final short CONSOLE_SLEEP_TIME_RESIZE_FRAME_DURING_STARTUP =				250;	// milliseconds
@@ -345,19 +345,18 @@ class Constants
 	protected static final short JUSTIFICATION_TYPE_GENERALIZATION_ASSUMPTION =												0;
 	protected static final short JUSTIFICATION_TYPE_OPPOSITE_POSSESSIVE_SPECIFICATION_ASSUMPTION =							1;
 	protected static final short JUSTIFICATION_TYPE_EXCLUSIVE_SPECIFICATION_SUBSTITUTION_ASSUMPTION =						2;
-	protected static final short JUSTIFICATION_TYPE_INDIRECTLY_ANSWERED_QUESTION_ASSUMPTION =								3;
-	protected static final short JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =										4;
+	protected static final short JUSTIFICATION_TYPE_SUGGESTIVE_QUESTION_ASSUMPTION =										3;
 
-	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION =								5;
-	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION =									6;
-	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION_OR_CONCLUSION =							7;
-	protected static final short JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION =										8;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =	9;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =					10;
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION =			11;
-	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION =								12;
+	protected static final short JUSTIFICATION_TYPE_ONLY_OPTION_LEFT_ASSUMPTION_OR_CONCLUSION =								4;
+	protected static final short JUSTIFICATION_TYPE_REVERSIBLE_ASSUMPTION_OR_CONCLUSION =									5;
+	protected static final short JUSTIFICATION_TYPE_DEFINITION_PART_OF_ASSUMPTION_OR_CONCLUSION =							6;
+	protected static final short JUSTIFICATION_TYPE_NEGATIVE_ASSUMPTION_OR_CONCLUSION =										7;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_GENERALIZATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =	8;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_ASSUMPTION_OR_CONCLUSION =					9;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_PART_OF_ASSUMPTION_OR_CONCLUSION =			10;
+	protected static final short JUSTIFICATION_TYPE_UNIQUE_RELATION_ASSUMPTION_OR_CONCLUSION =								11;
 
-	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =									13;
+	protected static final short JUSTIFICATION_TYPE_SPECIFICATION_SUBSTITUTION_QUESTION =									12;
 
 
 	//	Word types
@@ -964,13 +963,10 @@ class Constants
 
 	// Sentence (errors)
 	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_STORE_OR_RETRIEVE =								1640;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE =									1641;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_THIS_SENTENCE_DUE_TO_WORDS =					1642;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START =								1643;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE =										1644;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS =							1645;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START =				1646;
-	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END =				1647;
+	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_START =								1641;
+	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_SENTENCE_DUE_TO_WORDS =							1642;
+	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_START =				1643;
+	protected static final short INTERFACE_SENTENCE_ERROR_GRAMMAR_INTEGRITY_I_RETRIEVED_FROM_MY_SYSTEM_END =				1644;
 
 	// Chinese constants
 	protected static final char SYMBOL_CHINESE_ZERO =											'零';

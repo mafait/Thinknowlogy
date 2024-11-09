@@ -2,9 +2,9 @@
  *	Parent class:	Item
  *	Purpose:		Storing info about the grammar of a language, which
  *					will be used for reading as well as writing sentences
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -156,7 +156,7 @@ class GrammarItem extends Item
 	protected StringBuffer itemToStringBuffer( short queryWordTypeNr )
 		{
 		StringBuffer queryStringBuffer;
-		String grammarWordTypeString = myWordItem().wordTypeNameString( grammarWordTypeNr_ );
+		String grammarWordTypeString = WordItem.wordTypeNameString( grammarWordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 

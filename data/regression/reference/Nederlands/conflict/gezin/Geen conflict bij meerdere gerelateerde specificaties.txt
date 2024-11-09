@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,11 +127,11 @@
 * 
 * Mijn conclusies:
 < Jan is niet vrouwelijk.
-< Jan is mannelijk.
 < Jan is een man.
+< Jan is mannelijk.
 < Jan is geen dochter.
-< Jan is geen moeder.
 < Jan is geen meisje.
+< Jan is geen moeder.
 < Jan is geen vrouw.
 * 
 * Mijn veronderstellingen:
@@ -152,60 +152,60 @@
 * 	en:
 <	- Jan is een zoon.
 <	- Iedere zoon is niet vrouwelijk.
-< Jan is mannelijk. Omdat:
-<	- Jan is een vader.
-<	- Iedere vader is mannelijk.
-* 	en:
-<	- Jan is een man.
-<	- Iedere man is mannelijk.
-* 	en:
-<	- Jan is een zoon.
-<	- Iedere zoon is mannelijk.
 < Jan is een man. Omdat:
 <	- Jan is een vader.
 <	- Iedere vader is een man.
-< Jan is geen dochter. Omdat:
+< Jan is mannelijk. Omdat:
 <	- Jan is een man.
-<	- Iedere man is geen dochter.
+<	- Iedere man is mannelijk.
 * 	en:
+<	- Jan is een vader.
+<	- Iedere vader is mannelijk.
+* 	en:
+<	- Jan is een zoon.
+<	- Iedere zoon is mannelijk.
+< Jan is geen dochter. Omdat:
 <	- Jan is mannelijk.
 <	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen dochter.
 * 	en:
 <	- Jan is een vader.
 <	- Iedere vader is geen dochter.
 * 	en:
 <	- Jan is een zoon.
 <	- Iedere zoon is geen dochter.
-< Jan is geen moeder. Omdat:
-<	- Jan is een vader.
-<	- Iedere vader is geen moeder.
-* 	en:
-<	- Jan is een man.
-<	- Iedere man is geen moeder.
-* 	en:
-<	- Jan is mannelijk.
-<	- Iedere moeder is niet mannelijk.
-* 	en:
-<	- Jan is een zoon.
-<	- Iedere zoon is geen moeder.
 < Jan is geen meisje. Omdat:
-<	- Jan is een man.
-<	- Iedere man is geen meisje.
-* 	en:
 <	- Jan is mannelijk.
 <	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen meisje.
 * 	en:
 <	- Jan is een vader.
 <	- Iedere vader is geen meisje.
 * 	en:
 <	- Jan is een zoon.
 <	- Iedere zoon is geen meisje.
-< Jan is geen vrouw. Omdat:
-<	- Jan is een man.
-<	- Iedere man is geen vrouw.
+< Jan is geen moeder. Omdat:
+<	- Jan is mannelijk.
+<	- Iedere moeder is niet mannelijk.
 * 	en:
+<	- Jan is een man.
+<	- Iedere man is geen moeder.
+* 	en:
+<	- Jan is een vader.
+<	- Iedere vader is geen moeder.
+* 	en:
+<	- Jan is een zoon.
+<	- Iedere zoon is geen moeder.
+< Jan is geen vrouw. Omdat:
 <	- Jan is mannelijk.
 <	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Jan is een man.
+<	- Iedere man is geen vrouw.
 * 	en:
 <	- Jan is een vader.
 <	- Iedere vader is geen vrouw.

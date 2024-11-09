@@ -1,0 +1,10 @@
+﻿Read the file "English/reasoning/family/family definition".
+John is the father of Paul, Joe and Laura.
+Paul has 2 parents, called John and Anna.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Paul.
+Anna is the mother of Paul, Joe and Laura.
+#Dev#Display the justification report about John.
+#Dev#Display the justification report about Anna.
+#Dev#Display the justification report about Paul.
+# To continue, click button «Clear your mind.» or «Restart.».

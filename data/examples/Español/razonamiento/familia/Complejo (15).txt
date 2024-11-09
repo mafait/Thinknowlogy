@@ -1,6 +1,6 @@
 ﻿Leer el archivo "Español/razonamiento/familia/definición de familia".
-José es hijo de Juan y Ana.
-Luisa es hija de Juan y Ana.
+José es un hijo de Juan y Ana.
+Luisa es una hija de Juan y Ana.
 #Dev#Mostrar el informe de justificación sobre Ana.
 #Dev#Mostrar el informe de justificación sobre José.
 #Dev#Mostrar el informe de justificación sobre Luisa.

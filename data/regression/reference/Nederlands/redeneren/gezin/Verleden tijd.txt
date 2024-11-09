@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -127,12 +127,12 @@
 * 
 * Mijn conclusies:
 < Cor was een man.
-< Cor was geen dochter.
-< Cor was geen moeder.
-< Cor was geen meisje.
-< Cor was niet vrouwelijk.
-< Cor was geen vrouw.
 < Cor was mannelijk.
+< Cor was geen dochter.
+< Cor was geen meisje.
+< Cor was geen moeder.
+< Cor was geen vrouw.
+< Cor was niet vrouwelijk.
 < Kees heeft geen vader meer.
 < Kees had een vader, genaamd Cor.
 * 
@@ -157,61 +157,61 @@
 < Cor was een man. Omdat:
 <	- Cor was de vader van Kees.
 <	- Iedere vader is een man.
-< Cor was geen dochter. Omdat:
-<	- Cor was een man.
-<	- Iedere man is geen dochter.
-* 	en:
-<	- Cor was mannelijk.
-<	- Iedere dochter is niet mannelijk.
-* 	en:
-<	- Cor was de vader van Kees.
-<	- Iedere vader is geen dochter.
-< Cor was geen moeder. Omdat:
-<	- Cor was de vader van Kees.
-<	- Iedere vader is geen moeder.
-* 	en:
-<	- Cor was een man.
-<	- Iedere man is geen moeder.
-* 	en:
-<	- Cor was mannelijk.
-<	- Iedere moeder is niet mannelijk.
-< Cor was geen meisje. Omdat:
-<	- Cor was een man.
-<	- Iedere man is geen meisje.
-* 	en:
-<	- Cor was mannelijk.
-<	- Ieder meisje is niet mannelijk.
-* 	en:
-<	- Cor was de vader van Kees.
-<	- Iedere vader is geen meisje.
-< Cor was niet vrouwelijk. Omdat:
-<	- Cor was de vader van Kees.
-<	- Iedere vader is niet vrouwelijk.
-* 	en:
-<	- Cor was een man.
-<	- Iedere man is niet vrouwelijk.
-< Cor was geen vrouw. Omdat:
-<	- Cor was een man.
-<	- Iedere man is geen vrouw.
-* 	en:
-<	- Cor was mannelijk.
-<	- Iedere vrouw is niet mannelijk.
-* 	en:
-<	- Cor was de vader van Kees.
-<	- Iedere vader is geen vrouw.
 < Cor was mannelijk. Omdat:
 <	- Cor was een man.
 <	- Iedere man is mannelijk.
 * 	en:
 <	- Cor was de vader van Kees.
 <	- Iedere vader is mannelijk.
+< Cor was geen dochter. Omdat:
+<	- Cor was mannelijk.
+<	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Cor was een man.
+<	- Iedere man is geen dochter.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is geen dochter.
+< Cor was geen meisje. Omdat:
+<	- Cor was mannelijk.
+<	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Cor was een man.
+<	- Iedere man is geen meisje.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is geen meisje.
+< Cor was geen moeder. Omdat:
+<	- Cor was mannelijk.
+<	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Cor was een man.
+<	- Iedere man is geen moeder.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is geen moeder.
+< Cor was geen vrouw. Omdat:
+<	- Cor was mannelijk.
+<	- Iedere vrouw is niet mannelijk.
+* 	en:
+<	- Cor was een man.
+<	- Iedere man is geen vrouw.
+* 	en:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is geen vrouw.
+< Cor was niet vrouwelijk. Omdat:
+<	- Cor was de vader van Kees.
+<	- Iedere vader is niet vrouwelijk.
+* 	en:
+<	- Cor was een man.
+<	- Iedere man is niet vrouwelijk.
 * 
 * Mijn veronderstellingen:
 < Cor heeft mogelijk een kind, genaamd Kees. Omdat:
-<	- Kees is mogelijk een kind van Cor.
-* 	en:
 <	- Ieder gezin heeft ouders en kinderen.
 <	- Cor was waarschijnlijk een ouder van Kees.
+* 	en:
+<	- Kees is mogelijk een kind van Cor.
 < Cor was waarschijnlijk geen jongen. Omdat:
 <	- Cor was een man.
 <	- Een man is waarschijnlijk geen jongen.
@@ -227,6 +227,9 @@
 * 	en:
 <	- Kees had waarschijnlijk een ouder, genaamd Cor.
 < Cor was waarschijnlijk deel van een gezin. Omdat:
+<	- Kees had waarschijnlijk een ouder, genaamd Cor.
+<	- Ouders zijn deel van ieder gezin.
+* 	en:
 <	- Cor was waarschijnlijk een ouder van Kees.
 <	- Ouders zijn deel van ieder gezin.
 < 
@@ -240,13 +243,16 @@
 * Mijn veronderstellingen:
 < Kees is mogelijk een kind van Cor. Omdat:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Iedere ouder is een vader of een moeder.
-<	- Kees had een vader, genaamd Cor.
+<	- Cor was waarschijnlijk een ouder van Kees.
 * 	en:
 <	- Cor heeft mogelijk een kind, genaamd Kees.
 * 	en:
 <	- Ieder gezin heeft ouders en kinderen.
-<	- Cor was waarschijnlijk een ouder van Kees.
+<	- Kees had waarschijnlijk een ouder, genaamd Cor.
+* 	en:
+<	- Ieder gezin heeft ouders en kinderen.
+<	- Iedere ouder is een vader of een moeder.
+<	- Kees had een vader, genaamd Cor.
 < Kees is mogelijk deel van een gezin. Omdat:
 <	- Kees is mogelijk een kind van Cor.
 <	- Kinderen zijn deel van ieder gezin.
@@ -269,9 +275,9 @@
 < Is Kees vrouwelijk of mannelijk? Omdat:
 <	- Is Kees een meisje, een vrouw, een jongen of een man?
 <	- Iedere jongen is mannelijk.
+<	- Iedere man is mannelijk.
 <	- Ieder meisje is vrouwelijk.
 <	- Iedere vrouw is vrouwelijk.
-<	- Iedere man is mannelijk.
 * 	en:
 <	- Kees is mogelijk een kind van Cor.
 <	- Ieder kind is vrouwelijk of mannelijk.

@@ -1,9 +1,9 @@
 ﻿/*	Class:			AdminImperative
  *	Supports class:	AdminItem
  *	Purpose:		Executing imperative words
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ class AdminImperative
 	private SpecificationItem secondComparisonAssignmentItem_ = null;
 	private SpecificationItem virtualListAssignmentItem_ = null;
 
-	private String moduleNameString_ = this.getClass().getName();
+	private final String moduleNameString_ = this.getClass().getName();
 
 	// Private initialized variables
 
@@ -76,15 +76,15 @@ class AdminImperative
 		return false;
 		}
 
-	private byte addWordToVirtualList( boolean isSelection, short generalizationWordTypeNr, short specificationWordTypeNr, WordItem generalizationWordItem, WordItem specificationWordItem )
+	private byte addWordToVirtualList( short generalizationWordTypeNr, short specificationWordTypeNr, WordItem generalizationWordItem, WordItem specificationWordItem )
 		{
 		if( generalizationWordItem == null )
 			return adminItem_.startError( 1, moduleNameString_, "The given generalization word item is undefined" );
 
-		if( generalizationWordItem.addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, isSelection, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result != Constants.RESULT_OK )
+		if( generalizationWordItem.addSpecificationInWord( true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, generalizationWordTypeNr, specificationWordTypeNr, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to add a virtual list specification" );
 
-		if( generalizationWordItem.assignSpecification( false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null ).result != Constants.RESULT_OK )
+		if( generalizationWordItem.assignSpecification( false, false, false, false, false, false, false, false, Constants.NO_ASSUMPTION_LEVEL, Constants.NO_PREPOSITION_PARAMETER, Constants.NO_QUESTION_PARAMETER, Constants.NO_WORD_TYPE_NR, Constants.NO_COLLECTION_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, Constants.NO_CONTEXT_NR, 0, null, specificationWordItem, null, null, null ).result != Constants.RESULT_OK )
 			return adminItem_.addError( 1, moduleNameString_, "I failed to assign a virtual list word" );
 
 		return Constants.RESULT_OK;
@@ -208,7 +208,7 @@ class AdminImperative
 				if( !specificationWordItem.isNounHead() &&
 				!specificationWordItem.isNounTail() )
 					{
-					if( addWordToVirtualList( false, relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != Constants.RESULT_OK )
+					if( addWordToVirtualList( relationWordTypeNr, specificationWordTypeNr, relationWordItem, specificationWordItem ) != Constants.RESULT_OK )
 						return adminItem_.addError( 1, moduleNameString_, "I failed to add a word to a virtual list" );
 					}
 				else
@@ -282,7 +282,7 @@ class AdminImperative
 							}
 						else
 							{
-							if( addWordToVirtualList( false, virtualListAssignmentItem_.generalizationWordTypeNr(), virtualListAssignmentItem_.specificationWordTypeNr(), relationWordItem, virtualListAssignmentItem_.specificationWordItem() ) != Constants.RESULT_OK )
+							if( addWordToVirtualList( virtualListAssignmentItem_.generalizationWordTypeNr(), virtualListAssignmentItem_.specificationWordTypeNr(), relationWordItem, virtualListAssignmentItem_.specificationWordItem() ) != Constants.RESULT_OK )
 								return adminItem_.addError( 1, moduleNameString_, "I failed to add a word to a virtual list" );
 							}
 
@@ -428,7 +428,7 @@ class AdminImperative
 						GlobalVariables.currentAssignmentLevel++;
 
 						if( adminItem_.assignSelectionSpecification( possibilityScoreItem.referenceSelectionItem ) != Constants.RESULT_OK )
-							return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specifcation at assignment level: " + GlobalVariables.currentAssignmentLevel );
+							return adminItem_.addError( 1, moduleNameString_, "I failed to assign a selection specification at assignment level: " + GlobalVariables.currentAssignmentLevel );
 
 						nextSolveProgressLevel = currentSolveProgressLevel + solveProgressStep;
 

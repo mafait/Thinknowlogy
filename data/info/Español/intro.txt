@@ -1,13 +1,14 @@
 ﻿Mostrar "------------------------------------------------------------------------------".
-Mostrar " Thinknowlogy es la única tecnología de conocimiento autoorganizada del mundo.".
+Mostrar " Thinknowlogy es la única tecnología de conocimiento naturalmente inteligente del mundo.".
 Mostrar "------------------------------------------------------------------------------".
-Mostrar " Creo que la vida y el universo están diseñados de forma inteligente. Y creo que cualquier".
-Mostrar " diseño inteligente puede desentrañarse mediante ingeniería inversa. He identificado el".
-Mostrar " lenguaje humano como fuente de inteligencia natural. Estoy utilizando el diseño inteligente".
-Mostrar " del lenguaje humano para replicar la inteligencia humana en software.".
+Mostrar " La inteligencia natural es la utilización de la lógica que ocurre naturalmente.".
+Mostrar "------------------------------------------------------------------------------".
+Mostrar " Esta lógica natural proporciona pistas para organizar objetos naturales,".
+Mostrar " como agrupar objetos que pertenecen juntos, separar objetos que no pertenecen".
+Mostrar " juntos y archivar objetos que se han vuelto menos importantes.".
 Mostrar "------------------------------------------------------------------------------".
 Mostrar " La lógica natural del lenguaje se demuestra por:".
-Mostrar " * Razonamiento (en oraciones con gramática restringida):".
+Mostrar " * Razonamiento (en oraciones legibles con una gramática restringida):".
 Mostrar "   - sacando conclusiones (más avanzadas que las soluciones científicas),".
 Mostrar "   - haciendo suposiciones (con nivel de incertidumbre autoajustable),".
 Mostrar "   - haciendo preguntas sobre las lagunas en el conocimiento,".

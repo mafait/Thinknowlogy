@@ -1,9 +1,9 @@
 ﻿/*	Class:			ReadItem
  *	Parent class:	Item
  *	Purpose:		Temporarily storing info about read words of a sentence
- *	Version:		Thinknowlogy 2023 (Shaking tree)
+ *	Version:		Thinknowlogy 2024 (Intelligent Origin)
  *************************************************************************/
-/*	Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+/*	Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
  *	corrections and bug reports are welcome at https://mafait.org/contact
  *************************************************************************/
 /*	This program is free software: you can redistribute it and/or modify
@@ -53,6 +53,9 @@ class ReadItem extends Item
 
 	protected ReadItem( boolean isUncountableGeneralizationNoun, short wordOrderNr, short wordParameter, short wordTypeNr, int readStringLength, String _readString, WordItem readWordItem, List myList, WordItem myWordItem )
 		{
+		// Used for developer statistics
+		GlobalVariables.nCreatedReadItems++;
+
 		initializeItemVariables( Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, Constants.NO_SENTENCE_NR, myList, myWordItem );
 
 		// Private initialized variables
@@ -126,9 +129,9 @@ class ReadItem extends Item
 
 				( queryParameter == Constants.MAX_QUERY_PARAMETER &&
 
-				( grammarParameter > Constants.NO_GRAMMAR_PARAMETER ||
-				wordOrderNr_ > Constants.NO_ORDER_NR ||
-				wordParameter_ > Constants.NO_WORD_PARAMETER ) ) );
+					( grammarParameter > Constants.NO_GRAMMAR_PARAMETER ||
+					wordOrderNr_ > Constants.NO_ORDER_NR ||
+					wordParameter_ > Constants.NO_WORD_PARAMETER ) ) );
 		}
 
 	@Override
@@ -176,7 +179,7 @@ class ReadItem extends Item
 		{
 		StringBuffer queryStringBuffer;
 		String wordString;
-		String wordTypeString = myWordItem().wordTypeNameString( wordTypeNr_ );
+		String wordTypeString = WordItem.wordTypeNameString( wordTypeNr_ );
 
 		itemBaseToStringBuffer( queryWordTypeNr );
 
@@ -230,25 +233,6 @@ class ReadItem extends Item
 
 
 	// Protected methods
-
-	protected boolean hasFoundRelationWordInThisList( WordItem relationWordItem )
-		{
-		ReadItem searchReadItem = this;
-
-		if( relationWordItem != null )
-			{
-			while( searchReadItem != null )
-				{
-				if( searchReadItem.isRelationWord() &&
-				searchReadItem.readWordItem() == relationWordItem )
-					return true;
-
-				searchReadItem = searchReadItem.nextReadItem();
-				}
-			}
-
-		return false;
-		}
 
 	protected boolean isAdjectiveAssigned()
 		{

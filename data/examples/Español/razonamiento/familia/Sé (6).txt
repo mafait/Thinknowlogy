@@ -3,7 +3,7 @@ Juan es el padre y Ana es la madre de Paz, José y Luisa.
 Ana es la madre de Paz, José y Luisa.
 José tiene 2 padres, llamados Juan y Ana.
 José tiene una madre, llamada Ana.
-Paz es hijo de Juan y Ana.
+Paz es un hijo de Juan y Ana.
 Paz tiene un padre, llamado Juan.
 Juan es el padre de Paz, José y Luisa.
 Ana es la madre de Paz, José y Luisa.

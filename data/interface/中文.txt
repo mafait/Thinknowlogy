@@ -1,8 +1,8 @@
-﻿#----------------------------------------------------------------------------
+﻿
 # Purpose: To define the interface texts for the Chinese language
-# Version: Thinknowlogy 2023 (Shaking tree)
+# Version: Thinknowlogy 2024 (Intelligent Origin)
 #----------------------------------------------------------------------------
-# Copyright (C) 2023, Menno Mafait. Your suggestions, modifications,
+# Copyright (C) 2024, Menno Mafait. Your suggestions, modifications,
 # corrections and bug reports are welcome at https://mafait.org/contact
 #----------------------------------------------------------------------------
 
@@ -361,10 +361,7 @@
 # The following of interface texts are commented-out. Instead, the texts of the English interface file are taken.
 # In case you want to add translations, remove the '#' at the start of each line and replace the English text by a translation.
 #:1640			"\nIntegrity error! My implementation is insufficient to store or retrieve "
-#:1641			"this sentence."
-#:1642			"this sentence, due to words:"
-#:1643			"sentence \""
+#:1641			"sentence \""
+#:1642			"\", due to words:"
+#:1643			"\nI retrieved from my system: \""
 #:1644			"\"."
-#:1645			"\", due to words:"
-#:1646			"\nI retrieved from my system: \""
-#:1647			"\"."

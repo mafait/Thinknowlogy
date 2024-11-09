@@ -102,8 +102,8 @@
 < 
 * 
 * Mijn veronderstellingen die geconcludeerd zijn:
-< Iedere zoon is geen dochter.
 < Iedere dochter is geen zoon.
+< Iedere zoon is geen dochter.
 * 
 * Mijn conclusies:
 < Iedere dochter is vrouwelijk.
@@ -126,12 +126,12 @@
 < 
 * 
 * Mijn conclusies:
-< Paul is geen dochter.
-< Paul is geen meisje.
-< Paul is geen moeder.
 < Paul is niet vrouwelijk.
 < Paul is geen vrouw.
 < Paul is mannelijk.
+< Paul is geen dochter.
+< Paul is geen meisje.
+< Paul is geen moeder.
 * 
 * Mijn veronderstellingen:
 < Paul is waarschijnlijk geen jongen.
@@ -149,11 +149,11 @@
 <	- Paul is een zoon.
 <	- Iedere zoon is geen dochter.
 * 	en:
-<	- Paul is een man.
-<	- Iedere man is geen dochter.
-* 	en:
 <	- Paul is mannelijk.
 <	- Iedere dochter is niet mannelijk.
+* 	en:
+<	- Paul is een man.
+<	- Iedere man is geen dochter.
 < Paul is niet vrouwelijk. Omdat:
 <	- Paul is een zoon.
 <	- Iedere zoon is niet vrouwelijk.
@@ -164,20 +164,20 @@
 <	- Paul is een zoon.
 <	- Iedere zoon is geen meisje.
 * 	en:
-<	- Paul is een man.
-<	- Iedere man is geen meisje.
-* 	en:
 <	- Paul is mannelijk.
 <	- Ieder meisje is niet mannelijk.
+* 	en:
+<	- Paul is een man.
+<	- Iedere man is geen meisje.
 < Paul is geen moeder. Omdat:
 <	- Paul is een zoon.
 <	- Iedere zoon is geen moeder.
 * 	en:
-<	- Paul is een man.
-<	- Iedere man is geen moeder.
-* 	en:
 <	- Paul is mannelijk.
 <	- Iedere moeder is niet mannelijk.
+* 	en:
+<	- Paul is een man.
+<	- Iedere man is geen moeder.
 < Paul is geen vrouw. Omdat:
 <	- Paul is een zoon.
 <	- Iedere zoon is geen vrouw.

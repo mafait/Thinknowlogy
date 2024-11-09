@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -168,6 +168,11 @@
 * My conclusions:
 < John is part of a family. Because:
 <	- John is a parent of Paul, Joe and Laura.
+<	- Parents are part of every family.
+* 	and:
+<	- Paul has a parent, called John.
+<	- Joe has a parent, called John.
+<	- Laura has a parent, called John.
 <	- Parents are part of every family.
 * 
 * My assumptions:
@@ -244,6 +249,11 @@
 <	- Every woman is not masculine.
 < John is part of a family. Because:
 <	- John is a parent of Paul, Joe and Laura.
+<	- Parents are part of every family.
+* 	and:
+<	- Paul has a parent, called John.
+<	- Joe has a parent, called John.
+<	- Laura has a parent, called John.
 <	- Parents are part of every family.
 * 
 * My assumptions:

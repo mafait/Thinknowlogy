@@ -102,8 +102,8 @@
 < 
 * 
 * My assumptions that have been concluded:
-< Every son is not a daughter.
 < Every daughter is not a son.
+< Every son is not a daughter.
 * 
 * My conclusions:
 < Every daughter is feminine.
@@ -133,8 +133,8 @@
 < John has probably a child.
 * 
 * My questions:
-< Is John feminine or masculine?
 < Is John a woman or a man?
+< Is John feminine or masculine?
 < Is John a father or a mother?
 < 
 * 
@@ -146,8 +146,8 @@
 < Pete has probably a child.
 * 
 * My questions:
-< Is Pete feminine or masculine?
 < Is Pete a woman or a man?
+< Is Pete feminine or masculine?
 < Is Pete a father or a mother?
 < 
 * 
@@ -171,24 +171,24 @@
 * 
 * My conclusions:
 < Anna is a woman.
-< Anna is not a father.
+< Anna is not masculine.
+< Anna is feminine.
 < Anna is not a son.
 < Anna is not a boy.
-< Anna is not masculine.
+< Anna is not a father.
 < Anna is not a man.
-< Anna is feminine.
 < Paul has a mother, called Anna.
 * 
 * My assumptions:
 < Anna is probably not a girl.
 < Anna is probably a person.
-< Anna has possibly a child, called Paul.
 < Anna is probably a parent of Paul.
 < Anna is probably part of a family.
+< Anna has possibly a child, called Paul.
+< Paul has probably a parent, called Anna.
 < Paul is possibly a child of Anna.
 < Paul is possibly part of a family.
 < Paul is maybe a person.
-< Paul has probably a parent, called Anna.
 * 
 * My questions:
 < Is Paul a girl, a woman, a boy or a man?
@@ -200,12 +200,12 @@
 * 
 * My conclusions:
 < James was a man.
-< James was not a daughter.
-< James was not a mother.
-< James was not a girl.
-< James was not feminine.
-< James was not a woman.
 < James was masculine.
+< James was not a daughter.
+< James was not a girl.
+< James was not a mother.
+< James was not a woman.
+< James was not feminine.
 < Peter has no father anymore.
 < Peter had a father, called James.
 * 

@@ -102,8 +102,8 @@
 < 
 * 
 * Mes hypothèses qui ont été conclues:
-< Chaque fils n'est pas une fille.
 < Chaque fille n'est pas un fils.
+< Chaque fils n'est pas une fille.
 * 
 * Mes conclusions:
 < Chaque fille est féminin.
@@ -127,12 +127,12 @@
 * 
 * Mes conclusions:
 < Olivier est un homme.
-< Olivier n'est pas une fille.
-< Olivier n'est pas une mère.
-< Olivier n'est pas une jeune-fille.
 < Olivier n'est pas féminin.
-< Olivier n'est pas une femme.
 < Olivier est masculin.
+< Olivier n'est pas une fille.
+< Olivier n'est pas une jeune-fille.
+< Olivier n'est pas une mère.
+< Olivier n'est pas une femme.
 < Pascal a un père, appelé Olivier.
 < Pascal a une mère, appelée Amélie.
 < Julien a un père, appelé Olivier.
@@ -140,12 +140,12 @@
 < Lorraine a un père, appelé Olivier.
 < Lorraine a une mère, appelée Amélie.
 < Amélie est une femme.
-< Amélie n'est pas un père.
+< Amélie n'est pas masculin.
+< Amélie est féminin.
 < Amélie n'est pas un fils.
 < Amélie n'est pas un garçon.
-< Amélie n'est pas masculin.
+< Amélie n'est pas un père.
 < Amélie n'est pas un homme.
-< Amélie est féminin.
 * 
 * Mes hypothèses:
 < Olivier n'est probablement pas un garçon.
@@ -249,6 +249,11 @@
 * 
 * Mes hypothèses qui ont été conclues:
 < Olivier a une fille, appelée Lorraine.
+* 
+* Mes hypothèses qui ont été ajustées:
+< Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
+* 
+* Mes hypothèses qui ont été conclues:
 < Lorraine est féminin.
 < Lorraine n'est pas un fils.
 < Lorraine n'est pas un garçon.
@@ -258,7 +263,6 @@
 * 
 * Mes hypothèses qui ont été ajustées:
 < Lorraine est probablement partie d'une famille.
-< Olivier a probablement 3 enfants, appelés Pascal, Julien et Lorraine.
 * 
 * Mes hypothèses qui ont été conclues:
 < Amélie a une fille, appelée Lorraine.
@@ -269,24 +273,24 @@
 * 
 * Mes conclusions:
 < Guillaume est un homme.
-< Guillaume n'est pas une fille.
-< Guillaume n'est pas une mère.
-< Guillaume n'est pas une jeune-fille.
 < Guillaume n'est pas féminin.
-< Guillaume n'est pas une femme.
 < Guillaume est masculin.
+< Guillaume n'est pas une fille.
+< Guillaume n'est pas une jeune-fille.
+< Guillaume n'est pas une mère.
+< Guillaume n'est pas une femme.
 < Armand a un père, appelé Guillaume.
 * 
 * Mes hypothèses:
 < Guillaume n'est probablement pas un garçon.
 < Guillaume est probablement une personne.
-< Guillaume a possible un enfant, appelé Armand.
 < Guillaume est probablement un parent de Armand.
 < Guillaume est probablement partie d'une famille.
+< Guillaume a possible un enfant, appelé Armand.
+< Armand a probablement un parent, appelé Guillaume.
 < Armand est possible un enfant de Guillaume.
 < Armand est possible partie d'une famille.
 < Armand est peut-être une personne.
-< Armand a probablement un parent, appelé Guillaume.
 * 
 * Mes questions:
 < Est Armand une jeune-fille, une femme, un garçon ou un homme?
@@ -296,11 +300,11 @@
 * 
 * Mes conclusions:
 < Fabrice n'est pas féminin.
-< Fabrice est masculin.
 < Fabrice est un homme.
+< Fabrice est masculin.
 < Fabrice n'est pas une fille.
-< Fabrice n'est pas une mère.
 < Fabrice n'est pas une jeune-fille.
+< Fabrice n'est pas une mère.
 < Fabrice n'est pas une femme.
 * 
 * Mes hypothèses:

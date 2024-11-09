@@ -126,8 +126,8 @@
 < Every father is not feminine.
 < Every father is not a woman.
 < James was masculine.
-< James was not feminine.
 < James was not a woman.
+< James was not feminine.
 * 
 * My assumptions:
 < A man is probably a person.
@@ -213,10 +213,10 @@
 * 
 * My assumptions:
 < A son is probably a person.
-< Paul is probably a person.
 < A boy is probably not a man.
 < A boy is probably a person.
 < A man is probably not a boy.
+< Paul is probably a person.
 < 
 * 
 * My conclusions:
@@ -239,10 +239,10 @@
 * 
 * My assumptions:
 < A daughter is probably a person.
-< Laura is probably a person.
 < A girl is probably not a woman.
 < A girl is probably a person.
 < A woman is probably not a girl.
+< Laura is probably a person.
 * 
 * My questions:
 < Is Laura a girl or a woman?
@@ -364,11 +364,11 @@
 <	- A son is probably a person.
 < Paul is probably a child of John and Anna. Because:
 <	- Every family has a parent and a child.
-<	- Anna is a parent of Paul.
 <	- John is a parent of Paul.
+<	- Anna is a parent of Paul.
 * 	and:
-<	- Anna has probably a child, called Paul.
 <	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
 * 	and:
 <	- Every family has a parent and a child.
 <	- Paul has 2 parents, called John and Anna.
@@ -377,12 +377,16 @@
 <	- A child is part of every family.
 * 	and:
 <	- John has probably a child, called Paul.
+<	- Anna has probably a child, called Paul.
 <	- A child is part of every family.
 < 
 * 
 * My conclusions:
 < John is part of a family. Because:
 <	- John is a parent of Paul.
+<	- A parent is part of every family.
+* 	and:
+<	- Paul has 2 parents, called John and Anna.
 <	- A parent is part of every family.
 < John has a son, called Paul. Because:
 <	- Paul is a son of John.
@@ -392,10 +396,10 @@
 <	- John is a parent of Paul.
 <	- A parent is probably a person.
 < John has probably a child, called Paul. Because:
-<	- Paul is probably a child of John and Anna.
-* 	and:
 <	- Every family has a parent and a child.
 <	- John is a parent of Paul.
+* 	and:
+<	- Paul is probably a child of John and Anna.
 * 	and:
 <	- Every family has a parent and a child.
 <	- Paul has 2 parents, called John and Anna.
@@ -415,6 +419,9 @@
 * My conclusions:
 < Anna is part of a family. Because:
 <	- Anna is a parent of Paul.
+<	- A parent is part of every family.
+* 	and:
+<	- Paul has 2 parents, called John and Anna.
 <	- A parent is part of every family.
 * 
 * My assumptions:
@@ -467,6 +474,9 @@
 <	- Anna is a parent of Paul.
 * 	and:
 <	- Paul is probably a child of John and Anna.
+* 	and:
+<	- Every family has a parent and a child.
+<	- Paul has 2 parents, called John and Anna.
 < 
 * 
 * My conclusions:
@@ -593,11 +603,11 @@
 <	- James was the father of Joe.
 <	- Every father is masculine.
 < James was not a woman. Because:
-<	- James was a man.
-<	- Every man is not a woman.
-* 	and:
 <	- James was masculine.
 <	- Every woman is not masculine.
+* 	and:
+<	- James was a man.
+<	- Every man is not a woman.
 * 	and:
 <	- James was the father of Joe.
 <	- Every father is not a woman.
